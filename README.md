@@ -4,7 +4,7 @@
 * Jhonatan Oliveira Lopes
 * Marcos Vinicius Malaquias
 * Naira Giulia Pereira Maximo dos Santos - [GitHub](http://github.com/naira-maximo)
-* Paulo Granthon
+* Paulo Granthon - [GitHub](https://github.com/paulo-granthon)
 * Tânia de Oliveira Cruz
 
 ## Tríade da API
