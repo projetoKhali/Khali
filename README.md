@@ -2,10 +2,10 @@
 ## Integrantes da Equipe Khali
 * Aline Aparecida Vieira da Silva 
 * Jhonatan Oliveira Lopes
-* Marcos Vinicius Malaquias
+* Marcos Vinicius Malaquias [GitHub](https://github.com/Incivius)
 * Naira Giulia Pereira Maximo dos Santos - [GitHub](http://github.com/naira-maximo)
 * Paulo Granthon - [GitHub](https://github.com/paulo-granthon)
-* Tânia de Oliveira Cruz
+* Tânia de Oliveira Cruz [GitHub](https://github.com/taniacruzz)
 
 ## Tríade da API
 * Algoritmos - *Prof. Lucas Gonçalves Nadalete*
