@@ -12,8 +12,17 @@
 * Laboratório de Desenvolvimento em Banco de Dados - *Prof. Lucas Gonçalves Nadalete*
 * Arquitetura e Organização de Computadores - *Prof. Fabiano Sabha Walczak*
 
+### Prazos
+> - [x] 09/08 a 13/08 - *Dinamica Disruptiva*
+> - [x] 15/08 a 19/08 - *Kick-off*
+> - [x] 29/08 a 18/09 - *Primeira Sprint*
+> - [ ] 19/09 a 09/10 - *Segunda Sprint*
+> - [ ] 09/10 a 15/10 - *Recesso Escolar*
+> - [ ] 17/10 a 06/11 - *Terceira Sprint*
+> - [ ] 07/11 a 27/11 - *Quarta Sprint*
+> - [ ] 08/12 - *Feira de Soluções e Apresentação Final API*
 ##
-## Descrição do projeto
+## Descrição do Projeto
 > Desenvolvimento de uma solução computacional que exercite a capacidade de pesquisa e autodidaxia dos integrantes dos grupos, no que tange:
 > * A aplicação de técnicas de programação para a construção de algoritmos
 > * O uso de uma ferramenta que possibilite um Ambiente de Desenvolvimento Integrado (IDE) para o desenvolvimento da solução computacional
@@ -54,10 +63,16 @@
 * Refinamento dos Dashboards
 
 ### Backlog da 1ª Sprint
-* Criação do sistema de usuários e autentificação
-* Criação do fluxograma do produto
-* Criação e configuração do Wireframe
-* Teste Sprint 1
-* Documentação do Projeto
-* Criação parcial da tela Home
+- [ ] Criação do sistema de usuários e autentificação
+- [ ] Criação do fluxograma do produto
+- [x] Criação e configuração do Wireframe
+- [ ] Teste Sprint 1
+- [x] Documentação do Projeto
+- [ ] Criação parcial da tela Home
 
+### Fluxograma do Produto
+![Khali](https://i.ibb.co/pftjd1R/Whats-App-Image-2022-08-28-at-12-41-371.jpg)
+
+### Burndown 1º Sprint
+
+### Tecnologias Utilizadas
