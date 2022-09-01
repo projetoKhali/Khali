@@ -18,7 +18,7 @@
 ### Prazos
 > - [x] 09/08 a 13/08 - *Dinamica Disruptiva*
 > - [x] 15/08 a 19/08 - *Kick-off*
-> - [_] 29/08 a 18/09 - *Primeira Sprint*
+> - [-] 29/08 a 18/09 - *Primeira Sprint*
 > - [ ] 19/09 a 09/10 - *Segunda Sprint*
 > - [ ] 09/10 a 15/10 - *Recesso Escolar*
 > - [ ] 17/10 a 06/11 - *Terceira Sprint*
