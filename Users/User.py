@@ -1,30 +1,33 @@
 
-# definição do namespace de Usuário. Ao usar 'import Users', importará todos os metodos relacionados a usuários
-def Users():
+# Define o objeto "Usuário"
+class User:
 
-    # insira imports aqui
+    # O nome do usuário
+    name = ""
 
-    # Define o objeto "Usuário"
-    class User:
+    # O email do usuário
+    email = ""
 
-        # o nome do usuário
-        name = ""
+    # A TURMA que o usuário pertence
+    group_id = None
 
-        # o email do usuário
-        email = ""
+    # O TIME que o usuário pertence dentro da turma
+    team_id = None
 
-        # a equipe que o usuário pertence
-        group = None
+    # A função do usuário no time
+    role_id = None
 
-        # a função do usuário na equipe
-        role = None
+    # Método construtor para criar um novo usuário
+    def __init__(self, _name, _email, _group_id, _team_id, _role_id):
 
-        # método construtor para criar um novo usuário
-        def __init__(self, _name, _email, _group, _role):
+        # Ao criar um usuário, os parametros passados serão registrados ao valor das variáveis
+        self.name       = _name
+        self.email      = _email
+        self.group_id   = _group_id
+        self.team_id    = _team_id
+        self.role_id    = _role_id
 
-            # ao criar um usuário, os parametros passados serão registrados ao valor das variáveis
-            name = _name
-            email = _email
-            group = _group
-            role = _role
+    # retorna uma array com as informações do usuário
+    def fields(self):
+        return [ self.name, self.email, self.team_id, self.role_id ]
 

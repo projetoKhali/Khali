@@ -1,0 +1,34 @@
+
+[ ] -> [-] -> [x]
+
+[x] Main.py
+
+[-]Back:
+    [x] User
+
+    [x] CSV:
+        [x] write
+        [x] load
+        [x] write line
+        [x] load line
+
+    [-] Database:
+        [x] Users
+            [-] Create
+            [x] Save
+            [x] Load
+        [-] Groups
+            [ ] Create
+            [ ] Save
+            [x] Load 
+        [-] Teams
+            [ ] Create
+            [ ] Save
+            [x] Load 
+        [x] Roles
+
+    [-] Authentication:
+        [-] Register
+            [x] Validate Email
+            [x] Groups/Teams ID to name
+            [ ] Save to database
