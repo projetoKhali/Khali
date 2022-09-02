@@ -1,6 +1,5 @@
 # API 1º Semestre - Tecnologia em Banco de Dados 2022
 ## Integrantes da Equipe Khali
-* Aline Aparecida Vieira da Silva 
 * Jhonatan Oliveira Lopes
 * Marcos Vinicius Malaquias [GitHub](https://github.com/Incivius)
 * Naira Giulia Pereira Maximo dos Santos - [GitHub](http://github.com/naira-maximo)
