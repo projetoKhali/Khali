@@ -3,22 +3,22 @@
 class User:
 
     # O nome do usuário
-    name = ""
+    name:str = ""
 
     # O email do usuário
-    email = ""
+    email:str = ""
 
     # A TURMA que o usuário pertence
-    group_id = None
+    group_id:int = None
 
     # O TIME que o usuário pertence dentro da turma
-    team_id = None
+    team_id:int = None
 
     # A função do usuário no time
-    role_id = None
+    role_id:int = None
 
     # Método construtor para criar um novo usuário
-    def __init__(self, _name, _email, _group_id, _team_id, _role_id):
+    def __init__(self, _name:str, _email:str, _group_id:int, _team_id:int, _role_id:int):
 
         # Ao criar um usuário, os parametros passados serão registrados ao valor das variáveis
         self.name       = _name
