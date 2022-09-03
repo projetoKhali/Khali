@@ -1,11 +1,10 @@
 
 # Insira imports aqui para utilizá-los sem incluir no namespace (ao importar Users, NÃO importará também estes imports)
-from curses.ascii import isdigit
-from operator import truediv
 from CSV import CSVHandler
 from Users.User import User
 
 import UserSettings as settings
+from Roles.Role import *
 
 # Definição do namespace Authentication referente ao Cadastro & Login de usuários 
 def Authentication():
@@ -14,9 +13,12 @@ def Authentication():
 
 #region Users
 
+    # TODO: global current_user
+
+    # TODO: Login method
+
     # Efetua o Cadastro de um novo Usuário e, se efetuado com sucesso, o armazena na database .csv
     def register (name, email, group_id, team_id, role_id):
-
 
         # Verifica se o nome do Usuário é válido
         if not validate_user_name(name):
@@ -28,10 +30,26 @@ def Authentication():
             print('Erro ao cadastrar usuario: Email fornecido não é válido')
             return
 
+        # TODO: validate_group_id
+        if not exists_group(group_id):
+            print(f'Erro: grupo de id {group_id} não existe')
+            return
+
+        # TODO: validate_team_id
+        if not exists_team(team_id):
+            print(f'Erro: time de id {team_id} não existe')
+            return
+
+        # TODO: validate_role_id
+        if not exists_role(role_id):
+            print(f'Erro: função de id {role_id} não existe')
+            return
+
+        # 🤔 is this really needed?
         user = User(name, email, group_id, team_id, role_id)
 
         # Adiciona o usuário para a database
-        CSVHandler.add_line_csv(settings.USERS_PATH, get_user_fields(user))
+        CSVHandler.add_line(settings.USERS_PATH, get_user_fields(user))
 
 
     # Retorna uma lista com as informações de um Usuário
@@ -41,7 +59,7 @@ def Authentication():
             user.email,
             get_group_name(user.group_id),
             get_team_name(user.team_id),
-            settings.ROLES[user.role_id]
+            get_role(user.role_id)
         })
 
 #endregion
@@ -54,7 +72,7 @@ def Authentication():
         # Nome fornecido é INVALIDO se descumprir pelo menos uma das seguintes condições:
         # Numero de caracteres é maior ou igual ao minimo predefinido -> USER_NAME_MIN_MAX[0] 
         # Numero de caracteres é menor que o maximo predefinido       -> USER_NAME_MIN_MAX[1]
-        if name.count < settings.USER_NAME_MIN_MAX[0] or name.count >= settings.USER_NAME_MIN_MAX[1]:
+        if len(name) < settings.USER_NAME_MIN_MAX[0] or len(name) >= settings.USER_NAME_MIN_MAX[1]:
             return False
 
         # Cria uma variavel string para armazenar o caractere anterior no proximo loop
@@ -106,16 +124,35 @@ def Authentication():
 
 #region Grupos
 
+    def create_group (name:str):
+        return CSVHandler.add_line(settings.GROUPS_PATH, name)
+
+    def exists_group (id:int):
+        return id < CSVHandler.line_len(settings.GROUPS_PATH) - 1
+
     # retorna o nome do Grupo que corresponde ao id especificado 
     def get_group_name (id:int):
-        CSVHandler.load_line(settings.GROUPS_PATH, id)
+        CSVHandler.read_line(settings.GROUPS_PATH, id)
 
 #endregion
 
 #region Times
 
+    def create_team (name:str):
+        return CSVHandler.add_line(settings.TEAMS_PATH, name)
+
+    def exists_team (id:int):
+        return CSVHandler.find_data(settings.TEAMS_PATH, id) is not None 
+
     # retorna o nome do Time que corresponde ao id especificado 
     def get_team_name (id:int):
-        CSVHandler.load_line(settings.TEAMS_PATH, id)
+        CSVHandler.find_data(settings.TEAMS_PATH, id)
+
+#endregion
+
+#region Funções
+
+    def exists_role (id:int):
+        return get_role(id) is not None
 
 #endregion
