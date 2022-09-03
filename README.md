@@ -1,6 +1,6 @@
 # API 1º Semestre - Tecnologia em Banco de Dados 2022
 ## Integrantes da Equipe Khali
-* Jhonatan Oliveira Lopes
+* Jhonatan Oliveira Lopes [GitHub](https://github.com/JhonatanLop)
 * Marcos Vinicius Malaquias [GitHub](https://github.com/Incivius)
 * Naira Giulia Pereira Maximo dos Santos - [GitHub](http://github.com/naira-maximo)
 * Paulo Granthon - [GitHub](https://github.com/paulo-granthon)
