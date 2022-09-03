@@ -3,6 +3,12 @@ import Settings
 from Users.Authentication import *
 from Users.Roles.Role import *
 
+
+login("develano")
+
+exit()
+
+
 # Inicializa todas as databases
 def initialize_databases ():
     initialize_csv(Settings.USERS_PATH)
