@@ -62,15 +62,14 @@
 * Refinamento dos Dashboards
 
 ### Backlog da 1ª Sprint
-- [ ] Criação do sistema de usuários e autentificação
-- [ ] Criação do fluxograma do produto
-- [x] Criação e configuração do Wireframe
-- [ ] Teste Sprint 1
-- [x] Documentação do Projeto
-- [ ] Criação parcial da tela Home
+### CRIAÇÃO DO SISTEMA DE USUÁRIOS
+- [ ] Sistema de cadastramento de usuários por parte do Administrador 
+- [ ] Sistema de cadastramento de usuários por parte do Líder do Grupo
+- [ ] Criação da funcionalidade de login
+- [ ] Retorno para o usuário das Sprints e integrantes que ele deve avaliar
 
 ### Fluxograma do Produto
-![Khali](https://i.ibb.co/pftjd1R/Whats-App-Image-2022-08-28-at-12-41-371.jpg)
+![Khali](https://i.ibb.co/zZfJYtS/Fluxograma-Khali.png)
 
 ### Burndown 1º Sprint
 
