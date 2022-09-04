@@ -17,13 +17,13 @@
             [-] Create
             [x] Save
             [x] Load
-        [-] Groups
-            [ ] Create
-            [ ] Save
+        [x] Groups
+            [x] Create
+            [x] Save
             [x] Load 
-        [-] Teams
-            [ ] Create
-            [ ] Save
+        [x] Teams
+            [x] Create
+            [x] Save
             [x] Load 
         [x] Roles
 
