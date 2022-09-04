@@ -1,7 +1,7 @@
 from tkinter import *  # Importar biblioteca
 master = Tk()  # Instanciar a classe, para utilizar as funções da classe
 master.title("Sistema de Cadastro - Administrador")  # Título da tela
-master.iconbitmap(default="icokhali.ico.ico")  # Definir ícone da tela
+master.iconbitmap(default="icokhali.ico")  # Definir ícone da tela
 master.geometry("1300x670+300+200")  # Redimensionar a janela/
 # Dados referentes á Largura x Altura + Distância esquerda + Distância topo
 master.wm_resizable(width=False, height=False)  # Travar redimensionamento
