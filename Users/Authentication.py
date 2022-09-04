@@ -121,11 +121,11 @@ def validate_user_email(email:str):
 
 # Cria e armazena um novo Grupo com o nome fornecido
 def create_group (name:str):
-    return add_line_csv(settings.GROUPS_PATH, {name})
+    return add_line_csv(settings.GROUPS_PATH, [name])
 
 # Verifica se um Grupo com o id forneido existe armazenado no banco de dados
 def exists_group (id:int):
-    return id < line_len_csv(settings.GROUPS_PATH) - 1
+    return id < line_count_csv(settings.GROUPS_PATH) - 1
 
 # retorna o nome do Grupo que corresponde ao id especificado 
 def get_group_name (id:int):
@@ -137,7 +137,7 @@ def get_group_name (id:int):
 
 # Cria e armazena um novo Time com o nome fornecido
 def create_team (name:str):
-    return add_unique_csv_autoid(settings.TEAMS_PATH, {name})
+    return add_unique_csv_autoid(settings.TEAMS_PATH, [name])
 
 # Verifica se um Time com o id forneido existe armazenado no banco de dados
 def exists_team (id:int):

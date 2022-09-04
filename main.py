@@ -19,19 +19,15 @@ initialize_databases()
 # area de testes:
 
 fields = [ 1, 2, 3 ]
-rows = ( ( 'a', 'b', 'c'), ('a2', 'b2', 'c2' ) )
+rows = ( )
 
 save_file_csv("data/users", fields, rows)
 
 with open("data/users.csv", 'r') as data:
-    print(line_len_csv("data/users"))
-
-print ("find_data: " + str(find_data_csv(Settings.USERS_PATH, str("a"))))
+    print(line_count_csv("data/users"))
 
 
-create_group("new group name")
-create_team("1")
-create_team("2")
-create_team("3")
-create_team("4")
-create_team("5")
+create_group("first group")
+create_group("second group")
+
+print("groups linelen: " + str(line_count_csv(Settings.GROUPS_PATH)))
