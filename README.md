@@ -33,7 +33,7 @@
 > O desafio do grupo é apoiar a PBLTeX a levantar, especificar e desenvolver uma solução computacional que viabilize a aplicação dessa técnica. 
 ##
 ## Descrição do Produto
-*Wireframe disponível pelo [Figma](https://www.figma.com/files/project/64287399/Team-project?fuid=951608859077023281)*
+*Wireframe disponível pelo [Figma](https://www.figma.com/file/U1apWrrVuZHbtNIumUgUoo/Api?node-id=56%3A3)*
 ### Requisitos Funcionais
 * Possibilitar autoavaliação e avaliação dos demais integrantes do Time de forma individualizada;
 * Possibilitar que o Líder do Grupo avalie o Líder Técnico do Time e o *Fake Client* avalie o aluno PO do Time;
