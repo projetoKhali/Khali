@@ -121,31 +121,31 @@ def validate_user_email(email:str):
 
 # Cria e armazena um novo Grupo com o nome fornecido
 def create_group (name:str):
-    return add_line_csv(settings.GROUPS_PATH, [name])
+    return add_unique_csv_autoid(settings.GROUPS_PATH, [name])
 
 # Verifica se um Grupo com o id forneido existe armazenado no banco de dados
 def exists_group (id:int):
-    return id < line_count_csv(settings.GROUPS_PATH) - 1
+    return find_data_by_id_csv(settings.GROUPS_PATH, id) is not None 
 
 # retorna o nome do Grupo que corresponde ao id especificado 
 def get_group_name (id:int):
-    read_line_csv(settings.GROUPS_PATH, id)
+    return find_data_by_id_csv(settings.GROUPS_PATH, id)['name'] 
 
 #endregion
 
 #region Times
 
 # Cria e armazena um novo Time com o nome fornecido
-def create_team (name:str):
-    return add_unique_csv_autoid(settings.TEAMS_PATH, [name])
+def create_team (name:str, group:int):
+    return add_unique_csv_autoid(settings.TEAMS_PATH, [group, name])
 
 # Verifica se um Time com o id forneido existe armazenado no banco de dados
 def exists_team (id:int):
-    return find_data_csv(settings.TEAMS_PATH, id) is not None 
+    return find_data_by_id_csv(settings.TEAMS_PATH, id) is not None 
 
 # retorna o nome do Time que corresponde ao id especificado 
 def get_team_name (id:int):
-    return find_data_csv(settings.TEAMS_PATH, id)['name'] 
+    return find_data_by_id_csv(settings.TEAMS_PATH, id)['name'] 
 
 #endregion
 

@@ -3,7 +3,7 @@
 import os
 from array import array
 import csv
-from Settings import COLS
+from Settings import *
 # Definição do namespace, ao usar 'import ...', importará todos os metodos dentro do namespace
 
 # Retorna o conteudo da linha onde estiver localizada a informação fornecida
@@ -36,6 +36,38 @@ def find_data_csv (path:str, key:str):
     return None
 
 
+# Retorna o conteudo da linha onde estiver localizada a informação fornecida
+def find_data_by_id_csv (path:str, key:str):
+
+    # Tenta executar o próximo código
+    try:
+    
+        # Abre o arquivo
+        with open(path + '.csv', 'r') as file:
+
+            # Lê as linhas do arquivo e salva na variavel 'lines'
+            lines = file.readlines()
+
+    # Em caso de falha
+    except:
+        print(COLS[2] + "CSVHandler.find_data: Erro ao ler arquivo" + COLS[0])
+        return None
+
+    # Pra cada linha carregada na variavel 'lines'
+    for line in lines:
+
+        line_values = line.strip('\n').split(',')
+
+        # Se a linha atual contem a chave fornecida
+        if line_values[0] == key:
+
+            # Retorna a linha formatada para dicionario
+            return format_line_csv(lines[0].strip('\n').split(','), line)
+
+    # Loop finalizado sem encontrar nenhum resultado
+    return None
+
+
 # Formata uma linha de arquivo .csv em um dicionario python
 def format_line_csv (fields, line:str):
 
@@ -56,6 +88,20 @@ def format_line_csv (fields, line:str):
 
     # Retorna o dicionario gerado pelo loop
     return data
+
+def get_path_fields (path:str):
+    for path_fields in PATH_FIELDS:
+        if path_fields['path'] == path:
+            return path_fields['fields']
+    return ("id","data")
+
+def initialize_csv (path:str):
+
+    delete_csv(path)
+
+    fields = get_path_fields(path)
+
+    save_file_csv(path, fields, [])
 
 
 # Salva um banco de dados CSV
@@ -131,9 +177,15 @@ def add_unique_csv (path:str, id:int, row):
     # Acompanhamento de processo pelo terminal
     print(COLS[6] + "CSVHandler.add_unique_csv: Iniciando processo de armazenamento de informação identificada por id" + COLS[0])
 
+    if id < 0:
+        print(COLS[2] + f"CSVHandler.add_unique_csv -- Erro: O id fornecido é invalido" + COLS[0]) 
+
     # Verifica se o caminho existe, se não: inicia o arquivo com o texto a seguir na primeira linha
     if not os.path.exists(path + '.csv'):
-        add_line_csv(path, ("id","data"))
+        print("path doesn't exist")
+        initialize_csv(path)
+    else:
+        print("path exists")
 
     # Abre o arquivo localizado em 'path' em modo de acrescentação ('a') e o armazena na memoria como 'file'
     with open(path + '.csv', 'a', newline='') as file:
@@ -154,14 +206,14 @@ def add_unique_csv (path:str, id:int, row):
 def add_unique_csv_autoid (path:str, row):
 
     # Acompanhamento de processo pelo terminal
-    print(COLS[6] + "CSVHandler.add_unique_csv: Iniciando processo de armazenamento de informação identificada utilizando associação automatica de id" + COLS[0])
+    print(COLS[6] + "CSVHandler.add_unique_csv_autoid: Iniciando processo de armazenamento de informação identificada utilizando associação automatica de id" + COLS[0])
 
     # Verifica se o caminho existe, se não: inicia o arquivo com o texto a seguir na primeira linha
     if not os.path.exists(path + '.csv'):
         add_line_csv(path, ["id","data"])
 
     # Declara uma variavel para armazenar o maior id encontrado no arquivo
-    max_id = 0 
+    max_id = -1
 
     # Abre o arquivo especificado
     with open(path + '.csv', 'r') as file:
@@ -192,8 +244,11 @@ def add_unique_csv_autoid (path:str, row):
     # Define o id da linha a ser adicionada como sendo o maior id encontrado no loop + 1
     id = max_id + 1
 
+    if id < 0:
+        print(COLS[2] + f"CSVHandler.add_unique_csv_autoid -- Erro: O id invalido autogerado" + COLS[0]) 
+
     # printa para acompanhamento de processo
-    print(COLS[7] + "CSVHandler.add_unique_csv: id definido com sucesso: " + str(id))
+    print(COLS[7] + "CSVHandler.add_unique_csv_autoid: id definido com sucesso: " + str(id))
 
     # Chama a versão da função que inclui especificação por id para continuar o processo
     add_unique_csv(path, id, row)

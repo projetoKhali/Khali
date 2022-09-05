@@ -4,6 +4,12 @@ USERS_PATH  = "data/users"
 GROUPS_PATH = "data/groups"
 TEAMS_PATH  = "data/teams"
 
+PATH_FIELDS = [
+    { 'path': USERS_PATH,   'fields': ['id', 'name', 'email', 'group', 'team', 'role'] },
+    { 'path': GROUPS_PATH,  'fields':['id', 'name'] },
+    { 'path': TEAMS_PATH,   'fields': ['id', 'group', 'name',] },
+]
+
 # Mínimo e máximo número de caracteres permitido para o nome do Usuário
 USER_NAME_MIN_MAX = (3, 24)
 
