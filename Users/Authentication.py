@@ -17,27 +17,27 @@ def register (name, email, group_id, team_id, role_id):
 
     # Verifica se o nome do Usuário é válido
     if not validate_user_name(name):
-        print('Erro ao cadastrar usuario: Nome fornecido não é válido')
+        print(COLS[2] + 'Authentication.Register -- Erro ao cadastrar usuario: Nome fornecido não é válido' + COLS[0])
         return
 
     # Verifica se o email fornecido é valido
     if not validate_user_email(email):
-        print('Erro ao cadastrar usuario: Email fornecido não é válido')
+        print(COLS[2] + 'Authentication.Register -- Erro ao cadastrar usuario: Email fornecido não é válido' + COLS[0])
         return
 
     # TODO: validate_group_id
     if not exists_group(group_id):
-        print(f'Erro: grupo de id {group_id} não existe')
+        print(COLS[2] + f'Authentication.Register -- Erro: grupo de id {group_id} não existe' + COLS[0])
         return
 
     # TODO: validate_team_id
     if not exists_team(team_id):
-        print(f'Erro: time de id {team_id} não existe')
+        print(COLS[2] + f'Authentication.Register -- Erro: time de id {team_id} não existe' + COLS[0])
         return
 
     # TODO: validate_role_id
     if not exists_role(role_id):
-        print(f'Erro: função de id {role_id} não existe')
+        print(COLS[2] + f'Authentication.Register -- Erro: função de id {role_id} não existe' + COLS[0])
         return
 
     # 🤔 is this really needed?
@@ -49,13 +49,13 @@ def register (name, email, group_id, team_id, role_id):
 
 # Retorna uma lista com as informações de um Usuário
 def get_user_fields (user:User):
-    return list({
+    return [
         user.name,
         user.email,
         get_group_name(user.group_id),
         get_team_name(user.team_id),
-        get_role(user.role_id)
-    })
+        get_role_name(user.role_id)
+    ]
 
 #endregion
 

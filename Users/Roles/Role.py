@@ -1,5 +1,8 @@
 
 # Representa uma Função / um tipo de Usuário
+from random import getrandbits
+
+
 class Role:
 
     # O nome da função
@@ -38,4 +41,11 @@ def get_role (id:int):
 
     # Retorna a Função de index 'id'
     return ROLES[id]
+
+# Retorna o nome da função com id solicitado
+def get_role_name (id:int):
+    role = get_role(id)
+    if role is None:
+        return None
+    return role.name
 
