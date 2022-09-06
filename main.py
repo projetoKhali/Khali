@@ -16,9 +16,6 @@ def initialize_databases ():
 # !TODO!:  
 initialize_databases()
 
-print(gerar_senha())
-
-exit()
 # area de testes:
 
 # # printa a quantidade de linhas na database de usuarios

@@ -1,22 +1,24 @@
-
-# O local onde os arquivos .csv estão localizados
+# O caminho onde os arquivos .csv estão/estarão localizados
 USERS_PATH  = "data/users"
 GROUPS_PATH = "data/groups"
 TEAMS_PATH  = "data/teams"
 
 # Os campos que cada banco de dados irá possuir ao ser inicializado
 PATH_FIELDS = [
-#   Caminho do arquivo .csv   |           | id |                  campos                   | 
-    { 'path': USERS_PATH,       'fields': ['id', 'name', 'email', 'group', 'team', 'role'] },
+#   Caminho do arquivo .csv   |           | id |                        campos                         | 
+    { 'path': USERS_PATH,       'fields': ['id', 'name', 'email', 'group', 'team', 'role', 'password'] },
     { 'path': GROUPS_PATH,      'fields': ['id', 'name'] },
     { 'path': TEAMS_PATH,       'fields': ['id', 'group', 'name',] },
 ]
 
-# Tamanho da senha autogerada para cadastro de usuários
-AUTO_GEN_PW_SIZE = 7
-
 # Mínimo e máximo número de caracteres permitido para o nome do Usuário
 USER_NAME_MIN_MAX = (3, 24)
+
+# Mínimo e máximo número de caracteres permitido para o nome do Usuário
+PASSWORD_MIN_MAX = (3, 24)
+
+# Tamanho da senha autogerada para cadastro de usuários
+AUTO_GEN_PW_SIZE = 7
 
 # Cores do Console
 COLS = [

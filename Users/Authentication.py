@@ -1,6 +1,8 @@
 
 # Insira imports aqui para utilizá-los sem incluir no namespace (ao importar Users, NÃO importará também estes imports)
+from string import punctuation
 from CSV.CSVHandler import *
+from Users.Gerar_Senha import gerar_senha
 from Users.User import User
 
 import Settings as settings
@@ -15,33 +17,40 @@ from .Roles.Role import *
 # Efetua o Cadastro de um novo Usuário e, se efetuado com sucesso, o armazena na database .csv
 def register (name, email, group_id, team_id, role_id):
 
-    # Verifica se o nome do Usuário é válido
-    if not validate_user_name(name):
+    # Verifica se o Nome do Usuário fornecido é válido. Cancela o processo caso não seja.
+    if not validate_user_name (name):
         print(COLS[2] + 'Authentication.Register -- Erro ao cadastrar usuario: Nome fornecido não é válido' + COLS[0])
         return
 
-    # Verifica se o email fornecido é valido
-    if not validate_user_email(email):
+    # Verifica se o Email fornecido é válido. Cancela o processo caso não seja.
+    if not validate_user_email (email):
         print(COLS[2] + 'Authentication.Register -- Erro ao cadastrar usuario: Email fornecido não é válido' + COLS[0])
         return
 
-    # TODO: validate_group_id
-    if not exists_group(group_id):
-        print(COLS[2] + f'Authentication.Register -- Erro: grupo de id {group_id} não existe' + COLS[0])
+    # Verifica se o Grupo fornceido é válido. Cancela o processo caso não seja.
+    if not exists_group (group_id):
+        print(COLS[2] + f'Authentication.Register -- Erro: Grupo de id {group_id} não existe' + COLS[0])
         return
 
-    # TODO: validate_team_id
-    if not exists_team(team_id):
-        print(COLS[2] + f'Authentication.Register -- Erro: time de id {team_id} não existe' + COLS[0])
+    # Verifica se o Time fornecido é válido. Cancela o processo caso não seja.
+    if not exists_team (team_id):
+        print(COLS[2] + f'Authentication.Register -- Erro: Time de id {team_id} não existe' + COLS[0])
         return
 
-    # TODO: validate_role_id
-    if not exists_role(role_id):
-        print(COLS[2] + f'Authentication.Register -- Erro: função de id {role_id} não existe' + COLS[0])
+    # Verifica se a Função fornecida é válida. Cancela o processo caso não seja.
+    if not exists_role (role_id):
+        print(COLS[2] + f'Authentication.Register -- Erro: Função de id {role_id} não existe' + COLS[0])
+        return
+
+    # Gera uma senha aleatória para o Usuário
+    password = gerar_senha()
+
+    if not validate_user_password(password):
+        print(COLS[2] + f'Authentication.Register -- Erro: Senha inválida para cadastro' + COLS[0])
         return
 
     # 🤔 is this really needed?
-    user = User(name, email, group_id, team_id, role_id)
+    user = User(name, email, group_id, team_id, role_id, password)
 
     # Adiciona o usuário para a database
     add_line_csv(settings.USERS_PATH, get_user_fields(user))
@@ -54,7 +63,8 @@ def get_user_fields (user:User):
         user.email,
         get_group_name(user.group_id),
         get_team_name(user.team_id),
-        get_role_name(user.role_id)
+        get_role_name(user.role_id),
+        user.password
     ]
 
 #endregion
@@ -64,7 +74,7 @@ def get_user_fields (user:User):
 # Retorna True se o nome especificado é valido e False se não
 def validate_user_name(name:str):
 
-    # Nome fornecido é INVALIDO se descumprir pelo menos uma das seguintes condições:
+    # Nome fornecido é INVALIDO se descumprir qualquer uma das seguintes condições:
     # Numero de caracteres é maior ou igual ao minimo predefinido -> USER_NAME_MIN_MAX[0] 
     # Numero de caracteres é menor que o maximo predefinido       -> USER_NAME_MIN_MAX[1]
     if len(name) < settings.USER_NAME_MIN_MAX[0] or len(name) >= settings.USER_NAME_MIN_MAX[1]:
@@ -100,7 +110,6 @@ def validate_user_name(name:str):
     return True
 
 
-
 # Retorna True se o email especificado é valido e False se não
 def validate_user_email(email:str):
 
@@ -114,6 +123,41 @@ def validate_user_email(email:str):
     # Compara o email especificado utilizando o padrão regex e retorna o resultado
     return email_regex_pattern.match(email)
 
+
+def validate_user_password(password:str):
+
+    # Senha fornecida é INVALIDA se descumprir qualquer uma das seguintes condições:
+    # Numero de caracteres é maior ou igual ao minimo predefinido -> PASSWORD_MIN_MAX[0] 
+    # Numero de caracteres é menor que o maximo predefinido       -> PASSWORD_MIN_MAX[1]
+    if len(password) < settings.PASSWORD_MIN_MAX[0] or len(password) >= settings.PASSWORD_MIN_MAX[1]:
+        return False
+
+    # Importa a biblioteca de utilidades para strings
+    import string
+
+    # Cria 3 variaveis booleanas para as categorias: letras, digitos, caracteres especiais
+    letters, digits, punctuations = False, False, False
+
+    # Verifica cada digito da senha
+    for char in password:
+
+        # Se o caractere é letters, mude o valor da booleana para True
+        if char in string.ascii_letters:
+            print(char + " is letters")
+            letters = True
+
+        # Se o caractere é digits, mude o valor da booleana para True
+        if char in string.digits:
+            print(char + " is digits")
+            digits = True
+
+        # Se o caractere é punctuations, mude o valor da booleana para True
+        if char in string.punctuation:
+            print(char + " is punctuations")
+            punctuations = True
+
+    # Após o loop, retorna Verdadeiro caso as 3 booleanas sejam True
+    return (letters and digits and punctuations)
 
 #endregion
 

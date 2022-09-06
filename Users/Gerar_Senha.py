@@ -18,7 +18,7 @@ def gerar_senha():
     # Inicializa a string que armazenará a senha autogerada
     senha_segura = ""
 
-    # Executa um loop 'tamanho_senha' vezes
+    # Executa o próximo código 'tamanho_senha' vezes
     # Edit: 'i' (index do loop) substituido por '_' (Throw Away Variable)
     for _ in range(tamanho_senha):
 

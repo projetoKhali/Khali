@@ -17,8 +17,10 @@ class User:
     # A função do usuário no time
     role_id:int = None
 
+    password:int = None
+
     # Método construtor para criar um novo usuário
-    def __init__(self, _name:str, _email:str, _group_id:int, _team_id:int, _role_id:int):
+    def __init__(self, _name:str, _email:str, _group_id:int, _team_id:int, _role_id:int, _pw:str):
 
         # Ao criar um usuário, os parametros passados serão registrados ao valor das variáveis
         self.name       = _name
@@ -26,6 +28,7 @@ class User:
         self.group_id   = _group_id
         self.team_id    = _team_id
         self.role_id    = _role_id
+        self.password    = _pw
 
     # def __init__(self, _fields):
     #     try:
