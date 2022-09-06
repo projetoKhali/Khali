@@ -1,6 +1,7 @@
 from CSV.CSVHandler import *
 import Settings
 from Users.Authentication import *
+from Users.Gerar_Senha import gerar_senha
 from Users.Roles.Role import *
 
 # Inicializa todas as databases
@@ -15,6 +16,9 @@ def initialize_databases ():
 # !TODO!:  
 initialize_databases()
 
+print(gerar_senha())
+
+exit()
 # area de testes:
 
 # # printa a quantidade de linhas na database de usuarios
