@@ -13,6 +13,11 @@ from .Roles.Role import *
 # TODO: global current_user
 
 # TODO: Login method
+def login (email, senha=0):
+    a = find_data_csv(settings.USERS_PATH, email)
+    #descriptografar
+    print(a["senha"])
+
 
 # Efetua o Cadastro de um novo Usuário e, se efetuado com sucesso, o armazena na database .csv
 def register (name, email, group_id, team_id, role_id):
