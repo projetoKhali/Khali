@@ -64,7 +64,7 @@ def register (name, email, group_id, team_id, role_id):
     # Gera um Hash da senha utilizando 'hashpw' com a senha codificada e um 'salt' gerado com o bcrypt
     hashed_password = bcrypt.hashpw(encoded_password, bcrypt.gensalt())
 
-    # 🤔 is this really needed?                     !! decodifica a senha antes de salvar: remove b' e ' da string !! 
+    # Cria o Usuário com as informações especificadas        !! decodifica senha antes de salvar: remove b' e ' da string !! 
     user = User(name, email, group_id, team_id, role_id, hashed_password.decode('utf-8'))
 
     # Adiciona o usuário para a database

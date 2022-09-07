@@ -3,12 +3,6 @@ import Settings
 from Users.Authentication import *
 from Users.Roles.Role import *
 
-
-login("develano")
-
-exit()
-
-
 # Inicializa todas as databases
 def initialize_databases ():
     initialize_csv(Settings.USERS_PATH)
@@ -17,12 +11,22 @@ def initialize_databases ():
 
 # !TODO!: Limpa as databases toda vez que o programa for executado
 # !TODO!: 'Inicialize_databases' deverá ser executado APENAS na primeira execução do programa
+
+
 initialize_databases()
 
-create_group("group")
-create_team("team", 0)
 
-register("teste", "teste@teste.teste", 0, 0, 0)
+# cria grupo e time do develano
+create_group("Grupo do Develano")
+create_team("Time do Develano", 0)
+
+# cadastra o develano
+register("develano", "dev.lano@dev.lano", 0, 0, 0)
+
+# faz login com o develano
+login("develano")
+
+exit()
 
 exit()
 
