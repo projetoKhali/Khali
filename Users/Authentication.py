@@ -45,15 +45,25 @@ def register (name, email, group_id, team_id, role_id):
     # Gera uma senha aleatória para o Usuário
     password = gerar_senha()
 
+    # Verifica se a Senha fornecida é válida. TODO: gerar outra caso invalida
     if not validate_user_password(password):
         print(COLS[2] + f'Authentication.Register -- Erro: Senha inválida para cadastro' + COLS[0])
         return
 
-    # 🤔 is this really needed?
-    user = User(name, email, group_id, team_id, role_id, password)
+    # Importa bcrypt para criptografar a senha
+    import bcrypt
+
+    # Codifica a senha para utf-8: b'senha'
+    encoded_password = password.encode('utf-8')
+
+    # Gera um Hash da senha utilizando 'hashpw' com a senha codificada e um 'salt' gerado com o bcrypt
+    hashed_password = bcrypt.hashpw(encoded_password, bcrypt.gensalt())
+
+    # 🤔 is this really needed?                     !! decodifica a senha antes de salvar: remove b' e ' da string !! 
+    user = User(name, email, group_id, team_id, role_id, hashed_password.decode('utf-8'))
 
     # Adiciona o usuário para a database
-    add_line_csv(settings.USERS_PATH, get_user_fields(user))
+    add_unique_csv_autoid(settings.USERS_PATH, get_user_fields(user))
 
 
 # Retorna uma lista com as informações de um Usuário

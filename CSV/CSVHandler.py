@@ -59,12 +59,12 @@ def find_data_by_id_csv (path:str, key:str):
         line_values = line.strip('\n').split(',')
 
         try:
-            line_key = int(line_values[0])
+            line_key = line_values[0]
         except:
             continue
 
         # Se a linha atual contem a chave fornecida
-        if line_key == int(key):
+        if line_key == str(key):
 
             # Retorna a linha formatada para dicionario
             return format_line_csv(lines[0].strip('\n').split(','), line)

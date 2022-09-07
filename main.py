@@ -1,8 +1,8 @@
 from CSV.CSVHandler import *
 import Settings
 from Users.Authentication import *
-from Users.Gerar_Senha import gerar_senha
 from Users.Roles.Role import *
+
 
 # Inicializa todas as databases
 def initialize_databases ():
@@ -11,10 +11,13 @@ def initialize_databases ():
     initialize_csv(Settings.TEAMS_PATH)
 
 # !TODO!: Limpa as databases toda vez que o programa for executado
-# !TODO!:  
-# !TODO!: remover essa linha antes da entrega 
-# !TODO!:  
+# !TODO!: 'Inicialize_databases' deverá ser executado APENAS na primeira execução do programa
 initialize_databases()
+
+create_group("group")
+create_team("team", 0)
+
+register("teste", "teste@teste.teste", 0, 0, 0)
 
 # area de testes:
 
