@@ -19,6 +19,8 @@ create_team("team", 0)
 
 register("teste", "teste@teste.teste", 0, 0, 0)
 
+exit()
+
 # area de testes:
 
 # # printa a quantidade de linhas na database de usuarios
