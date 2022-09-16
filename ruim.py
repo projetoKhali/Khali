@@ -1,6 +1,4 @@
-from ast import Pass
 from tkinter import *
-from warnings import catch_warnings
 
 # cores
 co0 = "#FAE8E8" #rosa
@@ -43,69 +41,96 @@ def entry_sprint():
     except:
         return
     # frame_sprint = criar_frame(janela, valor, 4, 3, 2)
-    frame_sprint = criar_frame(janela, valor, 3)
+    frame_sprint = criar_frame(frame_section0, valor, 0)
     for i in range(valor):
         criar_label(frame_sprint, f"Sprint {i+1}", "Calibri, 10", i, 0)
-        criar_label(frame_sprint, "Data de início", "Calibri, 10", i, 1)
+        criar_label(frame_sprint, "Início", "Calibri, 10", i, 1)
         criar_entry(frame_sprint, "Calibri, 10", i, 2)
-        criar_label(frame_sprint, "Data final", "Calibri, 10", i, 3)
+        criar_label(frame_sprint, "Fim", "Calibri, 10", i, 3)
         criar_entry(frame_sprint, "Calibri, 10", i, 4)
         criar_label(frame_sprint, "Dias para avaliação", "Calibri, 10", i, 5)
         criar_entry(frame_sprint, "Calibri, 10", i, 6)
 
 def entry_times():
     valor = int(en_numtimes.get())
-    frame_parent_times = criar_frame(frame_times, 2, 0)
     for i in range(valor):
         row = i
         frame_time = criar_frame(frame_parent_times, row, 0)
-        criar_label(frame_time, f"Time {i+1}", "Calibri, 10", row, 0)
-        criar_label(frame_time, "Quantidade de alunos", "Calibri, 10", row, 1)
-        criar_entry(frame_time, "Calibri, 10", row, 2)
-        # lista.append(criar_button(frame_time, "Cadastrar", "Calibri, 10", i, 3, command = entry_alunos(en_numalunos)))
         lista_frame_time.append(frame_time)
-        criar_button(frame_time, "Cadastrar", "Calibri, 10", row, 3, command = entry_alunos)
+
+        frame_time_data = criar_frame(frame_time, 0, 0)
+        criar_label(frame_time_data, f"Time {i+1}", "Calibri, 10", row, 0)
+        criar_label(frame_time_data, "Quantidade de alunos", "Calibri, 10", row, 1)
+        criar_entry(frame_time_data, "Calibri, 10", row, 2)
+        # lista.append(criar_button(frame_time_data, "Cadastrar", "Calibri, 10", i, 3, command = entry_alunos(en_numalunos)))
+        criar_button(frame_time_data, "Cadastrar", "Calibri, 10", row, 3, command = entry_alunos)
 
 def entry_alunos():
-    print("chegamos na função entry_alunos")
-    print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+
+    # acessa a lista global de frames de time
     global lista_frame_time
+
+    # pra cada frame_time da lista
     for ft_index, frame_time in enumerate(lista_frame_time):
-        en_numalunos = frame_time.children['!entry']
+
+        # 1) criar ou acessar o frame_parent_aluno caso já exista.
+        # caso exista: deleta o frame_parent_aluno
+        # caso não exista: continua com a execução do código
+
+        # tenta executar o proximo código
+        try:
+
+            # acessa o child de index 1 (frame_parent_aluno) no frame_time
+            frame_parent_aluno = frame_time.winfo_children()[1]
+            print(f"frame_parent_aluno já existe: {frame_parent_aluno}")
+
+            # deleta o frame
+            frame_parent_aluno.destroy()
+
+        # caso não encontre o frame_parent_aluno dentro do frame_time:
+        # frame_parent_aluno não existe
+        except:
+            print("frame_parent_aluno doesn't exist")
+
+        # 2) após assegurar que não exista um frame_parent_aluno nesse frame_time,
+        # define o numero de alunos a serem registrados no time 
+        # e cria um formulario de cadastro para cada
+
+        # inicializa a variavel que armazena o numero de alunos desejado
         num_alunos = 0
+
+        # tenta acessar a entry que contem o numero de alunos fornecido
+        try:
+            en_numalunos = frame_time.winfo_children()[0].children['!entry']
+        except:
+            print("entry not found")
+
+        # tenta passar o valor na entry en_numalunos para a variavel num_alunos
         try:
             num_alunos = int(en_numalunos.get())
-            print(num_alunos)
+            print(f'en_numalunos:  OK  | {num_alunos}')
+
+        # em caso de erro, mantenha num_alunos em 0 (previamente inicializado)
         except:
-            print(f'en_numalunos nulo: {num_alunos}')
+            print(f'en_numalunos: NULO | {num_alunos}')
 
-        try:
-            frame_parent_aluno = frame_time.children['!frame']
-            print(f"frame_parent_aluno já existe: {frame_parent_aluno}")
-            frame_parent_aluno.configure(background='#ffff00')
+        # se nenhum aluno for cadastrado nesse time,
+        # significa que não há mais nenhum passo a ser executado para o frame_time atual, continue o loop 
+        if num_alunos < 1:
+            continue 
 
-            lista_label_aluno = frame_parent_aluno.winfo_children()
+        # pelo menos 1 aluno será cadastrado, crie o frame_parent_aluno para armazenar o formulario
+        frame_parent_aluno = criar_frame(frame_time, ft_index + 1, 0)
 
-            print(f'children: {lista_label_aluno}')
+        # para cada aluno, cria um formulário de cadastro
+        for i in range(num_alunos):
+            criar_formulario_aluno(frame_parent_aluno, i)
 
-            for label_aluno in lista_label_aluno:
-                label_aluno.configure(background='#ff0000', height=0)            
-                label_aluno.destroy()
-                label_aluno.grid_forget()
-                print(f'children: {lista_label_aluno}')
-                # del label_aluno
-            frame_parent_aluno.forget()
-        except:
-            Pass
-
-        if num_alunos > 0:
-            frame_parent_aluno = criar_frame(frame_time, ft_index + 1, 0)
-            for i in range(num_alunos):
-                criar_label(frame_parent_aluno, "teste", "Calibri, 10", i, 0)
-        # else:
-        #     frame_parent_aluno.destroy()
-    print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-    print("fim da função entry_alunos")
+def criar_formulario_aluno (frame_parent_aluno, index):
+    criar_label(frame_parent_aluno, "Nome", "Calibri, 10", index, 0)
+    criar_entry(frame_parent_aluno, "Calibri, 10", index, 1)
+    criar_label(frame_parent_aluno, "E-Mail", "Calibri, 10", index, 2)
+    criar_entry(frame_parent_aluno, "Calibri, 10", index, 3)
 
 
 # criando a janela
@@ -123,20 +148,42 @@ lista_frame_time = []
 
 criar_label(janela, "Cadastro", "Calibri, 14", 0, 0)
 
-# coloca os widgets no frame de sprints
-frame_sprints = criar_frame(janela, 1, 0)
+# HIERARQUIA:
+#
+# janela
+#   label                               # contém o titulo "Cadastro"
+#   frame_section0                      # separa a primeira seção da janela
+#       frame_sprints                   # contem o cabeçalho do cadastro de sprints
+#       frame_parent_sprints            # contem cada frame_sprint
+#           frame_sprint                # um frame_sprint para cada
+#           ...
+#   frame_section1                      # separa a segunda seção da janela
+#       frame_times                     # contem o cabeçalho do cacdastro de times
+#       frame_parent_times              # contem cada frame_time
+#           frame_time                  # um frame_time para cada time
+#           ...
+
+
+
+
+# cria a seção de sprints
+frame_section0 = criar_frame(janela, 1, 0)
+frame_sprints = criar_frame(frame_section0, 0, 0)
 criar_label(frame_sprints, "Sprints", "Calibri, 12", 0, 0)
 criar_label(frame_sprints, "Número de Sprints", "Calibri, 10", 1, 0)
 en_numsprints = criar_entry(frame_sprints, "Calibri, 10", 1, 1)
 criar_button(frame_sprints, "Cadastrar", "Calibri, 10", 1, 2, command = entry_sprint)
+frame_parent_sprints = criar_frame(frame_section0, 2, 0)
 
 
-# coloca os widgets no frame de times
-frame_times = criar_frame(janela, 2, 0)
+# cria a seção de times
+frame_section1 = criar_frame(janela, 2, 0)
+frame_times = criar_frame(frame_section1, 0, 0)
 criar_label(frame_times, "Times", "Calibri, 12", 0, 0)
 criar_label(frame_times, "Quantidade de Times", "Calibri, 10", 1, 0)
 en_numtimes = criar_entry(frame_times, "Calibri, 10", 1, 1)
 criar_button(frame_times, "Cadastrar", "Calibri, 10", 1, 2, command = entry_times)
+frame_parent_times = criar_frame(frame_section1, 2, 0)
 
 
 
