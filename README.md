@@ -9,7 +9,9 @@
       * [Requisitos Não Funcionais](#Requisitos-Não-Funcionais)
       * [Tríade da API](#Tríade-da-API)
       * [Prazos](#Prazos)
-  * [Desenvolvimento do Produto](#
+  * [Desenvolvimento do Produto](#User-Story)
+     * [Backlog](#Backlog)
+      * [Sprint 1](#SPRINT-1)
       * [Wireframe do Produto](#Descrição-doProduto)
 
 
@@ -106,8 +108,8 @@
 (DESEJAVÉL)
 
 
-### Backlog do Produto
-#### Sprint 1
+### Backlog
+#### SPRINT 1
 > Criação do sistema de usuário
 * Criação do usuario administrador
 * Sistema de cadastramento de usuario po parte do administrador 
