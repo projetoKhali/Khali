@@ -2,7 +2,7 @@
 ##
 ## Súmario
   * [Descrição do Projeto](#Descrição-do-Projeto)
-     * [Desafio Proposto] (#Desafio-Proposto)
+     * [Desafio Proposto](#Desafio-Proposto)
      * 
 ## Descrição do Projeto
 > Desenvolvimento de uma solução computacional que exercite a capacidade de pesquisa e autodidaxia dos integrantes dos grupos, no que tange:
