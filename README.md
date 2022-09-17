@@ -107,29 +107,19 @@
 
 
 ### Backlog do Produto
-* Criação do sistema de usuários e autentificação
-* Criação do fluxograma do produto
-* Criação e configuração do Wireframe
-* Teste Sprint 1
-* Documentação do Projeto
-* Criação parcial da tela Home
-* Criação do sistema de avaliação
-* Teste Sprint 2
-* Finalização da tela Home
-* Criação e configuração do sistema de Dashboards
-* Teste Sprint 3
-* Teste do MVP
-* Refinamento do Front-end
-* Refinamento dos Dashboards
+#### Sprint 1
+> Criação do sistema de usuário
+* Criação do usuario administrador
+* Sistema de cadastramento de usuario po parte do administrador 
+* Sistema de cadastramento e configuração de sprint pelo líder do grupo
+* Sistema de cadastramento e configuração de times pelo líder do grupo
+* Sistema de cadastramento de usuarios pelo líder do grupo
+* Criação da funcionalidade de login
+* Retorno para os usuarios das sprint e usuarios que ele deve avaliar
 
-### Backlog da 1ª Sprint
-### CRIAÇÃO DO SISTEMA DE USUÁRIOS
-- [ ] Sistema de cadastramento de usuários por parte do Administrador 
-- [ ] Sistema de cadastramento de usuários por parte do Líder do Grupo
-- [ ] Criação da funcionalidade de login
-- [ ] Retorno para o usuário das Sprints e integrantes que ele deve avaliar
 
 *Wireframe disponível pelo [Figma](https://www.figma.com/file/U1apWrrVuZHbtNIumUgUoo/Api?node-id=56%3A3)*
+
 ### Fluxograma do Produto
 ![Khali](https://i.ibb.co/zZfJYtS/Fluxograma-Khali.png)
 
