@@ -128,4 +128,4 @@
 *Wireframe disponível pelo [Figma](https://www.figma.com/file/U1apWrrVuZHbtNIumUgUoo/Api?node-id=56%3A3)*
 
 ### Fluxograma do Produto
-*[Fluxograma](https://i.ibb.co/zZfJYtS/Fluxograma-Khali.png)
+> [Fluxograma](https://i.ibb.co/zZfJYtS/Fluxograma-Khali.png)
