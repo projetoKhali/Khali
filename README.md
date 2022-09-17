@@ -3,11 +3,14 @@
 ## Sumário
   * [Descrição do Projeto](#Descrição-do-Projeto)
      * [Integrantes da Equipe Khali](#Integrantes-da-Equipe-Khali)
+     * [Tecnologias Utilizadas]
   * [Desafio Proposto](#Desafio-Proposto)
+      * [Requisitos Funcionais] (#Requisitos-Funcionais)
+      * [Requisitos Não Funcionais] (#Requisitos-Não-Funcionais)
       * [Tríade da API](#Tríade-da-API)
       * [Prazos](#Prazos)
+  *
       * [Wireframe do Produto](#Descrição-doProduto)
-      * 
 
 
 
@@ -31,6 +34,17 @@
 ## Desafio Proposto
 > A instituição de ensino PBLTeX, especializada em cursos e práticas de ensino aplicando PBL (*Problem Based Learning*) desenvolveu uma dinâmica de **Avaliação Democratizada** baseada na técnica de Avaliação 360°, porém incluindo uma avaliação técnica adicional feita pelo Líder do Grupo e uma avaliação de produto/negócio realizada pelo Fake Client, papel desempenhado por outro instrutor da instituição.
 > O desafio do grupo é apoiar a PBLTeX a levantar, especificar e desenvolver uma solução computacional que viabilize a aplicação dessa técnica. 
+> 
+### Requisitos Funcionais
+* Possibilitar autoavaliação e avaliação dos demais integrantes do Time de forma individualizada;
+* Possibilitar que o Líder do Grupo avalie o Líder Técnico do Time e o *Fake Client* avalie o aluno PO do Time;
+* Prover um ou mais Dashboards de acompanhamento.
+
+### Requisitos Não Funcionais
+* Linguagem de programação Python;
+* Uso de base de dados simples, como Text, CSV e ZODB;
+* Uso de sistema de controle de versão de código (Git)
+* Documentações
 
 ### Tríade da API
 * Algoritmos - *Prof. Lucas Gonçalves Nadalete*
@@ -51,17 +65,6 @@
 *Wireframe disponível pelo [Figma](https://www.figma.com/file/U1apWrrVuZHbtNIumUgUoo/Api?node-id=56%3A3)*
 
 ##
-## Requisitos Funcionais
-* Possibilitar autoavaliação e avaliação dos demais integrantes do Time de forma individualizada;
-* Possibilitar que o Líder do Grupo avalie o Líder Técnico do Time e o *Fake Client* avalie o aluno PO do Time;
-* Prover um ou mais Dashboards de acompanhamento.
-
-### Requisitos Não Funcionais
-* Linguagem de programação Python;
-* Uso de base de dados simples, como Text, CSV e ZODB;
-* Uso de sistema de controle de versão de código (Git)
-* Documentações
-
 ### Backlog do Produto
 * Criação do sistema de usuários e autentificação
 * Criação do fluxograma do produto
@@ -88,6 +91,3 @@
 ### Fluxograma do Produto
 ![Khali](https://i.ibb.co/zZfJYtS/Fluxograma-Khali.png)
 
-
-### Tecnologias Utilizadas
-##
