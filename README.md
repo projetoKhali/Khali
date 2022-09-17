@@ -25,14 +25,14 @@
 
 ## Descrição do Projeto
 * Objetivo:
-> Criar uma plataforma de avaliação para um time em treinamento utilizando o método de avaliação 360º, onde ao final de cada sprint os usuarios ralizarão uma bateria de avalições de acordo com a sua função.
+Atender a necessidade da instituição fictícia e desenvolver uma solução computacional que exercite a capacidade de pesquisa e autodidaxia dos integrantes dos grupos, no que tange:
+* A aplicação de técnicas de programação para a construção de algoritmos
+* O uso de uma ferramenta que possibilite um Ambiente de Desenvolvimento Integrado (IDE) para o desenvolvimento da solução computacional
+* O aprendizado e aplicação de uma ou mais linguagens de programação para concepção do projeto
+* O exercício do compromisso, responsabilidade e trabalho em equipe dos membros do Time
 
 * Tema: 
-> Desenvolvimento de uma solução computacional que exercite a capacidade de pesquisa e autodidaxia dos integrantes dos grupos, no que tange:
-> * A aplicação de técnicas de programação para a construção de algoritmos
-> * O uso de uma ferramenta que possibilite um Ambiente de Desenvolvimento Integrado (IDE) para o desenvolvimento da solução computacional
-> * O aprendizado e aplicação de uma ou mais linguagens de programação para concepção do projeto
-> * O exercício do compromisso, responsabilidade e trabalho em equipe dos membros do Time
+>  Desenvolvimento de uma solução computacional que viabilize a aplicação da técnica de Avaliação 360° e a análise dos dados obtidos pelos alunos e instrutores da instituição de ensino PBLTeX, especializada em cursos e práticas de ensino aplicando PBL (Problem Based Learning)
 
 ### Integrantes da Equipe Khali
 * Jhonatan Oliveira Lopes [GitHub](https://github.com/JhonatanLop)
