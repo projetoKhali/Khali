@@ -1,5 +1,9 @@
 # API 1º Semestre - Tecnologia em Banco de Dados 2022
 ##
+## Súmario
+  * [Descrição do Projeto](##Descrição-do-Projeto)
+     * [Desafio Proposto (##Desafio-Proposto)
+     * 
 ## Descrição do Projeto
 > Desenvolvimento de uma solução computacional que exercite a capacidade de pesquisa e autodidaxia dos integrantes dos grupos, no que tange:
 > * A aplicação de técnicas de programação para a construção de algoritmos
@@ -11,8 +15,6 @@
 > A instituição de ensino PBLTeX, especializada em cursos e práticas de ensino aplicando PBL (*Problem Based Learning*) desenvolveu uma dinâmica de **Avaliação Democratizada** baseada na técnica de Avaliação 360°, porém incluindo uma avaliação técnica adicional feita pelo Líder do Grupo e uma avaliação de produto/negócio realizada pelo Fake Client, papel desempenhado por outro instrutor da instituição.
 > O desafio do grupo é apoiar a PBLTeX a levantar, especificar e desenvolver uma solução computacional que viabilize a aplicação dessa técnica. 
 ##
-##Súmario
-  * [Descrição do Projeto](##Descrição-do-Projeto)
   
 ## Integrantes da Equipe Khali
 * Jhonatan Oliveira Lopes [GitHub](https://github.com/JhonatanLop)
