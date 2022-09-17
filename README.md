@@ -3,10 +3,10 @@
 ## Sumário
   * [Descrição do Projeto](#Descrição-do-Projeto)
      * [Integrantes da Equipe Khali](#Integrantes-da-Equipe-Khali)
-     * [Desafio Proposto](#Desafio-Proposto)
+  * [Desafio Proposto](#Desafio-Proposto)
       * [Tríade da API](#Tríade-da-API)
       * [Prazos](#Prazos)
-      * [Wireframe do Produto](#Descrição do Produto)
+      * [Wireframe do Produto](#Descrição-doProduto)
       * 
 
 
