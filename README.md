@@ -1,4 +1,19 @@
 # API 1º Semestre - Tecnologia em Banco de Dados 2022
+##
+## Descrição do Projeto
+> Desenvolvimento de uma solução computacional que exercite a capacidade de pesquisa e autodidaxia dos integrantes dos grupos, no que tange:
+> * A aplicação de técnicas de programação para a construção de algoritmos
+> * O uso de uma ferramenta que possibilite um Ambiente de Desenvolvimento Integrado (IDE) para o desenvolvimento da solução computacional
+> * O aprendizado e aplicação de uma ou mais linguagens de programação para concepção do projeto
+> * O exercício do compromisso, responsabilidade e trabalho em equipe dos membros do Time
+
+## Desafio Proposto
+> A instituição de ensino PBLTeX, especializada em cursos e práticas de ensino aplicando PBL (*Problem Based Learning*) desenvolveu uma dinâmica de **Avaliação Democratizada** baseada na técnica de Avaliação 360°, porém incluindo uma avaliação técnica adicional feita pelo Líder do Grupo e uma avaliação de produto/negócio realizada pelo Fake Client, papel desempenhado por outro instrutor da instituição.
+> O desafio do grupo é apoiar a PBLTeX a levantar, especificar e desenvolver uma solução computacional que viabilize a aplicação dessa técnica. 
+##
+##Súmario
+  * [Descrição do Projeto](#Descrição do Projeto)
+  
 ## Integrantes da Equipe Khali
 * Jhonatan Oliveira Lopes [GitHub](https://github.com/JhonatanLop)
 * Marcos Vinicius Malaquias [GitHub](https://github.com/Incivius)
@@ -71,7 +86,6 @@
 ### Fluxograma do Produto
 ![Khali](https://i.ibb.co/zZfJYtS/Fluxograma-Khali.png)
 
-### Burndown 1º Sprint
 
 ### Tecnologias Utilizadas
 ##
