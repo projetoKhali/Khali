@@ -12,10 +12,11 @@
       * [Prazos](#Prazos)
      
   * [Desenvolvimento do Produto](#User-Story)
+     * [User Story](#User-Story)
      * [Fluxograma do produto](*Fluxograma-do-Produto)
      * [Wireframe do Produto](#Descrição-doProduto)
      * [Backlog](#Backlog)
-      * [Sprint 1](#SPRINT-1)
+         * [Sprint 1](#SPRINT-1)
       
 
 
