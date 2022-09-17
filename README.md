@@ -13,7 +13,7 @@
      
   * [Desenvolvimento do Produto](#User-Story)
      * [User Story](#User-Story)
-     * [Fluxograma do produto](*Fluxograma-do-Produto)
+     * [Fluxograma do produto](#Fluxograma-do-Produto)
      * [Wireframe do Produto](#Descrição-doProduto)
      * [Backlog](#Backlog)
          > [Sprint 1](#SPRINT-1)
@@ -113,7 +113,8 @@
 (DESEJAVÉL)
 
 ### Fluxograma do Produto
-> [Fluxograma](https://i.ibb.co/zZfJYtS/Fluxograma-Khali.png)
+> *[Fluxograma](https://i.ibb.co/zZfJYtS/Fluxograma-Khali.png)*
+
 
 ### Wireframe do produto
 > *Wireframe disponível pelo [Figma](https://www.figma.com/file/U1apWrrVuZHbtNIumUgUoo/Api?node-id=56%3A3)*
