@@ -4,11 +4,13 @@
   * [Descrição do Projeto](#Descrição-do-Projeto)
      * [Integrantes da Equipe Khali](#Integrantes-da-Equipe-Khali)
      * [Tecnologias Utilizadas](#Tecnologias-Utilizadas)
+     
   * [Desafio Proposto](#Desafio-Proposto)
       * [Requisitos Funcionais](#Requisitos-Funcionais)
       * [Requisitos Não Funcionais](#Requisitos-Não-Funcionais)
       * [Tríade da API](#Tríade-da-API)
       * [Prazos](#Prazos)
+     
   * [Desenvolvimento do Produto](#User-Story)
      * [Fluxograma do produto](*Fluxograma-do-Produto)
      * [Wireframe do Produto](#Descrição-doProduto)
