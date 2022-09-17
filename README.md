@@ -24,6 +24,10 @@
 ##
 
 ## Descrição do Projeto
+* Objetivo:
+> Criar uma plataforma de avaliação para um time em treinamento utilizando o método de avaliação 360º, onde ao final de cada sprint os usuarios ralizarão uma bateria de avalições de acordo com a sua função.
+
+* Tema: 
 > Desenvolvimento de uma solução computacional que exercite a capacidade de pesquisa e autodidaxia dos integrantes dos grupos, no que tange:
 > * A aplicação de técnicas de programação para a construção de algoritmos
 > * O uso de uma ferramenta que possibilite um Ambiente de Desenvolvimento Integrado (IDE) para o desenvolvimento da solução computacional
