@@ -12,7 +12,7 @@
 > O desafio do grupo é apoiar a PBLTeX a levantar, especificar e desenvolver uma solução computacional que viabilize a aplicação dessa técnica. 
 ##
 ##Súmario
-  * [Descrição do Projeto](##Descrição do Projeto)
+  * [Descrição do Projeto](##Descrição-do-Projeto)
   
 ## Integrantes da Equipe Khali
 * Jhonatan Oliveira Lopes [GitHub](https://github.com/JhonatanLop)
