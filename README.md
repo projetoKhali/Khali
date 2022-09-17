@@ -1,6 +1,6 @@
 # API 1º Semestre - Tecnologia em Banco de Dados 2022
 ##
-## Súmario
+## Sumário
   * [Descrição do Projeto](#Descrição-do-Projeto)
      * [Desafio Proposto](#Desafio-Proposto)
      * 
