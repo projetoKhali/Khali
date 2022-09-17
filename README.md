@@ -68,17 +68,42 @@
 
 ##
 ## Desenvolvimento do Produto
+
 ### User Story
 * Como administrador da instituição preciso cadastrar os líderes dos grupos para que eles possam fazer login. 
-ESSENCIAL - SPRINT 1
+(ESSENCIAL)
 * Como líder do grupo preciso criar times para realizar o cadastro de usuários 
-ESSENCIAL – SPRINT 1
+(ESSENCIAL)
 * Como líder do grupo preciso cadastrar usuários dentro de um time para que os usuários possam fazer login
-ESSENCIAL – SPRINT 1
+(ESSENCIAL)
 * Como líder do grupo preciso definir as funções de um usuário dentro de um time que será utilizado como base para suas respectivas permissões 
-ESSENCIAL – SPRINT 1
+(ESSENCIAL)
 * Como líder do grupo preciso criar um cronograma de sprints dentro do meu grupo que será a base para o start das baterias de avaliações
-ESSENCIAL – SPRINT 1
+(ESSENCIAL)
+* Como líder do grupo avaliarei os líderes técnicos do meu grupo conforme requisito funcional
+(ESSENCIAL)
+* Como fake client avaliarei todos os PO do meu grupo conforme requisito funcional
+(ESSENCIAL)
+* Como PO avaliarei os líderes técnico, estudantes do meu time e a mim mesmo como requisito funcional 
+(ESSENCIAL)
+* Como líder técnico avaliarei o PO do meu time, estudantes do meu time e a mim mesmo como requisito funcional 
+(ESSENCIAL)
+* Como estudante avaliarei o PO do meu time, líder técnico do time, estudantes do meu time e a mim mesmo como requisito funcional
+(ESSENCIAL)
+* Como administrado da instituição preciso ter acesso a um dashboard de acompanhamento do desempenho dos grupos
+(IMPORTANTE)
+* Como líder do grupo terei acesso a um dashboard de desempenho do meu grupo para que possa acompanhar o desempenho dele
+(IMPORTANTE)
+* Como fake client terei acesso a todos os dashboard de rendimento do meu grupo para que possa acompanhar o desempenho deles
+(IMPORTANTE)
+* Como PO terei acesso ao meu dashboard individual e os dashboard de rendimento do meu time para realizar os acompanhamentos do desempenho do meu time
+(IMPORTANTE)
+* Como líder técnico terei acesso ao meu dashboard individual e os dashboard de rendimento do meu time para realizar os acompanhamentos do desempenho do meu time
+(IMPORTANTE)
+* Como estudante terei acesso ao meu dashboard individual para acompanhar o meu desempenho
+(IMPORTANTE)
+* Como líder do grupo terei a funcionalidade de desativar usuários e times para possíveis desligamentos ou finalização do projeto
+(DESEJAVÉL)
 
 
 ### Backlog do Produto
