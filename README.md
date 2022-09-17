@@ -112,6 +112,11 @@
 * Como líder do grupo terei a funcionalidade de desativar usuários e times para possíveis desligamentos ou finalização do projeto
 (DESEJAVÉL)
 
+### Fluxograma do Produto
+> [Fluxograma](https://i.ibb.co/zZfJYtS/Fluxograma-Khali.png)
+
+### Wireframe do produto
+> *Wireframe disponível pelo [Figma](https://www.figma.com/file/U1apWrrVuZHbtNIumUgUoo/Api?node-id=56%3A3)*
 
 ### Backlog
 #### SPRINT 1
@@ -123,9 +128,3 @@
 * Sistema de cadastramento de usuarios pelo líder do grupo
 * Criação da funcionalidade de login
 * Retorno para os usuarios das sprint e usuarios que ele deve avaliar
-
-
-*Wireframe disponível pelo [Figma](https://www.figma.com/file/U1apWrrVuZHbtNIumUgUoo/Api?node-id=56%3A3)*
-
-### Fluxograma do Produto
-> [Fluxograma](https://i.ibb.co/zZfJYtS/Fluxograma-Khali.png)
