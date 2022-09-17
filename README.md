@@ -5,8 +5,8 @@
      * [Integrantes da Equipe Khali](#Integrantes-da-Equipe-Khali)
      * [Tecnologias Utilizadas]
   * [Desafio Proposto](#Desafio-Proposto)
-      * [Requisitos Funcionais] (#Requisitos-Funcionais)
-      * [Requisitos Não Funcionais] (#Requisitos-Não-Funcionais)
+      * [Requisitos Funcionais](#Requisitos-Funcionais)
+      * [Requisitos Não Funcionais](#Requisitos-Não-Funcionais)
       * [Tríade da API](#Tríade-da-API)
       * [Prazos](#Prazos)
   *
