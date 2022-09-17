@@ -120,8 +120,8 @@
 > *Wireframe disponível pelo [Figma](https://www.figma.com/file/U1apWrrVuZHbtNIumUgUoo/Api?node-id=56%3A3)*
 
 ### Backlog
-#### > SPRINT 1
-> Criação do sistema de usuário
+> *SPRINT 1*
+ > Criação do sistema de usuário
 * Criação do usuario administrador
 * Sistema de cadastramento de usuario po parte do administrador 
 * Sistema de cadastramento e configuração de sprint pelo líder do grupo
