@@ -12,9 +12,7 @@ def initialize_databases ():
 # !TODO!: Limpa as databases toda vez que o programa for executado
 # !TODO!: 'Inicialize_databases' deverá ser executado APENAS na primeira execução do programa
 
-
 initialize_databases()
-
 
 # cria grupo e time do develano
 create_group("Grupo do Develano")
@@ -25,8 +23,6 @@ register("develano", "dev.lano@dev.lano", 0, 0, 0)
 
 # faz login com o develano
 login("develano", input("texto"))
-
-exit()
 
 exit()
 

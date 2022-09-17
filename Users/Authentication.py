@@ -13,11 +13,11 @@ from .Roles.Role import *
 
 # TODO: global current_user
 
-# TODO: Login method
+# Verificação de senha na base de dados e autenticação
 def login (email, senha):
     a = find_data_csv(settings.USERS_PATH, email)["password"]
-    #descriptografar
     import bcrypt
+    # autenticação de dados
     if not bcrypt.checkpw(senha.encode(), a.encode()):
         print("dado inválido")
         return
@@ -52,8 +52,9 @@ def register (name, email, group_id, team_id, role_id):
         print(COLS[2] + f'Authentication.Register -- Erro: Função de id {role_id} não existe' + COLS[0])
         return
 
-    # Gera uma senha aleatória para o Usuário
+    # Inicializa variável senha para armazenamento
     password = None
+    # Atualiza a senha toda vez que uma senha gerada é inválida
     while not validate_user_password(password):
         password = gerar_senha()
     print (password)
