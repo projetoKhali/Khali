@@ -3,13 +3,13 @@
 ## Sumário
   * [Descrição do Projeto](#Descrição-do-Projeto)
      * [Integrantes da Equipe Khali](#Integrantes-da-Equipe-Khali)
-     * [Tecnologias Utilizadas]
+     * [Tecnologias Utilizadas](#Tecnologias-Utilizadas)
   * [Desafio Proposto](#Desafio-Proposto)
       * [Requisitos Funcionais](#Requisitos-Funcionais)
       * [Requisitos Não Funcionais](#Requisitos-Não-Funcionais)
       * [Tríade da API](#Tríade-da-API)
       * [Prazos](#Prazos)
-  *
+  * [Desenvolvimento do Produto](#
       * [Wireframe do Produto](#Descrição-doProduto)
 
 
@@ -29,8 +29,13 @@
 * Naira Giulia Pereira Maximo dos Santos - [GitHub](http://github.com/naira-maximo)
 * Paulo Granthon - [GitHub](https://github.com/paulo-granthon)
 * Tânia de Oliveira Cruz [GitHub](https://github.com/taniacruzz)
-##
 
+### Tecnologias Utilizadas
+* Linguagens: Python e HTML
+* Base de Dados: Csv
+* Plataformas: Figma, asana e youtube
+
+##
 ## Desafio Proposto
 > A instituição de ensino PBLTeX, especializada em cursos e práticas de ensino aplicando PBL (*Problem Based Learning*) desenvolveu uma dinâmica de **Avaliação Democratizada** baseada na técnica de Avaliação 360°, porém incluindo uma avaliação técnica adicional feita pelo Líder do Grupo e uma avaliação de produto/negócio realizada pelo Fake Client, papel desempenhado por outro instrutor da instituição.
 > O desafio do grupo é apoiar a PBLTeX a levantar, especificar e desenvolver uma solução computacional que viabilize a aplicação dessa técnica. 
@@ -61,10 +66,21 @@
 > - [ ] 07/11 a 27/11 - *Quarta Sprint*
 > - [ ] 08/12 - *Feira de Soluções e Apresentação Final API*
 
-### Descrição do Produto
-*Wireframe disponível pelo [Figma](https://www.figma.com/file/U1apWrrVuZHbtNIumUgUoo/Api?node-id=56%3A3)*
-
 ##
+## Desenvolvimento do Produto
+### User Story
+* Como administrador da instituição preciso cadastrar os líderes dos grupos para que eles possam fazer login. 
+ESSENCIAL - SPRINT 1
+* Como líder do grupo preciso criar times para realizar o cadastro de usuários 
+ESSENCIAL – SPRINT 1
+* Como líder do grupo preciso cadastrar usuários dentro de um time para que os usuários possam fazer login
+ESSENCIAL – SPRINT 1
+* Como líder do grupo preciso definir as funções de um usuário dentro de um time que será utilizado como base para suas respectivas permissões 
+ESSENCIAL – SPRINT 1
+* Como líder do grupo preciso criar um cronograma de sprints dentro do meu grupo que será a base para o start das baterias de avaliações
+ESSENCIAL – SPRINT 1
+
+
 ### Backlog do Produto
 * Criação do sistema de usuários e autentificação
 * Criação do fluxograma do produto
@@ -88,6 +104,7 @@
 - [ ] Criação da funcionalidade de login
 - [ ] Retorno para o usuário das Sprints e integrantes que ele deve avaliar
 
+*Wireframe disponível pelo [Figma](https://www.figma.com/file/U1apWrrVuZHbtNIumUgUoo/Api?node-id=56%3A3)*
 ### Fluxograma do Produto
 ![Khali](https://i.ibb.co/zZfJYtS/Fluxograma-Khali.png)
 
