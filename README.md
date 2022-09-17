@@ -10,9 +10,11 @@
       * [Tríade da API](#Tríade-da-API)
       * [Prazos](#Prazos)
   * [Desenvolvimento do Produto](#User-Story)
+     * [Fluxograma do produto](*Fluxograma-do-Produto)
+     * [Wireframe do Produto](#Descrição-doProduto)
      * [Backlog](#Backlog)
       * [Sprint 1](#SPRINT-1)
-      * [Wireframe do Produto](#Descrição-doProduto)
+      
 
 
 
@@ -124,4 +126,3 @@
 
 ### Fluxograma do Produto
 ![Khali](https://i.ibb.co/zZfJYtS/Fluxograma-Khali.png)
-
