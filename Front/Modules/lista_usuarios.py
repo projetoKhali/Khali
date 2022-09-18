@@ -9,17 +9,12 @@ co1 = "#D9D9D9"  # cinza
 co2 = "#1A1D1A"  # preta
 
 
-def run(email):
+def run(frame_parent):
     # cria a janela
-    janela = Tk()
-    janela.title('')
-    janela.geometry('1300x670')  # tamanho da tela, largura x altura
-    # tentativa de dar numero de linhas e colunas para a tabela. Se deixo ativado, os labels ficam espalhados pela tela.
-    janela.rowconfigure([0,1], weight = 1, minsize=30)
-    janela.columnconfigure([0,1], weight = 1, minsize=30)
-    janela.configure(background=co0)
+    module_frame = Frame(frame_parent, background=co0)
 
-    users = lista_usuarios_back.get_users(email)
+    from Users.Authentication import CURRENT_USER
+    users = lista_usuarios_back.get_users(CURRENT_USER.email)
 
     # função de criar frame
     # row e column referem-se a posição do frame
@@ -33,20 +28,20 @@ def run(email):
         Label(quadro, text=text, font=font, background=co0).grid(row=r, column=c, sticky="w")
 
     # frame com os dados do usuário que está logado
-    frame_user = criar_frame(janela, 0, 0)
+    frame_user = criar_frame(frame_parent, 0, 0)
 
     from Users.Authentication import get_role_name
 
     criar_label(frame_user, 'Meu Perfil', 'Calibri, 14', 0, 0)
     # busco os dados do usuário que está logado
 
-    user_data = handler.find_data_csv(Settings.USERS_PATH, email)
+    user_data = handler.find_data_csv(Settings.USERS_PATH, CURRENT_USER.email)
 
     criar_label(frame_user, get_role_name(user_data['role_id']), 'Calibri, 12',1, 0)
     criar_label(frame_user, user_data['name'], 'Calibri, 12',2, 0)
 
     # frame com os usuários que devem ser analisados por quem está logado
-    frame_avaliados = criar_frame(janela, 1, 0)
+    frame_avaliados = criar_frame(frame_parent, 1, 0)
     criar_label(frame_avaliados, 'Integrantes a Serem Avaliados', 'Calibri, 14', 0, 0)
 
     for line in users:
@@ -59,9 +54,9 @@ def run(email):
         criar_label(frame_avaliado, line['name'], 'Calibri, 12', 1, 0)  # linha para teste
         criar_label(frame_avaliado, '', 'Calibri, 12', 2, 0)  # linha para teste
 
-    dashboard = criar_frame(janela, 0, 1)
+    dashboard = criar_frame(frame_parent, 0, 0)
     criar_label(dashboard, 'Dashboards', 'Calibri, 14', 0, 0)
 
-    janela.mainloop()
+    return module_frame
 
 

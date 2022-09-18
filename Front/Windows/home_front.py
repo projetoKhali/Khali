@@ -34,22 +34,29 @@ def run():
     def criar_button(quadro, text, font, command, r, c, w, padx, pady):
         Button(quadro, text=text, font=font, height=0, command = command, background = co3, fg = 'white').grid(row=r, column=c, sticky=w, padx = padx, pady = pady)
 
+    # COLUNA A --------------------------------------------------------------
     #frame widgets
-    frame_widgets = criar_frame(janela, 0,0)
-    
+    frame_coluna_A = criar_frame(janela, 0,0)
+
     #adiciona Logo
     img = PhotoImage(file=".\\" + Settings.RESOURCES_PATH + "\Logo_small.png")  # imagem que vai ser colocada na tela, tem que estar com formato gif
-    logo = Label(frame_widgets, image=img)
+    logo = Label(frame_coluna_A, image=img)
+    logo.photo = img
     logo.grid(row = 0, column = 0, sticky = 'n')
 
     #adiciona botões
-    criar_button(frame_widgets, 'Meu Perfil', "Calibri, 14", None, 1,0, 'w', 5, 5)
-    criar_button(frame_widgets, 'Cadastrar', "Calibri, 14", None, 2, 0, 'w', 5, 5)
+    criar_button(frame_coluna_A, 'Meu Perfil', "Calibri, 14", None, 1,0, 'w', 5, 5)
+    criar_button(frame_coluna_A, 'Cadastrar', "Calibri, 14", None, 2, 0, 'w', 5, 5)
 
+    # COLUNA B --------------------------------------------------------------
     #frame da segunda coluna, que muda se apertar "Cadastro" ou "Meu Perfil"
-    frame_direita = criar_frame(janela, 0,1)
+    frame_coluna_B = criar_frame(janela, 0,1)
 
-    criar_label(frame_direita, 'Teste', "Calibri, 14", 0, 0, 'nw', 5, 5)
+    criar_label(frame_coluna_B, 'Teste', "Calibri, 14", 0, 0, 'nw', 5, 5)
+
+    from Front.Modules import lista_usuarios
+
+    lista_usuarios.run(frame_coluna_B)
 
     return janela
 
