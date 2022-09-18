@@ -4,7 +4,7 @@ import Settings
 from Users.Authentication import *
 from Users.Roles.Role import *
 
-# from Front import cadastroadm
+from Front import cadastroadm
 from Tela_login import login_front
 
 # Inicializa todas as databases
