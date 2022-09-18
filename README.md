@@ -63,7 +63,7 @@
 ### Tecnologias Utilizadas
 * Linguagens: Python e HTML
 * Base de Dados: CSV
-* Plataformas: Figma, Asana, Youtube e Onedrive
+* Plataformas: Figma, Asana, Youtube, Google drive e documento google. 
 
 ### Wireframe do Produto
 * Wireframe disponível pelo [Figma](https://www.figma.com/file/U1apWrrVuZHbtNIumUgUoo/Api?node-id=56%3A3)
