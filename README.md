@@ -86,7 +86,7 @@
 
 | USER STORY | PRIORIDADE | SPRINT | 
 |------------|------------|:------------:|
-| CRIAÇÃO DO SISTEMA DE CADASTRO DO USUÁRIO E AUTENTICAÇÃO |
+| **CRIAÇÃO DO SISTEMA DE CADASTRO DO USUÁRIO E AUTENTICAÇÃO** |
 | Como Administrador da instituição, preciso cadastrar os Líderes dos Grupos para que façam login |Essencial| 1
 | Como Administrador da instituição, preciso cadastrar os Fake Clients para que façam login |Essencial| 1
 | Como Líder do Grupo, preciso criar Times para realizar o cadastro de usuários |Essencial| 1
