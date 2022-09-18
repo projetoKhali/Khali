@@ -14,11 +14,8 @@ def run():
     janela.resizable(width=True, height=True)
 
     #criar imagem e distribuir pro intereior do label essa imagem
-    path = ".\\" + RESOURCES_PATH + "\Logo_small.png"
     # path = "\Logo_big.gif"
-    print(path)
-    img = PhotoImage(file=path) #imagem que vai ser colocada na tela, tem que estar com formato gif
-    print(img)
+    img = PhotoImage(file=".\\" + RESOURCES_PATH + "\Logo_small.png") #imagem que vai ser colocada na tela, tem que estar com formato gif
     label_imagem = tk.Label(janela, image=img)
     label_imagem.photo = img
     label_imagem.place(relx = 0.5, rely = 0.2, anchor = 'center') #creio que 0.5 seja 50% da janela
@@ -33,13 +30,13 @@ def run():
     en_senha = tk.Entry(janela, bd=2, font=("Calibri", 15), justify=LEFT)
     en_senha.place(relx = 0.5, rely = 0.5, anchor = 'center')
 
-    # label email 
-    label_email = tk.Label(janela, text = 'E-mail', font = ("Calibri,15"), background = co0)
-    label_email.place(relx = 0.40, rely = 0.4, anchor = 'center')
+    # # label email 
+    # label_email = tk.Label(janela, text = 'E-mail', font = ("Calibri,15"), background = co0)
+    # label_email.place(relx = 0.40, rely = 0.4, anchor = 'center')
 
-    # label senha 
-    label_senha = tk.Label(janela, text = 'Senha', font = ("Calibri,15"), background = co0)
-    label_senha.place(relx = 0.40, rely = 0.5, anchor = 'center')
+    # # label senha 
+    # label_senha = tk.Label(janela, text = 'Senha', font = ("Calibri,15"), background = co0)
+    # label_senha.place(relx = 0.40, rely = 0.5, anchor = 'center')
 
     #*****BOTÃO DE LOGIN*****
     def send_login():

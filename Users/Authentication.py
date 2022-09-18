@@ -1,7 +1,5 @@
-
-# Insira imports aqui para utilizá-los sem incluir no namespace (ao importar Users, NÃO importará também estes imports)
-from xml.dom import UserDataHandler
 from CSV.CSVHandler import *
+from Front import WindowManager
 from Users.Gerar_Senha import gerar_senha
 from Users.User import User
 
@@ -9,6 +7,8 @@ import Settings as settings
 from .Roles.Role import *
 
 #region Users
+
+CURRENT_USER = None
 
 # Efetua o login de Usuário e, se efetuado com sucesso, retorna o User logado 
 def login (email, senha):
@@ -36,8 +36,9 @@ def login (email, senha):
 
     # comparação de senhas retorna True, login retornará o Usuário
     print("login sucesso")
-    # try:
-    return User(
+
+    global CURRENT_USER
+    CURRENT_USER = User(
         user_data['name'],
         user_data['email'],
         user_data['group_id'],
@@ -45,14 +46,15 @@ def login (email, senha):
         user_data['role_id'],
         user_data['password']
     )
-    # return user
-    # except:
-    #     print("erro ao definir usuário recém logado")
-    #     return 2
+
+    WindowManager.next_state()
+
+    return CURRENT_USER
+
 
 
 # Efetua o Cadastro de um novo Usuário e, se efetuado com sucesso, o armazena na database .csv
-def register (name, email, group_id, team_id, role_id):
+def register (name, email, group_id, team_id, role_id, custom_password = None):
 
     # Verifica se o Nome do Usuário fornecido é válido. Cancela o processo caso não seja.
     if not validate_user_name (name):
@@ -80,11 +82,15 @@ def register (name, email, group_id, team_id, role_id):
         return
 
     # Inicializa variável senha para armazenamento
-    password = None
-    # Atualiza a senha toda vez que uma senha gerada é inválida
-    while not validate_user_password(password):
-        password = gerar_senha()
-    print (password)
+    password = custom_password
+
+    if password is None:
+
+        # Atualiza a senha toda vez que uma senha gerada é inválida
+        while not validate_user_password(password):
+            password = gerar_senha()
+
+    print (f'email: {email} | password: {password}')
 
     # Importa bcrypt para criptografar a senha
     import bcrypt

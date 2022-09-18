@@ -22,7 +22,7 @@ create_group("Grupo do Develano")
 create_team("Time do Develano", 0)
 
 # cadastra o develano
-register("develano", "dev.lano@dev.lano", 0, 0, 0)
+register("develano", "dev.lano@dev.lano", 0, 0, 0, custom_password='123')
 
 
 # window = cadastroadm.run()

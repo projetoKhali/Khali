@@ -1,4 +1,5 @@
 from tkinter import *
+import Settings
 
 # cores
 co0 = "#FAE8E8"  # rosa
@@ -7,7 +8,7 @@ co2 = "#1A1D1A"  # preta
 co3 = "#26413C"  # verde
 
 
-def front():
+def run():
     # cria a janela
     janela = Tk()
     janela.title('')
@@ -35,8 +36,9 @@ def front():
 
     #frame widgets
     frame_widgets = criar_frame(janela, 0,0)
+    
     #adiciona Logo
-    img = PhotoImage(file="Logo_small2.png")  # imagem que vai ser colocada na tela, tem que estar com formato gif
+    img = PhotoImage(file=".\\" + Settings.RESOURCES_PATH + "\Logo_small.png")  # imagem que vai ser colocada na tela, tem que estar com formato gif
     logo = Label(frame_widgets, image=img)
     logo.grid(row = 0, column = 0, sticky = 'n')
 
@@ -49,8 +51,5 @@ def front():
 
     criar_label(frame_direita, 'Teste', "Calibri, 14", 0, 0, 'nw', 5, 5)
 
+    return janela
 
-    janela.mainloop()
-    #
-    #
-front()
