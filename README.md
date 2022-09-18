@@ -66,10 +66,10 @@
 * Plataformas: Figma, Asana, Youtube e Onedrive
 
 ### Wireframe do Produto
-* Wireframe disponível pelo [Figma](https://www.figma.com/file/U1apWrrVuZHbtNIumUgUoo/Api?node-id=56%3A3)*
+* Wireframe disponível pelo [Figma](https://www.figma.com/file/U1apWrrVuZHbtNIumUgUoo/Api?node-id=56%3A3)
 
 ### Fluxograma do Produto
-* Fluxograma disponível pelo [Figma](https://www.figma.com/file/Zbj4rKK3oPqUJxCyPc2eLo/Fluxograma-Khali?node-id=0%3A1)*
+* Fluxograma disponível pelo [Figma](https://www.figma.com/file/Zbj4rKK3oPqUJxCyPc2eLo/Fluxograma-Khali?node-id=0%3A1)
 
 ### Requisitos Funcionais
 * Possibilitar autoavaliação e avaliação dos demais integrantes do Time de forma individualizada;
