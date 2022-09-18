@@ -27,15 +27,21 @@ register("develano", "dev.lano@dev.lano", 0, 0, 0)
 
 
 # window = cadastroadm.run()
-window = login_front.run()
+# window = login_front.run()
 
-window.mainloop()  # Método que executa eventos como cliques de botão e mantém a janela aberta
+# window.mainloop()  # Método que executa eventos como cliques de botão e mantém a janela aberta
 
 # from Sprints.Sprints import create_sprint
 # create_sprint(0, date.)
 
 # faz login com o develano
 # login("develano", input("texto"))
+
+from Home import home_back
+from Home import home_front
+
+home_front.front("fulider_do@grupo.ldg")
+
 
 exit()
 
@@ -68,9 +74,5 @@ register("clielano", "fulano.cliente@cliente.c", 0, 0, 2)
 # cadastra developer teste
 register("develano", "fulano-dev@dev.com", 0, 0, 5)
 
-from Home import home_back
-from Home import home_front
-
-home_front.front("fulider_do@grupo.ldg")
 
 
