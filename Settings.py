@@ -9,7 +9,7 @@ RESOURCES_PATH  = "resources"
 # Os campos que cada banco de dados irá possuir ao ser inicializado
 PATH_FIELDS = [
 #   Caminho do arquivo .csv   |           | id |                        campos                         | 
-    { 'path': USERS_PATH,       'fields': ['id', 'name', 'email', 'group', 'team', 'role', 'password'] },
+    { 'path': USERS_PATH,       'fields': ['id', 'name', 'email', 'group_id', 'team_id', 'role_id', 'password'] },
     { 'path': GROUPS_PATH,      'fields': ['id', 'name'] },
     { 'path': SPRINTS_PATH,     'fields': ['id', 'group', 'start', 'finish', 'rating period'] },
     { 'path': TEAMS_PATH,       'fields': ['id', 'group', 'name',] },

@@ -1,5 +1,6 @@
 
 # Insira imports aqui para utilizá-los sem incluir no namespace (ao importar Users, NÃO importará também estes imports)
+from xml.dom import UserDataHandler
 from CSV.CSVHandler import *
 from Users.Gerar_Senha import gerar_senha
 from Users.User import User
@@ -7,20 +8,47 @@ from Users.User import User
 import Settings as settings
 from .Roles.Role import *
 
-
 #region Users
 
-# TODO: global current_user
-
-# Verificação de senha na base de dados e autenticação
+# Efetua o login de Usuário e, se efetuado com sucesso, retorna o User logado 
 def login (email, senha):
-    a = find_data_csv(settings.USERS_PATH, email)["password"]
+
+    # Acessa o usuário que corresponde ao email fornecido na database
+    try:
+        user_data = find_data_csv(settings.USERS_PATH, email)
+        hashed_pw = user_data["password"]
+
+    # em caso de erro, retorna o erro 0 - dado não encontrado
+    except:
+        print("dado não encontrado")
+        return 0
+
+    # importa a biblioteca de criptografia
     import bcrypt
-    # autenticação de dados
-    if not bcrypt.checkpw(senha.encode(), a.encode()):
+
+    # compara a senha fornecida com a senha criptografada salva na database
+    if not bcrypt.checkpw(senha.encode(), hashed_pw.encode()):
+
+        # caso a comparação retorne False, significa que as senhas não são iguais
+        # retorna o código de erro 1 - dado invalido
         print("dado inválido")
-        return
+        return 1
+
+    # comparação de senhas retorna True, login retornará o Usuário
     print("login sucesso")
+    # try:
+    return User(
+        user_data['name'],
+        user_data['email'],
+        user_data['group_id'],
+        user_data['team_id'],
+        user_data['role_id'],
+        user_data['password']
+    )
+    # return user
+    # except:
+    #     print("erro ao definir usuário recém logado")
+    #     return 2
 
 
 # Efetua o Cadastro de um novo Usuário e, se efetuado com sucesso, o armazena na database .csv
@@ -78,9 +106,9 @@ def get_user_fields (user:User):
     return [
         user.name,
         user.email,
-        get_group_name(user.group_id),
-        get_team_name(user.team_id),
-        get_role_name(user.role_id),
+        user.group_id,
+        user.team_id,
+        user.role_id,
         user.password
     ]
 
