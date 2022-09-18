@@ -4,8 +4,7 @@ import Settings
 from Users.Authentication import *
 from Users.Roles.Role import *
 
-from Front import cadastroadm
-from Tela_login import login_front
+from Front import cadastroadm, login_front
 
 # Inicializa todas as databases
 def initialize_databases ():
@@ -66,7 +65,7 @@ register("clielano", "fulano.cliente@cliente.c", 0, 0, 2)
 # cadastra developer teste
 register("develano", "fulano-dev@dev.com", 0, 0, 5)
 
-from Home import home_front
+from Front.Home import lista_usuarios
 
-home_front.run("fulider_do@grupo.ldg")
+lista_usuarios.run("fulider_do@grupo.ldg")
 

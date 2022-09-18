@@ -14,8 +14,8 @@ def run():
     janela.resizable(width=True, height=True)
 
     #criar imagem e distribuir pro intereior do label essa imagem
-    path = ".\\" + RESOURCES_PATH + "\Logo_small2.png"
-    # path = "\Logo_small2.gif"
+    path = ".\\" + RESOURCES_PATH + "\Logo_small.png"
+    # path = "\Logo_big.gif"
     print(path)
     img = PhotoImage(file=path) #imagem que vai ser colocada na tela, tem que estar com formato gif
     print(img)
