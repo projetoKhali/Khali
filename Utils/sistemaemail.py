@@ -1,7 +1,7 @@
 import win32com.client as win32
 
 # Função envio de  e-mail Líder do Grupo e Fake Client
-def enviaremail(nome, email1):
+def enviar_email(nome, email1):
     outlook = win32.Dispatch('outlook.application')  # Criar interação com outlook
     email = outlook.CreateItem(0)  # Criar um e-mail
 
@@ -25,5 +25,3 @@ def enviaremail(nome, email1):
         print(f'E-mail enviado para {nome}')
     else:
         print(f'Não existe e-mail cadastrado para {nome}')
-
-enviaremail()

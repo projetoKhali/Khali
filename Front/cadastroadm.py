@@ -3,7 +3,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import END
 from tkinter.messagebox import NO
-from turtle import heading
+from Utils.sistemaemail import enviar_email
 import win32com.client as win32  # Biblioteca que possibilita a interagração com o e-mail
 
 grupo = 0
@@ -22,8 +22,8 @@ def criar_grupo():
     tree.insert('', END, values=[codigo_str, nome_lider, email_lider, nome_client, email_client])
     tree.grid(row=0, column=0)
     # Chamar função com os parâmetros "nome" e "email1"
-    enviaremail(ent_lider.get(), ent_lemail.get())
-    enviaremail(ent_client.get(), ent_cemail.get())
+    enviar_email(ent_lider.get(), ent_lemail.get())
+    enviar_email(ent_client.get(), ent_cemail.get())
 
 window.configure(bg='#fae8e8')  # Cor do plano de fundo da tela
 window.title('Sistema de Cadastro - Administrador')  # Título da janela
@@ -103,31 +103,5 @@ criartabela('nomelider', '#2', 'Nome do Líder do Grupo')
 criartabela('emaillider', '#3', 'E-mail do Líder do Grupo')
 criartabela('nomeclient', '#4', 'Nome do Fake Client')
 criartabela('emailclient', '#5', 'E-mail do Fake Client')
-
-# Função envio de  e-mail Líder do Grupo e Fake Client
-def enviaremail(nome, email1):
-    outlook = win32.Dispatch('outlook.application')  # Criar interação com outlook
-    email = outlook.CreateItem(0)  # Criar um e-mail
-
-    # Configurar as informações do e-mail
-    email.To = email1
-    email.Subject = 'E-mail automático - Senha cadastrada para Avaliação 360°'
-    email.HTMLBody = f"""
-    <p>Olá, {nome}!</p>
-
-    <p>Aqui está sua senha gerada automaticamente, para acesso à plataforma de Avaliação 360°:</p>
-    <p>SENHA:</p>
-    <p>E-MAIL CADASTRADO: {email1}</p>
-
-    <p><b>Sua senha é intrasferível, não compartilhe com ninguém.</b></p>
-
-    <p>Não responda a este e-mail.</p>
-    """
-
-    if str(object='@') in email1:
-        email.Send()
-        print(f'E-mail enviado para {nome}')
-    else:
-        print(f'Não existe e-mail cadastrado para {nome}')
 
 window.mainloop()  # Método que executa eventos como cliques de botão e mantém a janela aberta
