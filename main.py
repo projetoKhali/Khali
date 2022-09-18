@@ -1,7 +1,10 @@
+from datetime import date
 from CSV.CSVHandler import *
+from Front import cadastroadm
 import Settings
 from Users.Authentication import *
 from Users.Roles.Role import *
+
 
 # Inicializa todas as databases
 def initialize_databases ():
@@ -21,8 +24,16 @@ create_team("Time do Develano", 0)
 # cadastra o develano
 register("develano", "dev.lano@dev.lano", 0, 0, 0)
 
+
+window = cadastroadm.run()
+
+window.mainloop()  # Método que executa eventos como cliques de botão e mantém a janela aberta
+
+# from Sprints.Sprints import create_sprint
+# create_sprint(0, date.)
+
 # faz login com o develano
-login("develano", input("texto"))
+# login("develano", input("texto"))
 
 exit()
 
