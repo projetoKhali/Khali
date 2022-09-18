@@ -1,6 +1,5 @@
 
 # Insira imports aqui para utilizá-los sem incluir no namespace (ao importar Users, NÃO importará também estes imports)
-from string import punctuation
 from CSV.CSVHandler import *
 from Users.Gerar_Senha import gerar_senha
 from Users.User import User
