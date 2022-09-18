@@ -1,5 +1,5 @@
 from CSV import CSVHandler as handler
-from Utils import home_back
+from Utils import lista_usuarios_back
 import Settings
 from tkinter import *
 
@@ -19,7 +19,7 @@ def run(email):
     janela.columnconfigure([0,1], weight = 1, minsize=30)
     janela.configure(background=co0)
 
-    users = home_back.get_users(email)
+    users = lista_usuarios_back.get_users(email)
 
     # função de criar frame
     # row e column referem-se a posição do frame

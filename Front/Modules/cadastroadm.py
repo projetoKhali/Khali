@@ -3,7 +3,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import END
 from tkinter.messagebox import NO, YES
-from Utils.sistemaemail import enviar_email
+from Utils.sistema_email import enviar_email
 
 def run():
 
