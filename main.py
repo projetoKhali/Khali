@@ -26,8 +26,8 @@ create_team("Time do Develano", 0)
 register("develano", "dev.lano@dev.lano", 0, 0, 0)
 
 
-window = cadastroadm.run()
-# window = login_front.run()
+# window = cadastroadm.run()
+window = login_front.run()
 
 window.mainloop()  # Método que executa eventos como cliques de botão e mantém a janela aberta
 
