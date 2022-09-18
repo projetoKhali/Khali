@@ -68,3 +68,9 @@ register("clielano", "fulano.cliente@cliente.c", 0, 0, 2)
 # cadastra developer teste
 register("develano", "fulano-dev@dev.com", 0, 0, 5)
 
+from Home import home_back
+from Home import home_front
+
+home_front.front("fulider_do@grupo.ldg")
+
+

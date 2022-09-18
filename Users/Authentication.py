@@ -86,6 +86,7 @@ def register (name, email, group_id, team_id, role_id):
         password = gerar_senha()
     print (password)
 
+    # Importa bcrypt para criptografar a senha
     import bcrypt
 
     # Codifica a senha para utf-8: b'senha'
