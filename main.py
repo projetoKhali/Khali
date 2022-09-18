@@ -4,12 +4,12 @@ import Settings
 from Users.Authentication import *
 from Users.Roles.Role import *
 
-from Front import cadastroadm, login_front
 
 # Inicializa todas as databases
 def initialize_databases ():
     initialize_csv(Settings.USERS_PATH)
     initialize_csv(Settings.GROUPS_PATH)
+    initialize_csv(Settings.SPRINTS_PATH)
     initialize_csv(Settings.TEAMS_PATH)
 
 # !TODO!: Limpa as databases toda vez que o programa for executado
@@ -65,7 +65,8 @@ register("clielano", "fulano.cliente@cliente.c", 0, 0, 2)
 # cadastra developer teste
 register("develano", "fulano-dev@dev.com", 0, 0, 5)
 
-from Front.Home import lista_usuarios
+from Front import WindowManager
 
-lista_usuarios.run("fulider_do@grupo.ldg")
+WindowManager.initialize()
+WindowManager.update()
 
