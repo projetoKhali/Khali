@@ -44,7 +44,7 @@ def get_role (id:int):
 
 # Retorna o nome da função com id solicitado
 def get_role_name (id:int):
-    role = get_role(id)
+    role = get_role(int(id))
     if role is None:
         return None
     return role.name
