@@ -1,6 +1,7 @@
 # O caminho onde os arquivos .csv estão/estarão localizados
 USERS_PATH  = "data/users"
 GROUPS_PATH = "data/groups"
+SPRINTS_PATH = "data/sprints"
 TEAMS_PATH  = "data/teams"
 
 # Os campos que cada banco de dados irá possuir ao ser inicializado
@@ -8,6 +9,7 @@ PATH_FIELDS = [
 #   Caminho do arquivo .csv   |           | id |                        campos                         | 
     { 'path': USERS_PATH,       'fields': ['id', 'name', 'email', 'group', 'team', 'role', 'password'] },
     { 'path': GROUPS_PATH,      'fields': ['id', 'name'] },
+    { 'path': SPRINTS_PATH,     'fields': ['id', 'group', 'start', 'finish', 'rating period'] },
     { 'path': TEAMS_PATH,       'fields': ['id', 'group', 'name',] },
 ]
 

@@ -1,6 +1,5 @@
 
 # Insira imports aqui para utilizá-los sem incluir no namespace (ao importar Users, NÃO importará também estes imports)
-from string import punctuation
 from CSV.CSVHandler import *
 from Users.Gerar_Senha import gerar_senha
 from Users.User import User
@@ -8,15 +7,20 @@ from Users.User import User
 import Settings as settings
 from .Roles.Role import *
 
+
 #region Users
 
 # TODO: global current_user
 
-# TODO: Login method
-def login (email, senha=0):
-    a = find_data_csv(settings.USERS_PATH, email)
-    #descriptografar
-    print(a["senha"])
+# Verificação de senha na base de dados e autenticação
+def login (email, senha):
+    a = find_data_csv(settings.USERS_PATH, email)["password"]
+    import bcrypt
+    # autenticação de dados
+    if not bcrypt.checkpw(senha.encode(), a.encode()):
+        print("dado inválido")
+        return
+    print("login sucesso")
 
 
 # Efetua o Cadastro de um novo Usuário e, se efetuado com sucesso, o armazena na database .csv
@@ -47,15 +51,13 @@ def register (name, email, group_id, team_id, role_id):
         print(COLS[2] + f'Authentication.Register -- Erro: Função de id {role_id} não existe' + COLS[0])
         return
 
-    # Gera uma senha aleatória para o Usuário
-    password = gerar_senha()
+    # Inicializa variável senha para armazenamento
+    password = None
+    # Atualiza a senha toda vez que uma senha gerada é inválida
+    while not validate_user_password(password):
+        password = gerar_senha()
+    print (password)
 
-    # Verifica se a Senha fornecida é válida. TODO: gerar outra caso invalida
-    if not validate_user_password(password):
-        print(COLS[2] + f'Authentication.Register -- Erro: Senha inválida para cadastro' + COLS[0])
-        return
-
-    # Importa bcrypt para criptografar a senha
     import bcrypt
 
     # Codifica a senha para utf-8: b'senha'
@@ -144,7 +146,7 @@ def validate_user_password(password:str):
     # Senha fornecida é INVALIDA se descumprir qualquer uma das seguintes condições:
     # Numero de caracteres é maior ou igual ao minimo predefinido -> PASSWORD_MIN_MAX[0] 
     # Numero de caracteres é menor que o maximo predefinido       -> PASSWORD_MIN_MAX[1]
-    if len(password) < settings.PASSWORD_MIN_MAX[0] or len(password) >= settings.PASSWORD_MIN_MAX[1]:
+    if password is None or len(password) < settings.PASSWORD_MIN_MAX[0] or len(password) >= settings.PASSWORD_MIN_MAX[1]:
         return False
 
     # Importa a biblioteca de utilidades para strings
@@ -158,17 +160,14 @@ def validate_user_password(password:str):
 
         # Se o caractere é letters, mude o valor da booleana para True
         if char in string.ascii_letters:
-            print(char + " is letters")
             letters = True
 
         # Se o caractere é digits, mude o valor da booleana para True
         if char in string.digits:
-            print(char + " is digits")
             digits = True
 
         # Se o caractere é punctuations, mude o valor da booleana para True
         if char in string.punctuation:
-            print(char + " is punctuations")
             punctuations = True
 
     # Após o loop, retorna Verdadeiro caso as 3 booleanas sejam True

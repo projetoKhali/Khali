@@ -1,7 +1,10 @@
+from datetime import date
 from CSV.CSVHandler import *
+from Front import cadastroadm
 import Settings
 from Users.Authentication import *
 from Users.Roles.Role import *
+
 
 # Inicializa todas as databases
 def initialize_databases ():
@@ -12,9 +15,7 @@ def initialize_databases ():
 # !TODO!: Limpa as databases toda vez que o programa for executado
 # !TODO!: 'Inicialize_databases' deverá ser executado APENAS na primeira execução do programa
 
-
 initialize_databases()
-
 
 # cria grupo e time do develano
 create_group("Grupo do Develano")
@@ -23,10 +24,16 @@ create_team("Time do Develano", 0)
 # cadastra o develano
 register("develano", "dev.lano@dev.lano", 0, 0, 0)
 
-# faz login com o develano
-login("develano")
 
-exit()
+window = cadastroadm.run()
+
+window.mainloop()  # Método que executa eventos como cliques de botão e mantém a janela aberta
+
+# from Sprints.Sprints import create_sprint
+# create_sprint(0, date.)
+
+# faz login com o develano
+# login("develano", input("texto"))
 
 exit()
 

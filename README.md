@@ -33,7 +33,7 @@
 > O desafio do grupo é apoiar a PBLTeX a levantar, especificar e desenvolver uma solução computacional que viabilize a aplicação dessa técnica. 
 ##
 ## Descrição do Produto
-*Wireframe disponível pelo [Figma](https://www.figma.com/files/project/64287399/Team-project?fuid=951608859077023281)*
+*Wireframe disponível pelo [Figma](https://www.figma.com/file/U1apWrrVuZHbtNIumUgUoo/Api?node-id=56%3A3)*
 ### Requisitos Funcionais
 * Possibilitar autoavaliação e avaliação dos demais integrantes do Time de forma individualizada;
 * Possibilitar que o Líder do Grupo avalie o Líder Técnico do Time e o *Fake Client* avalie o aluno PO do Time;
@@ -62,15 +62,14 @@
 * Refinamento dos Dashboards
 
 ### Backlog da 1ª Sprint
-- [ ] Criação do sistema de usuários e autentificação
-- [ ] Criação do fluxograma do produto
-- [x] Criação e configuração do Wireframe
-- [ ] Teste Sprint 1
-- [x] Documentação do Projeto
-- [ ] Criação parcial da tela Home
+### CRIAÇÃO DO SISTEMA DE USUÁRIOS
+- [ ] Sistema de cadastramento de usuários por parte do Administrador 
+- [ ] Sistema de cadastramento de usuários por parte do Líder do Grupo
+- [ ] Criação da funcionalidade de login
+- [ ] Retorno para o usuário das Sprints e integrantes que ele deve avaliar
 
 ### Fluxograma do Produto
-![Khali](https://i.ibb.co/pftjd1R/Whats-App-Image-2022-08-28-at-12-41-371.jpg)
+![Khali](https://i.ibb.co/zZfJYtS/Fluxograma-Khali.png)
 
 ### Burndown 1º Sprint
 
