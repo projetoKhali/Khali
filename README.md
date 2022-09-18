@@ -71,7 +71,7 @@
 * Criação do usuario *Administrador*
 * Sistema de cadastramento de grupos e usuários por parte do *Administrador* 
 * Sistema de cadastramento e configuração de Sprints pelo *Líder do Grupo*
-* Sistema de cadastramento e configuração de Times pelo ]*Líder do Grupo*
+* Sistema de cadastramento e configuração de Times pelo *Líder do Grupo*
 * Sistema de cadastramento de usuários pelo *Líder do Grupo*
 * Criação da funcionalidade de Login
 * Retorno para os usuários das Sprint e usuários que ele deve avaliar
