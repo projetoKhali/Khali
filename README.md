@@ -119,6 +119,6 @@
 * Criação da funcionalidade de Login
 * Retorno para os usuários das Sprints e usuários que ele deve avaliar
 
-*Documento com a descrição completa dos Épicos, storys e tarefas da [1ª srint](https://docs.google.com/document/d/e/2PACX-1vQ7dtt7AMiOUWYHD1UkAYsZ2ibkR9KMMcrm4DGZL1xgrUUiRh0o9ROnhx6awl8EsjuklAxMRILXGxCi/pub)*
+*Documento com a descrição completa dos Épicos, storys e tarefas da [1ª Sprint](https://docs.google.com/document/d/e/2PACX-1vQ7dtt7AMiOUWYHD1UkAYsZ2ibkR9KMMcrm4DGZL1xgrUUiRh0o9ROnhx6awl8EsjuklAxMRILXGxCi/pub)*
 
 *Fluxograma do sistema de cadastramento disponível pelo [Drive](https://drive.google.com/file/d/11j_OIrMpIdoHqzDNnrGinr8TQ7IvanjP/view?usp=sharing)*
