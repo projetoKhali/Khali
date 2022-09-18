@@ -16,7 +16,7 @@ from .Roles.Role import *
 def login (email, senha=0):
     a = find_data_csv(settings.USERS_PATH, email)
     #descriptografar
-    print(a["senha"])
+    print(a["password"])
 
 
 # Efetua o Cadastro de um novo Usuário e, se efetuado com sucesso, o armazena na database .csv

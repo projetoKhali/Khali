@@ -24,7 +24,7 @@ create_team("Time do Develano", 0)
 register("develano", "dev.lano@dev.lano", 0, 0, 0)
 
 # faz login com o develano
-login("develano")
+# login("develano")
 
 exit()
 
