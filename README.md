@@ -119,4 +119,4 @@
 * Criação da funcionalidade de Login
 * Retorno para os usuários das Sprints e usuários que ele deve avaliar
 
-*Fluxograma do sistema de cadastramento disponível pelo [Onedrive](file:///C:/Users/VENDAS/Downloads/Cadastramento%20de%20usuarios%20(2).pdf)*
+*Fluxograma do sistema de cadastramento disponível pelo [Drive](https://drive.google.com/file/d/1qJe6y54r15fP0OdQPtXWUV-T8grRcHp0/view?usp=sharing)*
