@@ -119,4 +119,4 @@
 * Criação da funcionalidade de Login
 * Retorno para os usuários das Sprints e usuários que ele deve avaliar
 
-*Fluxograma do sistema de cadastramento disponível pelo [Drive](https://drive.google.com/file/d/1d8XEYlfWLcBIQIcjtVy9Pu_bisLs5evT/view?usp=sharing)*
+*Fluxograma do sistema de cadastramento disponível pelo [Drive](https://drive.google.com/file/d/11j_OIrMpIdoHqzDNnrGinr8TQ7IvanjP/view?usp=sharing)*
