@@ -4,6 +4,8 @@ GROUPS_PATH = "data/groups"
 SPRINTS_PATH = "data/sprints"
 TEAMS_PATH  = "data/teams"
 
+RESOURCES_PATH  = "resources"
+
 # Os campos que cada banco de dados irá possuir ao ser inicializado
 PATH_FIELDS = [
 #   Caminho do arquivo .csv   |           | id |                        campos                         | 
@@ -36,3 +38,8 @@ COLS = [
     '\u001b[35m', # Magenta
     '\u001b[36m', # Cyan
 ]
+
+# Cores hash (front / tkinter)
+co0 = "#FAE8E8" #rosa
+co1 = "#D9D9D9" #cinza
+co2 = "1A1D1A" #preta

@@ -1,10 +1,11 @@
 from datetime import date
 from CSV.CSVHandler import *
-from Front import cadastroadm
 import Settings
 from Users.Authentication import *
 from Users.Roles.Role import *
 
+# from Front import cadastroadm
+from Tela_login import login_front
 
 # Inicializa todas as databases
 def initialize_databases ():
@@ -25,7 +26,8 @@ create_team("Time do Develano", 0)
 register("develano", "dev.lano@dev.lano", 0, 0, 0)
 
 
-window = cadastroadm.run()
+# window = cadastroadm.run()
+window = login_front.run()
 
 window.mainloop()  # Método que executa eventos como cliques de botão e mantém a janela aberta
 
