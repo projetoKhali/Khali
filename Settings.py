@@ -1,5 +1,6 @@
 # O caminho onde os arquivos .csv estão/estarão localizados
 USERS_PATH  = "data/users"
+SPRINTS_PATH = "data/sprints"
 GROUPS_PATH = "data/groups"
 TEAMS_PATH  = "data/teams"
 
@@ -7,6 +8,7 @@ TEAMS_PATH  = "data/teams"
 PATH_FIELDS = [
 #   Caminho do arquivo .csv   |           | id |                        campos                         | 
     { 'path': USERS_PATH,       'fields': ['id', 'name', 'email', 'group', 'team', 'role', 'password'] },
+    { 'path': SPRINTS_PATH,     'fields': ['id', 'name'] },
     { 'path': GROUPS_PATH,      'fields': ['id', 'name'] },
     { 'path': TEAMS_PATH,       'fields': ['id', 'group', 'name',] },
 ]
