@@ -7,29 +7,27 @@ co1 = "#D9D9D9" #cinza
 co2 = "#1A1D1A" #preta
 
 # função de criar frame
-# row e column referem-se ao numero de linhas e colunas que o frame terá, já linha e coluna referem-se
-# ao local onde o frame será colocado
 def criar_frame(quadro, row, column):
-    frame = Frame(quadro, background = co0)
-    frame.rowconfigure(row, minsize = 0)
-    frame.columnconfigure(column, minsize = 0)
-    frame.grid(row=row, column=column, sticky='w')
+    frame = Frame(quadro, background = co0, relief=FLAT, bd=1)
+    frame.rowconfigure(row, minsize = 10)  # Quantas linhas o frame terá
+    frame.columnconfigure(column, minsize = 100)  # Quantas colunas o frame terá
+    frame.grid(row=row, column=column, padx=10, sticky='w') # Local onde o frame será colocado
     return frame
 
 # criar widgets ###quadro é se seá colocado na janela ou em frame
 def criar_label(quadro, text, font, r, c, name=""):
-    label = Label(quadro, text=text, font=font, background=co1, name=name)
-    label.grid(row=r, column=c, sticky = "w")
+    label = Label(quadro, text=text, font=font, background=co0, name=name)
+    label.grid(row=r, column=c, padx=5, pady=3, sticky = "w")
     return label
 
 def criar_entry(quadro, font, r, c, name=""):
     entry = Entry(quadro, font = font, justify = "left", name=name)
-    entry.grid(row=r, column=c, sticky = "w")
+    entry.grid(row=r, column=c, padx=5, pady=3, sticky = "w")
     return entry
 
 def criar_button(quadro, text, font, r, c, command, name=""):
     button = Button(quadro, text = text, font = font, height = 0, command = command, name=name)
-    button.grid(row=r, column=c, sticky = "w")
+    button.grid(row=r, column=c, padx=5, pady=3, sticky = "w")
     return button
 
 def get_child_by_name(parent, name):
@@ -49,11 +47,11 @@ def entry_sprint():
     frame_sprint = criar_frame(frame_section0, valor, 0)
     for i in range(valor):
         criar_label(frame_sprint, f"Sprint {i+1}", "Calibri, 10", i, 0)
-        criar_label(frame_sprint, "Início", "Calibri, 10", i, 1)
+        criar_label(frame_sprint, "Início:", "Calibri, 10", i, 1)
         criar_entry(frame_sprint, "Calibri, 10", i, 2)
-        criar_label(frame_sprint, "Fim", "Calibri, 10", i, 3)
+        criar_label(frame_sprint, "Fim:", "Calibri, 10", i, 3)
         criar_entry(frame_sprint, "Calibri, 10", i, 4)
-        criar_label(frame_sprint, "Dias para avaliação", "Calibri, 10", i, 5)
+        criar_label(frame_sprint, "Dias para avaliação:", "Calibri, 10", i, 5)
         criar_entry(frame_sprint, "Calibri, 10", i, 6)
 
 def entry_times():
@@ -64,11 +62,11 @@ def entry_times():
         # lista_frame_time.append(frame_time)
 
         frame_time_data = criar_frame(frame_time, 0, 0)
-        criar_label(frame_time_data, f"Time {i+1}:",         "Calibri, 10", row, 0)
+        criar_label(frame_time_data, f"Time {i+1}",          "Calibri, 10", row, 0)
         # criar_label(frame_time_data, "Nome", "Calibri, 10", row, 1)
-        criar_entry(frame_time_data,                         "Calibri, 10", row, 2)
-        criar_label(frame_time_data, "Quantidade de alunos", "Calibri, 10", row, 3)
-        criar_entry(frame_time_data,                         "Calibri, 10", row, 4, name="q_alunos")
+        criar_entry(frame_time_data,                          "Calibri, 10", row, 2)
+        criar_label(frame_time_data, "Quantidade de alunos:", "Calibri, 10", row, 3)
+        criar_entry(frame_time_data,                          "Calibri, 10", row, 4, name="q_alunos")
         # lista.append(criar_button(frame_time_data, "Cadastrar", "Calibri, 10", i, 3, command = entry_alunos(en_numalunos)))
         criar_button(frame_time_data, "Cadastrar",           "Calibri, 10", row, 5, command = update_member_forms)
 
@@ -144,11 +142,12 @@ def get_entry_int (entry):
 
 # Cria os campos para o cadastro de UM aluno
 def criar_formulario_aluno (parent, row):
-    criar_label(parent, "Nome",   "Calibri, 10", row, 0)
+    criar_label(parent, "Nome:",  "Calibri, 10", row, 0)
     criar_entry(parent,           "Calibri, 10", row, 1)
-    criar_label(parent, "E-Mail", "Calibri, 10", row, 2)
+    criar_label(parent, "E-mail:","Calibri, 10", row, 2)
     criar_entry(parent,           "Calibri, 10", row, 3)
-    criar_label(parent, "Função", "Calibri, 10", row, 4)
+    criar_label(parent, "Função:","Calibri, 10", row, 4)
+    criar_entry(parent,           "Calibri, 10", row, 5)
     # TODO:
     # from Roles.Role import *
     # roles = ...
@@ -192,10 +191,10 @@ def criar_formulario_aluno (parent, row):
 
 # criando a janela
 janela = Tk()
-janela.title('')
-res = '800x400'
-# res = '1300x670'
-janela.geometry(res)  # aqui coloco o tamanho da tela, largura x altura
+janela.configure(bg=co0)
+janela.title('Sistema de Cadastro - Administrador')
+janela.geometry("1200x600")
+# aqui coloco o tamanho da tela, largura x altura
 # tentativa de dar numero de linhas e colunas para a tabela. Se deixo ativado, os labels ficam espalhados pela tela.
 # janela.rowconfigure([0,1,2,3], weight = 1, minsize=30)
 # janela.columnconfigure([0,1,2], weight = 1, minsize=30)
@@ -206,14 +205,15 @@ janela.geometry(res)  # aqui coloco o tamanho da tela, largura x altura
 # lista_frame_time = []
 
 # janela_header
-criar_label(janela, "Cadastro", "Calibri, 14", 0, 0)
+titulo=Label(janela, text='Cadastro de Times', bg='#fae8e8', font=('Calibre', 30))
+titulo.grid(row=0, column=0, padx=30, pady=10, sticky='w')
 
 # frame_body = Frame(janela)
 # frame_body.pack(fill=BOTH, expand=1)
 
 
 # frame_body = criar_frame(janela, 1, 0)
-frame_body = Frame(janela)
+frame_body = Frame(janela, bg=co0)
 frame_body.grid(row=1, column=0)
 
 # frame_body.grid_rowconfigure(0, weight=1)
@@ -253,7 +253,7 @@ frame_sprints = criar_frame(frame_section0, 0, 0)
 criar_label(frame_sprints, "Sprints", "Calibri, 12", 0, 0)
 
 # input: label, entry, button
-criar_label(frame_sprints, "Número de Sprints", "Calibri, 10", 1, 0)
+criar_label(frame_sprints, "Número de Sprints:    ", "Calibri, 10", 1, 0)
 en_numsprints = criar_entry(frame_sprints, "Calibri, 10", 1, 1)
 criar_button(frame_sprints, "Cadastrar", "Calibri, 10", 1, 2, command = entry_sprint)
 
@@ -293,7 +293,7 @@ times_header = criar_frame(frame_section1, 0, 0)
 criar_label(times_header, "Times", "Calibri, 12", 0, 0)
 
 # input: label, entry, button
-criar_label(times_header, "Quantidade de Times", "Calibri, 10", 1, 0)
+criar_label(times_header, "Quantidade de Times:", "Calibri, 10", 1, 0)
 en_numtimes = criar_entry(times_header, "Calibri, 10", 1, 1)
 criar_button(times_header, "Cadastrar", "Calibri, 10", 1, 2, command = entry_times)
 
@@ -316,7 +316,7 @@ def confirmar_cadastros():
 
     """"""
 
-Button(janela, text="Confirmar Cadastros", font="Calibri, 14", command=confirmar_cadastros).place(rely=0, relx=1.0, x=0, y=0, anchor=NE)
+Button(janela, text="Confirmar Cadastros", font="Calibri, 14", command=confirmar_cadastros).grid(row=0, column=1, sticky='e')
 
 janela.mainloop()
 
