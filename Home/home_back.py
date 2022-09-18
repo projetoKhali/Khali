@@ -9,20 +9,23 @@ import Settings
 # def get_users(email, grupo, time):
 def get_users(email):
     #retorna a linha que tem aquele email na forma de dicionário, isto é, os dados do aluno que fez o login.
-    line_dict = handler.find_data_csv(Settings.USERS_PATH , email)
+    line_dict = handler.find_data_csv(Settings.USERS_PATH, email)
+
+    print (line_dict)
 
     #pego grupo e time da linha referente ao aluno que fez login
-    grupo = line_dict["group"]
-    time = line_dict["team"]
+    grupo_id = line_dict["group_id"]
+    time_id = line_dict["team_id"]
 
     #armazenar em data os dados dos usuários que pertencem ao grupo
-    user_group = handler.find_data_list_csv(Settings.USERS_PATH, key = grupo)
-    users_time = []
+    user_group_members = handler.find_data_list_by_field_value_csv(Settings.USERS_PATH, 'group_id', grupo_id)
+    users_time_members = []
 
-    for line in user_group:
-        if line['team'] == time:
-            users_time.append(line)
-    return users_time
+    for group_member in user_group_members:
+        print(f'group_member: {group_member}')
+        if group_member['team_id'] == str(time_id):
+            users_time_members.append(group_member)
+    return users_time_members
 
 
 
