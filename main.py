@@ -4,8 +4,7 @@ import Settings
 from Users.Authentication import *
 from Users.Roles.Role import *
 
-from Front import cadastroadm
-from Tela_login import login_front
+from Front import cadastroadm, login_front
 
 # Inicializa todas as databases
 def initialize_databases ():
@@ -27,17 +26,15 @@ register("develano", "dev.lano@dev.lano", 0, 0, 0)
 
 
 # window = cadastroadm.run()
-window = login_front.run()
+# window = login_front.run()
 
-window.mainloop()  # Método que executa eventos como cliques de botão e mantém a janela aberta
+# window.mainloop()  # Método que executa eventos como cliques de botão e mantém a janela aberta
 
 # from Sprints.Sprints import create_sprint
 # create_sprint(0, date.)
 
 # faz login com o develano
 # login("develano", input("texto"))
-
-exit()
 
 # area de testes:
 
@@ -67,4 +64,8 @@ register("clielano", "fulano.cliente@cliente.c", 0, 0, 2)
 
 # cadastra developer teste
 register("develano", "fulano-dev@dev.com", 0, 0, 5)
+
+from Front.Home import lista_usuarios
+
+lista_usuarios.run("fulider_do@grupo.ldg")
 
