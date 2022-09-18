@@ -28,18 +28,24 @@ def run(frame_parent):
     # row e column referem-se a posição do frame
     def criar_frame(quadro, row, column):
         frame = Frame(quadro, background=co0)
-        frame.grid(row = row, column = column, sticky = "nw")
+        frame.grid(row = row, column = column, sticky = "nw", padx = 5, pady = 5)
         return frame
 
     # cria widget do tipo label
     def criar_label(quadro, text, font, r, c):
-        Label(quadro, text=text, font=font, background=co0).grid(row=r, column=c, sticky="w")
+        Label(quadro, text=text, font=font, background=co0, justify=LEFT).grid(row=r, column=c, sticky="w")
 
     # frame com os dados do usuário que está logado
     frame_user = criar_frame(frame_parent, 0, 0)
 
     # importa a função que transforma role_id em nome da role
     from Users.Authentication import get_role_name
+
+    # ###testes
+    # user_group_members = handler.find_data_list_by_field_value_csv(Settings.USERS_PATH, 'group_id', grupo_id)
+    #
+
+
 
     criar_label(frame_user, 'Meu Perfil', 'Calibri, 14', 0, 0)
 
@@ -61,7 +67,7 @@ def run(frame_parent):
         criar_label(frame_avaliado, '', 'Calibri, 12', 2, 0)  # linha para teste
 
     dashboard = criar_frame(frame_parent, 0, 0)
-    criar_label(dashboard, 'Dashboards', 'Calibri, 14', 0, 0)
+    # criar_label(dashboard, 'Dashboards', 'Calibri, 14', 0, 0)
 
     return module_frame
 
