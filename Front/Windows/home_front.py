@@ -52,7 +52,7 @@ def run():
     #frame da segunda coluna, que muda se apertar "Cadastro" ou "Meu Perfil"
     frame_coluna_B = criar_frame(janela, 0,1)
 
-    criar_label(frame_coluna_B, 'Teste', "Calibri, 14", 0, 0, 'nw', 5, 5)
+    # criar_label(frame_coluna_B, 'Teste', "Calibri, 14", 0, 0, 'nw', 5, 5)
 
     from Front.Modules import lista_usuarios
 
