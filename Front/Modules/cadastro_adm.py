@@ -5,7 +5,16 @@ from tkinter import END
 from tkinter.messagebox import NO, YES
 from Utils.sistema_email import enviar_email
 
+MODULE_NAME = 'Cadastrar'
+REQUIRED_PERMISSIONS = [
+    0,
+    1,
+    2,
+]        
+
 def run():
+
+    print("cadastro_adm.run() !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 
     window=tk.Tk()  # Criar uma janela e instanciar a classe
 

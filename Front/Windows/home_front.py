@@ -7,18 +7,21 @@ co1 = "#D9D9D9"  # cinza
 co2 = "#1A1D1A"  # preta
 co3 = "#26413C"  # verde
 
+modules = []
 
 def run():
+
+    print("home_front.run() !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+
     # cria a janela
     janela = Tk()
     janela.title('')
     janela.geometry('1300x670')  # tamanho da tela, largura x altura
+
     # tentativa de dar numero de linhas e colunas para a tabela. Se deixo ativado, os labels ficam espalhados pela tela.
     janela.rowconfigure(0, minsize = 800, weight = 1)
     janela.columnconfigure(1, minsize = 800, weight = 1)
     janela.configure(background=co0)
-
-    # home_back.get_users(email)
 
     # função de criar frame
     # row e column referem-se a posição do frame
@@ -44,19 +47,24 @@ def run():
     logo.photo = img
     logo.grid(row = 0, column = 0, sticky = 'n')
 
+    from Front.Modules import ModulesManager
+    global modules
+    modules = ModulesManager.get_modules()
+
+    for module in modules:
+        criar_button(frame_coluna_A, module.MODULE_NAME, "Calibri, 14", lambda: module.run(frame_coluna_B), 1,0, 'w', 5, 5)
+
+    print(f'modules: {modules}')
+
     #adiciona botões
-    criar_button(frame_coluna_A, 'Meu Perfil', "Calibri, 14", None, 1,0, 'w', 5, 5)
-    criar_button(frame_coluna_A, 'Cadastrar', "Calibri, 14", None, 2, 0, 'w', 5, 5)
+    # criar_button(frame_coluna_A, 'Meu Perfil', "Calibri, 14", None, 1,0, 'w', 5, 5)
+    # criar_button(frame_coluna_A, 'Cadastrar', "Calibri, 14", None, 2, 0, 'w', 5, 5)
 
     # COLUNA B --------------------------------------------------------------
     #frame da segunda coluna, que muda se apertar "Cadastro" ou "Meu Perfil"
     frame_coluna_B = criar_frame(janela, 0,1)
 
-    criar_label(frame_coluna_B, 'Teste', "Calibri, 14", 0, 0, 'nw', 5, 5)
-
-    from Front.Modules import lista_usuarios
-
-    lista_usuarios.run(frame_coluna_B)
+    modules[0].run(frame_coluna_B)
 
     return janela
 

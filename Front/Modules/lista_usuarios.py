@@ -1,6 +1,4 @@
-from CSV import CSVHandler as handler
 from Utils import lista_usuarios_back
-import Settings
 from tkinter import *
 
 # cores
@@ -8,12 +6,22 @@ co0 = "#FAE8E8"  # rosa
 co1 = "#D9D9D9"  # cinza
 co2 = "#1A1D1A"  # preta
 
+MODULE_NAME = 'Lista'
+REQUIRED_PERMISSIONS = [
+    [8, 9, 10]  # pelo menos uma das 3
+]        
 
 def run(frame_parent):
-    # cria a janela
+
+    print("lista_usuarios.run() !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+
+    # cria o frame do módulo
     module_frame = Frame(frame_parent, background=co0)
 
+    # importa o usuário logado
     from Users.Authentication import CURRENT_USER
+
+    # cria uma lista com os usuários do grupo e time do usuário logado
     users = lista_usuarios_back.get_users(CURRENT_USER.email)
 
     # função de criar frame
@@ -30,15 +38,13 @@ def run(frame_parent):
     # frame com os dados do usuário que está logado
     frame_user = criar_frame(frame_parent, 0, 0)
 
+    # importa a função que transforma role_id em nome da role
     from Users.Authentication import get_role_name
 
     criar_label(frame_user, 'Meu Perfil', 'Calibri, 14', 0, 0)
-    # busco os dados do usuário que está logado
 
-    user_data = handler.find_data_csv(Settings.USERS_PATH, CURRENT_USER.email)
-
-    criar_label(frame_user, get_role_name(user_data['role_id']), 'Calibri, 12',1, 0)
-    criar_label(frame_user, user_data['name'], 'Calibri, 12',2, 0)
+    criar_label(frame_user, get_role_name(CURRENT_USER.role_id), 'Calibri, 12',1, 0)
+    criar_label(frame_user, CURRENT_USER.name, 'Calibri, 12',2, 0)
 
     # frame com os usuários que devem ser analisados por quem está logado
     frame_avaliados = criar_frame(frame_parent, 1, 0)

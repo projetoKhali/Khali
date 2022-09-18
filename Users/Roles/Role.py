@@ -18,18 +18,18 @@ class Role:
 
 # Lista de Funções existentes
 ROLES = [
-    Role("ADM", { }),
+    Role("ADM",             [ 0, 1, 2, ]),
 
     # 1 por Grupo
-    Role("Lider do Grupo", { }),
-    Role("Cliente", { }),
+    Role("Lider do Grupo",  [ 3, 4, 5, 6, 7, 8, ]),
+    Role("Cliente",         [ 9 ]),
 
     # 1 por Time
-    Role("Lider Técnico", { }),
-    Role("Product Owner", { }),
+    Role("Lider Técnico",   [ 8, 9, 10 ]),
+    Role("Product Owner",   [ 8, 9, 10 ]),
 
     # 0+ por Time
-    Role("Developer", { })
+    Role("Developer",       [ 8, 9, 10 ])
 ]
 
 # Retorna a função com id solicitado

@@ -1,5 +1,4 @@
 from .Windows import home_front, login_front
-from Front.Modules import cadastro_adm, lista_usuarios
 
 # O estado atual do WindowManager corresponde a qual janela dentro da lista STATES deve estar aberta
 CURRENT_STATE = 0
@@ -23,6 +22,9 @@ def initialize():
 
     # Inicia a janela correspondente ao estado 0
     set_state(0)
+
+    from Users.Authentication import login
+    login(email='dev.lano@dev.lano', senha='123')
 
 def set_state(new_state:int):
     global CURRENT_STATE
