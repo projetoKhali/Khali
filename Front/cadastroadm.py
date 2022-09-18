@@ -48,18 +48,16 @@ def run():
         13, 2, 0, 0)
 
     # Frame do cadastro de grupos
-    frm_grupo=tk.Frame(master=window, relief=tk.GROOVE, bd=3,
-        width=1000, height=100, bg='#fae8e8')
+    frm_grupo=tk.Frame(master=window, relief=tk.GROOVE, bd=3, bg='#fae8e8')
     frm_grupo.rowconfigure([0, 1], weight=1, minsize=50) 
     frm_grupo.columnconfigure([0, 1, 2, 3, 4], weight=1, minsize=100)
-    frm_grupo.grid(row=3, column=0, padx=30, pady=30)
+    frm_grupo.place(relx=0.02, rely=0.2, relwidth=0.96, relheight=0.2)
 
-    # Frame da tabela de valores cadastrados
-    frm_tabela=tk.Frame(master=window, relief=tk.FLAT, bd=1,
-        width=100, height=100, bg='#fae8e8')
+    #   Frame da tabela de valores cadastrados
+    frm_tabela=tk.Frame(master=window, relief=tk.GROOVE, bd=1, bg='#fae8e8')
     frm_tabela.rowconfigure(0, weight=1, minsize=100) 
     frm_tabela.columnconfigure(0, weight=1, minsize=100)
-    frm_tabela.grid(row=4, column=0, padx=5, pady=5)
+    frm_tabela.place(relx=0.02, rely=0.45, relwidth=0.96, relheight=0.3)
 
     # Widgets de entrada
     ent_lider=tk.Entry(master=frm_grupo, width=30, fg='#1a1d1a', font=('Calibre 13'))  # Nome Líder
