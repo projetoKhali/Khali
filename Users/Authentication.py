@@ -82,7 +82,7 @@ def register (name, email, group_id, team_id, role_id, custom_password = None):
         return
 
     # Inicializa variável senha para armazenamento
-    password = custom_password
+    password = str(custom_password)
 
     if password is None:
 
@@ -218,6 +218,8 @@ def create_group (name:str):
 
 # Verifica se um Grupo com o id forneido existe armazenado no banco de dados
 def exists_group (id:int):
+    if id is None:
+        return True
     return find_data_by_id_csv(settings.GROUPS_PATH, id) is not None 
 
 # retorna o nome do Grupo que corresponde ao id especificado 
@@ -234,6 +236,8 @@ def create_team (name:str, group:int):
 
 # Verifica se um Time com o id forneido existe armazenado no banco de dados
 def exists_team (id:int):
+    if id is None:
+        return True
     return find_data_by_id_csv(settings.TEAMS_PATH, id) is not None 
 
 # retorna o nome do Time que corresponde ao id especificado 

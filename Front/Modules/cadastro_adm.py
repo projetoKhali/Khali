@@ -1,6 +1,6 @@
 # Importar bibliotecas
 import tkinter as tk
-from tkinter import ttk
+from tkinter import Frame, ttk
 from tkinter import END
 from tkinter.messagebox import NO, YES
 from Utils.sistema_email import enviar_email
@@ -12,11 +12,11 @@ REQUIRED_PERMISSIONS = [
     2,
 ]        
 
-def run():
+def run (frame_parent):
 
     print("cadastro_adm.run() !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 
-    window=tk.Tk()  # Criar uma janela e instanciar a classe
+    window=Frame(frame_parent)  # Criar uma janela e instanciar a classe
 
     # Criação da função que recolhe informações cadastradas e gera código do grupo
     def criar_grupo():
@@ -39,9 +39,9 @@ def run():
         tree.insert('', END, values=["{codigo_str}", nome_lider, email_lider, nome_client, email_client])
         tree.place(relx=0.02, rely=0.02, relwidth=0.96, relheight=0.96)
 
-    window.configure(bg='#fae8e8')  # Cor do plano de fundo da tela
-    window.geometry("1200x600")
-    window.title('Sistema de Cadastro - Administrador')  # Título da janela
+    # window.configure(bg='#fae8e8')  # Cor do plano de fundo da tela
+    # window.geometry("1200x600")
+    # window.title('Sistema de Cadastro - Administrador')  # Título da janela
 
     def textojanela(tipo, texto, tamanho, x, y, largura, altura):
         tipo=tk.Label(master=window,
