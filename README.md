@@ -14,6 +14,8 @@
     * [Tecnologias Utilizadas](#tecnologias-utilizadas)
     * [Wireframe do Produto](#wireframe-do-produto)
     * [Fluxograma do produto](#fluxograma-do-produto)
+    * [Wireframe do Produto](#wireframe-do-produto)
+    * [Fluxograma do produto](#fluxograma-do-produto)
     * [Requisitos Funcionais](#requisitos-funcionais)
     * [Requisitos Não Funcionais](#requisitos-não-funcionais)
     * [Backlog do Produto](#backlog-do-produto)
@@ -24,6 +26,7 @@
 ## *Projeto API*
 
 ### Integrantes da Equipe Khali
+* Danielle Tiemi Iwamoto [GitHub](https://github.com/daniiwamoto)
 * Danielle Tiemi Iwamoto [GitHub](https://github.com/daniiwamoto)
 * Jhonatan Oliveira Lopes [GitHub](https://github.com/JhonatanLop)
 * Marcos Vinicius Malaquias [GitHub](https://github.com/Incivius)
