@@ -16,7 +16,7 @@
     * [Fluxograma do produto](#fluxograma-do-produto)
     * [Wireframe do Produto](#wireframe-do-produto)
     * [Fluxograma do produto](#fluxograma-do-produto)
-    * [Vídeos com funcionalidades](#videos-com-funcionalidades)
+    * [Vídeos com funcionalidades](#vídeos-com-funcionalidades)
     * [Requisitos Funcionais](#requisitos-funcionais)
     * [Requisitos Não Funcionais](#requisitos-não-funcionais)
     * [Backlog do Produto](#backlog-do-produto)
