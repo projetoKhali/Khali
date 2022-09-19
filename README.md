@@ -16,6 +16,7 @@
     * [Fluxograma do produto](#fluxograma-do-produto)
     * [Wireframe do Produto](#wireframe-do-produto)
     * [Fluxograma do produto](#fluxograma-do-produto)
+    * [Vídeos com funcionalidades](#videos-com-funcionalidades)
     * [Requisitos Funcionais](#requisitos-funcionais)
     * [Requisitos Não Funcionais](#requisitos-não-funcionais)
     * [Backlog do Produto](#backlog-do-produto)
@@ -73,6 +74,9 @@
 
 ### Fluxograma do Produto
 * Fluxograma disponível pelo [Figma](https://www.figma.com/file/Zbj4rKK3oPqUJxCyPc2eLo/Fluxograma-Khali?node-id=0%3A1)
+
+### Vídeos com Funcionalidades
+* Vídeos disponíveis pelo [Youtube](https://www.youtube.com/channel/UCUj0bd9N4S3991OqdDg6TwQ/videos)
 
 ### Requisitos Funcionais
 * Possibilitar autoavaliação e avaliação dos demais integrantes do Time de forma individualizada;
