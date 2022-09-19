@@ -91,10 +91,10 @@ def run (frame_parent):
             fg='#1a1d1a', bg='#fae8e8', font=('Calibre', 15))
         usuario.grid(row=linha, column=coluna, sticky='e')
 
-    widgetlabel('lbl_lider', 0, 0)  # Widget de texto nome Líder do Grupo
-    widgetlabel('lbl_lemail', 0, 2)  # Widget de texto e-mail Líder do Grupo
-    widgetlabel('lbl_client', 1, 0)  # Widget de texto nome Fake Client
-    widgetlabel('lbl_cemail', 1, 2)  # Widget de texto e-mail Fake Client
+    widgetlabel('lbl_lider', 0, 0, 'Nome do Líder do Grupo:')  # Widget de texto nome Líder do Grupo
+    widgetlabel('lbl_lemail', 0, 2, 'E-mail do Líder do Grupo:')  # Widget de texto e-mail Líder do Grupo
+    widgetlabel('lbl_client', 1, 0, 'Nome do Fake Client:') # Widget de texto nome Fake Client
+    widgetlabel('lbl_cemail', 1, 2, 'E-mail do Fake Client:')  # Widget de texto e-mail Fake Client
 
     def criarbotao(nome, texto, comando, linha):
         nome=tk.Button(master=frm_grupo, text=texto, 
