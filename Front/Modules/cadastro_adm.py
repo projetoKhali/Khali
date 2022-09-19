@@ -21,6 +21,7 @@ def run (frame_parent):
     window=Frame(frame_parent)  # Criar uma janela e instanciar a classe
     # window.configure(background="green")
     window.grid(row=0, column=0, sticky="nsew")
+    window.configure(bg='#fae8e8')  # Cor do plano de fundo da tela
 
     # Criação da função que recolhe informações cadastradas e gera código do grupo
     def criar_grupo():
