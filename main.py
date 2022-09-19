@@ -50,8 +50,9 @@ from Front import WindowManager
 
 WindowManager.initialize()
 
-# teste
-login(email='fulider_do@grupo.ldg', senha='123')
+# teste - login automatico
+# login(email='fulider_do@grupo.ldg', senha='123')
+
 
 WindowManager.update()
 

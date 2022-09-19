@@ -1,3 +1,4 @@
+from cgitb import text
 from tkinter import *
 from tkinter import ttk
 
@@ -26,25 +27,44 @@ def run (frame_parent):
         return frame
 
     # criar widgets ###quadro é se seá colocado na janela ou em frame
-    def criar_label(quadro, text, font, r, c, name=""):
-        label = Label(quadro, text=text, font=font, background=co0, name=name)
+    def criar_label(quadro, text, font, r, c, name=None):
+        if name is not None:
+            label = Label(quadro, text=text, font=font, background=co0, name=name)
+        else:
+            label = Label(quadro, text=text, font=font, background=co0)
         label.grid(row=r, column=c, padx=5, pady=3, sticky = "w")
         return label
 
-    def criar_entry(quadro, font, r, c, name=""):
-        entry = Entry(quadro, font = font, justify = "left", name=name)
+    def criar_entry(quadro, font, r, c, name=None):
+        if name is not None:
+            entry = Entry(quadro, font = font, justify = "left", name=name)
+        else:
+            entry = Entry(quadro, font = font, justify = "left")
         entry.grid(row=r, column=c, padx=5, pady=3, sticky = "w")
         return entry
 
-    def criar_button(quadro, text, font, r, c, command, name=""):
-        button = Button(quadro, text = text, font = font, height = 0, command = command, name=name)
+    def criar_button(quadro, text, font, r, c, command, name=None):
+        if name is not None:
+            button = Button(quadro, text = text, font = font, height = 0, command = command, name=name)
+        else:
+            button = Button(quadro, text = text, font = font, height = 0, command = command)
         button.grid(row=r, column=c, padx=5, pady=3, sticky = "w")
         return button
 
+    def get_entries(parent):
+        lista = []
+        for child in parent.winfo_children():
+            if type(child) is Entry:
+                lista.append(child)
+        return lista
+
     def get_child_by_name(parent, name):
         for child in parent.winfo_children():
-            if child.name is name:
-                return child
+            try:
+                if child.name is name:
+                    return child
+            except:
+                continue
         return None
 
     # função que pegar o valor da caixa de entrada do "n° de sprints, ao apertar o button.
@@ -55,7 +75,7 @@ def run (frame_parent):
         except:
             return
         # frame_sprint = criar_frame(janela, valor, 4, 3, 2)
-        frame_sprint = criar_frame(frame_section0, valor, 0)
+        frame_sprint = criar_frame(frame_parent_sprints, valor, 0)
         for i in range(valor):
             criar_label(frame_sprint, f"Sprint {i+1}", "Calibri, 10", i, 0)
             criar_label(frame_sprint, "Início:", "Calibri, 10", i, 1)
@@ -104,7 +124,7 @@ def run (frame_parent):
             if num_alunos < 1:
                 continue 
 
-            num_alunos = (lambda x : 3 if x < 3 else (9 if x > 9 else x))(num_alunos)
+            num_alunos = (lambda x : 0 if x == 0 else (3 if x < 3 else (9 if x > 9 else x)))(num_alunos)
             print(num_alunos)
 
             # para cada aluno, cria um formulário de cadastro
@@ -149,12 +169,13 @@ def run (frame_parent):
 
     # Cria os campos para o cadastro de UM aluno
     def criar_formulario_aluno (parent, row):
-        criar_label(parent, "Nome:",  "Calibri, 10", row, 0)
-        criar_entry(parent,           "Calibri, 10", row, 1)
-        criar_label(parent, "E-mail:","Calibri, 10", row, 2)
-        criar_entry(parent,           "Calibri, 10", row, 3)
-        criar_label(parent, "Função:","Calibri, 10", row, 4)
-        criar_entry(parent,           "Calibri, 10", row, 5)
+        aluno = criar_frame(parent, row, 0)
+        criar_label(aluno, "Nome:",  "Calibri, 10", row, 0)
+        criar_entry(aluno,           "Calibri, 10", row, 1)
+        criar_label(aluno, "E-mail:","Calibri, 10", row, 2)
+        criar_entry(aluno,           "Calibri, 10", row, 3)
+        criar_label(aluno, "Função:","Calibri, 10", row, 4)
+        criar_entry(aluno,           "Calibri, 10", row, 5)
         # TODO:
         # from Roles.Role import *
         # roles = ...
@@ -308,17 +329,51 @@ def run (frame_parent):
 
 
     def confirmar_cadastros():
+        from Sprints.Sprints import create_sprint
+        from Users.Authentication import CURRENT_USER
+        def to_date(value:str):
+            from datetime import date
+            l = value.split('/')
+            return date(int(l[0]), int(l[1]), int(l[2]))
         # get sprints
+        sprints = frame_parent_sprints.winfo_children()
         # for each sprint:
-        #   save to sprints.csv
+        for sprint in sprints:
+        # try:
+            s_entries = get_entries(sprint)
+            inicio = to_date(s_entries[0].get())
+            fim =    to_date(s_entries[1].get())
+            periodo = get_entry_int(s_entries[2])
+            create_sprint(CURRENT_USER.group_id, inicio, fim, periodo)
+        # except:
+            print(f'Erro ao criar sprint! {sprint}')
 
+        from Users.Authentication import create_team, register
         # get teams
+        times = frame_parent_times.winfo_children()
+        for time in times:
+            time_data = time.winfo_children()[0]
         #   name
+            name = str(get_entries(time_data)[0].get())
         #   save team
+            team_id = create_team(name, CURRENT_USER.group_id)
         #   for each member:
-        #       register(member)
+            print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+            print(time.winfo_children()[1])
+            print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+            print(time.winfo_children()[1].winfo_children())
+            print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 
-        """"""
+            for member in time.winfo_children()[1].winfo_children():
+                print(f'member {member}')
+                # m_entries = get_entries(member)
+                # print(f'm_entries {member.winfo_children()}')
+                m_name = member.winfo_children()[1].get()
+                m_email = member.winfo_children()[3].get()
+                m_role = get_entry_int(member.winfo_children()[5])
+        #       register(member)
+                register(m_name, m_email, CURRENT_USER.group_id, team_id, m_role)
+
 
     Button(janela, text="Confirmar Cadastros", font="Calibri, 14", command=confirmar_cadastros).grid(row=0, column=1, sticky='e')
 
