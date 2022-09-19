@@ -17,9 +17,6 @@ def initialize_databases ():
 
 initialize_databases()
 
-# cadastra o develano
-register("A de Emmy", "adm@a.dm", None, None, 0, custom_password='123')
-
 # cria 2 grupos
 create_group("Grupo do Develano")
 create_group("first group")
@@ -33,6 +30,9 @@ create_team("second_team_of0", 0)
 # cria 2 times no segundo grupo
 create_team("first_team_of1", 1)
 create_team("second_team_of1", 1)
+
+# cadastra o develano
+register("A de Emmy", "adm@a.dm", None, None, 0, custom_password='123')
 
 # cadastra lider do grupo teste
 register("fulanoLdG", "fulider_do@grupo.ldg", 0, None, 1, custom_password='123')

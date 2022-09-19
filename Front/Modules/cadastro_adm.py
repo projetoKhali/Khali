@@ -15,8 +15,12 @@ REQUIRED_PERMISSIONS = [
 def run (frame_parent):
 
     print("cadastro_adm.run() !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    frame_parent.grid_rowconfigure(0, weight = 1)
+    frame_parent.grid_columnconfigure(0, weight = 1)
 
     window=Frame(frame_parent)  # Criar uma janela e instanciar a classe
+    # window.configure(background="green")
+    window.grid(row=0, column=0, sticky="nsew")
 
     # Criação da função que recolhe informações cadastradas e gera código do grupo
     def criar_grupo():

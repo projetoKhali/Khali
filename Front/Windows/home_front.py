@@ -1,3 +1,4 @@
+from inspect import modulesbyfile
 from tkinter import *
 import Settings
 
@@ -7,7 +8,11 @@ co1 = "#D9D9D9"  # cinza
 co2 = "#1A1D1A"  # preta
 co3 = "#26413C"  # verde
 
+current_module = None
 modules = []
+
+frame_coluna_A = None
+frame_coluna_B = None
 
 def run():
 
@@ -39,11 +44,14 @@ def run():
 
     # COLUNA A --------------------------------------------------------------
     #frame widgets
+    global frame_coluna_A
     frame_coluna_A = criar_frame(janela, 0,0)
+
+    frame_logo = criar_frame(frame_coluna_A, 0, 0)
 
     #adiciona Logo
     img = PhotoImage(file=".\\" + Settings.RESOURCES_PATH + "\Logo_small.png")  # imagem que vai ser colocada na tela, tem que estar com formato gif
-    logo = Label(frame_coluna_A, image=img)
+    logo = Label(frame_logo, image=img)
     logo.photo = img
     logo.grid(row = 0, column = 0, sticky = 'n')
 
@@ -51,8 +59,10 @@ def run():
     global modules
     modules = ModulesManager.get_modules()
 
-    for module in modules:
-        criar_button(frame_coluna_A, module.MODULE_NAME, "Calibri, 14", lambda: module.run(frame_coluna_B), 1,0, 'w', 5, 5)
+    frame_tabs = criar_frame(frame_coluna_A, 1, 0)
+
+    for tab_index, module in enumerate(modules):
+        criar_button(frame_tabs, module.MODULE_NAME, "Calibri, 14", lambda i=tab_index: run_module(i), tab_index, 0, 'w', 5, 5)
 
     print(f'modules: {modules}')
 
@@ -62,9 +72,21 @@ def run():
 
     # COLUNA B --------------------------------------------------------------
     #frame da segunda coluna, que muda se apertar "Cadastro" ou "Meu Perfil"
-    frame_coluna_B = criar_frame(janela, 0,1)
+    # frame_coluna_B = criar_frame(janela, 0,1)
+    # frame_coluna_B.configure(background="green")
+    # frame_coluna_B.grid(row=0, column=1, sticky="nsew")
 
-    modules[0].run(frame_coluna_B)
+    def run_module (m_index):
+        global frame_coluna_B
+        frame_coluna_B = Frame(janela)
+        frame_coluna_B.grid(row=0, column=1, sticky = "nsew")
+        global current_module
+        if current_module is not None:
+            current_module.configure(background = "red")
+            current_module.destroy()
+        current_module = modules[m_index].run(frame_coluna_B)
+
+    run_module(0)
 
     return janela
 

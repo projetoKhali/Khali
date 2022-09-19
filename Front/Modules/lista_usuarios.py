@@ -17,6 +17,7 @@ def run(frame_parent):
 
     # cria o frame do módulo
     module_frame = Frame(frame_parent, background=co0)
+    module_frame.grid(row=0, column=0, sticky="nwes")
 
     # importa o usuário logado
     from Users.Authentication import CURRENT_USER
