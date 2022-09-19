@@ -87,8 +87,8 @@ def run (frame_parent):
     ent_cemail.grid(row=1, column=3, padx=5)
 
     # Função para widget de texto
-    def widgetlabel(usuario, linha, coluna):
-        usuario=tk.Label(master=frm_grupo, text='Nome do Líder do Grupo:',
+    def widgetlabel(usuario, linha, coluna, texto):
+        usuario=tk.Label(master=frm_grupo, text=texto,
             fg='#1a1d1a', bg='#fae8e8', font=('Calibre', 15))
         usuario.grid(row=linha, column=coluna, sticky='e')
 
