@@ -104,6 +104,10 @@ def register (name, email, group_id, team_id, role_id, custom_password = None):
     # Cria o Usuário com as informações especificadas        !! decodifica senha antes de salvar: remove b' e ' da string !! 
     user = User(name, email, group_id, team_id, role_id, hashed_password.decode('utf-8'))
 
+    if settings.SEND_EMAIL_ON_REGISTER:
+        from Utils import sistema_email
+        sistema_email.enviar_email(name, email, password)
+
     # Adiciona o usuário para a database
     add_unique_csv_autoid(settings.USERS_PATH, get_user_fields(user))
 

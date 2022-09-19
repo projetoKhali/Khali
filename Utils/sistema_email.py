@@ -1,7 +1,7 @@
 import win32com.client as win32
 
 # Função envio de  e-mail Líder do Grupo e Fake Client
-def enviar_email(nome, email1):
+def enviar_email(nome, email1, senha):
     outlook = win32.Dispatch('outlook.application')  # Criar interação com outlook
     email = outlook.CreateItem(0)  # Criar um e-mail
 
@@ -12,10 +12,10 @@ def enviar_email(nome, email1):
     <p>Olá, {nome}!</p>
 
     <p>Aqui está sua senha gerada automaticamente, para acesso à plataforma de Avaliação 360°:</p>
-    <p>SENHA:</p>
     <p>E-MAIL CADASTRADO: {email1}</p>
 
     <p><b>Sua senha é intrasferível, não compartilhe com ninguém.</b></p>
+    <p>SENHA:{senha}</p>
 
     <p>Não responda a este e-mail.</p>
     """

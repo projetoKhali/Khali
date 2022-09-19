@@ -15,6 +15,8 @@ PATH_FIELDS = [
     { 'path': TEAMS_PATH,       'fields': ['id', 'group', 'name',] },
 ]
 
+SEND_EMAIL_ON_REGISTER = False
+
 # Mínimo e máximo número de caracteres permitido para o nome do Usuário
 USER_NAME_MIN_MAX = (3, 24)
 

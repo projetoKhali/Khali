@@ -1,9 +1,9 @@
 # Importar bibliotecas
+from nntplib import GroupInfo
 import tkinter as tk
 from tkinter import Frame, ttk
 from tkinter import END
 from tkinter.messagebox import NO, YES
-from Utils.sistema_email import enviar_email
 
 MODULE_NAME = 'Cadastrar'
 REQUIRED_PERMISSIONS = [
@@ -12,9 +12,10 @@ REQUIRED_PERMISSIONS = [
     2,
 ]        
 
+grupo_num = 0
+
 def run (frame_parent):
 
-    print("cadastro_adm.run() !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     frame_parent.grid_rowconfigure(0, weight = 1)
     frame_parent.grid_columnconfigure(0, weight = 1)
 
@@ -30,18 +31,21 @@ def run (frame_parent):
         nome_lider = ent_lider.get()
         email_lider = ent_lemail.get()
 
-        # envia a senha gerada para o lider
-        enviar_email(nome_lider, email_lider)
-
         # acessa as informações do cliente
         nome_client = ent_client.get()
         email_client = ent_cemail.get()
 
-        # envia a senha gerada para o cliente
-        enviar_email(nome_client, email_client)
+        from Users.Authentication import register, create_group
 
-        # codigo_str = 'GRUPO-{}'.format(grupo)
-        tree.insert('', END, values=["{codigo_str}", nome_lider, email_lider, nome_client, email_client])
+        codigo_str = f'GRUPO-{grupo_num + 1}'
+
+        group_id = create_group(codigo_str)
+
+        register(nome_lider, email_lider, group_id, None, 1)
+        register(nome_client, email_client, group_id, None, 2)
+
+
+        tree.insert('', END, values=[codigo_str, nome_lider, email_lider, nome_client, email_client])
         tree.place(relx=0.02, rely=0.02, relwidth=0.96, relheight=0.96)
 
     # window.configure(bg='#fae8e8')  # Cor do plano de fundo da tela

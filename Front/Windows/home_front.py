@@ -16,8 +16,6 @@ frame_coluna_B = None
 
 def run():
 
-    print("home_front.run() !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-
     # cria a janela
     janela = Tk()
     janela.title('')

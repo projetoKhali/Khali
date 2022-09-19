@@ -13,8 +13,6 @@ REQUIRED_PERMISSIONS = [
 
 def run(frame_parent):
 
-    print("lista_usuarios.run() !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-
     # cria o frame do módulo
     module_frame = Frame(frame_parent, background=co0)
     module_frame.grid(row=0, column=0, sticky="nwes")
