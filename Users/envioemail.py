@@ -13,8 +13,8 @@ def envio_email(nome ,to):
         # Declaração de valores de entrada e acesso 
     host = "smtp.gmail.com"
     port = "587"
-    login = "Khaligroup.fatecsjc@gmail.com"
-    password = "muvolexqtwrooghr" #FatecSjc
+    login = "Khaligroup.fatecsjc@gmail.com" #endereço de onde o email vai ser enviado
+    password = "senha123" #exemplo de senha
 
         # Faz a conexão com servidor
     server = smtplib.SMTP(host, port)
