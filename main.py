@@ -31,6 +31,13 @@ def initialize_test():
     register("devano", "devano-dev@dev.com", 0, 0, 5, custom_password='123')
     register("fulanodev", "fulano-dev@dev.com", 0, 0, 5, custom_password='123')
 
+
+from KML import KMLTeste
+
+KMLTeste.run()
+
+exit()
+
 from Front import WindowManager
 
 WindowManager.initialize()

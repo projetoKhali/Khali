@@ -1,6 +1,6 @@
 from CSV.CSVHandler import *
 from Front import WindowManager
-from Khali.Users.envioemail import envio_email
+from Users.envioemail import envio_email
 from Users.Gerar_Senha import gerar_senha
 from Users.User import User
 

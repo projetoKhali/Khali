@@ -28,17 +28,17 @@ AUTO_GEN_PW_SIZE = 7
 
 # Cores do Console
 COLS = [
-    '\u001b[0m', # Reset
+    '\u001b[0m',  # [0] Reset
 
-    '\u001b[37m', # White
+    '\u001b[37m', # [1] White
 
-    '\u001b[31m', # Red
-    '\u001b[32m', # Green
-    '\u001b[33m', # Yellow
+    '\u001b[31m', # [2] Red
+    '\u001b[32m', # [3] Green
+    '\u001b[33m', # [4] Yellow
 
-    '\u001b[34m', # Blue
-    '\u001b[35m', # Magenta
-    '\u001b[36m', # Cyan
+    '\u001b[34m', # [5] Blue
+    '\u001b[35m', # [6] Magenta
+    '\u001b[36m', # [7] Cyan
 ]
 
 # Cores hash (front / tkinter)
