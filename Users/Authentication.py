@@ -1,5 +1,6 @@
 from CSV.CSVHandler import *
 from Front import WindowManager
+from Khali.Users.envioemail import envio_email
 from Users.Gerar_Senha import gerar_senha
 from Users.User import User
 
@@ -109,6 +110,10 @@ def register (name, email, group_id, team_id, role_id, custom_password = None):
 
     # Adiciona o usuário para a database
     add_unique_csv_autoid(settings.USERS_PATH, get_user_fields(user))
+
+    import envioemail
+    # Envia email com os dados le login automaticamente para o usuário
+    envio_email(name, email)
 
 
 # Retorna uma lista com as informações de um Usuário
