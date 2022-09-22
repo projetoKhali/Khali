@@ -52,7 +52,6 @@ def login (email, senha):
     return CURRENT_USER
 
 
-
 # Efetua o Cadastro de um novo Usuário e, se efetuado com sucesso, o armazena na database .csv
 def register (name, email, group_id, team_id, role_id, custom_password = None):
 

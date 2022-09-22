@@ -217,7 +217,7 @@ def run (frame_parent):
     # janela.title('Sistema de Cadastro - Administrador')
     # janela.geometry("1200x600")
 
-    janela = criar_frame(frame_parent, 0, 0)
+    module_frame = criar_frame(frame_parent, 0, 0)
 
     # aqui coloco o tamanho da tela, largura x altura
     # tentativa de dar numero de linhas e colunas para a tabela. Se deixo ativado, os labels ficam espalhados pela tela.
@@ -230,7 +230,7 @@ def run (frame_parent):
     # lista_frame_time = []
 
     # janela_header
-    titulo=Label(janela, text='Cadastro de Times', bg='#fae8e8', font=('Calibre', 30))
+    titulo=Label(module_frame, text='Cadastro de Times', bg='#fae8e8', font=('Calibre', 30))
     titulo.grid(row=0, column=0, padx=30, pady=10, sticky='w')
 
     # frame_body = Frame(janela)
@@ -238,7 +238,7 @@ def run (frame_parent):
 
 
     # frame_body = criar_frame(janela, 1, 0)
-    frame_body = Frame(janela, bg=co0)
+    frame_body = Frame(module_frame, bg=co0)
     frame_body.grid(row=1, column=0)
 
     # frame_body.grid_rowconfigure(0, weight=1)
@@ -296,13 +296,12 @@ def run (frame_parent):
     #           |   |   header_data     (ex.: [label, entry, button])
     #           |   section_data        (ex.: [list-wrapper])
     #
-    # Onde 'section' contém 'header' e 'section_data' e
+    # Onde 'section' contém 'header' e 'section_data'
     #      'header' contém 'title' e 'header_data'
     #
     # '...._data' corresponde a uma lista de parametros a serem convertidos em widgets
     # def create_section (window, row, title, header_data, ):
     #     frame_section = criar_frame(window, row, 0)
-
 
     # cria a seção de times
     frame_section1 = criar_frame(frame_body, 2, 0)
@@ -312,7 +311,6 @@ def run (frame_parent):
     times_header = criar_frame(frame_section1, 0, 0)
     # times_header.grid_rowconfigure(0, weight=1)
     # times_header.grid_columnconfigure(0, weight=1)
-
 
     # título
     criar_label(times_header, "Times", "Calibri, 12", 0, 0)
@@ -328,56 +326,115 @@ def run (frame_parent):
     # frame_parent_times.grid_columnconfigure(0, weight=1)
 
 
+
+
+
+
+
+    # coleta os valores dos campos preenchidos e conclui o cadastro de sprints, times e seus membros
     def confirmar_cadastros():
+
+        # importa cores do console para finalidade de debug
+        from Settings import COLS
+
+        # importa o método que cria sprints
         from Sprints.Sprints import create_sprint
+
+        # importa as informações do atual usuário logado no sistema
         from Users.Authentication import CURRENT_USER
+
+        # define a função que converte o valor do tipo string 'value' em um valor do tipo date 
         def to_date(value:str):
+
+            # importa a biblioteca que contém a classe date
             from datetime import date
+
+            # divide o valor fornecido em uma lista contendo as seções separadas por /
             l = value.split('/')
-            return date(int(l[0]), int(l[1]), int(l[2]))
-        # get sprints
+
+            # retorna uma nova date utilizando os valores 1, 2 e 3 da lista
+            # l[0] = DD
+            # l[1] = MM
+            # l[2] = AAAA
+            # Obs.: a classe date utilizada o formato americano. Para a exibição, ela retornará "AAAA/MM/DD".
+            #       Para ser criada corretamente, os valores estão sendo passados na ordem 2,1,0 em vez de 0,1,2.
+            #       Caso contrário, o usuário teria que preencher 'AAAA/MM/DD' na entry da tela
+            return date(
+                int(l[2]),
+                int(l[1]),
+                int(l[0])
+            )
+
+        # acessa as children to frame_parent_sprints e executa o próximo loop
         sprints = frame_parent_sprints.winfo_children()
-        # for each sprint:
-        for sprint in sprints:
-        # try:
-            s_entries = get_entries(sprint)
-            inicio = to_date(s_entries[0].get())
-            fim =    to_date(s_entries[1].get())
-            periodo = get_entry_int(s_entries[2])
-            create_sprint(CURRENT_USER.group_id, inicio, fim, periodo)
-        # except:
-            print(f'Erro ao criar sprint! {sprint}')
+        for frame_sprint in sprints:
 
+            # acessa o frame que contém as informações do time
+            #           frame_parent_times
+            #           |  [x] frame_sprint.get_entries():         <--
+            #           |   |  [0] inicio
+            #           |   |  [1] fim
+            #           |   |  [2] periodo de avaliação
+            try:
+                s_entries = get_entries(frame_sprint)
+                inicio = to_date(s_entries[0].get())
+                fim =    to_date(s_entries[1].get())
+                periodo = get_entry_int(s_entries[2])
+                create_sprint(CURRENT_USER.group_id, inicio, fim, periodo)
+            except:
+                print(COLS[2] + f'Erro ao criar sprint: {frame_sprint}' + COLS[0])
+
+        # Importa as funções de criar time e cadastro de usuário
         from Users.Authentication import create_team, register
-        # get teams
-        times = frame_parent_times.winfo_children()
-        for time in times:
-            time_data = time.winfo_children()[0]
-        #   name
-            name = str(get_entries(time_data)[0].get())
-        #   save team
-            team_id = create_team(name, CURRENT_USER.group_id)
-        #   for each member:
-            print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-            print(time.winfo_children()[1])
-            print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-            print(time.winfo_children()[1].winfo_children())
-            print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 
-            for member in time.winfo_children()[1].winfo_children():
-                print(f'member {member}')
+        # acessa as children do frame_parent_times e executa o próximo loop
+        times = frame_parent_times.winfo_children()
+        for frame_time in times:
+
+            # acessa o frame que contém as informações do time
+            #           frame_parent_times
+            #           |  [x] frame_time
+            #           |   |  [0] time_data        <--
+            #           |   |   |   nome
+            #           |   |   |   qtd alunos
+            time_data = frame_time.winfo_children()[0]
+            name = str(get_entries(time_data)[0].get())
+            team_id = create_team(name, CURRENT_USER.group_id)
+
+            # acessa os frames de 'member' dentro do child 1 do frame_time
+            #           |   |  [x] frame_time
+            #           |   |   |  [1] members      <--
+            #           |   |   |   |  [0] member 0
+            #           |   |   |   |  [1] member 1
+            #           |   |   |   |  [2] member 2
+            for member in frame_time.winfo_children()[1].winfo_children():
+
+                # print(f'member {member}')
                 # m_entries = get_entries(member)
                 # print(f'm_entries {member.winfo_children()}')
-                m_name = member.winfo_children()[1].get()
-                m_email = member.winfo_children()[3].get()
-                m_role = get_entry_int(member.winfo_children()[5])
-        #       register(member)
-                register(m_name, m_email, CURRENT_USER.group_id, team_id, m_role)
 
+                # Acessa as entries dentro do frame 'member' para adquirir os valores necessarios pro cadastro
+                #       |   |   |   |  [x] member x
+                #       |   |   |   |   |  [0] label "nome:"
+                #       |   |   |   |   |  [1] entry {nome}
+                #       |   |   |   |   |  [2] label "email:"
+                #       |   |   |   |   |  [3] entry {email}
+                #       |   |   |   |   |  [4] label "role:"
+                #       |   |   |   |   |  [5] entry {role}
+                try:
+                    m_name = member.winfo_children()[1].get()
+                    m_email = member.winfo_children()[3].get()
+                    m_role = get_entry_int(member.winfo_children()[5])
+                    register(m_name, m_email, CURRENT_USER.group_id, team_id, m_role)
+                except:
+                    print(COLS[2] + f'Erro ao criar membro: {member}' + COLS[0])
+                    continue
 
-    Button(janela, text="Confirmar Cadastros", font="Calibri, 14", command=confirmar_cadastros).grid(row=0, column=1, sticky='e')
+    # Cria o botão responsável por efetuar os cadastros 
+    Button(module_frame, text="Confirmar Cadastros", font="Calibri, 14", command=confirmar_cadastros).grid(row=0, column=1, sticky='e')
 
-    return janela
+    # retorna o modulo
+    return module_frame
 
 
 

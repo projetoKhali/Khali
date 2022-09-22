@@ -37,7 +37,11 @@ def run (frame_parent):
 
         from Users.Authentication import register, create_group
 
-        codigo_str = f'GRUPO-{grupo_num + 1}'
+        # TODO: codigo_str -> group_name
+        # criar label e entry para definir o nome do grupo a ser criado
+        global grupo_num
+        grupo_num += 1
+        codigo_str = f'GRUPO-{grupo_num}'
 
         group_id = create_group(codigo_str)
 
