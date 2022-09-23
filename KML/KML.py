@@ -36,13 +36,22 @@ class label (Tag):
 # Mapeia os parametros das funções do tkinter aos seus tipos de variavel aceitados
 PARAM_MAP = {
     # param     :  [types] , [priority values], default value
-    'title'     : [[str], [], ['unnamed window']],
+    'title'     : [[str], [], ['unnamed window'], ''],
     'res'       : [[int], [], '400x300'],
 
-    'bg'        : [[str], ['white','black','red','green','blue','cyan','yellow','magenta',], ''],
-    'text'      : [[str], [], ''],
+    'bg'        : [[str], ['white','black','red','green','blue','cyan','yellow','magenta',], 'white'],
     'r'         : [[int], [], 0],
     'c'         : [[int], [], 0],
+    'sticky'    : [[], ['n','e','w','s','ne','nw','se','sw','ns','ew','new','sew','nse','nsw','news'], 'w'],
+
+    'padx'      : [[], [], 0],
+    'pady'      : [[], [], 0],
+
+    'text'      : [[str], [], ''],
+    'font'      : [[str], [], 'Calibri'],
+    'font-size' : [[], [10, 12, 14, 16, 20, 22, 24], 10],
+
+
 }
 
 def check_param_type (field, value):
@@ -53,27 +62,27 @@ def check_param_type (field, value):
 
 # Mapeia as funções do tkinter aos diferentes tipos de Tag
 FUNCTION_MAP = {
-#    tipo  : (         função          , [      parametros      ]),
-    'window': (KMLFunctions.create_window, ['title', 'res',       ]),
-    'frame':  (KMLFunctions.create_frame,  ['bg',         'r', 'c']),
-    'label':  (KMLFunctions.create_label,  ['bg', 'text', 'r', 'c']),
+#    tipo       : (          função          , [                      parametros                     ]),
+    'window'    : (KMLFunctions.create_window, ['title', 'res',                                      ]),
+    'frame'     : (KMLFunctions.create_frame,  ['bg', 'padx', 'pady',              'r', 'c', 'sticky']),
+    'label'     : (KMLFunctions.create_label,  ['bg', 'text', 'font', 'font-size', 'r', 'c', 'sticky']),
 }
 
 # Acessa a função no mapa de funções para o tipo de Tag fornecido
-def get_function(_type):
+def get_function_data(_type):
     try:
-        function = FUNCTION_MAP[_type]
-        print(COLS[3] + f'KML.get_function -- type {_type} returns function {function}' + COLS[0])
+        function_data = FUNCTION_MAP[_type]
+        print(COLS[3] + f'KML.get_function -- type {_type} returns function {function_data}' + COLS[0])
     except:
         print(COLS[2] + f"KML.get_function -- ERRO: função não encontrada para a tag de tipo '{_type}'" + COLS[0])
-    return function
+    return function_data
 
 # Executa a Tag fornecida requisitando a função correspondente ao seu tipo no mapa de funções 
 # e conectando parametros automaticamente 
 def run_tag(tag, parent):
     print(f'KML.run_tag -- tag "{tag}" | parent: "{parent}"')
     print(f'content: {tag.content}')
-    function_data = get_function(tag.type)
+    function_data = get_function_data(tag.type)
     return run_function(function_data[0], parent, get_params(function_data[1], tag))
 
 def run_function (function, parent, params):
@@ -149,24 +158,3 @@ def get_params(fields, tag):
 
     # Retorne a lista de parametros gerada
     return params
-
-
-
-
-
-
-
-things = [1, 2, 3, 'a', 'b', 'c']
-other_things = [thing for thing in things if type(thing) is int]
-
-
-
-
-
-print(other_things)
-
-
-# tag = Tag("label", "", "c")
-# print(tag.type)
-# print(tag.name)
-# print(tag.content)
