@@ -32,9 +32,9 @@ def initialize_test():
     register("fulanodev", "fulano-dev@dev.com", 0, 0, 5, custom_password='123')
 
 
-from KML import KMLTeste
-KMLTeste.run()
-exit()
+# from KML import KMLTeste
+# KMLTeste.run()
+# exit()
 
 initialize_test()
 

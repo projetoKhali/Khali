@@ -49,9 +49,13 @@ def run():
         ),                                                  
 
     )
+    
     janela.run()
+
+
 def printa_clique():
     print("clicou :D")
+
 
 def run_tkinter():
     janela = Tk()

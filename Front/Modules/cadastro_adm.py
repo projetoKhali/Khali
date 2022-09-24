@@ -1,5 +1,4 @@
 # Importar bibliotecas
-from nntplib import GroupInfo
 import tkinter as tk
 from tkinter import Frame, ttk
 from tkinter import END
@@ -47,7 +46,6 @@ def run (frame_parent):
 
         register(nome_lider, email_lider, group_id, None, 1)
         register(nome_client, email_client, group_id, None, 2)
-
 
         tree.insert('', END, values=[codigo_str, nome_lider, email_lider, nome_client, email_client])
         tree.place(relx=0.02, rely=0.02, relwidth=0.96, relheight=0.96)

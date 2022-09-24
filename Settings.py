@@ -3,6 +3,7 @@ USERS_PATH  = "data/users"
 GROUPS_PATH = "data/groups"
 SPRINTS_PATH = "data/sprints"
 TEAMS_PATH  = "data/teams"
+RATINGS_PATH  = "data/ratings"
 
 RESOURCES_PATH  = "resources"
 
@@ -13,9 +14,10 @@ PATH_FIELDS = [
     { 'path': GROUPS_PATH,      'fields': ['id', 'name'] },
     { 'path': SPRINTS_PATH,     'fields': ['id', 'group', 'start', 'finish', 'rating period'] },
     { 'path': TEAMS_PATH,       'fields': ['id', 'group', 'name',] },
+    { 'path': RATINGS_PATH,     'fields': ['id', 'from_user_id', 'to_user_id', 'value', 'comment'] },
 ]
 
-SEND_EMAIL_ON_REGISTER = False
+SEND_EMAIL_ON_REGISTER = True
 
 # Mínimo e máximo número de caracteres permitido para o nome do Usuário
 USER_NAME_MIN_MAX = (3, 24)

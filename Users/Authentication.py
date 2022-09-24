@@ -83,7 +83,6 @@ def register (name, email, group_id, team_id, role_id, custom_password = None):
 
     # Inicializa variável senha para armazenamento
     password = str(custom_password)
-
     if password is None:
 
         # Atualiza a senha toda vez que uma senha gerada é inválida
@@ -107,9 +106,9 @@ def register (name, email, group_id, team_id, role_id, custom_password = None):
     if settings.SEND_EMAIL_ON_REGISTER:
         # from Utils import sistema_email
         # sistema_email.enviar_email(name, email, password)
-        import envioemail
+        from Utils.sistema_envio_email import envio_email
         # Envia email com os dados le login automaticamente para o usuário
-        envio_email(name, email)
+        envio_email(name, email, password)
 
     # Adiciona o usuário para a database
     add_unique_csv_autoid(settings.USERS_PATH, get_user_fields(user))
