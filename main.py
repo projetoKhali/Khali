@@ -40,11 +40,13 @@ initialize_test()
 
 from Front import WindowManager
 
+# register("Jhow Jhow", 'jhooliveira.lopes@gmail.com', 0, 0, 5)
+
 WindowManager.initialize()
 
 # teste - login automatico
 # login(email='fulider_do@grupo.ldg', senha='123')
-login(email='l@d.g', senha='123')
+login(email='a@d.m', senha='123')
 
 # from CSV.CSVHandler import load_file_csv
 # from Settings import USERS_PATH
