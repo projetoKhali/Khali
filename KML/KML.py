@@ -1,5 +1,7 @@
 from . import KMLFunctions
 from Settings import COLS
+from .KMLUtils import *
+from KML import KMLUtils
 
 # Representa uma Tag que contem informações para a criação de um objeto tkinter
 class Tag:
@@ -33,19 +35,34 @@ class label (Tag):
     def run(self, parent):
         return super().run(parent)
 
+class entry (Tag):
+    def __init__(self, *_content):
+        super().__init__('entry', *_content)
+    def run(self, parent):
+        return super().run(parent)
+
+class button (Tag):
+    def __init__(self, *_content):
+        super().__init__('button', *_content)
+    def run(self, parent):
+        return super().run(parent)
+
 # Mapeia os parametros das funções do tkinter aos seus tipos de variavel aceitados
 PARAM_MAP = {
     # param     :  [types] , [priority values], default value
     'title'     : [[str], [], ['unnamed window'], ''],
-    'res'       : [[int], [], '400x300'],
+    'res'       : [[], value_is_resolution, '400x300'],
 
     'bg'        : [[str], ['white','black','red','green','blue','cyan','yellow','magenta',], 'white'],
     'r'         : [[int], [], 0],
     'c'         : [[int], [], 0],
-    'sticky'    : [[], ['n','e','w','s','ne','nw','se','sw','ns','ew','new','sew','nse','nsw','news'], 'w'],
+    'sticky'    : [[], ['n','e','w','s','ne','nw','se','sw','ns','ew','new','sew','nse','nsw','news'], None],
 
     'padx'      : [[], [], 0],
     'pady'      : [[], [], 0],
+    'justify'   : [[], [], None],
+
+    'command'   : [[], value_is_function, None],
 
     'text'      : [[str], [], ''],
     'font'      : [[str], [], 'Calibri'],
@@ -55,17 +72,21 @@ PARAM_MAP = {
 }
 
 def check_param_type (field, value):
-    result = type(value) in PARAM_MAP[field][0] or value in PARAM_MAP[field][1]
+    result = type(value) in PARAM_MAP[field][0]
+    if not result:
+        result = PARAM_MAP[field][1](value) if KMLUtils.value_is_function(PARAM_MAP[field][1]) else value in PARAM_MAP[field][1]
     print(f'KML.check_param_type -- field: "{field}" | value: "{value}" | result: "{result}"')
     return result
 
 
 # Mapeia as funções do tkinter aos diferentes tipos de Tag
 FUNCTION_MAP = {
-#    tipo       : (          função          , [                      parametros                     ]),
-    'window'    : (KMLFunctions.create_window, ['title', 'res',                                      ]),
-    'frame'     : (KMLFunctions.create_frame,  ['bg', 'padx', 'pady',              'r', 'c', 'sticky']),
-    'label'     : (KMLFunctions.create_label,  ['bg', 'text', 'font', 'font-size', 'r', 'c', 'sticky']),
+#    tipo       : (          função          , [                                parametros                                 ]),
+    'window'    : (KMLFunctions.create_window, ['title', 'res', 'bg',                                                      ]),
+    'frame'     : (KMLFunctions.create_frame,  ['bg', 'padx', 'pady',                                    'r', 'c', 'sticky']),
+    'label'     : (KMLFunctions.create_label,  ['bg', 'text', 'font', 'font-size', 'justify',            'r', 'c', 'sticky']),
+    'entry'     : (KMLFunctions.create_entry,  ['bg',         'font', 'font-size', 'justify',            'r', 'c', 'sticky']),
+    'button'    : (KMLFunctions.create_button, ['bg', 'text', 'font', 'font-size', 'justify', 'command', 'r', 'c', 'sticky']),
 }
 
 # Acessa a função no mapa de funções para o tipo de Tag fornecido

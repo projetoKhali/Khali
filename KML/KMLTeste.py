@@ -5,6 +5,7 @@ def run():
     janela = window(                                    # Tag janela
         'window test title',                            # titulo
         '1000x600',                                     # resolução
+        '#FAE8E8',                                      # background
         frame(                                              # Tag frame
             0, 0,                                           # row, column
             frame(                                              # Tag frame
@@ -27,15 +28,30 @@ def run():
             ),
             frame(                                                  # Tag frame
                 'blue',                                             # bg 
-                1, 1,                                               # row, column 
+                1, 2,                                               # row, column 
                 {'padx':20},                                        # padx 
                 {'pady':20},                                        # pady 
                 label('yellow', "coluna B label 1", 0, 0, 'ew'),        # Tag label(bg, text, font-size, row, column, sticky)
                 label('white', "coluna B label 2", 0, 1, 'ew'),         # Tag label(bg, text, font-size, row, column, sticky)
             ),
         ),
+        frame(                                              # Tag frame
+            2, 0,                                           # row, column
+            frame(                                              # Tag frame
+                'cyan',                                         # bg
+                0, 0,                                           # row, column
+                {'padx':20},                                    # padx
+                {'pady':20},                                    # pady
+                label('magenta', "entry & button:", 10, 0, 0,),
+                entry('yellow', 10, 0, 1,),
+                button('red', "clica aqui amigo(a)", 10, printa_clique, 0, 2,),
+            ),                                                  
+        ),                                                  
+
     )
     janela.run()
+def printa_clique():
+    print("clicou :D")
 
 def run_tkinter():
     janela = Tk()

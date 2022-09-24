@@ -20,7 +20,7 @@ def initialize_test():
     register("A de Emmy", "a@d.m", None, None, 0, custom_password='123')
 
     # cadastra lider do grupo teste
-    register("fulanoLdG", "fulider_do@grupo.ldg", 0, None, 1, custom_password='123')
+    register("L do Gê", "l@d.g", 0, None, 1, custom_password='123')
 
     # cadastra cliente teste
     register("clielano", "fulano.cliente@cliente.c", 0, None, 2)
@@ -33,10 +33,10 @@ def initialize_test():
 
 
 from KML import KMLTeste
-
 KMLTeste.run()
-
 exit()
+
+initialize_test()
 
 from Front import WindowManager
 
@@ -44,12 +44,13 @@ WindowManager.initialize()
 
 # teste - login automatico
 # login(email='fulider_do@grupo.ldg', senha='123')
+login(email='l@d.g', senha='123')
 
-from CSV.CSVHandler import load_file_csv
-from Settings import USERS_PATH
-if load_file_csv(USERS_PATH) is None:
-#     login(email='a@d.m', senha='123')
-    initialize_test()
+# from CSV.CSVHandler import load_file_csv
+# from Settings import USERS_PATH
+# if load_file_csv(USERS_PATH) is None:
+#     # login(email='a@d.m', senha='123')
+#     initialize_test()
 
 WindowManager.update()
 
