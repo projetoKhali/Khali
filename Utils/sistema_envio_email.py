@@ -1,6 +1,6 @@
 # import win32com.client as win32
 
-def envio_email(nome ,to):
+def envio_email(nome, to, senha):
     from http import server
     import smtplib
     from email.mime.multipart import MIMEMultipart
@@ -32,7 +32,7 @@ def envio_email(nome ,to):
             Olá, {nome}!
             segue abaixo seus dados para acessar nossa plataforma
             email: {to}
-            senha: 
+            senha: {senha}
 
             não compartilhe sua senha com ninguêm!
 

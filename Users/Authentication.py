@@ -1,13 +1,11 @@
 from CSV.CSVHandler import *
 from Front import WindowManager
-from Users.envioemail import envio_email
 from Users.Gerar_Senha import gerar_senha
 from Users.User import User
+from Models import Groups, Teams
 
 import Settings as settings
 from .Roles.Role import *
-
-#region Users
 
 CURRENT_USER = None
 
@@ -67,17 +65,17 @@ def register (name, email, group_id, team_id, role_id, custom_password = None):
         return
 
     # Verifica se o Grupo fornceido é válido. Cancela o processo caso não seja.
-    if not exists_group (group_id):
+    if not Groups.exists_group (group_id):
         print(COLS[2] + f'Authentication.Register -- Erro: Grupo de id {group_id} não existe' + COLS[0])
         return
 
     # Verifica se o Time fornecido é válido. Cancela o processo caso não seja.
-    if not exists_team (team_id):
+    if not Teams.exists_team (team_id):
         print(COLS[2] + f'Authentication.Register -- Erro: Time de id {team_id} não existe' + COLS[0])
         return
 
     # Verifica se a Função fornecida é válida. Cancela o processo caso não seja.
-    if not exists_role (role_id):
+    if not get_role(role_id) is not None:
         print(COLS[2] + f'Authentication.Register -- Erro: Função de id {role_id} não existe' + COLS[0])
         return
 
@@ -125,10 +123,6 @@ def get_user_fields (user:User):
         user.role_id,
         user.password
     ]
-
-#endregion
-
-#region User Register Validation
 
 # Retorna True se o nome especificado é valido e False se não
 def validate_user_name(name:str):
@@ -214,48 +208,3 @@ def validate_user_password(password:str):
 
     # Após o loop, retorna Verdadeiro caso as 3 booleanas sejam True
     return (letters and digits and punctuations)
-
-#endregion
-
-#region Grupos
-
-# Cria e armazena um novo Grupo com o nome fornecido
-def create_group (name:str):
-    return add_unique_csv_autoid(settings.GROUPS_PATH, [name])
-
-# Verifica se um Grupo com o id forneido existe armazenado no banco de dados
-def exists_group (id:int):
-    if id is None:
-        return True
-    return find_data_by_id_csv(settings.GROUPS_PATH, id) is not None 
-
-# retorna o nome do Grupo que corresponde ao id especificado 
-def get_group_name (id:int):
-    return find_data_by_id_csv(settings.GROUPS_PATH, id)['name'] 
-
-#endregion
-
-#region Times
-
-# Cria e armazena um novo Time com o nome fornecido
-def create_team (name:str, group:int):
-    return add_unique_csv_autoid(settings.TEAMS_PATH, [group, name])
-
-# Verifica se um Time com o id forneido existe armazenado no banco de dados
-def exists_team (id:int):
-    if id is None:
-        return True
-    return find_data_by_id_csv(settings.TEAMS_PATH, id) is not None 
-
-# retorna o nome do Time que corresponde ao id especificado 
-def get_team_name (id:int):
-    return find_data_by_id_csv(settings.TEAMS_PATH, id)['name'] 
-
-#endregion
-
-#region Funções
-
-def exists_role (id:int):
-    return get_role(id) is not None
-
-#endregion
