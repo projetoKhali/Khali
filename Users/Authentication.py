@@ -1,11 +1,11 @@
 from CSV.CSVHandler import *
 from Front import WindowManager
 from Users.Gerar_Senha import gerar_senha
-from Users.User import User
+from Models.User import User
 from Models import Groups, Teams
 
 import Settings as settings
-from .Roles.Role import *
+from Models.Role import *
 
 CURRENT_USER = None
 
@@ -85,7 +85,7 @@ def register (name, email, group_id, team_id, role_id, custom_password = None):
 
         # Atualiza a senha toda vez que uma senha gerada é inválida
         while not validate_user_password(password):
-            password = gerar_senha()
+            password = Gerar_Senha.gerar_senha()
 
     print (f'email: {email} | password: {password}')
 

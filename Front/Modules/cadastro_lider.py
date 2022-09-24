@@ -1,6 +1,4 @@
-from cgitb import text
 from tkinter import *
-from tkinter import ttk
 
 # cores
 co0 = "#FAE8E8" #rosa
@@ -385,7 +383,8 @@ def run (frame_parent):
                 print(COLS[2] + f'Erro ao criar sprint: {frame_sprint}' + COLS[0])
 
         # Importa as funções de criar time e cadastro de usuário
-        from Users.Authentication import create_team, register
+        from Users.Authentication import register
+        from Models.Teams import create_team
 
         # acessa as children do frame_parent_times e executa o próximo loop
         times = frame_parent_times.winfo_children()

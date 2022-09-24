@@ -17,7 +17,7 @@ PATH_FIELDS = [
     { 'path': RATINGS_PATH,     'fields': ['id', 'from_user_id', 'to_user_id', 'value', 'comment'] },
 ]
 
-SEND_EMAIL_ON_REGISTER = True
+SEND_EMAIL_ON_REGISTER = False
 
 # Mínimo e máximo número de caracteres permitido para o nome do Usuário
 USER_NAME_MIN_MAX = (3, 24)

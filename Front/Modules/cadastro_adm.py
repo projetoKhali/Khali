@@ -34,7 +34,8 @@ def run (frame_parent):
         nome_client = ent_client.get()
         email_client = ent_cemail.get()
 
-        from Users.Authentication import register, create_group
+        from Users.Authentication import register
+        from Models.Groups import create_group
 
         # TODO: codigo_str -> group_name
         # criar label e entry para definir o nome do grupo a ser criado

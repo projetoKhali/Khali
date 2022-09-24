@@ -38,7 +38,7 @@ def run(frame_parent):
     frame_user = criar_frame(frame_parent, 0, 0)
 
     # importa a função que transforma role_id em nome da role
-    from Users.Authentication import get_role_name
+    from Models.Role import get_role_name
 
     # ###testes
     # user_group_members = handler.find_data_list_by_field_value_csv(Settings.USERS_PATH, 'group_id', grupo_id)

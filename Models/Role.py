@@ -1,8 +1,4 @@
-
 # Representa uma Função / um tipo de Usuário
-from random import getrandbits
-
-
 class Role:
 
     # O nome da função

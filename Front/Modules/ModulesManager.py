@@ -9,7 +9,7 @@ MODULES = [
 
 def get_modules():
     from Users.Authentication import CURRENT_USER
-    from Users.Roles import Role 
+    from Models import Role 
     role = Role.get_role(int(CURRENT_USER.role_id))
     allowed_modules = []
     for module in MODULES:
