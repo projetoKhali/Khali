@@ -336,7 +336,7 @@ def run (frame_parent):
         from Settings import COLS
 
         # importa o método que cria sprints
-        from Sprints.Sprints import create_sprint
+        from Models.Sprints import create_sprint
 
         # importa as informações do atual usuário logado no sistema
         from Users.Authentication import CURRENT_USER
