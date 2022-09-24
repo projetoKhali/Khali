@@ -85,7 +85,7 @@ def register (name, email, group_id, team_id, role_id, custom_password = None):
 
         # Atualiza a senha toda vez que uma senha gerada é inválida
         while not validate_user_password(password):
-            password = Gerar_Senha.gerar_senha()
+            password = gerar_senha()
 
     print (f'email: {email} | password: {password}')
 

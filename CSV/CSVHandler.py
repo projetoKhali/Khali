@@ -1,4 +1,3 @@
-
 # Importa a biblioteca que permite manipular arquivos .csv
 import os
 from array import array
@@ -18,7 +17,7 @@ def check_path(path, debug):
 
 # Retorna o conteudo da linha onde estiver localizada a informação fornecida
 def find_data_csv (path:str, key:str):
-    check_path(path, 'find_data_csv')
+    # check_path(path, 'find_data_csv')
 
     # Tenta executar o próximo código
     try:
@@ -48,7 +47,7 @@ def find_data_csv (path:str, key:str):
 
 # Retorna o conteudo da linha onde estiver localizada a informação fornecida
 def find_data_by_id_csv (path:str, key:str):
-    check_path(path, 'find_data_by_id_csv')
+    # check_path(path, 'find_data_by_id_csv')
 
     # Tenta executar o próximo código
     try:
@@ -84,7 +83,7 @@ def find_data_by_id_csv (path:str, key:str):
     return None
 
 def find_data_list_by_field_value_csv(path:str, field:str, value:str):
-    check_path(path, 'find_data_list_by_field_value_csv')
+    # check_path(path, 'find_data_list_by_field_value_csv')
 
     # Tenta executar o próximo código
     try:
@@ -154,7 +153,7 @@ def get_path_fields (path:str):
 # Fields    =   Os campos que estarão presentes na tabela { name, email, group, role }      <--- linha 0
 # Rows      =   A lista de arrays em que cada array representa uma linha na tabela {[linha1], [linha2], [linha3]}
 def save_file_csv (path:str, fields:array, rows:array):
-    check_path(path, 'save_file_csv')
+    # check_path(path, 'save_file_csv')
     
     # Acompanhamento de processo pelo terminal
     print(COLS[6] + "Iniciando processo de salvamento de um arquivo csv\t" + f"Caminho: {path}" + COLS[0])
@@ -199,7 +198,7 @@ def load_file_csv (path:str):
 
 # Escreve a linha espeificada no arquivo .csv especificado
 def add_line_csv (path:str, row:str):
-    check_path(path, 'add_line_csv')
+    # check_path(path, 'add_line_csv')
 
     # Acompanhamento de processo pelo terminal
     print(COLS[6] + "CSVHandler.add_line: Iniciando processo de acrescentamento de um arquivo csv\t" + f"Caminho: {path}" + COLS[0])
@@ -217,7 +216,7 @@ def add_line_csv (path:str, row:str):
 
 # Escreve uma linha de informação "Unica" com o chave 'id' e valor especificado 'row'
 def add_unique_csv (path:str, id:int, row):
-    check_path(path, 'add_unique_csv')
+    # check_path(path, 'add_unique_csv')
 
     # Acompanhamento de processo pelo terminal
     print(COLS[6] + "CSVHandler.add_unique_csv: Iniciando processo de armazenamento de informação identificada por id" + COLS[0])
@@ -242,7 +241,7 @@ def add_unique_csv (path:str, id:int, row):
 # Escreve uma linha de informação "Unica" o valor especificado 'row'
 # A chave 'id' será definida como o proximo valor disponivel
 def add_unique_csv_autoid (path:str, row):
-    check_path(path, 'add_unique_csv_autoid')
+    # check_path(path, 'add_unique_csv_autoid')
 
     # Acompanhamento de processo pelo terminal
     print(COLS[6] + "CSVHandler.add_unique_csv_autoid: Iniciando processo de armazenamento de informação identificada utilizando associação automatica de id" + COLS[0])

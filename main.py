@@ -4,6 +4,17 @@ from Models.Teams import create_team
 
 def initialize_test():
 
+    delete_csv(USERS_PATH)
+    save_file_csv(USERS_PATH, get_path_fields(USERS_PATH), [])
+    delete_csv(GROUPS_PATH)
+    save_file_csv(GROUPS_PATH, get_path_fields(GROUPS_PATH), [])
+    delete_csv(SPRINTS_PATH)
+    save_file_csv(SPRINTS_PATH, get_path_fields(SPRINTS_PATH), [])
+    delete_csv(TEAMS_PATH)
+    save_file_csv(TEAMS_PATH, get_path_fields(TEAMS_PATH), [])
+    delete_csv(RATINGS_PATH)
+    save_file_csv(RATINGS_PATH, get_path_fields(RATINGS_PATH), [])
+
     # cria 2 grupos
     create_group("Grupo do Develano")
     create_group("first group")

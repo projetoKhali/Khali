@@ -1,6 +1,6 @@
 from datetime import date
 from CSV.CSVHandler import *
-import Settings 
+from Settings import SPRINTS_PATH 
 
 # Cria uma sprint e salva na database
 # parametros:
@@ -9,4 +9,4 @@ import Settings
 # finish   - a data de término da sprint
 # rating_period - a quantidade de dias disponíveis para efetur as avaliações referentes a sprint
 def create_sprint (group_id:int, start:date, finish:date, rating_period:int):
-    return add_unique_csv_autoid(Settings.SPRINTS_PATH, [group_id, start, finish, rating_period])
+    return add_unique_csv_autoid(SPRINTS_PATH, [group_id, start, finish, rating_period])
