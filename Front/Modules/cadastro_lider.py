@@ -125,7 +125,7 @@ def run (frame_parent):
                 continue 
 
             num_alunos = (lambda x : 0 if x == 0 else (3 if x < 3 else (9 if x > 9 else x)))(num_alunos)
-            print(num_alunos)
+            print(f'num_alunos: {num_alunos}')
 
             # para cada aluno, cria um formulário de cadastro
             for i in range(num_alunos):
