@@ -20,7 +20,7 @@ def run(frame_parent):
     # importa o usuário logado
     from Users.Authentication import CURRENT_USER
 
-    # cria uma lista com os usuários do grupo e time do usuário logado
+    # cria uma lista com os usuários a serem avaliados pelo usuário logado
     users = lista_usuarios_back.get_users(CURRENT_USER.email)
 
     # função de criar frame
