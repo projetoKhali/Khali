@@ -6,14 +6,15 @@ co0 = "#FAE8E8"  # rosa
 co1 = "#D9D9D9"  # cinza
 co2 = "#1A1D1A"  # preta
 
-MODULE_NAME = 'Lista'
-REQUIRED_PERMISSIONS = [
-    [8, 9, 10]  # pelo menos uma das 3
-]        
-# REQUIRED_RATINGS = [
-#     [3, 4, 5]  # pelo menos uma das 3
-# ]        
+# Informações do modulo
+NAME = 'Lista'
+REQUIRED_PERMISSIONS_REG  = [None]
+REQUIRED_PERMISSIONS_RATE = [
+    [3, 4, 5]  # pelo menos uma das 3
+]
+REQUIRED_PERMISSIONS_VIEW = [None]
 
+# executa o modulo e retorna
 def run(frame_parent):
 
     # cria o frame do módulo

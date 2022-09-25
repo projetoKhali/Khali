@@ -4,15 +4,16 @@ from tkinter import Frame, ttk
 from tkinter import END
 from tkinter.messagebox import NO, YES
 
-MODULE_NAME = 'Cadastrar'
-REQUIRED_PERMISSIONS = [
-    0,
-    1,
-    2,
-]        
+# Informações do modulo
+NAME = 'Cadastrar'
+REQUIRED_PERMISSIONS_REG = [0, 1, 2]        
+REQUIRED_PERMISSIONS_RATE = [None]
+REQUIRED_PERMISSIONS_VIEW = [None]
 
+# armazena o numero do grupo durante o cadastro
 grupo_num = 0
 
+# executa o modulo e retorna
 def run (frame_parent):
 
     frame_parent.grid_rowconfigure(0, weight = 1)

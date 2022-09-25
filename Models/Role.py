@@ -1,33 +1,27 @@
 # Representa uma Função / um tipo de Usuário
 class Role:
-
-    # O nome da função
-    name:str = ""
-
-    # As permissões que esse tipo de Usuário possui 
-    permissions = None
-    ratings = None
-
+    
     # Cria um novo tipo de Usuário
-    def __init__(self, n, p, r):
-        self.name = n
-        self.permissions = p
-        self.ratings = r
+    def __init__(self, _name, _permissions_reg, _permissions_rate, _permissions_view=None):
+        self.name = _name
+        self.permissions_reg = _permissions_reg
+        self.permissions_rate = _permissions_rate
+        self.permissions_view = _permissions_view
 
 # Lista de Funções existentes
 ROLES = [
-    Role("ADM",             [ 0, 1, 2, ], []),
+    Role("ADM",             [0, 1, 2      ], [             ]),
 
     # 1 por Grupo
-    Role("Lider do Grupo",  [ 3, 4, 5, 6, 7, 8], [3]),
-    Role("Cliente",         [ 9 ], [4]),
+    Role("Lider do Grupo",  [3, 4, 5, 6, 7], [3            ]),
+    Role("Cliente",         [             ], [4            ]),
 
     # 1 por Time
-    Role("Lider Técnico",   [8, 9, 10 ], [3, 4, 5]),
-    Role("Product Owner",   [8, 9, 10 ], [3, 4, 5]),
+    Role("Lider Técnico",   [             ], [3, 4, 5      ]),
+    Role("Product Owner",   [             ], [3, 4, 5      ]),
 
     # 0+ por Time
-    Role("Developer",       [8, 9, 10 ], [3, 4, 5])
+    Role("Developer",       [             ], [3, 4, 5      ])
 ]
 
 # Retorna a função com id solicitado

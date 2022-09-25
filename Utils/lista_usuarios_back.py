@@ -14,6 +14,12 @@ def get_users(email):
     #lista com os usuários que deverão ser avaliados pelo logado
     rate_users = []
 
+    from Models import Role
+    role = Role.get_role(line_dict["role_id"])
+    for group_member in user_group_members:
+        if int(group_member["role_id"]) in role.permissions_rate:
+            rate_users.append(group_member)
+
     #se o papel do logado for Lider do Grupo
     if line_dict["role_id"] == 1:
         for group_member in user_group_members:

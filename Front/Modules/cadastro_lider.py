@@ -5,15 +5,13 @@ co0 = "#FAE8E8" #rosa
 co1 = "#D9D9D9" #cinza
 co2 = "#1A1D1A" #preta
 
-MODULE_NAME = 'Cadastrar'
-REQUIRED_PERMISSIONS = [
-    3,
-    4,
-    5,
-    6,
-    7,
-]        
+# Informações do modulo
+NAME = 'Cadastrar'
+REQUIRED_PERMISSIONS_REG = [3, 4, 5, 6, 7]        
+REQUIRED_PERMISSIONS_RATE = [None]
+REQUIRED_PERMISSIONS_VIEW = [None]
 
+# executa o modulo e retorna
 def run (frame_parent):
 
     # função de criar frame

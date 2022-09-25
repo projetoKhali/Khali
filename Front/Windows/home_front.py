@@ -60,7 +60,7 @@ def run():
     frame_tabs = criar_frame(frame_coluna_A, 1, 0)
 
     for tab_index, module in enumerate(modules):
-        criar_button(frame_tabs, module.MODULE_NAME, "Calibri, 14", lambda i=tab_index: run_module(i), tab_index, 0, 'w', 5, 5)
+        criar_button(frame_tabs, module.NAME, "Calibri, 14", lambda i=tab_index: run_module(i), tab_index, 0, 'w', 5, 5)
 
     print(f'modules: {modules}')
 
