@@ -10,6 +10,9 @@ MODULE_NAME = 'Lista'
 REQUIRED_PERMISSIONS = [
     [8, 9, 10]  # pelo menos uma das 3
 ]        
+# REQUIRED_RATINGS = [
+#     [3, 4, 5]  # pelo menos uma das 3
+# ]        
 
 def run(frame_parent):
 

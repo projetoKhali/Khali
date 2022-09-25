@@ -36,7 +36,15 @@ def initialize_test():
     register("L do Gê", "l@d.g", 0, None, 1, custom_password='123')
 
     # cadastra cliente teste
-    register("clielano", "fulano.cliente@cliente.c", 0, None, 2)
+    register("clielano", "c@c.c", 0, None, 2, custom_password='123')
+
+    register("lt um", "p1@o.com", 0, 0, 4, custom_password='123')
+    register("lt dois", "p2@o.com", 0, 1, 4, custom_password='123')
+    register("lt tres", "p3@o.com", 1, 0, 4, custom_password='123')
+
+    register("po um", "p1@o.com", 0, 0, 4, custom_password='123')
+    register("po dois", "p2@o.com", 0, 1, 4, custom_password='123')
+    register("po tres", "p3@o.com", 1, 0, 4, custom_password='123')
 
     # cadastra developer teste
     register("developano", "developano-dev@dev.com", 0, 0, 5, custom_password='123')
@@ -58,8 +66,9 @@ from Front import WindowManager
 WindowManager.initialize()
 
 # teste - login automatico
-# login(email='fulider_do@grupo.ldg', senha='123')
-login(email='a@d.m', senha='123')
+login(email='l@d.g', senha='123')
+# login(email='a@d.m', senha='123')
+# login(email='c@c.c', senha='123')
 
 # from CSV.CSVHandler import load_file_csv
 # from Settings import USERS_PATH
