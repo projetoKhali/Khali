@@ -34,6 +34,8 @@ def create_label(parent, a):
         Label(
             parent,
             bg=a['bg'],
+            padx=a['padx'],
+            pady=a['pady'],
             text=a['text'],
             font=f"{a['font']}, {a['font-size']}",
             justify=a['justify']
@@ -48,6 +50,8 @@ def create_entry(parent, a):
         Entry(
             parent,
             bg=a['bg'],
+            padx=a['padx'],
+            pady=a['pady'],
             font=f"{a['font']}, {a['font-size']}",
             justify=a['justify']
         ),
@@ -61,6 +65,8 @@ def create_button(parent, a):
         Button(
             parent,
             bg=a['bg'],
+            padx=a['padx'],
+            pady=a['pady'],
             text=a['text'],
             font=f"{a['font']}, {a['font-size']}",
             justify=a['justify'],

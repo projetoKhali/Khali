@@ -23,29 +23,29 @@ class window (Tag):
         w.mainloop()
         return w
 
+class module (Tag):
+    def __init__(self, _name, _req_regi, _req_rate, _req_view, *_content):
+        self.NAME = _name,
+        self.REQUIRED_PERMISSIONS_REG = _req_regi
+        self.REQUIRED_PERMISSIONS_RATE = _req_rate
+        self.REQUIRED_PERMISSIONS_VIEW = _req_view
+        super().__init__('module', *_content)
+
 class frame (Tag):
     def __init__(self, *_content):
         super().__init__('frame', *_content)
-    def run(self, parent):
-        return super().run(parent)
 
 class label (Tag):
     def __init__(self, *_content):
         super().__init__('label', *_content)
-    def run(self, parent):
-        return super().run(parent)
 
 class entry (Tag):
     def __init__(self, *_content):
         super().__init__('entry', *_content)
-    def run(self, parent):
-        return super().run(parent)
 
 class button (Tag):
     def __init__(self, *_content):
         super().__init__('button', *_content)
-    def run(self, parent):
-        return super().run(parent)
 
 # Mapeia os parametros das funções do tkinter aos seus tipos de variavel aceitados
 PARAM_MAP = {
@@ -81,12 +81,13 @@ def check_param_type (field, value):
 
 # Mapeia as funções do tkinter aos diferentes tipos de Tag
 FUNCTION_MAP = {
-#    tipo       : (          função          , [                                parametros                                 ]),
-    'window'    : (KMLFunctions.create_window, ['title', 'res', 'bg',                                                      ]),
-    'frame'     : (KMLFunctions.create_frame,  ['bg', 'padx', 'pady',                                    'r', 'c', 'sticky']),
-    'label'     : (KMLFunctions.create_label,  ['bg', 'text', 'font', 'font-size', 'justify',            'r', 'c', 'sticky']),
-    'entry'     : (KMLFunctions.create_entry,  ['bg',         'font', 'font-size', 'justify',            'r', 'c', 'sticky']),
-    'button'    : (KMLFunctions.create_button, ['bg', 'text', 'font', 'font-size', 'justify', 'command', 'r', 'c', 'sticky']),
+#    tipo       : (          função          , [                                         parametros                                        ]),
+    'window'    : (KMLFunctions.create_window, ['title', 'res', 'bg',                                                                      ]),
+    'module'    : (KMLFunctions.create_module, ['name', 'req_reg', '_req_rate', '_req_view',                                               ]),
+    'frame'     : (KMLFunctions.create_frame,  ['bg', 'padx', 'pady',                                                    'r', 'c', 'sticky']),
+    'label'     : (KMLFunctions.create_label,  ['bg', 'padx', 'pady', 'text', 'font', 'font-size', 'justify',            'r', 'c', 'sticky']),
+    'entry'     : (KMLFunctions.create_entry,  ['bg', 'padx', 'pady',         'font', 'font-size', 'justify',            'r', 'c', 'sticky']),
+    'button'    : (KMLFunctions.create_button, ['bg', 'padx', 'pady', 'text', 'font', 'font-size', 'justify', 'command', 'r', 'c', 'sticky']),
 }
 
 # Acessa a função no mapa de funções para o tipo de Tag fornecido

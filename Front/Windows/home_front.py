@@ -1,4 +1,3 @@
-from inspect import modulesbyfile
 from tkinter import *
 import Settings
 
@@ -14,7 +13,11 @@ modules = []
 frame_coluna_A = None
 frame_coluna_B = None
 
+janela = None
+
 def run():
+
+    global janela
 
     # cria a janela
     janela = Tk()
@@ -74,17 +77,18 @@ def run():
     # frame_coluna_B.configure(background="green")
     # frame_coluna_B.grid(row=0, column=1, sticky="nsew")
 
-    def run_module (m_index):
-        global frame_coluna_B
-        frame_coluna_B = Frame(janela)
-        frame_coluna_B.grid(row=0, column=1, sticky = "nsew")
-        global current_module
-        if current_module is not None:
-            current_module.configure(background = "red")
-            current_module.destroy()
-        current_module = modules[m_index].run(frame_coluna_B)
-
     run_module(0)
 
     return janela
+
+def run_module (m_index):
+    global janela
+    global frame_coluna_B
+    frame_coluna_B = Frame(janela)
+    frame_coluna_B.grid(row=0, column=1, sticky = "nsew")
+    global current_module
+    if current_module is not None:
+        current_module.configure(background = "red")
+        current_module.destroy()
+    current_module = modules[m_index].run(frame_coluna_B)
 

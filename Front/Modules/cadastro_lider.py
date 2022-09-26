@@ -7,7 +7,7 @@ co2 = "#1A1D1A" #preta
 
 # Informações do modulo
 NAME = 'Cadastrar'
-REQUIRED_PERMISSIONS_REG = [3, 4, 5, 6, 7]        
+REQUIRED_PERMISSIONS_REG = [3, 4, 5, 6, 7]
 REQUIRED_PERMISSIONS_RATE = [None]
 REQUIRED_PERMISSIONS_VIEW = [None]
 
@@ -16,7 +16,7 @@ def run (frame_parent):
 
     # função de criar frame
     def criar_frame(quadro, row, column):
-        frame = Frame(quadro, background = co0, relief=FLAT, bd=1)
+        frame = Frame(quadro, background = co0, bd=1)
         frame.rowconfigure(row, minsize = 10)  # Quantas linhas o frame terá
         frame.columnconfigure(column, minsize = 100)  # Quantas colunas o frame terá
         frame.grid(row=row, column=column, padx=10, sticky='w') # Local onde o frame será colocado
@@ -120,7 +120,7 @@ def run (frame_parent):
             if num_alunos < 1:
                 continue 
 
-            num_alunos = (lambda x : 0 if x == 0 else (3 if x < 3 else (9 if x > 9 else x)))(num_alunos)
+            num_alunos = 0 if num_alunos == 0 else (3 if num_alunos < 3 else (9 if num_alunos > 9 else num_alunos))
             print(f'num_alunos: {num_alunos}')
 
             # para cada aluno, cria um formulário de cadastro

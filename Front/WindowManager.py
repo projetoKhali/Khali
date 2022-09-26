@@ -40,11 +40,13 @@ def launch():
 
     # Se a atual janela aberta não é nula, destrua
     if CURRENT_WINDOW_INSTANCE is not None:
-        CURRENT_WINDOW_INSTANCE.destroy()
+        CURRENT_WINDOW_INSTANCE[0] = None
+        CURRENT_WINDOW_INSTANCE[1].destroy()
 
-    CURRENT_WINDOW_INSTANCE = STATES[CURRENT_STATE].run()
+    CURRENT_WINDOW_INSTANCE = [STATES[CURRENT_STATE], None]
+    CURRENT_WINDOW_INSTANCE[1] = CURRENT_WINDOW_INSTANCE[0].run()
 
 
 def update():
-    CURRENT_WINDOW_INSTANCE.mainloop()
+    CURRENT_WINDOW_INSTANCE[1].mainloop()
 
