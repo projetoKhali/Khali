@@ -172,30 +172,6 @@ def save_file_csv (path:str, fields:array, rows:array):
 
         print(COLS[3] + "Arquivo .csv salvo com sucesso!" + COLS[0])
 
-# Carrega um arquivo csv e retorna os dados adquiridos pela leitura
-def load_file_csv (path:str):
-
-    # Acompanhamento de processo pelo terminal
-    print(COLS[6] + "Iniciando processo de carregamento de um arquivo csv\n" + f"Caminho: {path}" + COLS[0])
-
-    # Tenta executar o próximo código
-    try:
-
-        # Carrega o arquivo na variável 'reader'
-        reader = csv.reader(path + '.csv')
-
-    # Em caso de erro durante o processo de leitura do arquivo (Ex.: path inválido): 
-    except:
-
-        # Printa o Erro no console
-        print(COLS[2] + "Erro ao carregar arquivo .csv!" + COLS[0])
-        return None # interrompe a execução do método 'load'
-
-    print(COLS[3] + f"Arquivo carregado com sucesso!\n{reader}" + COLS[0])
-
-    # Retorna o texto carregado
-    return reader
-
 # Escreve a linha espeificada no arquivo .csv especificado
 def add_line_csv (path:str, row:str):
     # check_path(path, 'add_line_csv')
@@ -241,7 +217,7 @@ def add_unique_csv (path:str, id:int, row):
 # Escreve uma linha de informação "Unica" o valor especificado 'row'
 # A chave 'id' será definida como o proximo valor disponivel
 def add_unique_csv_autoid (path:str, row):
-    # check_path(path, 'add_unique_csv_autoid')
+    check_path(path, 'add_unique_csv_autoid')
 
     # Acompanhamento de processo pelo terminal
     print(COLS[6] + "CSVHandler.add_unique_csv_autoid: Iniciando processo de armazenamento de informação identificada utilizando associação automatica de id" + COLS[0])

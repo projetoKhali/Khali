@@ -4,17 +4,6 @@ from Models.Teams import create_team
 
 def initialize_test():
 
-    delete_csv(USERS_PATH)
-    save_file_csv(USERS_PATH, get_path_fields(USERS_PATH), [])
-    delete_csv(GROUPS_PATH)
-    save_file_csv(GROUPS_PATH, get_path_fields(GROUPS_PATH), [])
-    delete_csv(SPRINTS_PATH)
-    save_file_csv(SPRINTS_PATH, get_path_fields(SPRINTS_PATH), [])
-    delete_csv(TEAMS_PATH)
-    save_file_csv(TEAMS_PATH, get_path_fields(TEAMS_PATH), [])
-    delete_csv(RATINGS_PATH)
-    save_file_csv(RATINGS_PATH, get_path_fields(RATINGS_PATH), [])
-
     # cria 2 grupos
     create_group("Grupo do Develano")
     create_group("first group")
@@ -54,11 +43,10 @@ def initialize_test():
     register("fulanodev", "fulano-dev@dev.com", 0, 0, 5, custom_password='123')
 
 
-# from KML import KMLTeste
-# KMLTeste.run()
-# exit()
-
-initialize_test()
+# Inicializa os bancos de dados populado com informações teste caso não exista um arquivo users.csv
+import os
+if not os.path.exists(USERS_PATH + '.csv'):
+    initialize_test()
 
 from Front import WindowManager
 
@@ -67,15 +55,10 @@ from Front import WindowManager
 WindowManager.initialize()
 
 # teste - login automatico
-login(email='a@d.m', senha='123')
 # login(email='a@d.m', senha='123')
 # login(email='c@c.c', senha='123')
+# login(email='a@d.m', senha='123')
 
-# from CSV.CSVHandler import load_file_csv
-# from Settings import USERS_PATH
-# if load_file_csv(USERS_PATH) is None:
-#     # login(email='a@d.m', senha='123')
-#     initialize_test()
 
 WindowManager.update()
 

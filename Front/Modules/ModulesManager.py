@@ -1,6 +1,9 @@
 from . import cadastro_adm, cadastro_lider, lista_usuarios
 from Settings import COLS
 
+# Define se o acompanhamento de processo via console será habilitado durante a execução
+DEBUG = False
+
 # Define os módulos disponíveis
 MODULES = [
     lista_usuarios,
@@ -10,7 +13,7 @@ MODULES = [
 
 # Retorna os modulos disponiveis para o usuário logado
 def get_modules():
-    print(COLS[6] + f'ModulesManager.get_modules -- iniciando requisição de modulos' + COLS[0])
+    console(6, f'ModulesManager.get_modules -- iniciando requisição de modulos')
     from Users.Authentication import CURRENT_USER
     from Models import Role 
 
@@ -22,11 +25,11 @@ def get_modules():
 
     # para cadaa modulo dentre os existentes,
     for module in MODULES:
-        print(COLS[6] + f'ModulesManager.get_modules -- verifiando modulo {module.NAME}' + COLS[0])
+        console(6, f'ModulesManager.get_modules -- verifiando modulo {module.NAME}')
 
         # verifica se as permissões do tipo do usuario logado 
         # correspondem as permissões necessárias para o modulo 
-        if check_permissions(role.permissions_reg , module.REQUIRED_PERMISSIONS_REG , module.NAME+'_REG') \
+        if check_permissions(role.permissions_reg , module.REQUIRED_PERMISSIONS_REG , module.NAME+'_REG' ) \
         or check_permissions(role.permissions_rate, module.REQUIRED_PERMISSIONS_RATE, module.NAME+'_RATE') \
         or check_permissions(role.permissions_view, module.REQUIRED_PERMISSIONS_VIEW, module.NAME+'_VIEW') :
 
@@ -34,15 +37,15 @@ def get_modules():
             allowed_modules.append(module)
 
     # printa a lista de modulos permitidos e a retorna
-    print(COLS[6] + f'ModulesManager.get_modules -- allowed_modules: {allowed_modules}' + COLS[0])
+    console(6, f'ModulesManager.get_modules -- allowed_modules: {allowed_modules}')
     return allowed_modules
 
 # Retorna True caso as permissões fornecidas correspondem as permissões necessárias do modulo target
 def check_permissions(permissions, required_permissions, name = "unnamed"):
-    print(COLS[5] + f'ModulesManager.check_permissions -- module {name}: ' + COLS[0])
+    console(5, f'ModulesManager.check_permissions -- module {name}: ')
 
     if None in required_permissions:
-        print(COLS[2] + f'ModulesManager.check_permissions -- module {name}: \'None\' encontrado, lista será ignorada' + COLS[0])
+        console(2, f'ModulesManager.check_permissions -- module {name}: \'None\' encontrado, lista será ignorada')
         return False
 
     # inicializa a contagem de permissões cumpridas
@@ -58,7 +61,7 @@ def check_permissions(permissions, required_permissions, name = "unnamed"):
 
     # define a quantidade de permissões necessárias que devem ser cumpridas para o modulo target 
     len_required = len(required_permissions)
-    print(COLS[3] + f'ModulesManager.check_permissions -- module {name}: {p_fulfilled} of {len_required} fulfilled '+ COLS[0])
+    console(3, f'ModulesManager.check_permissions -- module {name}: {p_fulfilled} of {len_required} fulfilled ')
 
     # retorna True se a contagem de permissões cumpridas for igual a quantidade de permissões solicitadas
     # caso contrario retorna False
@@ -73,11 +76,11 @@ def check_required(permissions, required):
 
         # verifica se essa permissão corresponde a 'required'
         if check_permission(permission, required):
-            print(COLS[3] + f'ModulesManager.check_required -- required permission {required} GRANTED!' + COLS[0])
+            console(3, f'ModulesManager.check_required -- required permission {required} GRANTED!')
             return True
 
     # Loop finalizado sem encontrar uma correspondencia, nenhuma permissão em 'permissions' corresponde a 'required'
-    print(COLS[2] + f'ModulesManager.check_required -- required permission {required} DENIED!' + COLS[0])
+    console(2, f'ModulesManager.check_required -- required permission {required} DENIED!')
     return False
 
 # Retorna True caso a permissão fornecida corresponda a permissão 'required'
@@ -86,14 +89,18 @@ def check_permission(permission, required):
 
     # caso required seja um numero, retorna a comparação de ambas
     if type(required) is int:
-        print(f'ModulesManager.check_permission -- required is int | {permission} == {required}? {permission == required}')
+        console(0, f'ModulesManager.check_permission -- required is int | {permission} == {required}? {permission == required}')
         return permission == required
 
     # caso 'required' NÃO seja uma lista, retorna False pois required deve ser apenas 'int' ou 'list'
     if type(required) is not list:
-        print(f'ModulesManager.check_permission -- ERROR -- required is not list! invalid required! ')
+        console(0, f'ModulesManager.check_permission -- ERROR -- required is not list! invalid required! ')
         return False
 
     # 'required' é uma lista, retorna o resultado da verificação de pertinencia
-    print(f'ModulesManager.check_permission -- required is list | {permission} in {required}? {permission in required}')
+    console(0, f'ModulesManager.check_permission -- required is list | {permission} in {required}? {permission in required}')
     return permission in required
+
+def console (col, message):
+    if DEBUG:
+        print(COLS[col] + message + COLS[0])
