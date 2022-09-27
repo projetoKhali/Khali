@@ -10,7 +10,7 @@ from Models.Role import *
 CURRENT_USER = None
 
 # Efetua o login de Usuário e, se efetuado com sucesso, retorna o User logado 
-def login (email, senha):
+def login (email, senha, no_UI=False):
 
     # Acessa o usuário que corresponde ao email fornecido na database
     try:
@@ -46,7 +46,8 @@ def login (email, senha):
         user_data['password']
     )
 
-    WindowManager.next_state()
+    if not no_UI:
+        WindowManager.next_state()
 
     return CURRENT_USER
 

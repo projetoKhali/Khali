@@ -47,13 +47,29 @@ class button (Tag):
     def __init__(self, *_content):
         super().__init__('button', *_content)
 
+class img (Tag):
+    def __init__(self, *_content):
+        super().__init__('img', *_content)
+
+class loop (Tag):
+    list_function = None
+    iter_function = None
+    def __init__(self, list_function, iter_function, *_content):
+        self.list_function = list_function
+        self.iter_function = iter_function
+        super().__init__('loop', *_content)
+
 # Mapeia os parametros das funções do tkinter aos seus tipos de variavel aceitados
 PARAM_MAP = {
     # param     :  [types] , [priority values], default value
-    'title'     : [[str], [], ['unnamed window'], ''],
+    'title'     : [[str], [], 'unnamed window'],
     'res'       : [[], value_is_resolution, '400x300'],
 
+    'file'      : [[], value_is_file, None],
+
     'bg'        : [[str], ['white','black','red','green','blue','cyan','yellow','magenta',], 'white'],
+    'fg'        : [[str], ['white','black','red','green','blue','cyan','yellow','magenta',], 'white'],
+
     'r'         : [[int], [], 0],
     'c'         : [[int], [], 0],
     'sticky'    : [[], ['n','e','w','s','ne','nw','se','sw','ns','ew','new','sew','nse','nsw','news'], None],
@@ -81,13 +97,15 @@ def check_param_type (field, value):
 
 # Mapeia as funções do tkinter aos diferentes tipos de Tag
 FUNCTION_MAP = {
-#    tipo       : (          função          , [                                         parametros                                        ]),
-    'window'    : (KMLFunctions.create_window, ['title', 'res', 'bg',                                                                      ]),
-    'module'    : (KMLFunctions.create_module, ['name', 'req_reg', '_req_rate', '_req_view',                                               ]),
-    'frame'     : (KMLFunctions.create_frame,  ['bg', 'padx', 'pady',                                                    'r', 'c', 'sticky']),
-    'label'     : (KMLFunctions.create_label,  ['bg', 'padx', 'pady', 'text', 'font', 'font-size', 'justify',            'r', 'c', 'sticky']),
-    'entry'     : (KMLFunctions.create_entry,  ['bg', 'padx', 'pady',         'font', 'font-size', 'justify',            'r', 'c', 'sticky']),
-    'button'    : (KMLFunctions.create_button, ['bg', 'padx', 'pady', 'text', 'font', 'font-size', 'justify', 'command', 'r', 'c', 'sticky']),
+#    tipo       : (          função          , [                                            parametros                                           ]),
+    'window'    : (KMLFunctions.create_window, ['title', 'res', 'bg',                                                                            ]),
+    'module'    : (KMLFunctions.create_frame,  ['bg',                                    'padx', 'pady',                       'r', 'c', 'sticky']),
+    'frame'     : (KMLFunctions.create_frame,  ['bg',                                    'padx', 'pady',                       'r', 'c', 'sticky']),
+    'label'     : (KMLFunctions.create_label,  ['bg',       'text', 'font', 'font-size', 'padx', 'pady', 'justify',            'r', 'c', 'sticky']),
+    'entry'     : (KMLFunctions.create_entry,  ['bg',               'font', 'font-size', 'padx', 'pady', 'justify',            'r', 'c', 'sticky']),
+    'button'    : (KMLFunctions.create_button, ['bg', 'fg', 'text', 'font', 'font-size', 'padx', 'pady', 'justify', 'command', 'r', 'c', 'sticky']),
+    'img'       : (KMLFunctions.create_img,    ['file',                                                                        'r', 'c', 'sticky']),
+    'loop'      : (KMLFunctions.create_loop,   [                                                                                                 ]),
 }
 
 # Acessa a função no mapa de funções para o tipo de Tag fornecido
@@ -105,13 +123,13 @@ def run_tag(tag, parent):
     print(f'KML.run_tag -- tag "{tag}" | parent: "{parent}"')
     print(f'content: {tag.content}')
     function_data = get_function_data(tag.type)
-    return run_function(function_data[0], parent, get_params(function_data[1], tag))
+    return run_function(function_data[0], tag, parent, get_params(function_data[1], tag))
 
-def run_function (function, parent, params):
+def run_function (function, tag, parent, params):
     print(COLS[6] + f'KML.run_function -- function: "{function}" | parent: "{parent}" | params: "{params}"' + COLS[0])
     if parent is None:
-        return function(params)
-    return function(parent, params)
+        return function(tag, params)
+    return function(tag, parent, params)
 
 # Retorna uma lista com as informações na tag que correspondem aos campos 'fields' fornecidos
 def get_params(fields, tag):

@@ -53,6 +53,13 @@ def initialize_test():
     # register("devano", "devano-dev@dev.com", 0, 0, 5, custom_password='123')
     # register("fulanodev", "fulano-dev@dev.com", 0, 0, 5, custom_password='123')
 
+from Front.Windows import home_front_KML
+from KML import KMLTeste
+
+login(email='l@d.g', senha='123', no_UI=True)
+
+home_front_KML.run()
+exit()
 
 initialize_test()
 
@@ -69,8 +76,8 @@ login(email='l@d.g', senha='123')
 
 WindowManager.CURRENT_WINDOW_INSTANCE[0].run_module(1)
 
-from Front.Modules import cadastro_lider_KML 
-cadastro_lider_KML.run()
+# home_front_KML.run()
+home_front_KML.run()
 # exit()
 
 # from CSV.CSVHandler import load_file_csv

@@ -1,4 +1,5 @@
 from tkinter import *
+from unittest import result
 
 def grid (obj, r, c, s):
     if s:
@@ -7,7 +8,7 @@ def grid (obj, r, c, s):
         obj.grid(row=r, column=c)
     return obj
 
-def create_window(a):
+def create_window(tag, a):
     window = Tk()
     window.title(a['title'])
     window.geometry(a['res']) 
@@ -16,7 +17,7 @@ def create_window(a):
     window.configure(background=a['bg'])
     return window
 
-def create_frame(parent, a):
+def create_frame(tag, parent, a):
     return grid(
         Frame(
             parent,
@@ -29,7 +30,7 @@ def create_frame(parent, a):
         a['sticky']
     )
 
-def create_label(parent, a):
+def create_label(tag, parent, a):
     return grid(
         Label(
             parent,
@@ -45,13 +46,13 @@ def create_label(parent, a):
         a['sticky']
     )
 
-def create_entry(parent, a):
+def create_entry(tag, parent, a):
     return grid(
         Entry(
             parent,
             bg=a['bg'],
-            padx=a['padx'],
-            pady=a['pady'],
+            # padx=a['padx'],
+            # pady=a['pady'],
             font=f"{a['font']}, {a['font-size']}",
             justify=a['justify']
         ),
@@ -60,10 +61,11 @@ def create_entry(parent, a):
         a['sticky']
     )
 
-def create_button(parent, a):
+def create_button(tag, parent, a):
     return grid(
         Button(
             parent,
+            fg=a['fg'],
             bg=a['bg'],
             padx=a['padx'],
             pady=a['pady'],
@@ -76,3 +78,25 @@ def create_button(parent, a):
         a['c'],
         a['sticky']
     )
+
+def create_img(tag, parent, a):
+    from Settings import RESOURCES_PATH
+    kml_img = PhotoImage(file=f"{RESOURCES_PATH}\\{a['file']}")
+    kml_lbl = Label(parent, image=kml_img)
+    kml_lbl.photo = kml_img
+    return grid(
+        kml_lbl,
+        a['r'],
+        a['c'],
+        a['sticky']
+    )
+
+def create_loop (tag, parent, a):
+    results = []
+    from KML.KMLUtils import value_is_function
+    items = tag.list_function() if value_is_function(tag.list_function) else tag.list_function
+    for index, item in enumerate(items):
+        iteration_tag = tag.iter_function(tag, index, item)
+        results.append(iteration_tag.run(parent))
+
+    return results

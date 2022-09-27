@@ -15,7 +15,7 @@ frame_coluna_B = None
 
 janela = None
 
-def run():
+def run(init_module = True):
 
     global janela
 
@@ -51,7 +51,7 @@ def run():
     frame_logo = criar_frame(frame_coluna_A, 0, 0)
 
     #adiciona Logo
-    img = PhotoImage(file=".\\" + Settings.RESOURCES_PATH + "\Logo_small.png")  # imagem que vai ser colocada na tela, tem que estar com formato gif
+    img = PhotoImage(file=Settings.RESOURCES_PATH + "\Logo_small.png")  # imagem que vai ser colocada na tela, tem que estar com formato gif
     logo = Label(frame_logo, image=img)
     logo.photo = img
     logo.grid(row = 0, column = 0, sticky = 'n')
@@ -63,7 +63,7 @@ def run():
     frame_tabs = criar_frame(frame_coluna_A, 1, 0)
 
     for tab_index, module in enumerate(modules):
-        criar_button(frame_tabs, module.NAME, "Calibri, 14", lambda i=tab_index: run_module(i), tab_index, 0, 'w', 5, 5)
+        criar_button(frame_tabs, module.NAME, "Calibri, 14", lambda i=tab_index: init_module(i), tab_index, 0, 'w', 5, 5)
 
     print(f'modules: {modules}')
 
@@ -77,7 +77,8 @@ def run():
     # frame_coluna_B.configure(background="green")
     # frame_coluna_B.grid(row=0, column=1, sticky="nsew")
 
-    run_module(0)
+    if init_module:
+        run_module(0)
 
     return janela
 

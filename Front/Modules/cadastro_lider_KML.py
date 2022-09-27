@@ -1,6 +1,6 @@
 from KML.KML import *
 
-def run ():
+def run (parent):
     m = module(
         'Cadastrar',
         [3, 4, 5, 6, 7],
@@ -8,5 +8,5 @@ def run ():
         [None],
     )
 
-    m.run()
+    m.run(parent)
     return m
