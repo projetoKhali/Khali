@@ -1,4 +1,5 @@
 # Importar bibliotecas
+from asyncio.windows_events import NULL
 import tkinter as tk
 from tkinter import Frame, ttk
 from tkinter import END
@@ -34,6 +35,12 @@ def run (frame_parent):
         # acessa as informações do cliente
         nome_client = ent_client.get()
         email_client = ent_cemail.get()
+
+        print("Valores: ", nome_lider, email_lider, nome_client, email_client,)
+
+        if len(nome_lider) == 0  or len(email_lider) == 0  or len(nome_client) == 0  or len(email_client) == 0:
+            print("valores nulos, por favor inserir dados válidos.")
+            return
 
         from Users.Authentication import register
         from Models.Groups import create_group
