@@ -36,8 +36,7 @@ def run (frame_parent):
         nome_client = ent_client.get()
         email_client = ent_cemail.get()
 
-        print("Valores: ", nome_lider, email_lider, nome_client, email_client,)
-
+        # criando uma condição que lê o input do usuário impedindo o programa de criar um registro vazio
         if len(nome_lider) == 0  or len(email_lider) == 0  or len(nome_client) == 0  or len(email_client) == 0:
             print("valores nulos, por favor inserir dados válidos.")
             return
