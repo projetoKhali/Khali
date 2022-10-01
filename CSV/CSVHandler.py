@@ -142,10 +142,10 @@ def format_line_csv (fields, line:str):
     return data
 
 def get_path_fields (path:str):
-    for path_fields in PATH_FIELDS:
-        if path_fields['path'] == path:
-            return path_fields['fields']
-    return ("id","data")
+    try:
+        return PATH_FIELDS[path]
+    except:
+        return ('id', 'data')
 
 # Salva um banco de dados CSV
 # Parametros:

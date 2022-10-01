@@ -59,7 +59,7 @@ def run(init_module = True):
                         'r'        : index    ,
                         'c'        : 0        ,
                         'sticky'   : 'w'      ,
-                        'command':lambda i=index, t=tag: print(f'{tag}|{index}')
+                        'command':lambda i=index, t=tag: t.root.dispatch_event('module_select')
                     })
                     
                 )
