@@ -20,15 +20,20 @@ frame_coluna_B = None
 def run(init_module = True):
 
     w = window(
-        'window test title',
+        '@window',
+        'Home (KML)',
         '1000x600',
-        '#FAE8E8',
+        'white',
 
         # frame_coluna_A
         frame(
+            '@frame_coluna_A',
+            {'sticky':'nw'},
 
             # frame logo
             frame(
+                '@frame_logo',
+                {'sticky':'nw'},
 
                 # logo
                 img('Logo_small.png', {'sticky':'n'})
@@ -36,7 +41,10 @@ def run(init_module = True):
 
             # frame tabs | contém os botões seletores de modulo
             frame(
+                '@frame_tabs',
                 1, 0,
+                '#FAE8E8',
+                {'sticky':'nw'},
 
                 # tag loop - executa o loop na lista fornecida
                 loop(
@@ -61,10 +69,13 @@ def run(init_module = True):
 
         # frame_coluna_B
         frame(
+            '@frame_coluna_B',
 
         )
     )
 
     w.run()
+
+    print(w.content)
 
     return w

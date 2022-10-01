@@ -1,5 +1,4 @@
 from tkinter import *
-from unittest import result
 
 def grid (obj, r, c, s):
     if s:
@@ -72,7 +71,7 @@ def create_button(tag, parent, a):
             text=a['text'],
             font=f"{a['font']}, {a['font-size']}",
             justify=a['justify'],
-            command=a['command']
+            command=a['command'],
         ),
         a['r'],
         a['c'],
@@ -81,7 +80,11 @@ def create_button(tag, parent, a):
 
 def create_img(tag, parent, a):
     from Settings import RESOURCES_PATH
+    # try:
     kml_img = PhotoImage(file=f"{RESOURCES_PATH}\\{a['file']}")
+    # except:
+    #     pass
+        # kml_img = PhotoImage(file=f"{RESOURCES_PATH}\\None.png")
     kml_lbl = Label(parent, image=kml_img)
     kml_lbl.photo = kml_img
     return grid(

@@ -8,8 +8,12 @@ class Tag:
     def __init__(self, _type, *_content):
         self.type = _type
         self.content = _content
+        self.id = [i for i in self.content if value_is_id(i)]
+        # if self.id is not None:
+        #     self.content.remove(self.id)
     def run(self, parent):
         print(COLS[7] + f'Tag.run() {self.type} {self.content} {type(self)}' + COLS[0])
+        print(self.id)
         self.tk_obj = run_tag(self, parent)
         for child_tag in [i for i in self.content if type(i) is Tag or issubclass(type(i), Tag)]:
             child_tag.run(self.tk_obj)
@@ -59,13 +63,14 @@ class loop (Tag):
         self.iter_function = iter_function
         super().__init__('loop', *_content)
 
+
 # Mapeia os parametros das funções do tkinter aos seus tipos de variavel aceitados
 PARAM_MAP = {
     # param     :  [types] , [priority values], default value
     'title'     : [[str], [], 'unnamed window'],
     'res'       : [[], value_is_resolution, '400x300'],
 
-    'file'      : [[], value_is_file, None],
+    'file'      : [[], value_is_file, 'None.png'],
 
     'bg'        : [[str], ['white','black','red','green','blue','cyan','yellow','magenta',], 'white'],
     'fg'        : [[str], ['white','black','red','green','blue','cyan','yellow','magenta',], 'white'],
@@ -84,10 +89,9 @@ PARAM_MAP = {
     'font'      : [[str], [], 'Calibri'],
     'font-size' : [[], [10, 12, 14, 16, 20, 22, 24], 10],
 
-
 }
 
-def check_param_type (field, value):
+def check_param_type (field, value):        
     result = type(value) in PARAM_MAP[field][0]
     if not result:
         result = PARAM_MAP[field][1](value) if KMLUtils.value_is_function(PARAM_MAP[field][1]) else value in PARAM_MAP[field][1]
@@ -139,7 +143,7 @@ def get_params(fields, tag):
 
     # Inicializa uma lista que armazenará os dados da Tag que já foram associados a um campo da função
     tag_taken_content = []
-    current_index = 0
+    current_index = 1 if (False if len(tag.content) < 1 else value_is_id(tag.content[0])) else 0
 
     # Define uma função local que associa um valor da tag a um campo através do indice
     def assign_from_index(field, content):

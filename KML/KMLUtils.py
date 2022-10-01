@@ -1,3 +1,11 @@
+id_char = '@'
+def value_is_id (value):
+    try:
+        import re
+        return re.match('\A' + id_char + '[\w]+\Z', value)
+    except:
+        return False
+
 def value_is_resolution (value):
     try:
         import re
@@ -6,8 +14,11 @@ def value_is_resolution (value):
         return False
 
 def value_is_file (value):
-    import re
-    return re.match('.*?\.[\w]+\Z', value)
+    try:
+        import re
+        return re.fullmatch('.*?\.[\w]+\Z', value)
+    except:
+        return False
 
 def value_is_function (value):
     return hasattr(value, '__call__')
