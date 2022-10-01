@@ -26,11 +26,14 @@ def find_data_csv (path:str, key:str):
         with open(path + '.csv', 'r') as file:
 
             # Lê as linhas do arquivo e salva na variavel 'lines'
+            print('oi1')
             lines = file.readlines()
+            print('oi2')
 
     # Em caso de falha
     except:
         print(COLS[2] + "CSVHandler.find_data: Erro ao ler arquivo" + COLS[0])
+        print('deu erro')
         return None
 
     # Pra cada linha carregada na variavel 'lines'
@@ -60,7 +63,7 @@ def find_data_by_id_csv (path:str, key:str):
 
     # Em caso de falha
     except:
-        print(COLS[2] + "CSVHandler.find_data: Erro ao ler arquivo" + COLS[0])
+        print(COLS[2] + "CSVHandler.find_data_by_id_csv: Erro ao ler arquivo" + COLS[0])
         return None
 
     # Pra cada linha carregada na variavel 'lines'
@@ -96,7 +99,7 @@ def find_data_list_by_field_value_csv(path:str, field:str, value:str):
 
     # Em caso de falha
     except:
-        print(COLS[2] + "CSVHandler.find_data: Erro ao ler arquivo" + COLS[0])
+        print(COLS[2] + "CSVHandler.find_data_list_by_field_value_csv: Erro ao ler arquivo" + COLS[0])
         return None
 
     lista = []
@@ -142,10 +145,9 @@ def format_line_csv (fields, line:str):
     return data
 
 def get_path_fields (path:str):
-    for path_fields in PATH_FIELDS:
-        if path_fields['path'] == path:
-            return path_fields['fields']
-    return ("id","data")
+    return PATH_FIELDS[path]
+
+    # return ("id","data")
 
 # Salva um banco de dados CSV
 # Parametros:

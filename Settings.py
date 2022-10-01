@@ -8,14 +8,14 @@ RATINGS_PATH  = "data/ratings"
 RESOURCES_PATH  = "resources"
 
 # Os campos que cada banco de dados irá possuir ao ser inicializado
-PATH_FIELDS = [
+PATH_FIELDS = {
 #   Caminho do arquivo .csv   |           | id |                        campos                         | 
-    { 'path': USERS_PATH,       'fields': ['id', 'name', 'email', 'group_id', 'team_id', 'role_id', 'password'] },
-    { 'path': GROUPS_PATH,      'fields': ['id', 'name'] },
-    { 'path': SPRINTS_PATH,     'fields': ['id', 'group', 'start', 'finish', 'rating period'] },
-    { 'path': TEAMS_PATH,       'fields': ['id', 'group', 'name',] },
-    { 'path': RATINGS_PATH,     'fields': ['id', 'from_user_id', 'to_user_id', 'value', 'comment'] },
-]
+    USERS_PATH: ['id', 'name', 'email', 'group_id', 'team_id', 'role_id', 'password'] ,
+    GROUPS_PATH: ['id', 'name'] ,
+    SPRINTS_PATH: ['id', 'group', 'start', 'finish', 'rating period'] ,
+    TEAMS_PATH: ['id', 'group', 'name',] ,
+    RATINGS_PATH: ['id', 'from_user_id', 'to_user_id', 'value', 'comment'] ,
+}
 
 SEND_EMAIL_ON_REGISTER = False
 

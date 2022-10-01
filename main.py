@@ -43,10 +43,17 @@ def initialize_test():
     register("fulanodev", "fulano-dev@dev.com", 0, 0, 5, custom_password='123')
 
 
+
+
 # Inicializa os bancos de dados populado com informações teste caso não exista um arquivo users.csv
 import os
-if not os.path.exists(USERS_PATH + '.csv'):
-    initialize_test()
+# if not os.path.exists(USERS_PATH + '.csv'):
+initialize_test()
+
+from Utils.edit_team_back import *
+
+print(add_user('p1@o.com', 1))
+exit()
 
 from Front import WindowManager
 
