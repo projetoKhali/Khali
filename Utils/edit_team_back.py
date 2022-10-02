@@ -1,34 +1,42 @@
 from CSV import CSVHandler as handler
 import Settings
+from array import *
 
 
 
 
 def add_user(email, team):
-    # #busca, na base de dados 'users', os dados do estudante que tem aquele email
-    # data_student = handler.find_data_csv(Settings.USERS_PATH, email)
-    # #no diciona
-    # data_student["team_id"] = str(team)
-    # line =str(data_student["id"])
-    #
-    # for item in list(data_student.values())[1:]:
-    #     line = line + ','+ item
 
+    #abre e lê arquivo csv
     with open(Settings.USERS_PATH + '.csv', 'r') as file:
-        # Lê as linhas do arquivo e salva na variavel 'lines'
+        # Lê as linhas do arquivo e salva na variavel 'lines'. Cada linha é uma única string
         lines = file.readlines()
 
-    for i, item in enumerate(lines):
+    matriz = []
+
+    for i, item in enumerate(lines[1:]):
+        #retorna a linha no formato de string em um dicionário e armazena em data_student
         data_student = (handler.format_line_csv(Settings.PATH_FIELDS[Settings.USERS_PATH], item))
         if data_student['email'] == email:
             data_student['team_id'] = str(team)
-            line = str(data_student['id'])
-            for valor in list(data_student.values())[1:]:
-                line += ',' + valor
-            lines[i] = line
-    for item in lines:
-        print(item)
-    handler.save_file_csv(Settings.USERS_PATH, Settings.PATH_FIELDS[Settings.USERS_PATH], lines )
+
+        #transformar o dicionário em uma lista line. O primeiro item dessa lista é o id
+        line = []
+
+        for valor in list(data_student.values()):
+            line.append(str(valor))
+            print(line)
+
+
+            # #armazeno, no item de index i do arquivo csv, a line
+            # lines[i] = line
+        matriz.append(line)
+        # for i in range ()
+
+    # for item in lines:
+    #     dicionario = handler.format_line_csv(Settings.PATH_FIELDS[Settings.USERS_PATH], item)
+    #     print(item)
+    handler.save_file_csv(Settings.USERS_PATH, Settings.PATH_FIELDS[Settings.USERS_PATH], matriz)
 
 
 

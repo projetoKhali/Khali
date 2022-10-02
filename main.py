@@ -3,6 +3,12 @@ from Models.Groups import create_group
 from Models.Teams import create_team
 
 def initialize_test():
+    from CSV.CSVHandler import delete_csv
+    delete_csv(USERS_PATH)
+    delete_csv(GROUPS_PATH)
+    delete_csv(SPRINTS_PATH)
+    delete_csv(TEAMS_PATH)
+    delete_csv(RATINGS_PATH)
 
     # cria 2 grupos
     create_group("Grupo do Develano")
@@ -52,7 +58,7 @@ initialize_test()
 
 from Utils.edit_team_back import *
 
-print(add_user('p1@o.com', 1))
+print(add_user('p1@o.com', 4))
 exit()
 
 from Front import WindowManager
