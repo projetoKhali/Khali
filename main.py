@@ -58,7 +58,10 @@ initialize_test()
 
 from Utils.edit_team_back import *
 
-print(add_user('p1@o.com', 4))
+# print(add_user('p1@o.com', 2))
+# exit()
+
+print(delete_user('p1@o.com'))
 exit()
 
 from Front import WindowManager
