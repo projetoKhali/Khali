@@ -1,6 +1,5 @@
 # Importa a biblioteca que permite manipular arquivos .csv
 import os
-from array import array
 import csv
 from Settings import *
 # Definição do namespace, ao usar 'import ...', importará todos os metodos dentro do namespace
@@ -151,8 +150,8 @@ def get_path_fields (path:str):
 # Parametros:
 # Path      =   O caminho até o arquivo ('pasta/pasta/pasta/nome_do_arquivo.csv')
 # Fields    =   Os campos que estarão presentes na tabela { name, email, group, role }      <--- linha 0
-# Rows      =   A lista de arrays em que cada array representa uma linha na tabela {[linha1], [linha2], [linha3]}
-def save_file_csv (path:str, fields:array, rows:array):
+# Rows      =   A lista de linhas a serem colocadas na tabela, cada linha é representada por uma lista própria
+def save_file_csv (path:str, fields:list, rows:list):
     # check_path(path, 'save_file_csv')
     
     # Acompanhamento de processo pelo terminal
