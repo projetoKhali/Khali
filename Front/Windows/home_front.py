@@ -1,4 +1,5 @@
 from inspect import modulesbyfile
+from re import A
 from tkinter import *
 import Settings
 
@@ -60,19 +61,22 @@ def run():
     frame_tabs = criar_frame(frame_coluna_A, 1, 0)
 
     for tab_index, module in enumerate(modules):
-        criar_button(frame_tabs, module.NAME, "Calibri, 14", lambda i=tab_index: run_module(i), tab_index, 0, 'w', 5, 5)
+        criar_button(frame_tabs, module.NAME, "Calibri, 14", lambda i=tab_index: run_module(i), tab_index, 0, 'w', 5, 5)  
+
+    from Users.Authentication import sair
+    criar_button(frame_coluna_A ,"    sair    " ,"arial" ,sair ,2 ,0 ,"w" ,5 , 5)
 
     print(f'modules: {modules}')
 
     #adiciona botões
-    # criar_button(frame_coluna_A, 'Meu Perfil', "Calibri, 14", None, 1,0, 'w', 5, 5)
-    # criar_button(frame_coluna_A, 'Cadastrar', "Calibri, 14", None, 2, 0, 'w', 5, 5)
+    #criar_button(frame_coluna_A, 'Meu Perfil', "Calibri, 14", None, 1,0, 'w', 5, 5)
 
     # COLUNA B --------------------------------------------------------------
     #frame da segunda coluna, que muda se apertar "Cadastro" ou "Meu Perfil"
     # frame_coluna_B = criar_frame(janela, 0,1)
     # frame_coluna_B.configure(background="green")
     # frame_coluna_B.grid(row=0, column=1, sticky="nsew")
+
 
     def run_module (m_index):
         global frame_coluna_B
@@ -84,7 +88,5 @@ def run():
             current_module.destroy()
         current_module = modules[m_index].run(frame_coluna_B)
 
-    run_module(0)
-
+    run_module(0)    
     return janela
-
