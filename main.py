@@ -38,9 +38,9 @@ def initialize_test():
     # cadastra cliente teste
     register("clielano", "c@c.c", 0, None, 2, custom_password='123')
 
-    register("lt um", "p1@o.com", 0, 0, 4, custom_password='123')
-    register("lt dois", "p2@o.com", 0, 1, 4, custom_password='123')
-    register("lt tres", "p3@o.com", 1, 0, 4, custom_password='123')
+    register("lt um", "p1@o.com", 0, 0, 3, custom_password='123')
+    register("lt dois", "p2@o.com", 0, 1, 3, custom_password='123')
+    register("lt tres", "p3@o.com", 1, 0, 3, custom_password='123')
 
     register("po um", "p1@o.com", 0, 0, 4, custom_password='123')
     register("po dois", "p2@o.com", 0, 1, 4, custom_password='123')

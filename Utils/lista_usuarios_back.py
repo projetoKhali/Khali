@@ -20,7 +20,7 @@ def get_users(email):
     rate_users = []
 
     for group_member in handler.find_data_list_by_field_value_csv(Settings.USERS_PATH, 'group_id', user["group_id"]):
-        if int(group_member["role_id"]) in role.permissions_rate:
+        if (int(group_member["role_id"]) in role.ratings) and (group_member["team_id"] != ''):
             rate_users.append(group_member)
     return rate_users
 
