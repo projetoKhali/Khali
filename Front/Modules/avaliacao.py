@@ -62,9 +62,6 @@ p2 = criar_escala(frm_avaliacao, 9, 30, 2)
 p3 = criar_escala(frm_avaliacao, 12, 30, 2)
 p4 = criar_escala(frm_avaliacao, 15, 30, 2)
 p5 = criar_escala(frm_avaliacao, 18, 30, 2)
-p6 = criar_escala(frm_avaliacao, 21, 30, 2)
-p7 = criar_escala(frm_avaliacao, 24, 30, 2)
-p8 = criar_escala(frm_avaliacao, 27, 30, 2)
 
 # variable with integer values only
 var = IntVar()
@@ -77,14 +74,11 @@ criar_label(frm_geral, 'Breve explicação sobre a avaliação: Falar sobre a es
 10, 0, 3, 30, 30, 'w')  
 
 # Textos das questões da avaliação
-criar_label(frm_avaliacao, 'Primeira questão', 15, 0, 4, 30, 5, 'w')
-criar_label(frm_avaliacao, 'Segunda questão', 15, 0, 7, 30, 5, 'w')
-criar_label(frm_avaliacao, 'Terceira questão', 15, 0, 10, 30, 5, 'w')
-criar_label(frm_avaliacao, 'Quarta questão', 15, 0, 13, 30, 5, 'w') 
-criar_label(frm_avaliacao, 'Quinta questão', 15, 0, 16, 30, 5, 'w')
-criar_label(frm_avaliacao, 'Sexta questão', 15, 0, 19, 30, 5, 'w')
-criar_label(frm_avaliacao, 'Sétima questão', 15, 0, 22, 30, 5, 'w')  
-criar_label(frm_avaliacao, 'Oitava questão', 15, 0, 25, 30, 5, 'w')
+criar_label(frm_avaliacao, 'Como você avalia o integrante em trabalho em equipe, cooperação e descentralização de conhecimento?', 15, 0, 4, 30, 5, 'w')
+criar_label(frm_avaliacao, 'Como você avalia o integrante em iniciativa e proatividade?', 15, 0, 7, 30, 5, 'w')
+criar_label(frm_avaliacao, 'Como você avalia o integrante em autodidaxia e agregação de conhecimento ao grupo?', 15, 0, 10, 30, 5, 'w')
+criar_label(frm_avaliacao, 'Como você avalia o integrante em entrega de resultados e participação efetiva no projeto?', 15, 0, 13, 30, 5, 'w') 
+criar_label(frm_avaliacao, 'Como você avalia o integrante em competência técnica?', 15, 0, 16, 30, 5, 'w')
 
 # Descrição da tabela
 criar_label(frm_avaliacao, 'Péssimo (1)           Ruim (2)              Regular (3)                Bom (4)               Ótimo (5)', 10, 0, 5, 30, 0, 'w')
@@ -92,9 +86,5 @@ criar_label(frm_avaliacao, 'Péssimo (1)           Ruim (2)              Regular
 criar_label(frm_avaliacao, 'Péssimo (1)           Ruim (2)              Regular (3)                Bom (4)               Ótimo (5)', 10, 0, 11, 30, 0, 'w')
 criar_label(frm_avaliacao, 'Péssimo (1)           Ruim (2)              Regular (3)                Bom (4)               Ótimo (5)', 10, 0, 14, 30, 0, 'w') 
 criar_label(frm_avaliacao, 'Péssimo (1)           Ruim (2)              Regular (3)                Bom (4)               Ótimo (5)', 10, 0, 17, 30, 0, 'w')
-criar_label(frm_avaliacao, 'Péssimo (1)           Ruim (2)              Regular (3)                Bom (4)               Ótimo (5)', 10, 0, 20, 30, 0, 'w')
-criar_label(frm_avaliacao, 'Péssimo (1)           Ruim (2)              Regular (3)                Bom (4)               Ótimo (5)', 10, 0, 23, 30, 0, 'w')  
-criar_label(frm_avaliacao, 'Péssimo (1)           Ruim (2)              Regular (3)                Bom (4)               Ótimo (5)', 10, 0, 26, 30, 0, 'w')
-
 
 window.mainloop()
