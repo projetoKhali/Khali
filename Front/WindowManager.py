@@ -31,6 +31,11 @@ def set_state(new_state:int):
 
     launch()
 
+def reset():
+    CURRENT_WINDOW_INSTANCE.destroy()
+    CURRENT_STATE = 0
+    set_state(0)
+
 def next_state():
     set_state(CURRENT_STATE + 1)
 

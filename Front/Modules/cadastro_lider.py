@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import ttk
 
 # cores
 co0 = "#FAE8E8" #rosa
@@ -41,9 +42,9 @@ def run (frame_parent):
 
     def criar_button(quadro, text, font, r, c, command, name=None):
         if name is not None:
-            button = Button(quadro, text = text, font = font, height = 0, command = command, name=name)
+            button = Button(quadro, text = text, font = font, height = 0, command = command, name=name, activebackground='#c5a8b0', bg='#d9d9d9')
         else:
-            button = Button(quadro, text = text, font = font, height = 0, command = command)
+            button = Button(quadro, text = text, font = font, height = 0, command = command, activebackground='#c5a8b0', bg='#d9d9d9')
         button.grid(row=r, column=c, padx=5, pady=3, sticky = "w")
         return button
 
@@ -213,7 +214,25 @@ def run (frame_parent):
     # janela.title('Sistema de Cadastro - Administrador')
     # janela.geometry("1200x600")
 
-    module_frame = criar_frame(frame_parent, 0, 0)
+    frm_main=Frame(frame_parent, bg='#fae8e8')
+    frm_main.pack(fill=BOTH, expand=1) 
+
+    # O canvas aceita o scrollbar, mas ela só faz o papel da responsividade
+    canvas=Canvas(frm_main, bg='#fae8e8')
+    canvas.pack(side=LEFT, fill=BOTH, expand=1)
+
+    # Configurações do scrollbar
+    scrollbar_ver = ttk.Scrollbar(frm_main, orient=VERTICAL, command=canvas.yview) # Comando xview para orientação HORIZONTAL
+    scrollbar_ver.pack(side=RIGHT, fill=Y)
+
+    # Configurações do canvas
+    canvas.configure(yscrollcommand=scrollbar_ver.set) # xscrollcomand para barra horizontal
+    canvas.bind('<Configure>', lambda e: canvas.configure(scrollregion=canvas.bbox('all'))) # Seleciona qual parte do canvas o scrollbar deve identificar
+
+    module_frame=Frame(canvas, bg='#fae8e8', relief=FLAT, bd=3) # Não colocamos o frame com o .pack nesse caso
+
+    # Integração do frame geral a uma janela do canvas
+    canvas.create_window((0,0), window=module_frame, anchor='nw')
 
     # aqui coloco o tamanho da tela, largura x altura
     # tentativa de dar numero de linhas e colunas para a tabela. Se deixo ativado, os labels ficam espalhados pela tela.
@@ -428,7 +447,7 @@ def run (frame_parent):
                     continue
 
     # Cria o botão responsável por efetuar os cadastros 
-    Button(module_frame, text="Confirmar Cadastros", font="Calibri, 14", command=confirmar_cadastros).grid(row=0, column=1, sticky='e')
+    Button(module_frame, text="Confirmar Cadastros", font="Calibri, 14", command=confirmar_cadastros, activebackground='#c5a8b0', bg='#d9d9d9').grid(row=0, column=1, sticky='e')
 
     # retorna o modulo
     return module_frame

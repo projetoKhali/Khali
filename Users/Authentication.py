@@ -1,3 +1,4 @@
+from ast import Global
 from CSV.CSVHandler import *
 from Front import WindowManager
 from Users.Gerar_Senha import gerar_senha
@@ -50,6 +51,10 @@ def login (email, senha):
 
     return CURRENT_USER
 
+def sair():
+    CURRENT_USER = None
+    from Front.WindowManager import reset, set_state
+    reset()
 
 # Efetua o Cadastro de um novo Usuário e, se efetuado com sucesso, o armazena na database .csv
 def register (name, email, group_id, team_id, role_id, custom_password = None):
