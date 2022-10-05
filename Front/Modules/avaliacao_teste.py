@@ -6,7 +6,7 @@ from turtle import back
 window = Tk() 
 window.configure(bg='#fae8e8')  # Cor do plano de fundo da tela
 window.geometry("1200x600")
-window.title('Sistema de Cadastro - Administrador')  # Título da janela
+window.title('Avaliação 360°')  # Título da janela
 
 # Criar um frame para comportar o canvas
 frm_main=Frame(window, bg='#fae8e8')
@@ -68,18 +68,6 @@ p5 = Scale(master=frm_avaliacao, from_=1, to=5, length=500, tickinterval=1, orie
 bg='#fae8e8', font='Calibre, 10', highlightcolor='#c5a8b0', troughcolor='#c5a8b0', state='normal', variable=IntVar())
 p5.grid(column=0, row=18, padx=30, pady=2, sticky='w')
 
-p6 = Scale(master=frm_avaliacao, from_=1, to=5, length=500, tickinterval=1, orient=HORIZONTAL, 
-bg='#fae8e8', font='Calibre, 10', highlightcolor='#c5a8b0', troughcolor='#c5a8b0', state='normal', variable=IntVar())
-p6.grid(column=0, row=21, padx=30, pady=2, sticky='w')
-
-p7 = Scale(master=frm_avaliacao, from_=1, to=5, length=500, tickinterval=1, orient=HORIZONTAL, 
-bg='#fae8e8', font='Calibre, 10', highlightcolor='#c5a8b0', troughcolor='#c5a8b0', state='normal', variable=IntVar())
-p7.grid(column=0, row=24, padx=30, pady=2, sticky='w')
-
-p8 = Scale(master=frm_avaliacao, from_=1, to=5, length=500, tickinterval=1, orient=HORIZONTAL, 
-bg='#fae8e8', font='Calibre, 10', highlightcolor='#c5a8b0', troughcolor='#c5a8b0', state='normal', variable=IntVar())
-p8.grid(column=0, row=27, padx=30, pady=2, sticky='w')
-
 def resposta():
     if p1.get() <= 3:
         criar_label(frm_avaliacao, 'Feedback obrigatório: ', 13, 1, 6, 2, 0, 'e')
@@ -93,15 +81,6 @@ def resposta():
     elif p5.get() <= 3:
         criar_label(frm_avaliacao, 'Feedback obrigatório: ', 13, 1, 18, 2, 0, 'e')
         criar_entrada(frm_avaliacao, 18, 2, 1, 0, 'w')
-    elif p6.get() <= 3:
-        criar_label(frm_avaliacao, 'Feedback obrigatório: ', 13, 1, 21, 2, 0, 'e')
-        criar_entrada(frm_avaliacao, 21, 2, 1, 0, 'w')
-    elif p7.get() <= 3:
-        criar_label(frm_avaliacao, 'Feedback obrigatório: ', 13, 1, 24, 2, 0, 'e')
-        criar_entrada(frm_avaliacao, 24, 2, 1, 0, 'w')
-    elif p8.get() <= 3:
-        criar_label(frm_avaliacao, 'Feedback obrigatório: ', 13, 1, 27, 2, 0, 'e')
-        criar_entrada(frm_avaliacao, 27, 2, 1, 0, 'w')
     else:
         return
 
@@ -114,21 +93,18 @@ nome.grid(row=28, column=1, padx=5, pady=5, sticky='w')
 var = IntVar()
 
 # Textos gerais da tela
-criar_label(frm_geral, 'Autoavaliação', 30, 0, 0, 30, 30, 'w')
+criar_label(frm_geral, 'Avaliação 360°', 30, 0, 0, 30, 30, 'w')
 criar_label(frm_geral, 'Nome do usuário', 20, 0, 1, 30, 0, 'w')  
 criar_label(frm_geral, 'Prazo para realizar a autoavaliação da {nº da Sprint}', 15, 0, 2, 30, 20, 'w')
 criar_label(frm_geral, 'Breve explicação sobre a avaliação: Falar sobre a escala Likert e dos feedbacks obrigatórios para notas abaixo ou iguais a 3',
 10, 0, 3, 30, 30, 'w')  
 
 # Textos das questões da avaliação
-criar_label(frm_avaliacao, 'Primeira questão', 15, 0, 4, 30, 5, 'w')
-criar_label(frm_avaliacao, 'Segunda questão', 15, 0, 7, 30, 5, 'w')
-criar_label(frm_avaliacao, 'Terceira questão', 15, 0, 10, 30, 5, 'w')
-criar_label(frm_avaliacao, 'Quarta questão', 15, 0, 13, 30, 5, 'w') 
-criar_label(frm_avaliacao, 'Quinta questão', 15, 0, 16, 30, 5, 'w')
-criar_label(frm_avaliacao, 'Sexta questão', 15, 0, 19, 30, 5, 'w')
-criar_label(frm_avaliacao, 'Sétima questão', 15, 0, 22, 30, 5, 'w')  
-criar_label(frm_avaliacao, 'Oitava questão', 15, 0, 25, 30, 5, 'w')
+criar_label(frm_avaliacao, 'Como você avalia o integrante em trabalho em equipe, cooperação e descentralização de conhecimento?', 15, 0, 4, 30, 5, 'w')
+criar_label(frm_avaliacao, 'Como você avalia o integrante em iniciativa e proatividade?', 15, 0, 7, 30, 5, 'w')
+criar_label(frm_avaliacao, 'Como você avalia o integrante em autodidaxia e agregação de conhecimento ao grupo?', 15, 0, 10, 30, 5, 'w')
+criar_label(frm_avaliacao, 'Como você avalia o integrante em entrega de resultados e participação efetiva no projeto?', 15, 0, 13, 30, 5, 'w') 
+criar_label(frm_avaliacao, 'Como você avalia o integrante em competência técnica?', 15, 0, 16, 30, 5, 'w')
 
 # Descrição da tabela
 criar_label(frm_avaliacao, 'Péssimo (1)           Ruim (2)              Regular (3)                Bom (4)               Ótimo (5)', 10, 0, 5, 30, 0, 'w')
@@ -136,9 +112,5 @@ criar_label(frm_avaliacao, 'Péssimo (1)           Ruim (2)              Regular
 criar_label(frm_avaliacao, 'Péssimo (1)           Ruim (2)              Regular (3)                Bom (4)               Ótimo (5)', 10, 0, 11, 30, 0, 'w')
 criar_label(frm_avaliacao, 'Péssimo (1)           Ruim (2)              Regular (3)                Bom (4)               Ótimo (5)', 10, 0, 14, 30, 0, 'w') 
 criar_label(frm_avaliacao, 'Péssimo (1)           Ruim (2)              Regular (3)                Bom (4)               Ótimo (5)', 10, 0, 17, 30, 0, 'w')
-criar_label(frm_avaliacao, 'Péssimo (1)           Ruim (2)              Regular (3)                Bom (4)               Ótimo (5)', 10, 0, 20, 30, 0, 'w')
-criar_label(frm_avaliacao, 'Péssimo (1)           Ruim (2)              Regular (3)                Bom (4)               Ótimo (5)', 10, 0, 23, 30, 0, 'w')  
-criar_label(frm_avaliacao, 'Péssimo (1)           Ruim (2)              Regular (3)                Bom (4)               Ótimo (5)', 10, 0, 26, 30, 0, 'w')
-
 
 window.mainloop()
