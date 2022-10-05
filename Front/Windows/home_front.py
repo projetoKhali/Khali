@@ -64,7 +64,7 @@ def run():
         criar_button(frame_tabs, module.NAME, "Calibri, 14", lambda i=tab_index: run_module(i), tab_index, 0, 'w', 5, 5)  
 
     from Users.Authentication import sair
-    criar_button(frame_coluna_A ,"    sair    " ,"arial" ,sair ,2 ,0 ,"w" ,5 , 5)
+    criar_button(frame_coluna_A, "sair", "arial", sair, 2, 0, "we", 5, 5)
 
     print(f'modules: {modules}')
 
@@ -83,9 +83,13 @@ def run():
         frame_coluna_B = Frame(janela)
         frame_coluna_B.grid(row=0, column=1, sticky = "nsew")
         global current_module
-        if current_module is not None:
-            current_module.configure(background = "red")
-            current_module.destroy()
+        try:
+            if current_module is not None:
+                print(f'current_module "{current_module}"')
+                current_module.configure(background = "red")
+                current_module.destroy()
+        except:
+            pass
         current_module = modules[m_index].run(frame_coluna_B)
 
     run_module(0)    

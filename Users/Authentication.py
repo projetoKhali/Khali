@@ -55,6 +55,7 @@ def sair():
     CURRENT_USER = None
     from Front.WindowManager import reset, set_state
     reset()
+    # login(email='a@d.m', senha='123')
 
 # Efetua o Cadastro de um novo Usuário e, se efetuado com sucesso, o armazena na database .csv
 def register (name, email, group_id, team_id, role_id, custom_password = None):

@@ -32,7 +32,6 @@ def set_state(new_state:int):
     launch()
 
 def reset():
-    CURRENT_WINDOW_INSTANCE.destroy()
     CURRENT_STATE = 0
     set_state(0)
 
@@ -45,6 +44,7 @@ def launch():
 
     # Se a atual janela aberta não é nula, destrua
     if CURRENT_WINDOW_INSTANCE is not None:
+        print(f'CURRENT_WINDOW_INSTANCE \'{CURRENT_WINDOW_INSTANCE}\'')
         CURRENT_WINDOW_INSTANCE.destroy()
 
     CURRENT_WINDOW_INSTANCE = STATES[CURRENT_STATE].run()
