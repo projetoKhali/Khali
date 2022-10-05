@@ -33,21 +33,21 @@ def initialize_test():
     # cadastra cliente teste
     register("clielano", "c@c.c", 0, None, 2, custom_password='123')
 
-    register("lt um", "p1@o.com",   0, 0, 3, custom_password='123')
-    register("lt dois", "p2@o.com", 0, 1, 3, custom_password='123')
-    register("lt tres", "p3@o.com", 1, 0, 3, custom_password='123')
+    register("lt um", "lt1@o.com",   0, 0, 3, custom_password='123')
+    register("lt dois", "lt2@o.com", 0, 1, 3, custom_password='123')
+    register("lt tres", "lt3@o.com", 0, 2, 3, custom_password='123')
 
-    register("po um", "p1@o.com",   0, 0, 4, custom_password='123')
-    register("po dois", "p2@o.com", 0, 1, 4, custom_password='123')
-    register("po tres", "p3@o.com", 1, 0, 4, custom_password='123')
+    register("po um", "po1@o.com",   0, 0, 4, custom_password='123')
+    register("po dois", "p02@o.com", 0, 1, 4, custom_password='123')
+    register("po tres", "p03@o.com", 0, 2, 4, custom_password='123')
 
     # cadastra developer teste
     register("deve", "d@e.v", 0, 0, 5, custom_password='123')
-    register("developano", "developano-dev@dev.com", 0, 0, 5, custom_password='123')
+    register("developano", "develop@dev.com", 0, 0, 5, custom_password='123')
     register("develano", "develano-dev@dev.com", 0, 0, 5, custom_password='123')
-    register("devano", "devano-dev@dev.com", 0, 0, 5, custom_password='123')
+    register("devano", "dev-ano@dev.com", 0, 0, 5, custom_password='123')
     register("fulanodev", "fulano-dev@dev.com", 0, 0, 5, custom_password='123')
-
+    register("fulanodev", "ful@dev.com", 0, 1, 5, custom_password='123')
 
 
 
@@ -58,10 +58,13 @@ initialize_test()
 
 from Utils.edit_team_back import *
 
-# print(add_user('p1@o.com', 2))
+# print(add_user("ful@dev.com", 0))
 # exit()
 
-print(delete_user('p1@o.com'))
+# print(delete_user('ful@dev.com'))
+# exit()
+
+print(change_role(1, 'lt2@o.com', 5))
 exit()
 
 from Front import WindowManager
