@@ -1,12 +1,12 @@
+from lzma import FILTER_LZMA1
 from tkinter import * 
 from tkinter import ttk
-from turtle import back
 
 # Configurações da janela
 window = Tk() 
 window.configure(bg='#fae8e8')  # Cor do plano de fundo da tela
 window.geometry("1200x600")
-window.title('Avaliação 360°')  # Título da janela
+window.title('Autoavaliação')  # Título da janela
 
 # Criar um frame para comportar o canvas
 frm_main=Frame(window, bg='#fae8e8')
@@ -19,98 +19,119 @@ canvas.pack(side=LEFT, fill=BOTH, expand=1)
 # Configurações do scrollbar
 scrollbar_ver = ttk.Scrollbar(frm_main, orient=VERTICAL, command=canvas.yview) # Comando xview para orientação HORIZONTAL
 scrollbar_ver.pack(side=RIGHT, fill=Y)
-scrollbar_hor = ttk.Scrollbar(frm_main, orient=HORIZONTAL, command=canvas.xview) # Comando xview para orientação HORIZONTAL
-scrollbar_hor.pack(side=BOTTOM, fill=X)
 
 # Configurações do canvas
-canvas.configure(yscrollcommand=scrollbar_ver.set, xscrollcommand=scrollbar_hor.set) # xscrollcomand para barra horizontal
+canvas.configure(yscrollcommand=scrollbar_ver.set) # xscrollcomand para barra horizontal
 canvas.bind('<Configure>', lambda e: canvas.configure(scrollregion=canvas.bbox('all'))) # Seleciona qual parte do canvas o scrollbar deve identificar
 
 frm_geral=Frame(canvas, bg='#fae8e8', relief=FLAT, bd=3) # Não colocamos o frame com o .pack nesse caso
-
 # Integração do frame geral a uma janela do canvas
 canvas.create_window((0,0), window=frm_geral, anchor='nw')
 
-# Criação de um frame para as questões da avaliação
+# Comporta todos os outros frames. Deu erro quando coloquei diretamente no frm_geral
 frm_avaliacao=Frame(frm_geral, bg='#fae8e8', relief=FLAT, bd=3)
-frm_avaliacao.grid(row=4, column=0, columnspan=3, sticky='w') # O label do prazo está muito afastado, aumentei o columnspan para aproximar
+frm_avaliacao.grid(row=0, rowspan=30, column=0, columnspan=3, sticky='w')
+
+# TENTEI COLOCAR A CRIAÇÃO DOS FRAMES COMO FUNÇÃO, MAS DEU CONFLITO (não permite colocar .grid em algo .pack). Criando um por um não dá erro
+frm_1=Frame(frm_avaliacao, bg='#fae8e8', relief=FLAT, bd=3)
+frm_1.grid(row= 0, column=0, columnspan=4, sticky='nsew')
+frm_1.columnconfigure(0, weight=1)
+frm_1.rowconfigure([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 19, 20], weight=1)
+
+frm_2=Frame(frm_avaliacao, bg='#fae8e8', relief=GROOVE, bd=3)
+frm_2.grid(row= 1, column=0, columnspan=4, sticky='nsew')
+frm_2.columnconfigure(0, weight=1)
+frm_2.rowconfigure([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 19, 20], weight=1)
+
+frm_3=Frame(frm_avaliacao, bg='#fae8e8', relief=GROOVE, bd=3)
+frm_3.grid(row= 2, column=0, columnspan=4, sticky='nsew')
+frm_3.columnconfigure(0, weight=1)
+frm_3.rowconfigure([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 19, 20], weight=1)
+
+frm_4=Frame(frm_avaliacao, bg='#fae8e8', relief=GROOVE, bd=3)
+frm_4.grid(row= 3, column=0, columnspan=4, sticky='nsew')
+frm_4.columnconfigure(0, weight=1)
+frm_4.rowconfigure([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 19, 20], weight=1)
+
+frm_5=Frame(frm_avaliacao, bg='#fae8e8', relief=GROOVE, bd=3)
+frm_5.grid(row= 4, column=0, columnspan=4, sticky='nsew')
+frm_5.columnconfigure(0, weight=1)
+frm_5.rowconfigure([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 19, 20], weight=1)
+
+frm_6=Frame(frm_avaliacao, bg='#fae8e8', relief=GROOVE, bd=3)
+frm_6.grid(row= 5, column=0, columnspan=4, sticky='nsew')
+frm_6.columnconfigure(0, weight=1)
+frm_6.rowconfigure([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 19, 20], weight=1)
 
 # Função para criação de texto
 def criar_label(master, text, tamanho, column, row, padx, pady, sticky):
     label=Label(master=master, text=text
     , bg='#fae8e8', font=('Calibre', tamanho))
     label.grid(column=column, row=row, padx=padx, pady=pady, sticky=sticky)
+ 
+# Textos gerais da tela
+criar_label(frm_1, 'Autoavaliação', 30, 0, 0, 30, 30, 'w')
+criar_label(frm_1, 'Nome do usuário', 20, 0, 1, 30, 0, 'w')  # PUXAR DADO VINCULADO COM TELA DE RETORNO - NOME E FUNÇÃO ???
+criar_label(frm_1, 'Prazo para realizar a autoavaliação da {nº da Sprint}', 15, 0, 2, 30, 20, 'w')  # PUXAR DADO VINCULADO COM TELA DE RETORNO ???
+criar_label(frm_1, 'Esta avaliação 360° utiliza a escala Likert para medir o desempenho dos usuários. Notas abaixo ou iguais a 3 necessitam obrigatoriamente de Feedback (resposta descritiva)',
+13, 0, 3, 30, 10, 'w')  
 
+criar_label(frm_2, '1) Como você se avalia em trabalho em equipe, cooperação e descentralização de conhecimento?', 11, 0, 4, 30, 5, 'w')
+criar_label(frm_3, '2) Como você se avalia em iniciativa e proatividade?', 11, 0, 4, 30, 5, 'w')
+criar_label(frm_4, '3) Como você se avalia em autodidaxia e agregação de conhecimento ao grupo?', 11, 0, 4, 30, 5, 'w')
+criar_label(frm_5, '4) Como você se avalia em entrega de resultados e participação efetiva no projeto?', 11, 0, 4, 30, 5, 'w') 
+criar_label(frm_6, '5) Como você se avalia em competência técnica?', 11, 0, 4, 30, 5, 'w')
+
+criar_label(frm_2, 'Péssimo (1)           Ruim (2)              Regular (3)                Bom (4)               Ótimo (5)', 10, 0, 5, 30, 0, 'w')
+criar_label(frm_3, 'Péssimo (1)           Ruim (2)              Regular (3)                Bom (4)               Ótimo (5)', 10, 0, 8, 30, 0, 'w')
+criar_label(frm_4, 'Péssimo (1)           Ruim (2)              Regular (3)                Bom (4)               Ótimo (5)', 10, 0, 11, 30, 0, 'w')
+criar_label(frm_5, 'Péssimo (1)           Ruim (2)              Regular (3)                Bom (4)               Ótimo (5)', 10, 0, 14, 30, 0, 'w') 
+criar_label(frm_6, 'Péssimo (1)           Ruim (2)              Regular (3)                Bom (4)               Ótimo (5)', 10, 0, 17, 30, 0, 'w')
+
+escalas = []
+
+def criar_escala(master, row):
+    p = Scale(master=master, from_=1, to=5, length=500, tickinterval=1, orient=HORIZONTAL, 
+    bg='#fae8e8', font='Calibre, 10', highlightcolor='#c5a8b0', troughcolor='#c5a8b0', state='normal', variable=IntVar())
+    p.grid(column=0, row=row, padx=30, pady=2, sticky='w')
+    p.set(1)
+    escalas.append(p)
+
+# Escalas de cada um dos critérios separadas por Frame
+criar_escala(frm_2, 6)
+criar_escala(frm_3, 9)
+criar_escala(frm_4, 12)
+criar_escala(frm_5, 15)
+criar_escala(frm_6, 18)
+
+# Função para criação de caixas de entrada
 def criar_entrada(master, row, column, padx, pady, sticky):
-    feedback=Entry(master=master, width=80, fg='#1a1d1a', font=('Calibre 13'))  # Nome Líder
+    feedback=Entry(master=master, width=75, fg='#1a1d1a', font=('Calibre 10'))
     feedback.grid(row=row, column=column, padx=padx, pady=pady, sticky=sticky)
 
-# variable with integer values only
-var = IntVar()
-
-p1 = Scale(master=frm_avaliacao, from_=1, to=5, length=500, tickinterval=1, orient=HORIZONTAL, 
-bg='#fae8e8', font='Calibre, 10', highlightcolor='#c5a8b0', troughcolor='#c5a8b0', state='normal', variable=IntVar())
-p1.grid(column=0, row=6, padx=30, pady=2, sticky='w')
-
-p2 = Scale(master=frm_avaliacao, from_=1, to=5, length=500, tickinterval=1, orient=HORIZONTAL, 
-bg='#fae8e8', font='Calibre, 10', highlightcolor='#c5a8b0', troughcolor='#c5a8b0', state='normal', variable=IntVar())
-p2.grid(column=0, row=9, padx=30, pady=2, sticky='w')
-
-p3 = Scale(master=frm_avaliacao, from_=1, to=5, length=500, tickinterval=1, orient=HORIZONTAL, 
-bg='#fae8e8', font='Calibre, 10', highlightcolor='#c5a8b0', troughcolor='#c5a8b0', state='normal', variable=IntVar())
-p3.grid(column=0, row=12, padx=30, pady=2, sticky='w')
-
-p4 = Scale(master=frm_avaliacao, from_=1, to=5, length=500, tickinterval=1, orient=HORIZONTAL, 
-bg='#fae8e8', font='Calibre, 10', highlightcolor='#c5a8b0', troughcolor='#c5a8b0', state='normal', variable=IntVar())
-p4.grid(column=0, row=15, padx=30, pady=2, sticky='w')
-
-p5 = Scale(master=frm_avaliacao, from_=1, to=5, length=500, tickinterval=1, orient=HORIZONTAL, 
-bg='#fae8e8', font='Calibre, 10', highlightcolor='#c5a8b0', troughcolor='#c5a8b0', state='normal', variable=IntVar())
-p5.grid(column=0, row=18, padx=30, pady=2, sticky='w')
-
 def resposta():
-    if p1.get() <= 3:
-        criar_label(frm_avaliacao, 'Feedback obrigatório: ', 13, 1, 6, 2, 0, 'e')
-        criar_entrada(frm_avaliacao, 6, 2, 1, 0, 'w')
-    elif p3.get() <= 3:
-        criar_label(frm_avaliacao, 'Feedback obrigatório: ', 13, 1, 12, 2, 0, 'e')
-        criar_entrada(frm_avaliacao, 12, 2, 1, 0, 'w')
-    elif p4.get() <= 3:
-        criar_label(frm_avaliacao, 'Feedback obrigatório: ', 13, 1, 15, 2, 0, 'e')
-        criar_entrada(frm_avaliacao, 15, 2, 1, 0, 'w')
-    elif p5.get() <= 3:
-        criar_label(frm_avaliacao, 'Feedback obrigatório: ', 13, 1, 18, 2, 0, 'e')
-        criar_entrada(frm_avaliacao, 18, 2, 1, 0, 'w')
-    else:
-        return
+    for i, escala in enumerate(escalas):
+        if escala.get() <= 3:
+            #frm_feedback=Frame(frm_avaliacao, bg='#fae8e8', relief=FLAT, bd=3)  # Frame individual para cada feedback obrigatório
+            #frm_feedback.grid(row=row, column=1, sticky='w')
+            criar_label(frm_2, f'Feedback obrigatório para critério {i+1}: ', 10, 1, 6, 0, 24, 'w')
+            criar_entrada(frm_2, 6, 2, 10, 0, 'w')
+        # print(f'Print P1 {str(p[i].get())}')
 
-nome=Button(master=frm_avaliacao, text='Enviar', fg='#1a1d1a', bg='#d9d9d9', 
-    font=('Calibre', 15), width=10, height=1, activebackground='#c5a8b0', command=resposta)
-nome.grid(row=28, column=1, padx=5, pady=5, sticky='w')
+def enviar_retorno():
+    label=Label(master=frm_main, text='Avaliação enviada com sucesso!'
+    , bg='#fae8e8', font=('Calibre', 10))
+    label.place(relx=0.78, rely=0.09, relheight=0.03, relwidth=0.17)
 
+# Botão para registrar notas e conferir a necessidade de feedback
+button=Button(master=frm_main, text='Registrar Notas', fg='#1a1d1a', bg='#d9d9d9', 
+font=('Calibre', 10), width=13, height=1, activebackground='#c5a8b0', command=resposta)
+button.place(relx=0.59, rely=0.09, relheight=0.04, relwidth=0.08)
+# resposta(p1, 0), resposta(p2, 5), resposta(p3, 10), resposta(p4, 15), resposta(p5, 20)
 
-# variable with integer values only
-var = IntVar()
-
-# Textos gerais da tela
-criar_label(frm_geral, 'Avaliação 360°', 30, 0, 0, 30, 30, 'w')
-criar_label(frm_geral, 'Nome do usuário', 20, 0, 1, 30, 0, 'w')  
-criar_label(frm_geral, 'Prazo para realizar a autoavaliação da {nº da Sprint}', 15, 0, 2, 30, 20, 'w')
-criar_label(frm_geral, 'Breve explicação sobre a avaliação: Falar sobre a escala Likert e dos feedbacks obrigatórios para notas abaixo ou iguais a 3',
-10, 0, 3, 30, 30, 'w')  
-
-# Textos das questões da avaliação
-criar_label(frm_avaliacao, 'Como você avalia o integrante em trabalho em equipe, cooperação e descentralização de conhecimento?', 15, 0, 4, 30, 5, 'w')
-criar_label(frm_avaliacao, 'Como você avalia o integrante em iniciativa e proatividade?', 15, 0, 7, 30, 5, 'w')
-criar_label(frm_avaliacao, 'Como você avalia o integrante em autodidaxia e agregação de conhecimento ao grupo?', 15, 0, 10, 30, 5, 'w')
-criar_label(frm_avaliacao, 'Como você avalia o integrante em entrega de resultados e participação efetiva no projeto?', 15, 0, 13, 30, 5, 'w') 
-criar_label(frm_avaliacao, 'Como você avalia o integrante em competência técnica?', 15, 0, 16, 30, 5, 'w')
-
-# Descrição da tabela
-criar_label(frm_avaliacao, 'Péssimo (1)           Ruim (2)              Regular (3)                Bom (4)               Ótimo (5)', 10, 0, 5, 30, 0, 'w')
-criar_label(frm_avaliacao, 'Péssimo (1)           Ruim (2)              Regular (3)                Bom (4)               Ótimo (5)', 10, 0, 8, 30, 0, 'w')
-criar_label(frm_avaliacao, 'Péssimo (1)           Ruim (2)              Regular (3)                Bom (4)               Ótimo (5)', 10, 0, 11, 30, 0, 'w')
-criar_label(frm_avaliacao, 'Péssimo (1)           Ruim (2)              Regular (3)                Bom (4)               Ótimo (5)', 10, 0, 14, 30, 0, 'w') 
-criar_label(frm_avaliacao, 'Péssimo (1)           Ruim (2)              Regular (3)                Bom (4)               Ótimo (5)', 10, 0, 17, 30, 0, 'w')
+# Botão para enviar notas para o banco de dados
+button1=Button(master=frm_main, text='Enviar Avaliação', fg='#1a1d1a', bg='#d9d9d9', 
+font=('Calibre', 10), width=13, height=1, activebackground='#c5a8b0', command=enviar_retorno)
+button1.place(relx=0.69, rely=0.09, relheight=0.04, relwidth=0.08)
 
 window.mainloop()
