@@ -1,5 +1,10 @@
 # API 1º Semestre - Tecnologia em Banco de Dados 2022
 ##
+
+<div align="center">
+<img src=https://user-images.githubusercontent.com/112902530/193478966-17501f27-785b-4c3a-bd7f-47b2d8d659fe.png>
+</div>
+
 ## Sumário
   * [Projeto API](#projeto-API)
     * [Integrantes da Equipe Khali](#integrantes-da-equipe-khali) 

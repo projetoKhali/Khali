@@ -24,14 +24,16 @@ def initialize_test():
     create_team("first_team_of1", 1)
     create_team("second_team_of1", 1)
 
+    #           nome          email                     grupo time  role         senha
+
     # cadastra o develano
-    register("A de Emmy", "a@d.m", None, None, 0, custom_password='123')
+    register("A de Emmy",   "a@d.m",                    None, None, 0,    custom_password='123')
 
     # cadastra lider do grupo teste
-    register("L do Gê", "l@d.g", 0, None, 1, custom_password='123')
+    register("L do Gê",     "l@d.g",                    0,    None, 1,    custom_password='123')
 
     # cadastra cliente teste
-    register("clielano", "c@c.c", 0, None, 2, custom_password='123')
+    register("clielano",    "c@c.c",                    0,    None, 2,    custom_password='123')
 
     register("lt um", "lt1@o.com",   0, 0, 3, custom_password='123')
     register("lt dois", "lt2@o.com", 0, 1, 3, custom_password='123')
@@ -55,6 +57,21 @@ def initialize_test():
 import os
 # if not os.path.exists(USERS_PATH + '.csv'):
 initialize_test()
+<<<<<<< HEAD
+
+from Utils.edit_team_back import *
+
+# print(add_user("ful@dev.com", 0))
+# exit()
+
+# print(delete_user('ful@dev.com'))
+# exit()
+
+# print(change_role(1, 'lt2@o.com', 5))
+# exit()
+
+=======
+>>>>>>> b8f10a5a193b6cb7696b1c7fd76852c91d480613
 
 from Utils.edit_team_back import *
 
@@ -75,8 +92,9 @@ from Front import WindowManager
 WindowManager.initialize()
 
 # teste - login automatico
-# login(email='a@d.m', senha='123')
+login(email='a@d.m', senha='123')
 # login(email='c@c.c', senha='123')
+# login(email='l@d.g', senha='123')
 
 WindowManager.update()
 

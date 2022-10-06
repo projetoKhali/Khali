@@ -1,3 +1,4 @@
+from ast import Global
 from CSV.CSVHandler import *
 from Front import WindowManager
 from Users.Gerar_Senha import gerar_senha
@@ -19,7 +20,7 @@ def login (email, senha):
 
     # em caso de erro, retorna o erro 0 - dado não encontrado
     except:
-        print("dado não encontrado")
+        print("Authentication.login -- Dado não encontrado")
         return 0
 
     # importa a biblioteca de criptografia
@@ -30,11 +31,11 @@ def login (email, senha):
 
         # caso a comparação retorne False, significa que as senhas não são iguais
         # retorna o código de erro 1 - dado invalido
-        print("dado inválido")
+        print("Authentication.login -- Dado inválido")
         return 1
 
     # comparação de senhas retorna True, login retornará o Usuário
-    print("login sucesso")
+    print("Authentication.login -- login sucesso")
 
     global CURRENT_USER
     CURRENT_USER = User(
@@ -50,6 +51,10 @@ def login (email, senha):
 
     return CURRENT_USER
 
+def sair():
+    CURRENT_USER = None
+    from Front.WindowManager import reset, set_state
+    reset()
 
 # Efetua o Cadastro de um novo Usuário e, se efetuado com sucesso, o armazena na database .csv
 def register (name, email, group_id, team_id, role_id, custom_password = None):
@@ -87,7 +92,7 @@ def register (name, email, group_id, team_id, role_id, custom_password = None):
         while not validate_user_password(password):
             password = gerar_senha()
 
-    print (f'email: {email} | password: {password}')
+    print (f'Authentication.register -- Novo usuário cadastrado. Email: {email}, senha: {password}')
 
     # Importa bcrypt para criptografar a senha
     import bcrypt
