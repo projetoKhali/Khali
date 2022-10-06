@@ -26,7 +26,7 @@ def add_user(email, team):
         #pego apenas os valores do dicionários, sem os fields, e coloco na lista line
         for valor in list(data_student.values()):
             line.append(str(valor))
-            print(line)
+            # print(f'line: {line}')
 
         matriz.append(line)
 
@@ -53,7 +53,7 @@ def delete_user(email):
         # pego apenas os valores do dicionários, sem os fields, e coloco na lista line
         for valor in list(data_student.values()):
             line.append(str(valor))
-            print(line)
+            # print(f'line: {line}')
 
         matriz.append(line)
 
@@ -98,7 +98,7 @@ def change_role(team, email, role):
         # pego apenas os valores do dicionários, sem os fields, e coloco na lista line
         for valor in list(data_student.values()):
             line.append(str(valor))
-            print(line)
+            # print(f'line: {line}')
 
         matriz.append(line)
 

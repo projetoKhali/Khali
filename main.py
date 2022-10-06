@@ -52,11 +52,11 @@ def initialize_test():
 
 
 # Inicializa os bancos de dados populado com informações teste caso não exista um arquivo users.csv
-import os
+# import os
 # if not os.path.exists(USERS_PATH + '.csv'):
 initialize_test()
 
-from Utils.edit_team_back import *
+# from Utils.edit_team_back import *
 
 # print(add_user("ful@dev.com", 0))
 # exit()
@@ -64,8 +64,8 @@ from Utils.edit_team_back import *
 # print(delete_user('ful@dev.com'))
 # exit()
 
-print(change_role(1, 'lt2@o.com', 5))
-exit()
+# print(change_role(1, 'lt2@o.com', 5))
+# exit()
 
 from Front import WindowManager
 
@@ -75,6 +75,7 @@ WindowManager.initialize()
 
 # teste - login automatico
 # login(email='a@d.m', senha='123')
+login(email='l@d.g', senha='123')
 # login(email='c@c.c', senha='123')
 
 WindowManager.update()

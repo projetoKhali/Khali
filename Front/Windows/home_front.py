@@ -84,12 +84,5 @@ def run():
             current_module.destroy()
         current_module = modules[m_index].run(frame_coluna_B)
 
-<<<<<<< Updated upstream
-    run_module(0)
-
-    return janela
-
-=======
     run_module(2)
     return janela
->>>>>>> Stashed changes

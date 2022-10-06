@@ -87,11 +87,7 @@ def register (name, email, group_id, team_id, role_id, custom_password = None, l
         while not validate_user_password(password):
             password = gerar_senha()
 
-<<<<<<< Updated upstream
-    print (f'email: {email} | password: {password}')
-=======
-    if log: print (f'Authentication.register -- Novo usuário cadastrado. Email: {email}, senha: {password}')
->>>>>>> Stashed changes
+    print (f'Authentication.register -- Novo usuário cadastrado. Email: {email}, senha: {password}')
 
     # Importa bcrypt para criptografar a senha
     import bcrypt
