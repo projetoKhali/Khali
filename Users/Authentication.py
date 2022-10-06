@@ -52,7 +52,7 @@ def login (email, senha):
 
 
 # Efetua o Cadastro de um novo Usuário e, se efetuado com sucesso, o armazena na database .csv
-def register (name, email, group_id, team_id, role_id, custom_password = None):
+def register (name, email, group_id, team_id, role_id, custom_password = None, log = True):
 
     # Verifica se o Nome do Usuário fornecido é válido. Cancela o processo caso não seja.
     if not validate_user_name (name):
@@ -87,7 +87,11 @@ def register (name, email, group_id, team_id, role_id, custom_password = None):
         while not validate_user_password(password):
             password = gerar_senha()
 
+<<<<<<< Updated upstream
     print (f'email: {email} | password: {password}')
+=======
+    if log: print (f'Authentication.register -- Novo usuário cadastrado. Email: {email}, senha: {password}')
+>>>>>>> Stashed changes
 
     # Importa bcrypt para criptografar a senha
     import bcrypt
