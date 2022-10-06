@@ -1,5 +1,6 @@
 **/__pycache__
 **.csv
 .idea
+.vscode
 venv/
 bd.py
