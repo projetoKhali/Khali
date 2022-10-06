@@ -64,8 +64,9 @@ from Utils.edit_team_back import *
 # print(delete_user('ful@dev.com'))
 # exit()
 
-print(change_role(1, 'lt2@o.com', 5))
-exit()
+# print(change_role(1, 'lt2@o.com', 5))
+# exit()
+
 
 from Front import WindowManager
 
