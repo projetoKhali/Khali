@@ -35,28 +35,36 @@ def run(frame_parent):
     from Settings import USERS_PATH, TEAMS_PATH
     print(f'group_id:{CURRENT_USER.group_id}')
 
+    # seleciona os times pertencentes ao grupo do usuario logado
     times = find_data_list_by_field_value_csv(TEAMS_PATH, 'group', CURRENT_USER.group_id)
     print(f'times:{times}')
 
     from Models.Teams import get_team_name
 
+    # pra cada time
     for i, time_data in enumerate(times):
         print(f'i: [{i}]: time "{time_data}"')
 
+        # cria o frame do time
         frame_team = Frame(frame_teams)
         frame_team.grid(row=i, column=0, sticky="we")
 
+        # coloca o nome do time
         Label(frame_team, text=get_team_name(int(time_data['id'])), font='Calibri, 16').grid(row=0, column=0)
 
+        # seleciona os membros do time
         members = find_data_list_by_field_value_csv(USERS_PATH, 'team_id', i)
 
+        # para cada membro
         for j, member_data in enumerate(members):
 
             print(f'member: {member_data}')
 
+            # cria um frame para o membro dentro do frame_time
             frame_member = Frame(frame_team)
             frame_member.grid(row=j+1, column=0, sticky="we")
 
+            # coloca o nome do membro
             Label(frame_member, text=member_data['name'], font='Calibri, 12').grid(row=0, column=0)
 
 
