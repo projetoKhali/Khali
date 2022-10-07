@@ -88,7 +88,6 @@
 
 <summary> Sprint 1 </summary>
 <br>
-This is how you dropdown.
 
 | USER STORY | PRIORIDADE | SPRINT | 
 |------------|------------|:------------:|
