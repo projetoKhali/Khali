@@ -1,6 +1,11 @@
 from Utils import edit_team_back
 from tkinter import *
 
+from CSV.CSVHandler import find_data_list_by_field_value_csv
+from Users.Authentication import CURRENT_USER
+from Settings import USERS_PATH, TEAMS_PATH
+from Models.Teams import get_team_name
+
 # cores
 co0 = "#FAE8E8"  # rosa
 co1 = "#D9D9D9"  # cinza
@@ -34,94 +39,99 @@ def run(frame_parent):
     frame_teams.columnconfigure(0, minsize = 0, weight = 1)
     frame_teams.grid(row=1, column=0, sticky="ew")
 
-    from CSV.CSVHandler import find_data_list_by_field_value_csv
-    from Users.Authentication import CURRENT_USER
-    from Settings import USERS_PATH, TEAMS_PATH
     print(f'group_id:{CURRENT_USER.group_id}')
 
     # seleciona os times pertencentes ao grupo do usuario logado
-    times = find_data_list_by_field_value_csv(TEAMS_PATH, 'group', CURRENT_USER.group_id)
-    print(f'times:{times}')
-
-    from Models.Teams import get_team_name
+    teams_list = find_data_list_by_field_value_csv(TEAMS_PATH, 'group', CURRENT_USER.group_id)
+    print(f'times:{teams_list}')
 
     # pra cada time
-    for i, time_data in enumerate(times):
-        print(f'i: [{i}]: time "{time_data}"')
+    for i, time_data in enumerate(teams_list):
+        create_team(frame_teams, time_data, i)
 
-        # cria o frame do time
-        frame_team = Frame(frame_teams, padx=2, pady=2, bg="yellow")
-        frame_team.columnconfigure(0, minsize = 0, weight = 1)
-        frame_team.grid(row=i, column=0, sticky="ew")
+def create_team(frame_teams_parent, team_data, row):
 
-        # coloca o nome do time
-        Label(frame_team, text=get_team_name(int(time_data['id'])), font='Calibri, 16').grid(row=0, column=0)
+    # cria o frame do time
+    frame_team = Frame(frame_teams_parent, padx=2, pady=2, bg="yellow")
+    frame_team.columnconfigure(0, minsize = 0, weight = 1)
+    frame_team.grid(row=row, column=0, sticky="ew")
 
-        # seleciona os membros do time
-        members = find_data_list_by_field_value_csv(USERS_PATH, 'team_id', i)
+    # coloca o nome do time
+    Label(frame_team, text=get_team_name(int(team_data['id'])), font='Calibri, 16').grid(row=0, column=0)
 
-        # para cada membro
-        for j, member_data in enumerate(members):
+    # seleciona os membros do time
+    members_list = find_data_list_by_field_value_csv(USERS_PATH, 'team_id', row)
 
-            print(f'member: {member_data}')
+    frame_members_parent = Frame(frame_team)
+    frame_members_parent.columnconfigure(0, minsize = 0, weight = 1)
+    frame_members_parent.grid(row=row+1, column=0, sticky="ew")
 
-            # cria um frame para o membro dentro do frame_time
-            frame_member = Frame(frame_team, padx=2, pady=2)
-            frame_member.columnconfigure(0, minsize = 0, weight = 1)
-            frame_member.grid(row=j+1, column=0, sticky="we")
+    # para cada membro
+    for i, member_data in enumerate(members_list):
+        create_member(frame_members_parent, member_data, i)
 
-            # coloca o nome do membro
-            frame_member_name = Frame(frame_team, padx=2, pady=2)
-            # frame_member_name.columnconfigure(0, minsize = 0, weight = 1)
-            frame_member_name.grid(row=j+1, column=0, sticky="w")
-            Label(frame_member_name, text=member_data['name'], font='Calibri, 12', justify='left', bg='green', padx=2, pady=2).grid(row=0, column=0, sticky="ew")
 
-            # cria um frame parent para as ações
-            frame_actions = Frame(frame_member)
-            frame_actions.columnconfigure(0, minsize = 0, weight = 1)
-            frame_actions.grid(row=0, column=1, sticky="w")
+def create_member(frame_members_parent, member_data, row):
 
-            # cria o frame e dropdown de role dentro do ações
-            frame_dropdown = Frame(frame_actions)
-            frame_dropdown.grid(row=0, column=0)
-            roles = [3, 4, 5]
-            role_selected = IntVar()
-            role_selected.set(int(member_data['role_id']))
-            OptionMenu(
-                frame_dropdown,
+    # cria um frame para o membro dentro do frame_time
+    frame_member = Frame(frame_members_parent, padx=2, pady=2)
+    frame_member.columnconfigure(0, minsize = 0, weight = 1)
+    frame_member.grid(row=row, column=0, sticky="we")
 
-                # variavel que armazenará o valor da nova role quando selecionada no OptionMenu
-                role_selected,
+    # coloca o nome do membro
+    frame_member_name = Frame(frame_members_parent, padx=2, pady=2)
+    # frame_member_name.columnconfigure(0, minsize = 0, weight = 1)
+    frame_member_name.grid(row=row, column=0, sticky="w")
+    Label(frame_member_name, text=member_data['name'], font='Calibri, 12', justify='left', bg='green', padx=2, pady=2).grid(row=0, column=0, sticky="ew")
 
-                # lista que contém os valores selecionaveis no OptionMenu
-                *roles,
+    # cria um frame parent para as ações
+    frame_actions = Frame(frame_member)
+    frame_actions.columnconfigure(0, minsize = 0, weight = 1)
+    frame_actions.grid(row=0, column=1, sticky="w")
 
-                # comando que será executado ao selecionar uma opção
-                command=(lambda _, md=member_data, rs = role_selected : update_role(_, md, rs.get()))
-            ).grid(row=0, column=0)
+    # cria o frame e dropdown de role dentro do ações
+    frame_dropdown = Frame(frame_actions)
+    frame_dropdown.grid(row=0, column=0)
+    role_selected = IntVar()
+    role_selected.set(int(member_data['role_id']))
+    OptionMenu(
+        frame_dropdown,
 
-            # cria o frame e button remover dentro do ações
-            frame_remover = Frame(frame_actions)
-            frame_remover.grid(row=0, column=1)
-            Button(
-                frame_remover,
-                text='remover',
-                font='Calibri, 12',
-                padx=8, pady=2,
-                bg='red',
+        # variavel que armazenará o valor da nova role quando selecionada no OptionMenu
+        role_selected,
 
-                # comando que será executado ao clicar: 
-                # chama a função remove_member com o member_data atual do loop como parametro
-                command=lambda md=member_data:remove_member(md)
-            ).grid(row=0, column=0)
+        # lista que contém os valores selecionaveis no OptionMenu
+        *[3, 4, 5],
+
+        # comando que será executado ao selecionar uma opção
+        command=(lambda _, md=member_data, rs = role_selected : update_role(_, md, rs.get()))
+    ).grid(row=0, column=0)
+
+    # cria o frame e button remover dentro do ações
+    frame_remover = Frame(frame_actions)
+    frame_remover.grid(row=0, column=1)
+    Button(
+        frame_remover,
+        text='remover',
+        font='Calibri, 12',
+        padx=8, pady=2,
+        bg='red',
+
+        # comando que será executado ao clicar: 
+        # chama a função remove_member com o member_data atual do loop como parametro
+        command=lambda md=member_data:remove_member(md)
+    ).grid(row=0, column=0)
+
+
+from Utils import edit_team_back
 
 def update_role(_, member_data, new_role):
     print(member_data['name'])
     print(new_role)
+    edit_team_back.change_role(member_data['team_id'], member_data['email'], new_role)
 
 
 def remove_member(member_data):
     print(member_data)
-    pass
-
+    edit_team_back.delete_user(member_data['email'])
 
