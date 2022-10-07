@@ -12,8 +12,8 @@ from Users.Authentication import CURRENT_USER
 # - Nota (1 a 5)
 # - Critério avaliativo
 
-# def create_rating (from_user_id, to_user_id, value, comment, sprint, critery):
-    # return add_unique_csv_autoid(RATINGS_PATH, [from_user_id, to_user_id, value, comment, sprint, criterio])
+# def create_rating (from_user_id, to_user_id, value, comment, sprint, criteria):
+    # return add_unique_csv_autoid(RATINGS_PATH, [from_user_id, to_user_id, value, comment, sprint, criteria])
 
 def criar_dados():
     rt.create_rating(CURRENT_USER.id, 'to_user_id', resposta, resposta(p1, criar_entrada), 'sprint', 't_e')
