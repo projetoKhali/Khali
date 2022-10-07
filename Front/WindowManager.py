@@ -31,6 +31,7 @@ def set_state(new_state:int):
 
     launch()
 
+# Seta CURRENT_STATE pra 0 para chamar a tela de login e deslogar usuário
 def reset():
     CURRENT_STATE = 0
     set_state(0)
