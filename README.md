@@ -84,7 +84,8 @@
 
 
 ## Backlog do Produto
-<details>
+
+ <details>
 
  <summary> Sprint 1 </summary>
  <br>
@@ -99,7 +100,9 @@
   | Como Líder do Grupo, preciso definir a função dos usuário dentro de um Time, que será utilizada como base para suas respectivas permissões |Essencial| 1
   | Como Líder do Grupo, preciso criar um cronograma de Sprints dentro do meu grupo, que será a base para os prazos das avaliações |Essencial| 1
   | Como Líder do Grupo, terei a funcionalidade de desativar usuários e times para possíveis desligamentos ou finalização do projeto |Desejável| 2
-
+ 
+ </details>
+ </details>
   <summary> Sprint 2 </summary>
  <br>
  
@@ -113,7 +116,9 @@
   | Como estudante, avaliarei o PO, Líder Técnico, estudantes do meu time e a mim mesmo como requisito funcional |Essencial| 2
   | CRIAÇÃO DO SISTEMA DE DASHBOARDS |
 
-
+ </details>
+ </details>
+ 
  <summary> Sprint 3 </summary>
  <br>
 
@@ -123,7 +128,9 @@
   | Como Administrador da instituição, preciso ter acesso a um Dashboard para acompanhamento de desempenho dos grupos |Importante| 3
   | Como Líder do Grupo, preciso ter acesso ao Dashboard para acompanhamento de desempenho do meu grupo |Importante| 3
   | Como Fake Client, preciso ter acesso ao Dashboard para acompanhamento de desempenho do meu grupo |Importante| 3
-
+ 
+ </details>
+ </details>
 
  <summary> Sprint 4 </summary>
  <br>
@@ -134,7 +141,7 @@
   | Como Líder Técnico, terei acesso ao meu Dashboard individual e aos Dashboards do meu time, para acompanhamento de desempenho |Importante| 4
   | Como estudante, terei acesso ao meu Dashboard individual e ao Dashboard geral do time, para acompanhar o meu desempenho |Importante| 4
 
-</details>
+ </details>
 
 ### Backlog detalhado da Sprint 1
 #### *Criação do sistema de usuário*
