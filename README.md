@@ -104,10 +104,10 @@
 </details>
 
 
-</details>
+<details open>
+<summary> Sprint 2 </summary>
+<br>
 
- <summary> Sprint 2 </summary>
- <br>
 
  | USER STORY | PRIORIDADE | SPRINT | 
  |------------|------------|:------------:|
