@@ -10,6 +10,7 @@ from Models.Teams import get_team_name
 co0 = "#FAE8E8"  # rosa
 co1 = "#D9D9D9"  # cinza
 co2 = "#1A1D1A"  # preta
+co3 = "#26413C"  # verde
 
 # Informações do modulo
 NAME = 'Editar'
@@ -22,19 +23,19 @@ REQUIRED_PERMISSIONS_VIEW = [None]
 def run(frame_parent):
 
     # cria o frame do módulo
-    module_frame = Frame(frame_parent, padx=2, pady=2, bg='magenta')
+    module_frame = Frame(frame_parent, padx=2, pady=2, )
     # module_frame.rowconfigure(0, minsize = 0, weight = 1)
     module_frame.columnconfigure(0, minsize = 0, weight = 1)
     module_frame.grid(row=0, column=0, sticky="news")
 
     # section 0
-    frame_title = Frame(module_frame, padx=2, pady=2, bg='blue')
+    frame_title = Frame(module_frame, padx=2, pady=2, bg=co3)
     frame_title.grid(row=0, column=0, sticky='we')
 
-    Label(frame_title, text="Editar", font='Calibri, 20').grid(row=0, column=0)
+    Label(frame_title, text="Editar Times", font='Calibri, 20', bg=co3, fg='white').grid(row=0, column=0)
 
     # section 1
-    frame_teams = Frame(module_frame, padx=2, pady=2, bg='cyan')
+    frame_teams = Frame(module_frame, padx=2, pady=2, )
     frame_teams.rowconfigure(1, minsize = 0, weight = 1)
     frame_teams.columnconfigure(0, minsize = 0, weight = 1)
     frame_teams.grid(row=1, column=0, sticky="ew")
@@ -52,12 +53,12 @@ def run(frame_parent):
 def create_team(frame_teams_parent, team_data, row):
 
     # cria o frame do time
-    frame_team = Frame(frame_teams_parent, padx=2, pady=2, bg="yellow")
+    frame_team = Frame(frame_teams_parent, bg=co1)
     frame_team.columnconfigure(0, minsize = 0, weight = 1)
     frame_team.grid(row=row, column=0, sticky="ew")
 
     # coloca o nome do time
-    Label(frame_team, text=get_team_name(int(team_data['id'])), font='Calibri, 16').grid(row=0, column=0)
+    Label(frame_team, text=get_team_name(int(team_data['id'])), font='Calibri, 16', bg=co1).grid(row=0, column=0)
 
     # seleciona os membros do time
     members_list = find_data_list_by_field_value_csv(USERS_PATH, 'team_id', row)
@@ -73,24 +74,26 @@ def create_team(frame_teams_parent, team_data, row):
 
 def create_member(frame_members_parent, member_data, row):
 
+    color = co0 if row % 2 == 1 else 'white'
+
     # cria um frame para o membro dentro do frame_time
-    frame_member = Frame(frame_members_parent, padx=2, pady=2)
+    frame_member = Frame(frame_members_parent, padx=2, pady=2, bg=color)
     frame_member.columnconfigure(0, minsize = 0, weight = 1)
     frame_member.grid(row=row, column=0, sticky="we")
 
     # coloca o nome do membro
-    frame_member_name = Frame(frame_members_parent, padx=2, pady=2)
+    frame_member_name = Frame(frame_members_parent, padx=2, pady=2, bg=color)
     # frame_member_name.columnconfigure(0, minsize = 0, weight = 1)
     frame_member_name.grid(row=row, column=0, sticky="w")
-    Label(frame_member_name, text=member_data['name'], font='Calibri, 12', justify='left', bg='green', padx=2, pady=2).grid(row=0, column=0, sticky="ew")
+    Label(frame_member_name, text=member_data['name'], font='Calibri, 12', justify='left', padx=2, pady=2, bg=color).grid(row=0, column=0, sticky="ew")
 
     # cria um frame parent para as ações
-    frame_actions = Frame(frame_member)
+    frame_actions = Frame(frame_member, bg=color)
     frame_actions.columnconfigure(0, minsize = 0, weight = 1)
     frame_actions.grid(row=0, column=1, sticky="w")
 
     # cria o frame e dropdown de role dentro do ações
-    frame_dropdown = Frame(frame_actions)
+    frame_dropdown = Frame(frame_actions, bg=color)
     frame_dropdown.grid(row=0, column=0)
     role_selected = IntVar()
     role_selected.set(int(member_data['role_id']))
@@ -115,7 +118,6 @@ def create_member(frame_members_parent, member_data, row):
         text='remover',
         font='Calibri, 12',
         padx=8, pady=2,
-        bg='red',
 
         # comando que será executado ao clicar: 
         # chama a função remove_member com o member_data atual do loop como parametro
