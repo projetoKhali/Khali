@@ -84,6 +84,11 @@
 
 ### Backlog do Produto
 
+<details>
+<summary> ### Backlog do Produto </summary>
+<br>
+This is how you dropdown.
+
 | USER STORY | PRIORIDADE | SPRINT | 
 |------------|------------|:------------:|
 | **CRIAÇÃO DO SISTEMA DE CADASTRO DO USUÁRIO E AUTENTICAÇÃO** |
@@ -108,6 +113,7 @@
 | Como Líder Técnico, terei acesso ao meu Dashboard individual e aos Dashboards do meu time, para acompanhamento de desempenho |Importante| 4
 | Como estudante, terei acesso ao meu Dashboard individual e ao Dashboard geral do time, para acompanhar o meu desempenho |Importante| 4
 
+</details>
 
 ### Backlog detalhado da Sprint 1
 #### *Criação do sistema de usuário*
