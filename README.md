@@ -105,6 +105,7 @@
 
 
 </details>
+
 <summary> Sprint 2 </summary>
 <br>
 
@@ -141,7 +142,8 @@
 <summary> Sprint 4 </summary>
 <br>
 
-| USER STORY | PRIORIDADE | SPRINT | 
+| USER STORY | PRIORIDADE | SPRINT |
+|------------|------------|:------------:|
 | REFINAMENTO DAS FUNCIONALIDADES E INTEGRAÇÕES |
 | Como PO, terei acesso ao meu Dashboard individual e os Dashboards do meu time, para acompanhamento de desempenho |Importante| 4
 | Como Líder Técnico, terei acesso ao meu Dashboard individual e aos Dashboards do meu time, para acompanhamento de desempenho |Importante| 4
