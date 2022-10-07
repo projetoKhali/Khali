@@ -85,7 +85,7 @@
 
 ## Backlog do Produto
 
- <details>
+<details>
 
  <summary> Sprint 1 </summary>
  <br>
@@ -101,10 +101,10 @@
  | Como Líder do Grupo, preciso criar um cronograma de Sprints dentro do meu grupo, que será a base para os prazos das avaliações |Essencial| 1
  | Como Líder do Grupo, terei a funcionalidade de desativar usuários e times para possíveis desligamentos ou finalização do projeto |Desejável| 2
 
- </details>
+</details>
 
 
- </details>
+</details>
 
  <summary> Sprint 2 </summary>
  <br>
@@ -119,7 +119,7 @@
  | Como estudante, avaliarei o PO, Líder Técnico, estudantes do meu time e a mim mesmo como requisito funcional |Essencial| 2
  | CRIAÇÃO DO SISTEMA DE DASHBOARDS |
 
- </details>
+</details>
 
 
  </details>
