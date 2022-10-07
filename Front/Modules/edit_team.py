@@ -84,14 +84,44 @@ def run(frame_parent):
             # cria o frame e dropdown de role dentro do ações
             frame_dropdown = Frame(frame_actions)
             frame_dropdown.grid(row=0, column=0)
-            Label(frame_dropdown, text='dropdown', font='Calibri, 12', padx=8, pady=2, bg='blue').grid(row=0, column=0)
+            roles = [3, 4, 5]
+            role_selected = IntVar()
+            role_selected.set(int(member_data['role_id']))
+            OptionMenu(
+                frame_dropdown,
+
+                # variavel que armazenará o valor da nova role quando selecionada no OptionMenu
+                role_selected,
+
+                # lista que contém os valores selecionaveis no OptionMenu
+                *roles,
+
+                # comando que será executado ao selecionar uma opção
+                command=(lambda _, md=member_data, rs = role_selected : update_role(_, md, rs.get()))
+            ).grid(row=0, column=0)
 
             # cria o frame e button remover dentro do ações
             frame_remover = Frame(frame_actions)
             frame_remover.grid(row=0, column=1)
-            Label(frame_remover, text='remover', font='Calibri, 12', padx=8, pady=2, bg='red').grid(row=0, column=0)
+            Button(
+                frame_remover,
+                text='remover',
+                font='Calibri, 12',
+                padx=8, pady=2,
+                bg='red',
+
+                # comando que será executado ao clicar: 
+                # chama a função remove_member com o member_data atual do loop como parametro
+                command=lambda md=member_data:remove_member(md)
+            ).grid(row=0, column=0)
+
+def update_role(_, member_data, new_role):
+    print(member_data['name'])
+    print(new_role)
 
 
-
+def remove_member(member_data):
+    print(member_data)
+    pass
 
 
