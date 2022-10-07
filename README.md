@@ -86,51 +86,53 @@
 ## Backlog do Produto
 <details>
 
-<summary> Sprint 1 </summary>
-<br>
+ <summary> Sprint 1 </summary>
+ <br>
 
-| USER STORY | PRIORIDADE | SPRINT | 
-|------------|------------|:------------:|
-| **CRIAÇÃO DO SISTEMA DE CADASTRO DO USUÁRIO E AUTENTICAÇÃO** |
-| Como Administrador da instituição, preciso cadastrar os Líderes dos Grupos para que façam login |Essencial| 1
-| Como Administrador da instituição, preciso cadastrar os Fake Clients para que façam login |Essencial| 1
-| Como Líder do Grupo, preciso criar Times para realizar o cadastro de usuários |Essencial| 1
-| Como Líder do Grupo, preciso cadastrar usuários dentro de um Time para que façam login |Essencial| 1
-| Como Líder do Grupo, preciso definir a função dos usuário dentro de um Time, que será utilizada como base para suas respectivas permissões |Essencial| 1
-| Como Líder do Grupo, preciso criar um cronograma de Sprints dentro do meu grupo, que será a base para os prazos das avaliações |Essencial| 1
-| Como Líder do Grupo, terei a funcionalidade de desativar usuários e times para possíveis desligamentos ou finalização do projeto |Desejável| 2
+  | USER STORY | PRIORIDADE | SPRINT | 
+  |------------|------------|:------------:|
+  | **CRIAÇÃO DO SISTEMA DE CADASTRO DO USUÁRIO E AUTENTICAÇÃO** |
+  | Como Administrador da instituição, preciso cadastrar os Líderes dos Grupos para que façam login |Essencial| 1
+  | Como Administrador da instituição, preciso cadastrar os Fake Clients para que façam login |Essencial| 1
+  | Como Líder do Grupo, preciso criar Times para realizar o cadastro de usuários |Essencial| 1
+  | Como Líder do Grupo, preciso cadastrar usuários dentro de um Time para que façam login |Essencial| 1
+  | Como Líder do Grupo, preciso definir a função dos usuário dentro de um Time, que será utilizada como base para suas respectivas permissões |Essencial| 1
+  | Como Líder do Grupo, preciso criar um cronograma de Sprints dentro do meu grupo, que será a base para os prazos das avaliações |Essencial| 1
+  | Como Líder do Grupo, terei a funcionalidade de desativar usuários e times para possíveis desligamentos ou finalização do projeto |Desejável| 2
 
-<summary> Sprint 2 </summary>
-<br>
-| USER STORY | PRIORIDADE | SPRINT | 
-|------------|------------|:------------:|
-| CRIAÇÃO DO SISTEMA DE AVALIAÇÃO |
-| Como Líder do Grupo, avaliarei os Líderes Técnicos do meu grupo conforme requisito funcional |Essencial| 2
-| Como Fake Client, avaliarei os POs do meu grupo conforme requisito funcional |Essencial| 2
-| Como PO, avaliarei o Líder Técnico, estudantes do meu time e a mim mesmo como requisito funcional |Essencial| 2
-| Como Líder Técnico, avaliarei o PO, estudantes do meu time e a mim mesmo como requisito funcional |Essencial| 2
-| Como estudante, avaliarei o PO, Líder Técnico, estudantes do meu time e a mim mesmo como requisito funcional |Essencial| 2
-| CRIAÇÃO DO SISTEMA DE DASHBOARDS |
+  <summary> Sprint 2 </summary>
+ <br>
  
+  | USER STORY | PRIORIDADE | SPRINT | 
+  |------------|------------|:------------:|
+  | CRIAÇÃO DO SISTEMA DE AVALIAÇÃO |
+  | Como Líder do Grupo, avaliarei os Líderes Técnicos do meu grupo conforme requisito funcional |Essencial| 2
+  | Como Fake Client, avaliarei os POs do meu grupo conforme requisito funcional |Essencial| 2
+  | Como PO, avaliarei o Líder Técnico, estudantes do meu time e a mim mesmo como requisito funcional |Essencial| 2
+  | Como Líder Técnico, avaliarei o PO, estudantes do meu time e a mim mesmo como requisito funcional |Essencial| 2
+  | Como estudante, avaliarei o PO, Líder Técnico, estudantes do meu time e a mim mesmo como requisito funcional |Essencial| 2
+  | CRIAÇÃO DO SISTEMA DE DASHBOARDS |
 
-<summary> Sprint 3 </summary>
-<br>
+
+ <summary> Sprint 3 </summary>
+ <br>
+
+  | USER STORY | PRIORIDADE | SPRINT | 
+  |------------|------------|:------------:|
+  | CRIAÇÃO DO SISTEMA DE DASHBOARD |
+  | Como Administrador da instituição, preciso ter acesso a um Dashboard para acompanhamento de desempenho dos grupos |Importante| 3
+  | Como Líder do Grupo, preciso ter acesso ao Dashboard para acompanhamento de desempenho do meu grupo |Importante| 3
+  | Como Fake Client, preciso ter acesso ao Dashboard para acompanhamento de desempenho do meu grupo |Importante| 3
+
+
+ <summary> Sprint 4 </summary>
+ <br>
  
-| USER STORY | PRIORIDADE | SPRINT | 
-|------------|------------|:------------:|
-| CRIAÇÃO DO SISTEMA DE DASHBOARD |
-| Como Administrador da instituição, preciso ter acesso a um Dashboard para acompanhamento de desempenho dos grupos |Importante| 3
-| Como Líder do Grupo, preciso ter acesso ao Dashboard para acompanhamento de desempenho do meu grupo |Importante| 3
-| Como Fake Client, preciso ter acesso ao Dashboard para acompanhamento de desempenho do meu grupo |Importante| 3
-
-
-<summary> Sprint 4 </summary>
-<br>
-| USER STORY | PRIORIDADE | SPRINT | 
-| REFINAMENTO DAS FUNCIONALIDADES E INTEGRAÇÕES |
-| Como PO, terei acesso ao meu Dashboard individual e os Dashboards do meu time, para acompanhamento de desempenho |Importante| 4
-| Como Líder Técnico, terei acesso ao meu Dashboard individual e aos Dashboards do meu time, para acompanhamento de desempenho |Importante| 4
-| Como estudante, terei acesso ao meu Dashboard individual e ao Dashboard geral do time, para acompanhar o meu desempenho |Importante| 4
+  | USER STORY | PRIORIDADE | SPRINT | 
+  | REFINAMENTO DAS FUNCIONALIDADES E INTEGRAÇÕES |
+  | Como PO, terei acesso ao meu Dashboard individual e os Dashboards do meu time, para acompanhamento de desempenho |Importante| 4
+  | Como Líder Técnico, terei acesso ao meu Dashboard individual e aos Dashboards do meu time, para acompanhamento de desempenho |Importante| 4
+  | Como estudante, terei acesso ao meu Dashboard individual e ao Dashboard geral do time, para acompanhar o meu desempenho |Importante| 4
 
 </details>
 
