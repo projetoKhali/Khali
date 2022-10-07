@@ -86,12 +86,11 @@
 ## Backlog do Produto
 
 <details>
-
  <summary> Sprint 1 </summary>
  <br>
 
 
- > ** CRIAÇÃO DO SISTEMA DE CADASTRO DO USUÁRIO E AUTENTICAÇÃO **
+ > **CRIAÇÃO DO SISTEMA DE CADASTRO DO USUÁRIO E AUTENTICAÇÃO**
  
   | USER STORY | PRIORIDADE | SPRINT | 
   |------------|------------|:------------:|
@@ -104,6 +103,7 @@
   | Como Líder do Grupo, terei a funcionalidade de desativar usuários e times para possíveis desligamentos ou finalização do projeto |Desejável| 2
 
 
+ 
  > **CRIAÇÃO DO SISTEMA DE AVALIAÇÃO**
  
   | USER STORY | PRIORIDADE | SPRINT | 
@@ -115,8 +115,9 @@
   | Como estudante, avaliarei o PO, Líder Técnico, estudantes do meu time e a mim mesmo como requisito funcional |Essencial| 2
   | CRIAÇÃO DO SISTEMA DE DASHBOARDS |
 
+ 
 
- > ** CRIAÇÃO DO SISTEMA DE DASHBOARD**
+ > **CRIAÇÃO DO SISTEMA DE DASHBOARD**
  
   | USER STORY | PRIORIDADE | SPRINT | 
   |------------|------------|:------------:|
@@ -124,8 +125,9 @@
   | Como Líder do Grupo, preciso ter acesso ao Dashboard para acompanhamento de desempenho do meu grupo |Importante| 3
   | Como Fake Client, preciso ter acesso ao Dashboard para acompanhamento de desempenho do meu grupo |Importante| 3
 
+ 
 
- > ** REFINAMENTO DAS FUNCIONALIDADES E INTEGRAÇÕES**
+ > **REFINAMENTO DAS FUNCIONALIDADES E INTEGRAÇÕES**
  
   | USER STORY | PRIORIDADE | SPRINT |
   |------------|------------|:------------:|
@@ -133,7 +135,9 @@
   | Como Líder Técnico, terei acesso ao meu Dashboard individual e aos Dashboards do meu time, para acompanhamento de desempenho |Importante| 4
   | Como estudante, terei acesso ao meu Dashboard individual e ao Dashboard geral do time, para acompanhar o meu desempenho |Importante| 4
 
-<details>
+</details>
+
+
 
 ### Backlog detalhado da Sprint 1
 #### *Criação do sistema de usuário*
