@@ -77,6 +77,8 @@ def run():
     def run_module (m_index):
         global frame_coluna_B
         frame_coluna_B = Frame(janela)
+        frame_coluna_B.rowconfigure(0, minsize = 800, weight = 1)
+        frame_coluna_B.columnconfigure(0, minsize = 800, weight = 1)
         frame_coluna_B.grid(row=0, column=1, sticky = "nsew")
         global current_module
         if current_module is not None:
@@ -84,12 +86,5 @@ def run():
             current_module.destroy()
         current_module = modules[m_index].run(frame_coluna_B)
 
-<<<<<<< Updated upstream
-    run_module(0)
-
-    return janela
-
-=======
     run_module(2)
     return janela
->>>>>>> Stashed changes

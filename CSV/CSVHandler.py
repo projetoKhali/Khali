@@ -5,6 +5,8 @@ import csv
 from Settings import *
 # Definição do namespace, ao usar 'import ...', importará todos os metodos dentro do namespace
 
+log = False
+
 def initialize_csv (path:str):
     delete_csv(path)
     fields = get_path_fields(path)
@@ -32,7 +34,7 @@ def find_data_csv (path:str, key:str):
 
     # Em caso de falha
     except:
-        print(COLS[2] + "CSVHandler.find_data: Erro ao ler arquivo" + COLS[0])
+        if log: print(COLS[2] + "CSVHandler.find_data: Erro ao ler arquivo" + COLS[0])
         # print('deu erro')
         return None
 
@@ -63,7 +65,7 @@ def find_data_by_id_csv (path:str, key:str):
 
     # Em caso de falha
     except:
-        print(COLS[2] + "CSVHandler.find_data_by_id_csv: Erro ao ler arquivo" + COLS[0])
+        if log: print(COLS[2] + "CSVHandler.find_data_by_id_csv: Erro ao ler arquivo" + COLS[0])
         return None
 
     # Pra cada linha carregada na variavel 'lines'
@@ -99,7 +101,7 @@ def find_data_list_by_field_value_csv(path:str, field:str, value:str):
 
     # Em caso de falha
     except:
-        print(COLS[2] + "CSVHandler.find_data_list_by_field_value_csv: Erro ao ler arquivo" + COLS[0])
+        if log: print(COLS[2] + "CSVHandler.find_data_list_by_field_value_csv: Erro ao ler arquivo" + COLS[0])
         return None
 
     lista = []
@@ -158,7 +160,7 @@ def save_file_csv (path:str, fields:array, rows:array):
     # check_path(path, 'save_file_csv')
     
     # Acompanhamento de processo pelo terminal
-    print(COLS[6] + "Iniciando processo de salvamento de um arquivo csv\t" + f"Caminho: {path}" + COLS[0])
+    if log: print(COLS[6] + "Iniciando processo de salvamento de um arquivo csv\t" + f"Caminho: {path}" + COLS[0])
 
     # Abre o arquivo localizado em 'path' em modo de escrita ('w') e o armazena na memoria como 'file'
     with open(path + '.csv', 'w', newline='') as file:
@@ -172,14 +174,14 @@ def save_file_csv (path:str, fields:array, rows:array):
         # Para cada linha subsequente, coloca os valores dos campos correspondentes 
         writer.writerows(rows)
 
-        print(COLS[3] + "Arquivo .csv salvo com sucesso!" + COLS[0])
+        if log: print(COLS[3] + "Arquivo .csv salvo com sucesso!" + COLS[0])
 
 # Escreve a linha espeificada no arquivo .csv especificado
 def add_line_csv (path:str, row:str):
     # check_path(path, 'add_line_csv')
 
     # Acompanhamento de processo pelo terminal
-    print(COLS[6] + "CSVHandler.add_line: Iniciando processo de acrescentamento de um arquivo csv\t" + f"Caminho: {path}" + COLS[0])
+    if log: print(COLS[6] + "CSVHandler.add_line: Iniciando processo de acrescentamento de um arquivo csv\t" + f"Caminho: {path}" + COLS[0])
 
     # Abre o arquivo localizado em 'path' em modo de acrescentação ('a') e o armazena na memoria como 'file'
     with open(path + '.csv', 'a', newline='') as file:
@@ -190,17 +192,17 @@ def add_line_csv (path:str, row:str):
         # Insere o nome de cada campo na primeira linha
         writer.writerow(row)
 
-        print(COLS[3] + "CSVHandler.add_line: Arquivo .csv acrescentado com sucesso!" + COLS[0])
+        if log: print(COLS[3] + "CSVHandler.add_line: Arquivo .csv acrescentado com sucesso!" + COLS[0])
 
 # Escreve uma linha de informação "Unica" com o chave 'id' e valor especificado 'row'
 def add_unique_csv (path:str, id:int, row):
     # check_path(path, 'add_unique_csv')
 
     # Acompanhamento de processo pelo terminal
-    print(COLS[6] + "CSVHandler.add_unique_csv: Iniciando processo de armazenamento de informação identificada por id" + COLS[0])
+    if log: print(COLS[6] + "CSVHandler.add_unique_csv: Iniciando processo de armazenamento de informação identificada por id" + COLS[0])
 
     if id < 0:
-        print(COLS[2] + f"CSVHandler.add_unique_csv -- Erro: O id fornecido é invalido" + COLS[0]) 
+        if log: print(COLS[2] + f"CSVHandler.add_unique_csv -- Erro: O id fornecido é invalido" + COLS[0]) 
 
     # Abre o arquivo localizado em 'path' em modo de acrescentação ('a') e o armazena na memoria como 'file'
     with open(path + '.csv', 'a', newline='') as file:
@@ -214,7 +216,7 @@ def add_unique_csv (path:str, id:int, row):
         # Insere o nome de cada campo na primeira linha
         writer.writerow(row)
 
-        print(COLS[3] + "CSVHandler.add_unique_csv: Arquivo .csv acrescentado com sucesso!" + COLS[0])
+        if log: print(COLS[3] + "CSVHandler.add_unique_csv: Arquivo .csv acrescentado com sucesso!" + COLS[0])
 
 # Escreve uma linha de informação "Unica" o valor especificado 'row'
 # A chave 'id' será definida como o proximo valor disponivel
@@ -222,7 +224,7 @@ def add_unique_csv_autoid (path:str, row):
     check_path(path, 'add_unique_csv_autoid')
 
     # Acompanhamento de processo pelo terminal
-    print(COLS[6] + "CSVHandler.add_unique_csv_autoid: Iniciando processo de armazenamento de informação identificada utilizando associação automatica de id" + COLS[0])
+    if log: print(COLS[6] + "CSVHandler.add_unique_csv_autoid: Iniciando processo de armazenamento de informação identificada utilizando associação automatica de id" + COLS[0])
 
     # Verifica se o caminho existe, se não: inicia o arquivo com o texto a seguir na primeira linha
     if not os.path.exists(path + '.csv'):
@@ -261,10 +263,10 @@ def add_unique_csv_autoid (path:str, row):
     id = max_id + 1
 
     if id < 0:
-        print(COLS[2] + f"CSVHandler.add_unique_csv_autoid -- Erro: O id invalido autogerado" + COLS[0]) 
+        if log: print(COLS[2] + f"CSVHandler.add_unique_csv_autoid -- Erro: O id invalido autogerado" + COLS[0]) 
 
     # printa para acompanhamento de processo
-    print(COLS[7] + "CSVHandler.add_unique_csv_autoid: id definido com sucesso: " + str(id))
+    if log: print(COLS[7] + "CSVHandler.add_unique_csv_autoid: id definido com sucesso: " + str(id))
 
     # Chama a versão da função que inclui especificação por id para continuar o processo
     add_unique_csv(path, id, row)
@@ -285,7 +287,7 @@ def read_line_csv (path:str, line:int):
 
     # Em caso de erro (mais provavel: numero da linha maior ou igual o numero total de linhas do arquivo / OutOfBouds)
     except:
-        print(COLS[2] + f"Erro ao ler a linha {line} no arquivo de caminho {path}" + COLS[0])
+        if log: print(COLS[2] + f"Erro ao ler a linha {line} no arquivo de caminho {path}" + COLS[0])
 
 # Retorna o numero de linhas do arquivo especificado
 def line_count_csv (path:str):
@@ -301,7 +303,7 @@ def line_count_csv (path:str):
 
     # falha
     except:
-        print(COLS[2] + "CSVHandler.line_len: arquivo não encontrado" + COLS[0])
+        if log: print(COLS[2] + "CSVHandler.line_len: arquivo não encontrado" + COLS[0])
 
     return 0
 
