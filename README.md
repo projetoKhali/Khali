@@ -82,10 +82,11 @@
 * Uso de sistema de controle de versão de código (Git)
 * Documentações
 
-<details>
-<h1> Backlog do Produto
 
-<summary> </summary>
+## Backlog do Produto
+<details>
+
+<summary> Sprint 1 </summary>
 <br>
 This is how you dropdown.
 
