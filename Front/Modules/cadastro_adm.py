@@ -44,6 +44,7 @@ def run (frame_parent):
         if len(nome_lider) == 0  or len(email_lider) == 0  or len(nome_client) == 0  or len(email_client) == 0:
             print("valores nulos, por favor inserir dados válidos.")
             return
+            
         # para a aplicação sempre que o email do lider e do cliente forem iguais
         if email_lider == email_client:
             print("emails são iguais!!! por favor, insira emails diferentes")
