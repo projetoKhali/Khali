@@ -51,9 +51,10 @@ def login (email, senha):
 
     return CURRENT_USER
 
+# Define que não não tem usuário logado e envia para a tela de login
 def sair():
     CURRENT_USER = None
-    from Front.WindowManager import reset, set_state
+    from Front.WindowManager import reset
     reset()
 
 # Efetua o Cadastro de um novo Usuário e, se efetuado com sucesso, o armazena na database .csv
