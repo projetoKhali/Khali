@@ -86,11 +86,8 @@
 ## Backlog do Produto
 
 <details>
- <summary> Sprint 1 </summary>
+ <summary> SPRINT 1- CRIAÇÃO DO SISTEMA DE CADASTRO DO USUÁRIO E AUTENTICAÇÃO </summary>
  <br>
-
-
- > **CRIAÇÃO DO SISTEMA DE CADASTRO DO USUÁRIO E AUTENTICAÇÃO**
  
   | USER STORY | PRIORIDADE | SPRINT | 
   |------------|------------|:------------:|
@@ -103,8 +100,9 @@
   | Como Líder do Grupo, terei a funcionalidade de desativar usuários e times para possíveis desligamentos ou finalização do projeto |Desejável| 2
 
 
+ <details>
+<summary>SPRINT 2 - CRIAÇÃO DO SISTEMA DE AVALIAÇÃO</summary>
  
- > **CRIAÇÃO DO SISTEMA DE AVALIAÇÃO**
  
   | USER STORY | PRIORIDADE | SPRINT | 
   |------------|------------|:------------:|
