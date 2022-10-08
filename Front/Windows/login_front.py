@@ -13,7 +13,7 @@ def run():
     #criar imagem e distribuir pro intereior do label essa imagem
     # path = "\Logo_big.gif"
     img = PhotoImage(file=".\\" + RESOURCES_PATH + "\Logo_small.png") #imagem que vai ser colocada na tela, tem que estar com formato gif
-    label_imagem = Label(janela, image=img)
+    label_imagem = Label(janela, image=img, background=co0)
     label_imagem.photo = img
     label_imagem.place(relx = 0.5, rely = 0.2, anchor = 'center') #creio que 0.5 seja 50% da janela
 

@@ -4,10 +4,10 @@ from tkinter import *
 import Settings
 
 # cores
-co0 = "#FAE8E8"  # rosa
-co1 = "#D9D9D9"  # cinza
-co2 = "#1A1D1A"  # preta
-co3 = "#26413C"  # verde
+co0 = "#fae8e8"  # rosa
+co1 = "#d9d9d9"  # cinza
+co2 = "#1a1d1a"  # preta
+co3 = "#26413c"  # verde
 
 current_module = None
 modules = []
@@ -50,7 +50,7 @@ def run():
 
     #adiciona Logo
     img = PhotoImage(file=".\\" + Settings.RESOURCES_PATH + "\Logo_small.png")  # imagem que vai ser colocada na tela, tem que estar com formato gif
-    logo = Label(frame_logo, image=img)
+    logo = Label(frame_logo, image=img, bg=co0)
     logo.photo = img
     logo.grid(row = 0, column = 0, sticky = 'n')
 
@@ -64,7 +64,7 @@ def run():
         criar_button(frame_tabs, module.NAME, "Calibri, 14", lambda i=tab_index: run_module(i), tab_index, 0, 'w', 5, 5)  
 
     from Users.Authentication import sair
-    criar_button(frame_coluna_A ,"    sair    " ,"arial" ,sair ,2 ,0 ,"w" ,5 , 5)
+    criar_button(frame_coluna_A ,"    Sair    ", "Calibri, 14" , sair, 2, 0, "w", 5, 5)
 
     print(f'modules: {modules}')
 
@@ -80,7 +80,7 @@ def run():
 
     def run_module (m_index):
         global frame_coluna_B
-        frame_coluna_B = Frame(janela)
+        frame_coluna_B = Frame(janela, bg=co0)
         frame_coluna_B.grid(row=0, column=1, sticky = "nsew")
         global current_module
         if current_module is not None:

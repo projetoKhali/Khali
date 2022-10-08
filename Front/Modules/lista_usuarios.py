@@ -2,9 +2,9 @@ from Utils import lista_usuarios_back
 from tkinter import *
 
 # cores
-co0 = "#FAE8E8"  # rosa
-co1 = "#D9D9D9"  # cinza
-co2 = "#1A1D1A"  # preta
+co0 = "#fae8e8"  # rosa
+co1 = "#d9d9d9"  # cinza
+co2 = "#1a1d1a"  # preta
 
 # Informações do modulo
 NAME = 'Lista'
