@@ -99,8 +99,9 @@
   | Como Líder do Grupo, preciso criar um cronograma de Sprints dentro do meu grupo, que será a base para os prazos das avaliações |Essencial| 1
   | Como Líder do Grupo, terei a funcionalidade de desativar usuários e times para possíveis desligamentos ou finalização do projeto |Desejável| 2
 
+</details>
 
- <details>
+<details>
 <summary>SPRINT 2 - CRIAÇÃO DO SISTEMA DE AVALIAÇÃO</summary>
  
  
@@ -113,7 +114,8 @@
   | Como estudante, avaliarei o PO, Líder Técnico, estudantes do meu time e a mim mesmo como requisito funcional |Essencial| 2
   | CRIAÇÃO DO SISTEMA DE DASHBOARDS |
 
- 
+ </details>
+
 
  > **CRIAÇÃO DO SISTEMA DE DASHBOARD**
  
