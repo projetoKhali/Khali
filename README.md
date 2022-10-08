@@ -116,18 +116,19 @@
 
  </details>
 
+<details>
+<summary>SPRINT 3 - CRIAÇÃO DO SISTEMA DE DASHBOARD </summary>
 
- > **CRIAÇÃO DO SISTEMA DE DASHBOARD**
  
   | USER STORY | PRIORIDADE | SPRINT | 
   |------------|------------|:------------:|
   | Como Administrador da instituição, preciso ter acesso a um Dashboard para acompanhamento de desempenho dos grupos |Importante| 3
   | Como Líder do Grupo, preciso ter acesso ao Dashboard para acompanhamento de desempenho do meu grupo |Importante| 3
   | Como Fake Client, preciso ter acesso ao Dashboard para acompanhamento de desempenho do meu grupo |Importante| 3
-
+ </details>
  
-
- > **REFINAMENTO DAS FUNCIONALIDADES E INTEGRAÇÕES**
+<details>
+<summary>SPRINT 4 - "NÃO VALIDADO AINDA" </summary>
  
   | USER STORY | PRIORIDADE | SPRINT |
   |------------|------------|:------------:|
@@ -135,7 +136,7 @@
   | Como Líder Técnico, terei acesso ao meu Dashboard individual e aos Dashboards do meu time, para acompanhamento de desempenho |Importante| 4
   | Como estudante, terei acesso ao meu Dashboard individual e ao Dashboard geral do time, para acompanhar o meu desempenho |Importante| 4
 
-</details>
+ </details>
 
 
 
