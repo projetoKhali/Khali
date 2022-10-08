@@ -121,8 +121,8 @@
   | USER STORY | PRIORIDADE |
   |------------|------------|
   | Como estudante terei acesso a um dashboard dos meus resultados individuais nas avaliações para que eu possa acompanhar e analisar o meu desempenho | Importante|
-| Como PO terei acesso a um dashboard com resultado do meu time nas avaliações para que eu possa acompanhar o desempenho do meu time | Importante |
- | Como LG terei acesso a um dashboard com resultado do meu time nas avaliações para que eu possa acompanhar o desempenho do meu time | Importante |
+| Como PO terei acesso a um dashboard com resultado do meu time nas avaliações para que eu possa acompanhar e analisar o desempenho do meu time | Importante |
+ | Como LG terei acesso a um dashboard com resultado do meu time nas avaliações para que eu possa acompanhar e analisar o desempenho do meu time | Importante |
 
 	
  </details>
