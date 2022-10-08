@@ -13,7 +13,7 @@ class User:
     password:int = None     # A senha criptografada do usuário
 
     # Método construtor para criar um novo usuário
-    def __init__(self, _id, _name:str, _email:str, _group_id:int, _team_id:int, _role_id:int, _pw:str):
+    def __init__(self, _name:str, _email:str, _group_id:int, _team_id:int, _role_id:int, _pw:str, _id:int=None):
 
         # Ao criar um usuário, os parametros passados serão registrados ao valor das variáveis
         self.id         = _id

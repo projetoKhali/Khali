@@ -16,7 +16,7 @@ def get_users(email):
     if user["role_id"] in [3, 4, 5]:
         # retorna lista com todos os usuários que são do mesmo time que o logado
         rate_users_for_students = handler.find_data_list_by_field_value_csv(Settings.USERS_PATH, 'team_id', user["team_id"])
-        users_to_rate =
+        # users_to_rate =
         return rate_users_for_students
 
 

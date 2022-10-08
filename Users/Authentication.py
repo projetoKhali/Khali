@@ -39,13 +39,13 @@ def login (email, senha):
 
     global CURRENT_USER
     CURRENT_USER = User(
-        user_data['id'],
         user_data['name'],
         user_data['email'],
         user_data['group_id'],
         user_data['team_id'],
         user_data['role_id'],
-        user_data['password']
+        user_data['password'],
+        user_data['id'],
     )
 
     WindowManager.next_state()

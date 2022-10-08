@@ -59,7 +59,6 @@ def initialize_test():
 import os
 # if not os.path.exists(USERS_PATH + '.csv'):
 initialize_test()
-<<<<<<< HEAD
 
 from Utils.edit_team_back import *
 
