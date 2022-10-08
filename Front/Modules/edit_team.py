@@ -5,6 +5,7 @@ from CSV.CSVHandler import find_data_list_by_field_value_csv
 from Users.Authentication import CURRENT_USER
 from Settings import USERS_PATH, TEAMS_PATH
 from Models.Teams import get_team_name
+from Models.Role import get_role_name, get_role_id
 
 # cores
 co0 = "#FAE8E8"  # rosa
@@ -95,8 +96,8 @@ def create_member(frame_members_parent, member_data, row):
     # cria o frame e dropdown de role dentro do ações
     frame_dropdown = Frame(frame_actions, bg=color)
     frame_dropdown.grid(row=0, column=0)
-    role_selected = IntVar()
-    role_selected.set(int(member_data['role_id']))
+    role_selected = StringVar()
+    role_selected.set(get_role_name(int(member_data['role_id'])))
     OptionMenu(
         frame_dropdown,
 
@@ -104,10 +105,10 @@ def create_member(frame_members_parent, member_data, row):
         role_selected,
 
         # lista que contém os valores selecionaveis no OptionMenu
-        *[3, 4, 5],
+        *["Lider Técnico", "Product Owner", "Developer"],
 
         # comando que será executado ao selecionar uma opção
-        command=(lambda _, md=member_data, rs = role_selected : update_role(_, md, rs.get()))
+        command=(lambda _, md=member_data, rs = role_selected : update_role(_, md, get_role_id(rs.get())))
     ).grid(row=0, column=0)
 
     # cria o frame e button remover dentro do ações

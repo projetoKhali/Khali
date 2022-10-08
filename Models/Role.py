@@ -36,6 +36,12 @@ def get_role (id:int):
     # Retorna a Função de index 'id'
     return ROLES[id]
 
+def get_role_id (name:str):
+    for i, role in enumerate(ROLES):
+        if role.name == name:
+            return i
+    return None
+
 # Retorna o nome da função com id solicitado
 def get_role_name (id:int):
     role = get_role(int(id))
