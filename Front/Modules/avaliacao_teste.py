@@ -69,11 +69,11 @@ def run(frame_parent):
     for i in range(5):
 
         frm_criteria = Frame(frm_avaliacao, bg='#fae8e8', relief=GROOVE, bd=3)
-        frm_criteria.grid(row= i+1, column=0, columnspan=4, sticky='nsew')
+        frm_criteria.grid(row= i+1, column=0, columnspan=2, sticky='nsew')
         frm_criteria.columnconfigure(0, weight=1)
 
         frm_criteria_data = Frame(frm_criteria, bg='#fae8e8')
-        frm_criteria_data.grid(row= 0, column=0, columnspan=2, sticky='nsew')
+        frm_criteria_data.grid(row= 0, column=0, sticky='nsew')
         frm_criteria_data.columnconfigure(0, weight=1)
         frm_criteria_data.rowconfigure([0, 1, 2, 3, 4], weight=1)
 
@@ -110,7 +110,7 @@ def run(frame_parent):
         if escalas[i].get() <= 3:
 
             frm_criteria_feedback = Frame(frm_criteria, bg='#fae8e8')
-            frm_criteria_feedback.grid(row= 0, column=1, columnspan=2, sticky='nsew')
+            frm_criteria_feedback.grid(row= 0, column=1, sticky='nsew')
             frm_criteria_feedback.columnconfigure(0, weight=1)
 
             criar_label(frm_criteria_feedback, f'Feedback obrigatório para critério {i+1}: ', 10, 1, 0, 0, 24, 'w')

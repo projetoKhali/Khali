@@ -50,10 +50,10 @@ def run(frame_parent):
 
 
 
-    criar_label(frame_user, 'Meu Perfil', 'Calibri, 14', 0, 0)
+    criar_label(frame_user, 'Meu Perfil', 'Calibri, 30', 0, 0)
 
-    criar_label(frame_user, get_role_name(CURRENT_USER.role_id), 'Calibri, 12',1, 0)
-    criar_label(frame_user, CURRENT_USER.name, 'Calibri, 12',2, 0)
+    criar_label(frame_user, get_role_name(CURRENT_USER.role_id), 'Calibri, 20',1, 0)
+    criar_label(frame_user, CURRENT_USER.name, 'Calibri, 20',2, 0)
 
     # frame com os usuários que devem ser analisados por quem está logado
     frame_avaliados = criar_frame(frame_parent, 1, 0)

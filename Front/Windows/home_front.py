@@ -23,23 +23,23 @@ def run():
     janela.geometry('1300x670')  # tamanho da tela, largura x altura
 
     # tentativa de dar numero de linhas e colunas para a tabela. Se deixo ativado, os labels ficam espalhados pela tela.
-    janela.rowconfigure(0, minsize = 800, weight = 1)
-    janela.columnconfigure(1, minsize = 800, weight = 1)
+    janela.rowconfigure(0, minsize=800, weight=1)
+    janela.columnconfigure(1, minsize=800, weight=1)
     janela.configure(background=co0)
 
     # função de criar frame
     # row e column referem-se a posição do frame
     def criar_frame(quadro, row, column):
         frame = Frame(quadro, background=co0)
-        frame.grid(row = row, column = column, sticky = "nw")
+        frame.grid(row=row, column=column, sticky='nw')
         return frame
 
     # cria widget do tipo label
     def criar_label(quadro, text, font, r, c, w, padx, pady):
-        Label(quadro, text=text, font=font, background=co0).grid(row=r, column=c, sticky=w, padx = padx, pady = pady)
+        Label(quadro, text=text, font=font, background=co0).grid(row=r, column=c, sticky=w, padx=padx, pady=pady)
 
     def criar_button(quadro, text, font, command, r, c, w, padx, pady):
-        Button(quadro, text=text, font=font, height=0, command = command, background = co3, fg = 'white').grid(row=r, column=c, sticky=w, padx = padx, pady = pady)
+        Button(quadro, text=text, font=font, width=13, height=1, command=command, background=co3, fg='white').grid(row=r, column=c, sticky=w, padx=padx, pady=pady)
 
     # COLUNA A --------------------------------------------------------------
     #frame widgets
@@ -49,7 +49,7 @@ def run():
     frame_logo = criar_frame(frame_coluna_A, 0, 0)
 
     #adiciona Logo
-    img = PhotoImage(file=".\\" + Settings.RESOURCES_PATH + "\Logo_small.png")  # imagem que vai ser colocada na tela, tem que estar com formato gif
+    img = PhotoImage(file='.\\' + Settings.RESOURCES_PATH + '\Logo_small.png')  # imagem que vai ser colocada na tela, tem que estar com formato gif
     logo = Label(frame_logo, image=img, bg=co0)
     logo.photo = img
     logo.grid(row = 0, column = 0, sticky = 'n')
@@ -64,7 +64,7 @@ def run():
         criar_button(frame_tabs, module.NAME, "Calibri, 14", lambda i=tab_index: run_module(i), tab_index, 0, 'w', 5, 5)  
 
     from Users.Authentication import sair
-    criar_button(frame_coluna_A ,"    Sair    ", "Calibri, 14" , sair, 2, 0, "w", 5, 5)
+    criar_button(frame_coluna_A, "Sair", "Calibri, 14" , sair, 2, 0, "w", 5, 5)
 
     print(f'modules: {modules}')
 
