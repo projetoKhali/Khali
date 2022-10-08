@@ -14,7 +14,7 @@ PATH_FIELDS = {
     GROUPS_PATH: ['id', 'name'] ,
     SPRINTS_PATH: ['id', 'group', 'start', 'finish', 'rating period'] ,
     TEAMS_PATH: ['id', 'group', 'name',] ,
-    RATINGS_PATH: ['id', 'from_user_id', 'to_user_id', 'value', 'comment'] ,
+    RATINGS_PATH: ['id', 'from_user_id', 'to_user_id', 'value', 'comment', 'sprint', 'criteria'] ,
 }
 
 SEND_EMAIL_ON_REGISTER = False
