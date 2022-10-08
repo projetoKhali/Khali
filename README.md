@@ -132,7 +132,7 @@
   | USER STORY | PRIORIDADE |
   |------------|------------|
   | Como PO, terei acesso ao meu Dashboard individual e os Dashboards do meu time, para acompanhamento de desempenho |Importante|
-  | Como Líder Técnico, terei acesso ao meu Dashboard individual e aos Dashboards do meu time, para acompanhamento de desempenho |Importante|
+  | Como Líder Técnico, terei acesso ao meu Dashboard individual e aos Dashboards do meu time, <br /> para acompanhamento de desempenho |Importante|
   | Como estudante, terei acesso ao meu Dashboard individual e ao Dashboard geral do time, para acompanhar o meu desempenho |Importante|
 
  </details>
