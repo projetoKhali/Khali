@@ -32,13 +32,48 @@
 ## *Projeto API*
 
 ### Integrantes da Equipe Khali
+
 * Danielle Tiemi Iwamoto [GitHub](https://github.com/daniiwamoto)
-* Danielle Tiemi Iwamoto [GitHub](https://github.com/daniiwamoto)
+<div> 
+  <a href="https://www.linkedin.com/in/danielle-tiemi-i-095757133/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a>
+  <a href = "mailto:daniiwamoto@gmail.com"><img src="https://img.shields.io/badge/-Gmail-%23333?style=for-the-badge&logo=gmail&logoColor=white" target="_blank"></a>
+   <a href="https://www.instagram.com/daniiwamot0/" target="_blank"><img src="https://img.shields.io/badge/-Instagram-%23E4405F?style=for-the-badge&logo=instagram&logoColor=white" target="_blank"></a>
+ <div>
+
 * Jhonatan Oliveira Lopes [GitHub](https://github.com/JhonatanLop)
+<div>
+    <a href="https://www.linkedin.com/in/jhonatan-oliveira-lopes/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a>
+  <a href = "mailto:jhooliveira.lopes@gmail.com"><img src="https://img.shields.io/badge/-Gmail-%23333?style=for-the-badge&logo=gmail&logoColor=white" target="_blank"></a>
+   <a href="https://www.instagram.com/jhonatan_lopes_lmao/?next=%2F" target="_blank"><img src="https://img.shields.io/badge/-Instagram-%23E4405F?style=for-the-badge&logo=instagram&logoColor=white" target="_blank"></a>
+<div>
+    
 * Marcos Vinicius Malaquias [GitHub](https://github.com/Incivius)
+ <div>
+    <a href="https://www.linkedin.com/in/marcos-malaquias-criatividade-%C3%A9-o-que-me-faz-ser-eu/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a>
+  <a href = "mailto:vitchenso1@gmail.com"><img src="https://img.shields.io/badge/-Gmail-%23333?style=for-the-badge&logo=gmail&logoColor=white" target="_blank"></a>
+   <a href="https://www.instagram.com/mv.malaquias/?next=%2F"_blank"><img src="https://img.shields.io/badge/-Instagram-%23E4405F?style=for-the-badge&logo=instagram&logoColor=white" target="_blank"></a>
+<div>
+
 * Naira Giulia Pereira Maximo dos Santos [GitHub](http://github.com/naira-maximo)
+ <div>
+    <a href="https://www.linkedin.com/in/naira-maximo/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a>
+  <a href = "mailto:ngpmaximo@gmail.com"><img src="https://img.shields.io/badge/-Gmail-%23333?style=for-the-badge&logo=gmail&logoColor=white" target="_blank"></a>
+   <a href="https://www.instagram.com/nai_maximo/?next=%2F"><img src="https://img.shields.io/badge/-Instagram-%23E4405F?style=for-the-badge&logo=instagram&logoColor=white" target="_blank"></a>
+<div>
+ 
 * Paulo Granthon [GitHub](https://github.com/paulo-granthon)
+ <div>
+    <a href="https://www.linkedin.com/in/paulo-granthon/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a>
+  <a href = "mailto:pv.granthon@gmail.com"><img src="https://img.shields.io/badge/-Gmail-%23333?style=for-the-badge&logo=gmail&logoColor=white" target="_blank"></a>
+   <a href="https://www.instagram.com/p.granthon/?next=%2F"><img src="https://img.shields.io/badge/-Instagram-%23E4405F?style=for-the-badge&logo=instagram&logoColor=white" target="_blank"></a>
+<div>
+
 * Tânia de Oliveira Cruz [GitHub](https://github.com/taniacruzz)
+<div>
+    <a href="https://www.linkedin.com/in/t%C3%A2nia-cruz-30ab5812a/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a>
+  <a href = "mailto:tanicruz112@gmail.com"><img src="https://img.shields.io/badge/-Gmail-%23333?style=for-the-badge&logo=gmail&logoColor=white" target="_blank"></a>
+   <a href="https://www.instagram.com/tanicruz_/?next=%2F"><img src="https://img.shields.io/badge/-Instagram-%23E4405F?style=for-the-badge&logo=instagram&logoColor=white" target="_blank"></a>
+<div>
 
 ### Objetivo
 * Atender à necessidade da instituição fictícia e desenvolver uma solução computacional que exercite a capacidade de pesquisa e autodidaxia dos integrantes dos grupos, no que tange:
