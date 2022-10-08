@@ -35,9 +35,11 @@ def initialize_test():
     # cadastra cliente teste
     register("clielano",    "c@c.c",                    0,    None, 2,    custom_password='123')
 
+
     register("lt um", "lt1@o.com",   0, 0, 3, custom_password='123')
     register("lt dois", "lt2@o.com", 0, 1, 3, custom_password='123')
     register("lt tres", "lt3@o.com", 0, 2, 3, custom_password='123')
+
 
     register("po um", "po1@o.com",   0, 0, 4, custom_password='123')
     register("po dois", "p02@o.com", 0, 1, 4, custom_password='123')
@@ -70,8 +72,7 @@ from Utils.edit_team_back import *
 # print(change_role(1, 'lt2@o.com', 5))
 # exit()
 
-=======
->>>>>>> b8f10a5a193b6cb7696b1c7fd76852c91d480613
+
 
 from Utils.edit_team_back import *
 
