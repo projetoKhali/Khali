@@ -107,10 +107,10 @@
  
   | USER STORY | PRIORIDADE |
   |------------|------------|
-  | Como Líder do Grupo, avaliarei os Líderes Técnicos do meu grupo conforme requisito funcional |Essencial|
-  | Como Fake Client, avaliarei os POs do meu grupo conforme requisito funcional |Essencial|
-  | Como PO, avaliarei o Líder Técnico, estudantes do meu time e a mim mesmo como requisito funcional |Essencial|
-  |Como estudante avaliarei todos os outros itegrantes do meu time,e a mim mesmo como requisito funcional |Essencial|
+  | Como Líder do Grupo, avaliarei os Líderes Técnicos do meu grupo conforme requisito funcional | Essencial |
+  | Como Fake Client, avaliarei os POs do meu grupo conforme requisito funcional | Essencial |
+  | Como PO, avaliarei o Líder Técnico, estudantes do meu time e a mim mesmo como requisito funcional | Essencial|
+  | Como estudante avaliarei todos os outros itegrantes do meu time,e a mim mesmo como requisito funcional | Essencial |
 
  </details>
 
@@ -120,9 +120,9 @@
  
   | USER STORY | PRIORIDADE |
   |------------|------------|
-  | Como estudante terei acesso a um dashboard dos meus resultados individuais nas avaliações para que eu possa acompanhar e analisar o meu desempenho |Importante|
-	 | Como PO terei acesso a um dashboard com resultado do meu time nas avaliações para que eu possa acompanhar e analisar o desempenho do meu time |Importante|
-	 | Como Líder técnico terei acesso a um dashboard com resultado do meu time nas avaliações para que eu possa acompanhar e analisar o desempenho do meu time |Importante|
+  | Como estudante terei acesso a um dashboard dos meus resultados individuais nas avaliações para que eu possa acompanhar e analisar o meu desempenho | Importante|
+	 | Como PO terei acesso a um dashboard com resultado do meu time nas avaliações para que eu possa acompanhar e analisar o desempenho do meu time | Importante |
+	 | Como Líder técnico terei acesso a um dashboard com resultado do meu time nas avaliações para que eu possa acompanhar e analisar o desempenho do meu time | Importante |
 	
  </details>
  
