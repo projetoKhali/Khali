@@ -33,10 +33,9 @@ def run(frame_parent):
 
     # Configurações do canvas
     canvas.configure(yscrollcommand=scrollbar_ver.set) # xscrollcomand para barra horizontal
-    canvas.bind('<Configure>', lambda e: canvas.configure(scrollregion=canvas.bbox('all'))) # Seleciona qual parte do canvas o scrollbar deve identificar
-
-
     frm_geral=Frame(canvas, bg='#fae8e8', relief=FLAT, bd=3) # Não colocamos o frame com o .pack nesse caso
+    frm_geral.bind('<Configure>', lambda e: canvas.configure(scrollregion=canvas.bbox('all'))) # Seleciona qual parte do canvas o scrollbar deve identificar
+
     # Integração do frame geral a uma janela do canvas
     canvas.create_window((0,0), window=frm_geral, anchor='nw')
 
