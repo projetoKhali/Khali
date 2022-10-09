@@ -80,7 +80,7 @@ def run():
 
     def run_module (m_index):
         global frame_coluna_B
-        frame_coluna_B = Frame(janela)
+        frame_coluna_B = Frame(janela, background=co0)
         frame_coluna_B.grid(row=0, column=1, sticky = "nsew")
         global current_module
         if current_module is not None:
