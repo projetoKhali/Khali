@@ -14,11 +14,11 @@ ROLES = [
     Role("ADM",             [0, 1, 2      ], [             ]),
 
     # 1 por Grupo
-    Role("Lider do Grupo",  [3, 4, 5, 6, 7], [3            ]),
+    Role("Líder do Grupo",  [3, 4, 5, 6, 7], [3            ]),
     Role("Cliente",         [             ], [4            ]),
 
     # 1 por Time
-    Role("Lider Técnico",   [             ], [3, 4, 5      ]),
+    Role("Líder Técnico",   [             ], [3, 4, 5      ]),
     Role("Product Owner",   [             ], [3, 4, 5      ]),
 
     # 0+ por Time
