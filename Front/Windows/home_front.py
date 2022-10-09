@@ -66,8 +66,6 @@ def run():
     from Users.Authentication import sair
     criar_button(frame_coluna_A ,"    sair    " ,"arial" ,sair ,2 ,0 ,"w" ,5 , 5)
 
-    print(f'modules: {modules}')
-
     #adiciona botões
     #criar_button(frame_coluna_A, 'Meu Perfil', "Calibri, 14", None, 1,0, 'w', 5, 5)
 

@@ -92,8 +92,6 @@ def run(frame_parent):
     # def criar_label(master, text, tamanho, column, row, padx, pady, sticky):
     def computar_resposta(i):
 
-        print(f'index: {i} | {type(i)}')
-
         # print("computar_respostas")
 
         frm_criteria = frm_criterias[i]
