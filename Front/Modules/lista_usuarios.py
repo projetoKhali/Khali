@@ -19,15 +19,25 @@ module_frame = None
 # executa o modulo e retorna
 def run(frame_parent):
 
-    global module_frame
-    module_frame=Frame(frame_parent, bg=co0)
-    module_frame.columnconfigure(0, minsize = 0, weight = 1)
-    module_frame.grid(row=0, column=0, sticky="nsew")
+    # Criar um frame para comportar o canvas
+    frm_main=Frame(frame_parent, bg=co0)
+    frm_main.pack(fill=BOTH, expand=1) 
 
-    from Front.Scrollbar import add_scrollbar
-    module_frame = add_scrollbar(module_frame)
-    module_frame.columnconfigure(0, minsize = 0, weight = 1)
-    module_frame.grid(row=0, column=0, sticky="nsew")
+    # O canvas aceita o scrollbar, mas ela só faz o papel da responsividade
+    canvas=Canvas(frm_main, bg=co0)
+    canvas.pack(side=LEFT, fill=BOTH, expand=1)
+
+    # Configurações do scrollbar
+    scrollbar_ver = Scrollbar(frm_main, orient=VERTICAL, command=canvas.yview) # Comando xview para orientação HORIZONTAL
+    scrollbar_ver.pack(side=RIGHT, fill=Y)
+
+    # Configurações do canvas
+    canvas.configure(yscrollcommand=scrollbar_ver.set) # xscrollcomand para barra horizontal
+    module_frame=Frame(canvas, bg=co0, relief=FLAT, bd=3) # Não colocamos o frame com o .pack nesse caso
+    module_frame.bind('<Configure>', lambda e: canvas.configure(scrollregion=canvas.bbox('all'))) # Seleciona qual parte do canvas o scrollbar deve identificar
+
+    # Integração do frame geral a uma janela do canvas
+    canvas.create_window((0,0), window=module_frame, anchor='nw')
 
     # importa o usuário logado
     from Users.Authentication import CURRENT_USER
