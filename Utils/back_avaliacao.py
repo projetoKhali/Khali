@@ -11,7 +11,12 @@ from Users.Authentication import CURRENT_USER
 # def create_rating (from_user_id, to_user_id, value, comment, sprint, criteria):
     # return add_unique_csv_autoid(RATINGS_PATH, [from_user_id, to_user_id, value, comment, sprint, criteria])
 
-def criar_dados(to_user_id, notas, feedback):
+def dados_autoavaliacao(notas, feedback):
+    from Models.id_criteria import criteria
+    for i, c in enumerate(criteria):
+        create_rating(CURRENT_USER.id, CURRENT_USER.id, notas[i], feedback[i], 'sprint', c)
+
+def dados_avaliacao(to_user_id, notas, feedback):
     from Models.id_criteria import criteria
     for i, c in enumerate(criteria):
         create_rating(CURRENT_USER.id, to_user_id, notas[i], feedback[i], 'sprint', c)

@@ -2,10 +2,10 @@ from tkinter import *
 import Settings
 
 # cores
-co0 = "#FAE8E8"  # rosa
-co1 = "#D9D9D9"  # cinza
-co2 = "#1A1D1A"  # preta
-co3 = "#26413C"  # verde
+co0 = "#fae8e8"  # rosa
+co1 = "#d9d9d9"  # cinza
+co2 = "#1a1d1a"  # preta
+co3 = "#26413c"  # verde
 
 current_module = None
 modules = []
@@ -21,8 +21,8 @@ def run():
     janela.geometry('1300x670')  # tamanho da tela, largura x altura
 
     # tentativa de dar numero de linhas e colunas para a tabela. Se deixo ativado, os labels ficam espalhados pela tela.
-    janela.rowconfigure(0, minsize = 800, weight = 1)
-    janela.columnconfigure(1, minsize = 800, weight = 1)
+    janela.rowconfigure(0, minsize=800, weight=1)
+    janela.columnconfigure(1, minsize=800, weight=1)
     janela.configure(background=co0)
 
     # função de criar frame
@@ -34,10 +34,10 @@ def run():
 
     # cria widget do tipo label
     def criar_label(quadro, text, font, r, c, w, padx, pady):
-        Label(quadro, text=text, font=font, background=co0).grid(row=r, column=c, sticky=w, padx = padx, pady = pady)
+        Label(quadro, text=text, font=font, background=co0).grid(row=r, column=c, sticky=w, padx=padx, pady=pady)
 
     def criar_button(quadro, text, font, command, r, c, w, padx, pady):
-        Button(quadro, text=text, font=font, height=0, command = command, background = co3, fg = 'white').grid(row=r, column=c, sticky=w, padx = padx, pady = pady)
+        Button(quadro, text=text, font=font, width=10, height=1, command=command, background=co3, fg='white').grid(row=r, column=c, sticky=w, padx=padx, pady=pady)
 
     # COLUNA A --------------------------------------------------------------
     #frame widgets
@@ -47,8 +47,8 @@ def run():
     frame_logo = criar_frame(frame_coluna_A, 0, 0, 'news')
 
     #adiciona Logo
-    img = PhotoImage(file=".\\" + Settings.RESOURCES_PATH + "\Logo_small.png")  # imagem que vai ser colocada na tela, tem que estar com formato gif
-    logo = Label(frame_logo, image=img)
+    img = PhotoImage(file='.\\' + Settings.RESOURCES_PATH + '\Logo_small.png')  # imagem que vai ser colocada na tela, tem que estar com formato gif
+    logo = Label(frame_logo, image=img, bg=co0)
     logo.photo = img
     logo.grid(row = 0, column = 0, sticky = 'n')
 

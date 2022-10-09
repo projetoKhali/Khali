@@ -26,25 +26,25 @@ def run (frame_parent):
     # criar widgets ###quadro é se seá colocado na janela ou em frame
     def criar_label(quadro, text, font, r, c, name=None):
         if name is not None:
-            label = Label(quadro, text=text, font=font, background=co0, name=name)
+            label = Label(quadro, text=text, font=font, background=co0, fg=co2, name=name)
         else:
-            label = Label(quadro, text=text, font=font, background=co0)
+            label = Label(quadro, text=text, font=font, background=co0, fg=co2)
         label.grid(row=r, column=c, padx=5, pady=3, sticky = "w")
         return label
 
     def criar_entry(quadro, font, r, c, name=None):
         if name is not None:
-            entry = Entry(quadro, font = font, justify = "left", name=name)
+            entry = Entry(quadro, font=font, fg=co2, justify="left", name=name)
         else:
-            entry = Entry(quadro, font = font, justify = "left")
+            entry = Entry(quadro, font=font, fg=co2,  justify="left")
         entry.grid(row=r, column=c, padx=5, pady=3, sticky = "w")
         return entry
 
     def criar_button(quadro, text, font, r, c, command, name=None):
         if name is not None:
-            button = Button(quadro, text = text, font = font, height = 0, command = command, name=name, activebackground='#c5a8b0', bg='#d9d9d9')
+            button = Button(quadro, text = text, font = font, width=10, height=1, command = command, name=name, fg=co2, activebackground='#c5a8b0', bg='#d9d9d9')
         else:
-            button = Button(quadro, text = text, font = font, height = 0, command = command, activebackground='#c5a8b0', bg='#d9d9d9')
+            button = Button(quadro, text = text, font = font, width=10, height=1, command = command, fg=co2, activebackground='#c5a8b0', bg='#d9d9d9')
         button.grid(row=r, column=c, padx=5, pady=3, sticky = "w")
         return button
 
@@ -447,7 +447,8 @@ def run (frame_parent):
                     continue
 
     # Cria o botão responsável por efetuar os cadastros 
-    Button(module_frame, text="Confirmar Cadastros", font="Calibri, 14", command=confirmar_cadastros, activebackground='#c5a8b0', bg='#d9d9d9').grid(row=0, column=1, sticky='e')
+    Button(module_frame, text="Confirmar Cadastros", font="Calibri, 12", command=confirmar_cadastros, 
+        activebackground='#c5a8b0', bg='#d9d9d9', fg='#1a1d1a', height=0).grid(row=0, column=1, sticky='e')
 
     # retorna o modulo
     return module_frame
