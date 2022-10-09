@@ -61,7 +61,7 @@ def initialize_test():
 # Inicializa os bancos de dados populado com informações teste caso não exista um arquivo users.csv
 # import os
 # if not os.path.exists(USERS_PATH + '.csv'):
-initialize_test()
+# initialize_test()
 
 # from Utils.edit_team_back import *
 
@@ -81,7 +81,7 @@ from Front import WindowManager
 WindowManager.initialize()
 
 # teste - login automatico
-login(email='a@d.m', senha='123')
+# login(email='a@d.m', senha='123')
 # login(email='l@d.g', senha='123')
 # login(email='c@c.c', senha='123')
 # login(email='l@d.g', senha='123')
