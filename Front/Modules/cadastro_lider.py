@@ -73,30 +73,36 @@ def run (frame_parent):
             return
         # frame_sprint = criar_frame(janela, valor, 4, 3, 2)
         frame_sprint = criar_frame(frame_parent_sprints, valor, 0)
-        for i in range(valor):
-            criar_label(frame_sprint, f"Sprint {i+1}", "Calibri, 10", i, 0)
-            criar_label(frame_sprint, "Início:", "Calibri, 10", i, 1)
-            criar_entry(frame_sprint, "Calibri, 10", i, 2)
-            criar_label(frame_sprint, "Fim:", "Calibri, 10", i, 3)
-            criar_entry(frame_sprint, "Calibri, 10", i, 4)
-            criar_label(frame_sprint, "Dias para avaliação:", "Calibri, 10", i, 5)
-            criar_entry(frame_sprint, "Calibri, 10", i, 6)
+        if 1 < valor < 13:    
+            for i in range(valor):
+                criar_label(frame_sprint, f"Sprint {i+1}", "Calibri, 10", i, 0)
+                criar_label(frame_sprint, "Início:", "Calibri, 10", i, 1)
+                criar_entry(frame_sprint, "Calibri, 10", i, 2)
+                criar_label(frame_sprint, "Fim:", "Calibri, 10", i, 3)
+                criar_entry(frame_sprint, "Calibri, 10", i, 4)
+                criar_label(frame_sprint, "Dias para avaliação:", "Calibri, 10", i, 5)
+                criar_entry(frame_sprint, "Calibri, 10", i, 6)
+        else:
+            print("número muito grande de sprints!!, por favor, insira um valor menor")
 
     def entry_times():
         valor = get_entry_int(en_numtimes)
-        for i in range(valor):
-            row = i
-            frame_time = criar_frame(frame_parent_times, row, 0)
-            # lista_frame_time.append(frame_time)
+        if 1 < valor < 13:    
+            for i in range(valor):
+                row = i
+                frame_time = criar_frame(frame_parent_times, row, 0)
+                # lista_frame_time.append(frame_time)
 
-            frame_time_data = criar_frame(frame_time, 0, 0)
-            criar_label(frame_time_data, f"Time {i+1}",          "Calibri, 10", row, 0)
-            # criar_label(frame_time_data, "Nome", "Calibri, 10", row, 1)
-            criar_entry(frame_time_data,                          "Calibri, 10", row, 2)
-            criar_label(frame_time_data, "Quantidade de alunos:", "Calibri, 10", row, 3)
-            criar_entry(frame_time_data,                          "Calibri, 10", row, 4, name="q_alunos")
-            # lista.append(criar_button(frame_time_data, "Cadastrar", "Calibri, 10", i, 3, command = entry_alunos(en_numalunos)))
-            criar_button(frame_time_data, "Cadastrar",           "Calibri, 10", row, 5, command = update_member_forms)
+                frame_time_data = criar_frame(frame_time, 0, 0)
+                criar_label(frame_time_data, f"Time {i+1}",          "Calibri, 10", row, 0)
+                # criar_label(frame_time_data, "Nome", "Calibri, 10", row, 1)
+                criar_entry(frame_time_data,                          "Calibri, 10", row, 2)
+                criar_label(frame_time_data, "Quantidade de alunos:", "Calibri, 10", row, 3)
+                criar_entry(frame_time_data,                          "Calibri, 10", row, 4, name="q_alunos")
+                # lista.append(criar_button(frame_time_data, "Cadastrar", "Calibri, 10", i, 3, command = entry_alunos(en_numalunos)))
+                criar_button(frame_time_data, "Cadastrar",           "Calibri, 10", row, 5, command = update_member_forms)
+        else:
+            print("são muitos times!! por favor, insira um valor menor")
 
     # Atualiza a tela para criar os formularios para cada membro de acordo com o numero de membros especificado em cada time
     def update_member_forms():
