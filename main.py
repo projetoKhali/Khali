@@ -30,8 +30,8 @@ def initialize_test():
     # cadastra lider do grupo teste
     register("L do Gê", "l@d.g", 0, None, 1, custom_password='123')
 
-    # cadastra cliente teste
-    register("clielano", "c@c.c", 0, None, 2, custom_password='123')
+    # # cadastra cliente teste
+    # register("clielano", "c@c.c", 0, None, 2, custom_password='123')
 
     register("lt um", "lt1@o.com",   0, 0, 3, custom_password='123')
     register("lt dois", "lt2@o.com", 0, 1, 3, custom_password='123')
@@ -41,14 +41,17 @@ def initialize_test():
     register("po dois", "p02@o.com", 0, 1, 4, custom_password='123')
     register("po tres", "p03@o.com", 0, 2, 4, custom_password='123')
 
-    # cadastra developer teste
+    # # cadastra developer teste
     register("deve", "d@e.v", 0, 0, 5, custom_password='123')
-    register("developano", "develop@dev.com", 0, 0, 5, custom_password='123')
-    register("develano", "develano-dev@dev.com", 0, 0, 5, custom_password='123')
-    register("devano", "dev-ano@dev.com", 0, 0, 5, custom_password='123')
-    register("fulanodev", "fulano-dev@dev.com", 0, 0, 5, custom_password='123')
-    register("fulanodev", "ful@dev.com", 0, 1, 5, custom_password='123')
+    # register("developano", "develop@dev.com", 0, 0, 5, custom_password='123')
+    # register("develano", "develano-dev@dev.com", 0, 0, 5, custom_password='123')
+    # register("devano", "dev-ano@dev.com", 0, 0, 5, custom_password='123')
+    # register("fulanodev", "fulano-dev@dev.com", 0, 0, 5, custom_password='123')
+    # register("fuldev", "ful@dev.com", 0, 1, 5, custom_password='123')
 
+    register("semtime", "st@s.t", 0, None, 5, custom_password='123')
+    register("timesem", "ts@t.s", 0, None, 5, custom_password='123')
+    register("emitmes", "s@e.m",  0, None, 5, custom_password='123')
 
 
 # Inicializa os bancos de dados populado com informações teste caso não exista um arquivo users.csv
