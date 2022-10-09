@@ -1,8 +1,7 @@
 # API 1º Semestre - Tecnologia em Banco de Dados 2022
-##
 
 <div align="center">
-<img src=https://user-images.githubusercontent.com/112902530/193478966-17501f27-785b-4c3a-bd7f-47b2d8d659fe.png>
+<img height="300" width="1500" src=https://user-images.githubusercontent.com/112902530/194772536-2f7f67a2-4b7b-4087-a8ac-41c291115a7e.png>
 </div>
 
 ## Sumário
