@@ -1,5 +1,6 @@
 from tkinter import *
 from Settings import RESOURCES_PATH, co0
+import stdiomask
 
 def run():
 
@@ -24,7 +25,7 @@ def run():
     en_email.place(relx = 0.5, rely = 0.4, anchor = 'center')
 
     # entry senha
-    en_senha = Entry(janela, bd=2, font=("Calibri", 15), justify=LEFT)
+    en_senha = Entry(janela, bd=2, font=("Calibri", 15), justify=LEFT,show="*")
     en_senha.place(relx = 0.5, rely = 0.5, anchor = 'center')
 
     # # label email 
@@ -37,6 +38,7 @@ def run():
 
     #*****BOTÃO DE LOGIN*****
     def send_login():
+
         email = en_email.get()
         senha = en_senha.get()
         from Users.Authentication import login
