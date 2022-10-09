@@ -6,14 +6,15 @@ co0 = "#FAE8E8"  # rosa
 co1 = "#D9D9D9"  # cinza
 co2 = "#1A1D1A"  # preta
 
-MODULE_NAME = 'Lista'
-REQUIRED_PERMISSIONS = [
-    [8, 9, 10]  # pelo menos uma das 3
-]        
-# REQUIRED_RATINGS = [
-#     [3, 4, 5]  # pelo menos uma das 3
-# ]        
+# Informações do modulo
+NAME = 'Lista'
+REQUIRED_PERMISSIONS_REG  = [None]
+REQUIRED_PERMISSIONS_RATE = [
+    [3, 4, 5]  # pelo menos uma das 3
+]
+REQUIRED_PERMISSIONS_VIEW = [None]
 
+# executa o modulo e retorna
 def run(frame_parent):
 
     # cria o frame do módulo
@@ -24,7 +25,8 @@ def run(frame_parent):
     from Users.Authentication import CURRENT_USER
 
     # cria uma lista com os usuários a serem avaliados pelo usuário logado
-    users = lista_usuarios_back.get_users(CURRENT_USER.email)
+    grade_submitted = lista_usuarios_back.get_users(CURRENT_USER.email)[0]
+    grade_to_submit = lista_usuarios_back.get_users(CURRENT_USER.email)[1]
 
     # função de criar frame
     # row e column referem-se a posição do frame
@@ -35,7 +37,10 @@ def run(frame_parent):
 
     # cria widget do tipo label
     def criar_label(quadro, text, font, r, c):
-        Label(quadro, text=text, font=font, background=co0, justify=LEFT).grid(row=r, column=c, sticky="w")
+        Label(quadro, text=text, font=font, background = co1, justify=LEFT).grid(row=r, column=c, sticky="w")
+
+    def criar_button(quadro, text, font, r, c):
+        Button(quadro, text = text, font = font, background = co0, justify=LEFT).grid(row=r, column=c, sticky="w")
 
     # frame com os dados do usuário que está logado
     frame_user = criar_frame(frame_parent, 0, 0)
@@ -56,19 +61,39 @@ def run(frame_parent):
 
     # frame com os usuários que devem ser analisados por quem está logado
     frame_avaliados = criar_frame(frame_parent, 1, 0)
-    criar_label(frame_avaliados, 'Integrantes a Serem Avaliados', 'Calibri, 14', 0, 0)
+    criar_label(frame_avaliados, 'Integrantes ainda não Avaliados', 'Calibri, 14', 0, 0)
 
-    for line in users:
-        # para que os nomes dos avaliados não fiquem sobrescritos:
-        # uso o índice dos dados daquele avaliado para posicionar as frames
-        indice = users.index(line)
-        # cada avaliado tem uma frame específica
-        frame_avaliado = criar_frame(frame_avaliados, indice + 1, 0)
-        criar_label(frame_avaliado, get_role_name(line['role_id']), 'Calibri, 12', 0, 0)  # linha para teste
-        criar_label(frame_avaliado, line['name'], 'Calibri, 12', 1, 0)  # linha para teste
-        criar_label(frame_avaliado, '', 'Calibri, 12', 2, 0)  # linha para teste
+    indice = 0
 
-    dashboard = criar_frame(frame_parent, 0, 0)
+    for line in grade_to_submit:
+        indice = grade_to_submit.index(line)
+        frame_to_rate = criar_frame(frame_avaliados, indice + 1, 0)
+        criar_label(frame_to_rate, get_role_name(line['role_id']), 'Calibri, 12', 0, 0)  # linha para teste
+        criar_label(frame_to_rate, line['name'], 'Calibri, 12', 1, 0)  # linha para teste
+        # criar_label(frame_to_rate, '', 'Calibri, 12', 2, 0)  # linha para teste
+
+    indice = indice + 2
+
+    criar_label(frame_avaliados, 'Integrantes já Avaliados', 'Calibri, 14', indice, 0)
+
+    for line in grade_submitted:
+        indice = indice + 1
+        frame_rated = criar_frame(frame_avaliados, indice + 1, 0)
+        criar_label(frame_rated, get_role_name(line['role_id']), 'Calibri, 12', 0, 0)  # linha para teste
+        criar_label(frame_rated, line['name'], 'Calibri, 12', 1, 0)  # linha para teste
+        # criar_label(frame_rated, '', 'Calibri, 12', 2, 0)  # linha para teste
+
+    # for line in users:
+    #     # para que os nomes dos avaliados não fiquem sobrescritos:
+    #     # uso o índice dos dados daquele avaliado para posicionar as frames
+    #     indice = users.index(line)
+    #     # cada avaliado tem uma frame específica
+    #     frame_avaliado = criar_frame(frame_avaliados, indice + 1, 0)
+    #     criar_label(frame_avaliado, get_role_name(line['role_id']), 'Calibri, 12', 0, 0)  # linha para teste
+    #     criar_label(frame_avaliado, line['name'], 'Calibri, 12', 1, 0)  # linha para teste
+    #     criar_label(frame_avaliado, '', 'Calibri, 12', 2, 0)  # linha para teste
+
+    # dashboard = criar_frame(frame_parent, 0, 0)
     # criar_label(dashboard, 'Dashboards', 'Calibri, 14', 0, 0)
 
     return module_frame

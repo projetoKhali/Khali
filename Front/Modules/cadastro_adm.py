@@ -1,18 +1,20 @@
 # Importar bibliotecas
+from asyncio.windows_events import NULL
 import tkinter as tk
 from tkinter import Frame, ttk
 from tkinter import END
 from tkinter.messagebox import NO, YES
 
-MODULE_NAME = 'Cadastrar'
-REQUIRED_PERMISSIONS = [
-    0,
-    1,
-    2,
-]        
+# Informações do modulo
+NAME = 'Cadastrar'
+REQUIRED_PERMISSIONS_REG = [0, 1, 2]        
+REQUIRED_PERMISSIONS_RATE = [None]
+REQUIRED_PERMISSIONS_VIEW = [None]
 
+# armazena o numero do grupo durante o cadastro
 grupo_num = 0
 
+# executa o modulo e retorna
 def run (frame_parent):
 
     frame_parent.grid_rowconfigure(0, weight = 1)
@@ -33,6 +35,11 @@ def run (frame_parent):
         # acessa as informações do cliente
         nome_client = ent_client.get()
         email_client = ent_cemail.get()
+
+        # criando uma condição que lê o input do usuário impedindo o programa de criar um registro vazio
+        if len(nome_lider) == 0  or len(email_lider) == 0  or len(nome_client) == 0  or len(email_client) == 0:
+            print("valores nulos, por favor inserir dados válidos.")
+            return
 
         from Users.Authentication import register
         from Models.Groups import create_group
@@ -63,7 +70,7 @@ def run (frame_parent):
     textojanela('lbl_titulo', 'Cadastro de Grupos', 30, 0.02, 0.01, 0.96, 0.09)
     textojanela('lbl_desc', 
         'Após inserir os dados do Líder do Grupo e Fake Client, clique no botão "Cadastrar" para salvar as informações e criar outro grupo.', 
-        15, 0.02, 0.1, 0.96, 0.06)  
+        13, 0.02, 0.1, 0.96, 0.06)  
     textojanela('lbl_senha', 
         'Uma senha gerada automaticamente será enviada para o e-mail de cada um dos integrantes ao final do cadastro.', 
         13, 0.02, 0.17, 0.96, 0.04)
@@ -96,7 +103,7 @@ def run (frame_parent):
     # Função para widget de texto
     def widgetlabel(usuario, linha, coluna, texto):
         usuario=tk.Label(master=frm_grupo, text=texto,
-            fg='#1a1d1a', bg='#fae8e8', font=('Calibre', 15))
+            fg='#1a1d1a', bg='#fae8e8', font=('Calibre', 13))
         usuario.grid(row=linha, column=coluna, sticky='e')
 
     widgetlabel('lbl_lider', 0, 0, 'Nome do Líder do Grupo:')  # Widget de texto nome Líder do Grupo
@@ -106,7 +113,7 @@ def run (frame_parent):
 
     def criarbotao(nome, texto, comando, linha):
         nome=tk.Button(master=frm_grupo, text=texto, 
-        fg='#1a1d1a', bg='#d9d9d9', font=('Calibre', 15),
+        fg='#1a1d1a', bg='#d9d9d9', font=('Calibre', 13),
         width=10, height=1, activebackground='#c5a8b0',
         command=comando)
         nome.grid(row=linha, column=4, padx=20)
@@ -118,10 +125,15 @@ def run (frame_parent):
         column=('codigogrupo', 'nomelider', 'emaillider', 'nomeclient', 'emailclient'),
         show="headings")
 
+    scroll_tree = ttk.Scrollbar(frm_tabela, orient=tk.VERTICAL, command=tree.yview) # Comando xview para orientação HORIZONTAL
+    scroll_tree.pack(side=tk.RIGHT, fill=tk.Y)
+    tree.configure(yscrollcommand=scroll_tree.set) # xscrollcomand para barra horizontal
+    tree.bind('<Configure>', lambda e: tree.configure(scrollregion=tree.bbox('all'))) # Seleciona qual parte do canvas o scrollbar deve identificar
+
     def criartabela(coluna, número, texto): 
         tree.column(coluna, width=200, minwidth=50, stretch=YES)
         tree.heading(número, text=texto)
-
+    
     criartabela('codigogrupo', '#1', 'Código do grupo')
     criartabela('nomelider', '#2', 'Nome do Líder do Grupo')
     criartabela('emaillider', '#3', 'E-mail do Líder do Grupo')
@@ -129,3 +141,5 @@ def run (frame_parent):
     criartabela('emailclient', '#5', 'E-mail do Fake Client')
 
     return window
+
+

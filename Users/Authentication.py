@@ -1,7 +1,8 @@
+from ast import Global
 from CSV.CSVHandler import *
 from Front import WindowManager
 from Users.Gerar_Senha import gerar_senha
-from Models.User import User
+from Models.User import User, create_user
 from Models import Groups, Teams
 
 import Settings as settings
@@ -19,7 +20,7 @@ def login (email, senha):
 
     # em caso de erro, retorna o erro 0 - dado não encontrado
     except:
-        print("dado não encontrado")
+        print("Authentication.login -- Dado não encontrado")
         return 0
 
     # importa a biblioteca de criptografia
@@ -30,11 +31,11 @@ def login (email, senha):
 
         # caso a comparação retorne False, significa que as senhas não são iguais
         # retorna o código de erro 1 - dado invalido
-        print("dado inválido")
+        print("Authentication.login -- Dado inválido")
         return 1
 
     # comparação de senhas retorna True, login retornará o Usuário
-    print("login sucesso")
+    print("Authentication.login -- login sucesso")
 
     global CURRENT_USER
     CURRENT_USER = User(
@@ -43,13 +44,19 @@ def login (email, senha):
         user_data['group_id'],
         user_data['team_id'],
         user_data['role_id'],
-        user_data['password']
+        user_data['password'],
+        user_data['id'],
     )
 
     WindowManager.next_state()
 
     return CURRENT_USER
 
+# Define que não não tem usuário logado e envia para a tela de login
+def sair():
+    CURRENT_USER = None
+    from Front.WindowManager import reset
+    reset()
 
 # Efetua o Cadastro de um novo Usuário e, se efetuado com sucesso, o armazena na database .csv
 def register (name, email, group_id, team_id, role_id, custom_password = None):
@@ -87,7 +94,7 @@ def register (name, email, group_id, team_id, role_id, custom_password = None):
         while not validate_user_password(password):
             password = gerar_senha()
 
-    print (f'email: {email} | password: {password}')
+    print (f'Authentication.register -- Novo usuário cadastrado. Email: {email}, senha: {password}')
 
     # Importa bcrypt para criptografar a senha
     import bcrypt
@@ -101,6 +108,16 @@ def register (name, email, group_id, team_id, role_id, custom_password = None):
     # Cria o Usuário com as informações especificadas        !! decodifica senha antes de salvar: remove b' e ' da string !! 
     user = User(name, email, group_id, team_id, role_id, hashed_password.decode('utf-8'))
 
+    # Adiciona o usuário para a database
+    create_user(
+        user.name,
+        user.email,
+        user.group_id,
+        user.team_id,
+        user.role_id,
+        user.password
+    )
+
     if settings.SEND_EMAIL_ON_REGISTER:
         # from Utils import sistema_email
         # sistema_email.enviar_email(name, email, password)
@@ -108,21 +125,6 @@ def register (name, email, group_id, team_id, role_id, custom_password = None):
         # Envia email com os dados le login automaticamente para o usuário
         envio_email(name, email, password)
 
-    # Adiciona o usuário para a database
-    add_unique_csv_autoid(settings.USERS_PATH, get_user_fields(user))
-
-
-
-# Retorna uma lista com as informações de um Usuário
-def get_user_fields (user:User):
-    return [
-        user.name,
-        user.email,
-        user.group_id,
-        user.team_id,
-        user.role_id,
-        user.password
-    ]
 
 # Retorna True se o nome especificado é valido e False se não
 def validate_user_name(name:str):
