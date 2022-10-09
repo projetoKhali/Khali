@@ -15,31 +15,25 @@ REQUIRED_PERMISSIONS_VIEW = [None]
 
 # executa o modulo e retorna
 def run(frame_parent, to_user_id):
+    #Criar um frame para comportar o canvas
+    frm_main=Frame(frame_parent, bg=co0)
+    frm_main.grid(row=0, column=1, sticky='nsew')
 
-    module_frame = Frame(frame_parent, bg=co0)
-    module_frame.columnconfigure(0, minsize=0, weight=1)
-    module_frame.grid(row=0, column=0)
+    # O canvas aceita o scrollbar, mas ela só faz o papel da responsividade
+    canvas=Canvas(frm_main, bg=co0)
+    canvas.pack(side=LEFT, fill=BOTH, expand=1)
 
+    # Configurações do scrollbar
+    scrollbar_ver = ttk.Scrollbar(frm_main, orient=VERTICAL, command=canvas.yview) # Comando xview para orientação HORIZONTAL
+    scrollbar_ver.pack(side=RIGHT, fill=Y)
 
-    # Criar um frame para comportar o canvas
-    # frm_main=Frame(frame_parent, bg=co0)
-    # frm_main.pack(fill=BOTH, expand=1) 
+    # Configurações do canvas
+    canvas.configure(yscrollcommand=scrollbar_ver.set) # xscrollcomand para barra horizontal
+    module_frame=Frame(canvas, bg=co0, relief=FLAT, bd=3) # Não colocamos o frame com o .pack nesse caso
+    module_frame.bind('<Configure>', lambda e: canvas.configure(scrollregion=canvas.bbox('all'))) # Seleciona qual parte do canvas o scrollbar deve identificar
 
-    # # O canvas aceita o scrollbar, mas ela só faz o papel da responsividade
-    # canvas=Canvas(frm_main, bg=co0)
-    # canvas.pack(side=LEFT, fill=BOTH, expand=1)
-
-    # # Configurações do scrollbar
-    # scrollbar_ver = ttk.Scrollbar(frm_main, orient=VERTICAL, command=canvas.yview) # Comando xview para orientação HORIZONTAL
-    # scrollbar_ver.pack(side=RIGHT, fill=Y)
-
-    # # Configurações do canvas
-    # canvas.configure(yscrollcommand=scrollbar_ver.set) # xscrollcomand para barra horizontal
-    # frm_geral=Frame(canvas, bg=co0, relief=FLAT, bd=3) # Não colocamos o frame com o .pack nesse caso
-    # frm_geral.bind('<Configure>', lambda e: canvas.configure(scrollregion=canvas.bbox('all'))) # Seleciona qual parte do canvas o scrollbar deve identificar
-
-    # # Integração do frame geral a uma janela do canvas
-    # canvas.create_window((0,0), window=frm_geral, anchor='nw')
+    # Integração do frame geral a uma janela do canvas
+    canvas.create_window((0,0), window=module_frame, anchor='nw')
 
     # Comporta todos os outros frames. Deu erro quando coloquei diretamente no frm_geral
     frm_avaliacao=Frame(module_frame, bg=co0, relief=FLAT, bd=3)

@@ -48,7 +48,7 @@ def run(frame_parent):
 
     # Integração do frame geral a uma janela do canvas
     canvas.create_window((0,0), window=module_frame, anchor='nw')
-    
+
     # importa o usuário logado
     from Users.Authentication import CURRENT_USER
 
@@ -124,4 +124,4 @@ def run(frame_parent):
 def avaliar (id):
     from Front.Modules import avaliacao_teste
     global module_frame
-    avaliacao_teste.run(module_frame.master, id)
+    avaliacao_teste.run(module_frame, id)
