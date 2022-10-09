@@ -35,7 +35,7 @@ def find_data_csv (path:str, key:str):
 
     # Em caso de falha
     except:
-        print(COLS[2] + "CSVHandler.find_data: Erro ao ler arquivo" + COLS[0])
+        log(COLS[2] + "CSVHandler.find_data: Erro ao ler arquivo" + COLS[0])
         return None
 
     # Pra cada linha carregada na variavel 'lines'
@@ -202,7 +202,7 @@ def add_unique_csv (path:str, id:int, row):
     log(COLS[6] + "CSVHandler.add_unique_csv: Iniciando processo de armazenamento de informação identificada por id" + COLS[0])
 
     if id < 0:
-        print(COLS[2] + f"CSVHandler.add_unique_csv -- Erro: O id fornecido é invalido" + COLS[0]) 
+        if log: print(COLS[2] + f"CSVHandler.add_unique_csv -- Erro: O id fornecido é invalido" + COLS[0]) 
 
     # Abre o arquivo localizado em 'path' em modo de acrescentação ('a') e o armazena na memoria como 'file'
     with open(path + '.csv', 'a', newline='') as file:
@@ -263,7 +263,7 @@ def add_unique_csv_autoid (path:str, row):
     id = max_id + 1
 
     if id < 0:
-        print(COLS[2] + f"CSVHandler.add_unique_csv_autoid -- Erro: O id invalido autogerado" + COLS[0]) 
+        if log: print(COLS[2] + f"CSVHandler.add_unique_csv_autoid -- Erro: O id invalido autogerado" + COLS[0]) 
 
     # printa para acompanhamento de processo
     log(COLS[7] + "CSVHandler.add_unique_csv_autoid: id definido com sucesso: " + str(id))

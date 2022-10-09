@@ -59,7 +59,7 @@ def sair():
     reset()
 
 # Efetua o Cadastro de um novo Usuário e, se efetuado com sucesso, o armazena na database .csv
-def register (name, email, group_id, team_id, role_id, custom_password = None):
+def register (name, email, group_id, team_id, role_id, custom_password = None, log = True):
 
     # Verifica se o Nome do Usuário fornecido é válido. Cancela o processo caso não seja.
     if not validate_user_name (name):

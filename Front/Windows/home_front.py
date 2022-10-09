@@ -1,5 +1,3 @@
-from inspect import modulesbyfile
-from re import A
 from tkinter import *
 import Settings
 
@@ -79,6 +77,8 @@ def run():
     def run_module (m_index):
         global frame_coluna_B
         frame_coluna_B = Frame(janela)
+        frame_coluna_B.rowconfigure(0, minsize = 800, weight = 1)
+        frame_coluna_B.columnconfigure(0, minsize = 800, weight = 1)
         frame_coluna_B.grid(row=0, column=1, sticky = "nsew")
         global current_module
         try:

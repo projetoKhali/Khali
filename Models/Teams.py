@@ -12,6 +12,13 @@ def exists_team (id:int):
     from CSV.CSVHandler import find_data_by_id_csv
     return find_data_by_id_csv(TEAMS_PATH, id) is not None 
 
+def get_team_id (name:str):
+    from CSV.CSVHandler import find_data_list_by_field_value_csv
+    for team in find_data_list_by_field_value_csv(TEAMS_PATH, 'name', name):
+        if team['name'] == name:
+            return team['id']
+    return None
+
 # retorna o nome do Time que corresponde ao id especificado 
 def get_team_name (id:int):
     from CSV.CSVHandler import find_data_by_id_csv
