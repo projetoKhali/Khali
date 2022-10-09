@@ -40,7 +40,7 @@ def run(frame_parent):
         Label(quadro, text=text, font=font, background = co1, justify=LEFT).grid(row=r, column=c, sticky="w")
 
     def criar_button(quadro, text, font, r, c):
-        Button(quadro, text = text, font = font, background = co0, justify=LEFT).grid(row=r, column=c, sticky="w")
+        Button(quadro, text = text, font = font, background = co1, justify=LEFT).grid(row=r, column=c, sticky="w")
 
     # frame com os dados do usuário que está logado
     frame_user = criar_frame(frame_parent, 0, 0)
@@ -78,10 +78,12 @@ def run(frame_parent):
 
     for line in grade_submitted:
         indice = indice + 1
-        frame_rated = criar_frame(frame_avaliados, indice + 1, 0)
+        frame_rated = criar_frame(frame_avaliados, indice, 0)
         criar_label(frame_rated, get_role_name(line['role_id']), 'Calibri, 12', 0, 0)  # linha para teste
         criar_label(frame_rated, line['name'], 'Calibri, 12', 1, 0)  # linha para teste
         # criar_label(frame_rated, '', 'Calibri, 12', 2, 0)  # linha para teste
+
+
 
     # for line in users:
     #     # para que os nomes dos avaliados não fiquem sobrescritos:
@@ -93,7 +95,7 @@ def run(frame_parent):
     #     criar_label(frame_avaliado, line['name'], 'Calibri, 12', 1, 0)  # linha para teste
     #     criar_label(frame_avaliado, '', 'Calibri, 12', 2, 0)  # linha para teste
 
-    # dashboard = criar_frame(frame_parent, 0, 0)
+    # dashboard = criar_frame(frame_parent, 0, 1)
     # criar_label(dashboard, 'Dashboards', 'Calibri, 14', 0, 0)
 
     return module_frame

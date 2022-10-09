@@ -10,7 +10,7 @@ def get_users(email):
 
 
     if user == None:
-        print ('nenhum usuário encontrado, lista_usuarios_back.get_users.user')
+        # print ('nenhum usuário encontrado, lista_usuarios_back.get_users.user')
         return
 
     from Models import Role
@@ -40,12 +40,12 @@ def get_users(email):
 
 
 
-        print('a avaliar')
-        for item in (grade_to_submit):
-            print(item["email"])
-        print('avaliados')
-        for item in (grade_submitted):
-            print(item["email"])
+        # print('a avaliar')
+        # for item in (grade_to_submit):
+        #     print(item["email"])
+        # print('avaliados')
+        # for item in (grade_submitted):
+        #     print(item["email"])
 
         return (grade_submitted, grade_to_submit)
 
@@ -54,24 +54,24 @@ def get_users(email):
 
     rate_users = handler.find_data_list_by_field_value_csv(Settings.USERS_PATH, 'group_id', user["group_id"])
     for group_member in rate_users:
-        print(group_member)
-        print(type(role.permissions_rate[0]))
+        # print(group_member)
+        # print(type(role.permissions_rate[0]))
 
 
         if (int(group_member["role_id"]) not in role.permissions_rate) or (group_member["team_id"] == ''):
-            print('pular iteração')
+            # print('pular iteração')
             continue
 
         auxiliar = 0
         for rating in ratings:
             if group_member["id"] == rating["to_user_id"] and rating["value"] != '':
                 auxiliar = 1
-                print('incluiu na sumbmitted')
+                # print('incluiu na sumbmitted')
                 break
         if auxiliar == 1:
             grade_submitted.append(group_member)
         else:
-            print('incluiu na to_submit')
+            # print('incluiu na to_submit')
             grade_to_submit.append(group_member)
 
         # # rate_users.append(group_member)
