@@ -114,11 +114,10 @@
                                                                                                                      
 * Plataformas:
 
-<img alt="API-Csharp" height="40" width="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-plain.svg" />                                         
-<img alt="API-Csharp" height="40" width="50" src="https://api.iconify.design/simple-icons/asana.svg?width=40&height=50">
-<img  alt="API-Csharp" height="40" width="50" src="https://api.iconify.design/fa/youtube.svg?width=40&height=50">
+<img alt="API-Csharp" height="40" width="50" src="https://api.iconify.design/ph/figma-logo-light.svg?color=%23ff4000&width=40&height=50" />                              <img alt="API-Csharp" height="40" width="50" src="https://api.iconify.design/logos/asana.svg?width=40&height=50">
+<img  alt="API-Csharp" height="40" width="50" src="https://api.iconify.design/logos/youtube.svg?width=40&height=50">
 <img  alt="API-Csharp" height="40" width="50" src="https://api.iconify.design/logos/google-drive.svg?width=40&height=50">
-<img  alt="API-Csharp" height="40" width="50" src="https://api.iconify.design/arcticons/google-docs.svg?width=40&height=50">                                                                                                                        
+<img  alt="API-Csharp" height="40" width="50" src="https://api.iconify.design/arcticons/google-docs.svg?color=%23013adf&width=40&height=50">                                                                                                                        
                                                                                                                                
 Figma, Asana, Youtube, Google drive e Google Docs. 
 
