@@ -2,7 +2,6 @@ from tkinter import *
 from tkinter import ttk
 from Models.Role import get_role_name
 from Users.Authentication import CURRENT_USER
-from Utils.back_avaliacao import dados_autoavaliacao
 
 # Informações do modulo
 NAME = 'Avaliar'

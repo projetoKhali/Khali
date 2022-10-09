@@ -10,6 +10,7 @@ class Role:
 
 # Lista de Funções existentes
 ROLES = [
+    #       permissions:         REG              RATE
     Role("ADM",             [0, 1, 2      ], [             ]),
 
     # 1 por Grupo
