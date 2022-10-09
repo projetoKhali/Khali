@@ -140,8 +140,12 @@
 
 
 
-### Backlog detalhado da Sprint 1
-#### *Criação do sistema de usuário*
+### Backlog detalhado das sprints
+
+<details>
+<summary>SPRINT 1 - Sistema de cadastro do usuário e autenticação  </summary>
+	
+
 * Criação do usuario *Administrador*
 * Sistema de cadastramento de grupos e usuários (Líder do Grupo e Fake Client) por parte do *Administrador* 
 * Sistema de cadastramento e configuração de Sprints pelo *Líder do Grupo*
@@ -149,7 +153,18 @@
 * Sistema de cadastramento de usuários pelo *Líder do Grupo*
 * Criação da funcionalidade de Login
 * Retorno para os usuários das Sprints e usuários que ele deve avaliar
+ </details>
 
-*Documento com a descrição completa dos Épicos, storys e tarefas da [1ª srint](https://docs.google.com/document/d/e/2PACX-1vQ7dtt7AMiOUWYHD1UkAYsZ2ibkR9KMMcrm4DGZL1xgrUUiRh0o9ROnhx6awl8EsjuklAxMRILXGxCi/pub)*
+<details>
+<summary>SPRINT 2 - Sistema de avaliação </summary>
+	
+* Cumprir as pendências da sprint 1
+* Criação da funcionalidade de avaliação
+* Criação da funcionalidade feedback
+* Integração do sistema de avaliação ao perfil dos usuários com o retorno das sprints e integrantes que ele deve avaliar
+ </details>
+
+
+*Documento com a descrição completa dos Épicos, storys e tarefas da [1ª e 2ª sprint](https://docs.google.com/document/d/e/2PACX-1vQ7dtt7AMiOUWYHD1UkAYsZ2ibkR9KMMcrm4DGZL1xgrUUiRh0o9ROnhx6awl8EsjuklAxMRILXGxCi/pub)*
 
 *Fluxograma do sistema de cadastramento disponível pelo [Drive](https://drive.google.com/file/d/11j_OIrMpIdoHqzDNnrGinr8TQ7IvanjP/view?usp=sharing)*
