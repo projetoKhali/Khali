@@ -31,7 +31,9 @@ def find_data_csv (path:str, key:str):
         with open(path + '.csv', 'r') as file:
 
             # Lê as linhas do arquivo e salva na variavel 'lines'
+            print('oi1')
             lines = file.readlines()
+            print('oi2')
 
     # Em caso de falha
     except:

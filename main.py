@@ -45,25 +45,25 @@ def initialize_test():
     register("po dois", "p02@o.com", 0, 1, 4, custom_password='123')
     register("po tres", "p03@o.com", 0, 2, 4, custom_password='123')
 
-    # # cadastra developer teste
+    # cadastra developer teste
     register("deve", "d@e.v", 0, 0, 5, custom_password='123')
-    # register("developano", "develop@dev.com", 0, 0, 5, custom_password='123')
-    # register("develano", "develano-dev@dev.com", 0, 0, 5, custom_password='123')
-    # register("devano", "dev-ano@dev.com", 0, 0, 5, custom_password='123')
-    # register("fulanodev", "fulano-dev@dev.com", 0, 0, 5, custom_password='123')
-    # register("fuldev", "ful@dev.com", 0, 1, 5, custom_password='123')
+    register("developano", "develop@dev.com", 0, 0, 5, custom_password='123')
+    register("develano", "develano-dev@dev.com", 0, 0, 5, custom_password='123')
+    register("devano", "dev-ano@dev.com", 0, 0, 5, custom_password='123')
+    register("fulanodev", "fulano-dev@dev.com", 0, 0, 5, custom_password='123')
+    register("dirce", "dirc@dev.com", 0, 0, 5, custom_password='123')
+    register("cleiton", "cleitin@dev.com", 0, 0, 5, custom_password='123')
+    register("cumpadi", "cmp@dev.com", 0, 0, 5, custom_password='123')
+    register("washington", "wash@dev.com", 0, 0, 5, custom_password='123')
 
-    register("semtime", "st@s.t", 0, None, 5, custom_password='123')
-    register("timesem", "ts@t.s", 0, None, 5, custom_password='123')
-    register("emitmes", "s@e.m",  0, None, 5, custom_password='123')
 
 
 # Inicializa os bancos de dados populado com informações teste caso não exista um arquivo users.csv
-# import os
+import os
 # if not os.path.exists(USERS_PATH + '.csv'):
-# initialize_test()
+initialize_test()
 
-# from Utils.edit_team_back import *
+from Utils.edit_team_back import *
 
 # print(add_user("ful@dev.com", 0))
 # exit()
@@ -73,6 +73,21 @@ def initialize_test():
 
 # print(change_role(1, 'lt2@o.com', 5))
 # exit()
+
+
+
+from Utils.edit_team_back import *
+
+# print(add_user("ful@dev.com", 0))
+# exit()
+
+# print(delete_user('ful@dev.com'))
+# exit()
+
+# print(change_role(1, 'lt2@o.com', 5))
+# exit()
+
+initialize_test()
 
 from Front import WindowManager
 
@@ -85,6 +100,6 @@ WindowManager.initialize()
 # login(email='l@d.g', senha='123')
 # login(email='c@c.c', senha='123')
 # login(email='l@d.g', senha='123')
-# login(email='d@e.v', senha='123')
+login(email='lt1@o.com', senha='123')
 
 WindowManager.update()

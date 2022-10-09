@@ -1,3 +1,4 @@
+from ast import Global
 from CSV.CSVHandler import *
 from Front import WindowManager
 from Users.Gerar_Senha import gerar_senha

@@ -2,7 +2,7 @@ from . import cadastro_adm, cadastro_lider, lista_usuarios, edit_team
 from Settings import COLS
 
 # Define se o acompanhamento de processo via console será habilitado durante a execução
-DEBUG = True
+DEBUG = False
 
 # Define os módulos disponíveis
 MODULES = [
