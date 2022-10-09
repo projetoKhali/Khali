@@ -29,10 +29,11 @@ def get_users(email):
         rate_users = handler.find_data_list_by_field_value_csv(Settings.USERS_PATH, 'team_id', user["team_id"])
         for member in rate_users:
             auxiliar = 0
-            for rating in ratings:
-                if member["id"] == rating["to_user_id"] and rating["value"] != '':
-                    auxiliar = 1
-                    break
+            if ratings is not None:
+                for rating in ratings:
+                    if member["id"] == rating["to_user_id"] and rating["value"] != '':
+                        auxiliar = 1
+                        break
             if auxiliar == 1:
                 grade_submitted.append(member)
             else:
@@ -63,11 +64,13 @@ def get_users(email):
             continue
 
         auxiliar = 0
-        for rating in ratings:
-            if group_member["id"] == rating["to_user_id"] and rating["value"] != '':
-                auxiliar = 1
-                # print('incluiu na sumbmitted')
-                break
+
+        if ratings is not None:
+            for rating in ratings:
+                if group_member["id"] == rating["to_user_id"] and rating["value"] != '':
+                    auxiliar = 1
+                    # print('incluiu na sumbmitted')
+                    break
         if auxiliar == 1:
             grade_submitted.append(group_member)
         else:

@@ -6,7 +6,7 @@ DEBUG = False
 
 # Define os módulos disponíveis
 MODULES = [
-    # lista_usuarios,
+    lista_usuarios,
     cadastro_adm,
     cadastro_lider,
     edit_team

@@ -3,6 +3,8 @@ from tkinter import ttk
 from Models.Role import get_role_name
 from Users.Authentication import CURRENT_USER
 
+from Settings import co0
+
 # Informações do modulo
 NAME = 'Avaliar'
 REQUIRED_PERMISSIONS_REG  = [None]
@@ -12,47 +14,52 @@ REQUIRED_PERMISSIONS_RATE = [
 REQUIRED_PERMISSIONS_VIEW = [None]
 
 # executa o modulo e retorna
-def run(frame_parent):
+def run(frame_parent, to_user_id):
 
-    # module_frame = Frame(frame_parent, bg='#fae8e8')
-    # module_frame.grid(row=0, column=0)
+    module_frame = Frame(frame_parent, bg=co0)
+    module_frame.columnconfigure(0, minsize=0, weight=1)
+    module_frame.grid(row=0, column=0)
 
 
     # Criar um frame para comportar o canvas
-    frm_main=Frame(frame_parent, bg='#fae8e8')
-    frm_main.pack(fill=BOTH, expand=1) 
+    # frm_main=Frame(frame_parent, bg=co0)
+    # frm_main.pack(fill=BOTH, expand=1) 
 
-    # O canvas aceita o scrollbar, mas ela só faz o papel da responsividade
-    canvas=Canvas(frm_main, bg='#fae8e8')
-    canvas.pack(side=LEFT, fill=BOTH, expand=1)
+    # # O canvas aceita o scrollbar, mas ela só faz o papel da responsividade
+    # canvas=Canvas(frm_main, bg=co0)
+    # canvas.pack(side=LEFT, fill=BOTH, expand=1)
 
-    # Configurações do scrollbar
-    scrollbar_ver = ttk.Scrollbar(frm_main, orient=VERTICAL, command=canvas.yview) # Comando xview para orientação HORIZONTAL
-    scrollbar_ver.pack(side=RIGHT, fill=Y)
+    # # Configurações do scrollbar
+    # scrollbar_ver = ttk.Scrollbar(frm_main, orient=VERTICAL, command=canvas.yview) # Comando xview para orientação HORIZONTAL
+    # scrollbar_ver.pack(side=RIGHT, fill=Y)
 
-    # Configurações do canvas
-    canvas.configure(yscrollcommand=scrollbar_ver.set) # xscrollcomand para barra horizontal
-    frm_geral=Frame(canvas, bg='#fae8e8', relief=FLAT, bd=3) # Não colocamos o frame com o .pack nesse caso
-    frm_geral.bind('<Configure>', lambda e: canvas.configure(scrollregion=canvas.bbox('all'))) # Seleciona qual parte do canvas o scrollbar deve identificar
+    # # Configurações do canvas
+    # canvas.configure(yscrollcommand=scrollbar_ver.set) # xscrollcomand para barra horizontal
+    # frm_geral=Frame(canvas, bg=co0, relief=FLAT, bd=3) # Não colocamos o frame com o .pack nesse caso
+    # frm_geral.bind('<Configure>', lambda e: canvas.configure(scrollregion=canvas.bbox('all'))) # Seleciona qual parte do canvas o scrollbar deve identificar
 
-    # Integração do frame geral a uma janela do canvas
-    canvas.create_window((0,0), window=frm_geral, anchor='nw')
+    # # Integração do frame geral a uma janela do canvas
+    # canvas.create_window((0,0), window=frm_geral, anchor='nw')
 
     # Comporta todos os outros frames. Deu erro quando coloquei diretamente no frm_geral
-    frm_avaliacao=Frame(frm_geral, bg='#fae8e8', relief=FLAT, bd=3)
+    frm_avaliacao=Frame(module_frame, bg=co0, relief=FLAT, bd=3)
     frm_avaliacao.grid(row=0, rowspan=30, column=0, columnspan=3, sticky='w')
 
     frm_criterias = []
 
     # TENTEI COLOCAR A CRIAÇÃO DOS FRAMES COMO FUNÇÃO, MAS DEU CONFLITO (não permite colocar .grid em algo .pack). Criando um por um não dá erro
-    frame_header=Frame(frm_avaliacao, bg='#fae8e8', relief=FLAT, bd=3)
+    frame_header=Frame(frm_avaliacao, bg=co0, relief=FLAT, bd=3)
     frame_header.grid(row= 0, column=0, columnspan=4, sticky='nsew')
     frame_header.columnconfigure(0, weight=1)
     frame_header.rowconfigure([0, 1, 2, 3, 4, 5, 6, 7], weight=1)
 
     # Textos gerais da tela
-    criar_label(frame_header, 'Autoavaliação', 30, 0, 0, 5, 5, 'w')
-    criar_label(frame_header, CURRENT_USER.name, 20, 0, 1, 5, 5, 'w')
+    title        = 'Autoavaliação' if to_user_id == CURRENT_USER.id else 'Avaliação'
+    from CSV.CSVHandler import find_data_by_id_csv
+    from Settings import USERS_PATH
+    to_user_name = CURRENT_USER.name if to_user_id == CURRENT_USER.id else find_data_by_id_csv(USERS_PATH, str(to_user_id))['name']
+    criar_label(frame_header, title, 30, 0, 0, 5, 5, 'w')
+    criar_label(frame_header, to_user_name, 20, 0, 1, 5, 5, 'w')
     criar_label(frame_header, get_role_name(CURRENT_USER.role_id), 15, 0, 2, 5, 5, 'w')
     criar_label(frame_header, 'Prazo para realizar a autoavaliação da {nº da Sprint}', 15, 0, 3, 5, 5, 'w')  # PUXAR DADO VINCULADO COM TELA DE RETORNO ???
     criar_label(frame_header, 'Esta avaliação 360° utiliza a escala Likert para medir o desempenho dos usuários. Notas abaixo ou iguais a 3 necessitam obrigatoriamente de Feedback (resposta descritiva)', 11, 0, 4, 5, 5, 'w')  
@@ -70,12 +77,12 @@ def run(frame_parent):
 
     for i in range(5):
 
-        frm_criteria = Frame(frm_avaliacao, bg='#fae8e8', relief=GROOVE, bd=3)
+        frm_criteria = Frame(frm_avaliacao, bg=co0, relief=GROOVE, bd=3)
         frm_criteria.grid(row= i+1, column=0, columnspan=2, sticky='nsew')
         frm_criteria.columnconfigure(0, weight=1)
         frm_criteria.rowconfigure([0, 1, 2, 3, 4], weight=1)
 
-        frm_criteria_data = Frame(frm_criteria, bg='#fae8e8')
+        frm_criteria_data = Frame(frm_criteria, bg=co0)
         frm_criteria_data.grid(row= 0, column=0, sticky='nsew')
         frm_criteria_data.columnconfigure(0, weight=1)
         frm_criteria_data.rowconfigure([0, 1, 2, 3, 4], weight=1)
@@ -88,8 +95,8 @@ def run(frame_parent):
     
 
     def enviar_retorno():
-        label=Label(master=frm_main, text='Avaliação enviada com sucesso!',
-        bg='#fae8e8', fg='#1a1d1a', font=('Calibre', 10))
+        label=Label(master=module_frame, text='Avaliação enviada com sucesso!',
+        bg=co0, fg='#1a1d1a', font=('Calibre', 10))
         label.place(relx=0.78, rely=0.09, relheight=0.03, relwidth=0.17)
 
     # def criar_label(master, text, tamanho, column, row, padx, pady, sticky):
@@ -110,7 +117,7 @@ def run(frame_parent):
 
         if escalas[i].get() <= 3:
 
-            frm_criteria_feedback = Frame(frm_criteria, bg='#fae8e8')
+            frm_criteria_feedback = Frame(frm_criteria, bg=co0)
             frm_criteria_feedback.grid(row= 0, column=1, sticky='nsew')
             frm_criteria_feedback.columnconfigure(0, weight=1)
             frm_criteria_feedback.rowconfigure([0, 1, 2, 3, 4], weight=1)
@@ -125,11 +132,10 @@ def run(frame_parent):
         feedback.grid(row=row, column=column, padx=padx, pady=pady, sticky=sticky)
         return feedback
 
-    def enviar_notas():
+    def enviar_notas(_to_user_id):
 
-        from Utils.back_avaliacao import dados_autoavaliacao
+        from Utils.back_avaliacao import dados_avaliacao
 
-        to_user_id = None
         notas = []
         comentarios = [None, None, None, None, None]
 
@@ -151,9 +157,9 @@ def run(frame_parent):
             notas.append(nota)
             comentarios[i] = comentario
 
-        dados_autoavaliacao(notas, comentarios)
+        dados_avaliacao(_to_user_id, notas, comentarios)
 
-        # enviar_retorno()
+        enviar_retorno()
 
 
     # Botão para registrar notas e conferir a necessidade de feedback
@@ -163,8 +169,8 @@ def run(frame_parent):
     # resposta(p1, 0), resposta(p2, 5), resposta(p3, 10), resposta(p4, 15), resposta(p5, 20)
 
     # Botão para enviar notas para o banco de dados
-    button1=Button(master=frm_main, text='Enviar Avaliação', fg='#1a1d1a', bg='#d9d9d9', 
-        font='Calibre, 12', height=0, activebackground='#c5a8b0', command=(enviar_notas, enviar_retorno)
+    button1=Button(master=module_frame, text='Enviar Avaliação', fg='#1a1d1a', bg='#d9d9d9', 
+        font='Calibre, 12', height=0, activebackground='#c5a8b0', command= lambda : enviar_notas(to_user_id)
     )
     button1.place(relx=0.69, rely=0.09)
 
@@ -174,12 +180,12 @@ def run(frame_parent):
 # Função para criação de texto
 def criar_label(master, text, tamanho, column, row, padx, pady, sticky):
     label=Label(master=master, text=text, fg='#1a1d1a'
-    , bg='#fae8e8', font=('Calibre', tamanho))
+    , bg=co0, font=('Calibre', tamanho))
     label.grid(column=column, row=row, padx=padx, pady=pady, sticky=sticky)
 
 def criar_escala(master, row, command):
     _escala = Scale(master=master, from_=1, to=5, length=500, tickinterval=1, orient=HORIZONTAL, 
-        bg='#fae8e8', font='Calibre, 10', highlightcolor='#c5a8b0', troughcolor='#c5a8b0', state='normal', variable=IntVar(),
+        bg=co0, font='Calibre, 10', highlightcolor='#c5a8b0', troughcolor='#c5a8b0', state='normal', variable=IntVar(),
         command=command
     )
     _escala.grid(column=0, row=row, padx=5, pady=5, sticky='w')

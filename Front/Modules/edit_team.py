@@ -25,26 +25,30 @@ module_frame = None
 
 def run(frame_parent):
 
-    frm_main=Frame(frame_parent, bg='#fae8e8')
-    #frm_main.pack(fill=BOTH, expand=1) 
-    frm_main.grid(row=0, column=0, sticky='nsew')
+    module_frame = Frame(frame_parent)
+    module_frame.columnconfigure(0, minsize = 0, weight = 1)
+    module_frame.grid(row=0, column=0, sticky='nsew')
 
-    # O canvas aceita o scrollbar, mas ela só faz o papel da responsividade
-    canvas=Canvas(frm_main, bg='#fae8e8')
-    #canvas.pack(side=LEFT, fill=BOTH, expand=1)
-    frm_main.grid(row=0, column=0, sticky='nsew')
+    # frm_main=Frame(frame_parent, bg='#fae8e8')
+    # #frm_main.pack(fill=BOTH, expand=1) 
+    # frm_main.grid(row=0, column=0, sticky='nsew')
 
-    # Configurações do scrollbar
-    scrollbar_ver = Scrollbar(frm_main, orient=VERTICAL, command=canvas.yview) # Comando xview para orientação HORIZONTAL
-    scrollbar_ver.pack(side=RIGHT, fill=Y)
+    # # O canvas aceita o scrollbar, mas ela só faz o papel da responsividade
+    # canvas=Canvas(frm_main, bg='#fae8e8')
+    # #canvas.pack(side=LEFT, fill=BOTH, expand=1)
+    # frm_main.grid(row=0, column=0, sticky='nsew')
 
-    # Configurações do canvas
-    canvas.configure(yscrollcommand=scrollbar_ver.set) # xscrollcomand para barra horizontal
-    module_frame=Frame(canvas, bg='#fae8e8', relief=FLAT, bd=3) # Não colocamos o frame com o .pack nesse caso
-    module_frame.bind('<Configure>', lambda e: canvas.configure(scrollregion=canvas.bbox('all'))) # Seleciona qual parte do canvas o scrollbar deve identificar
+    # # Configurações do scrollbar
+    # scrollbar_ver = Scrollbar(frm_main, orient=VERTICAL, command=canvas.yview) # Comando xview para orientação HORIZONTAL
+    # scrollbar_ver.pack(side=RIGHT, fill=Y)
 
-    # Integração do frame geral a uma janela do canvas
-    canvas.create_window((0,0), window=module_frame, anchor='nw')
+    # # Configurações do canvas
+    # canvas.configure(yscrollcommand=scrollbar_ver.set) # xscrollcomand para barra horizontal
+    # module_frame=Frame(canvas, bg='#fae8e8', relief=FLAT, bd=3) # Não colocamos o frame com o .pack nesse caso
+    # module_frame.bind('<Configure>', lambda e: canvas.configure(scrollregion=canvas.bbox('all'))) # Seleciona qual parte do canvas o scrollbar deve identificar
+
+    # # Integração do frame geral a uma janela do canvas
+    # canvas.create_window((0,0), window=module_frame, anchor='nw')
 
     # section 0
     frame_title = Frame(module_frame, padx=2, pady=2, bg=co3)

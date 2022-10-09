@@ -14,39 +14,20 @@ REQUIRED_PERMISSIONS_RATE = [
 ]
 REQUIRED_PERMISSIONS_VIEW = [None]
 
+module_frame = None
+
 # executa o modulo e retorna
 def run(frame_parent):
 
-    # frm_main = Frame(frame_parent, background=co0)
-    # # frm_main.grid(row = 0, column = 0, sticky = "ew", padx = 5, pady = 5)
-    # frm_main.pack(expand =1, fill=BOTH)
-    # # frm_main.columnconfigure(0, minsize=0, weight = 1)
-
-
-    # canvas = Canvas(frm_main, bg=co0)
-    # canvas.pack(side=LEFT, expand=1, fill=BOTH)
-
-
-    # scrollbar_ver=Scrollbar(frm_main, orient=VERTICAL, command=canvas.yview)
-    # scrollbar_ver.pack(side=RIGHT, fill=Y)
-
-
-    # canvas.configure(yscrollcommand=scrollbar_ver.set)
-    # # canvas.bind('<Configure>', lambda e: canvas.configure(scrollregion=canvas.bbox('all')))
-
-    module_frame=Frame(frame_parent, bg="blue")
-    # module_frame.pack(expand=1, fill=BOTH)
-    # module_frame.columnconfigure(0, minsize=0, weight=1)
+    global module_frame
+    module_frame=Frame(frame_parent, bg=co0)
+    module_frame.columnconfigure(0, minsize = 0, weight = 1)
     module_frame.grid(row=0, column=0, sticky="nsew")
-    # module_frame.bind('<Configure>', lambda e: canvas.configure(scrollregion=canvas.bbox('all')))
 
-    Label(module_frame, text='iasuhiuadhs').grid(row=0, column=0, sticky='news')
-
-    return module_frame
-
-
-    # canvas.create_window((0,0), window=module_frame, anchor="center")
-
+    from Front.Scrollbar import add_scrollbar
+    module_frame = add_scrollbar(module_frame)
+    module_frame.columnconfigure(0, minsize = 0, weight = 1)
+    module_frame.grid(row=0, column=0, sticky="nsew")
 
     # importa o usuário logado
     from Users.Authentication import CURRENT_USER
@@ -63,11 +44,11 @@ def run(frame_parent):
         return frame
 
     # cria widget do tipo label
-    def criar_label(quadro, text, font, r, c, sticky):
+    def criar_label(quadro, text, font, r, c, sticky='n'):
         Label(quadro, text=text, font=font, background = co0, justify=LEFT).grid(row=r, column=c, sticky= sticky)
 
-    def criar_button(quadro, text, font, r, c, sticky):
-        Button(quadro, text = text, font = font, background = co0, justify=RIGHT, fg=co2,
+    def criar_button(quadro, text, font, r, c, command, sticky='n'):
+        Button(quadro, text = text, font = font, background = co0, justify=RIGHT, fg=co2, command=command,
                width=13, height=0, activebackground='#c5a8b0').grid(row=r, column=c, sticky= sticky)
 
     # frame com os dados do usuário que está logado
@@ -88,34 +69,39 @@ def run(frame_parent):
     criar_label(frame_user, CURRENT_USER.name, 'Calibri, 12',2, 0, "w")
 
     # frame com os usuários que devem ser analisados por quem está logado
-    frame_avaliados = criar_frame(module_frame, 1, 0, "nsew", "red")
+    frame_avaliados = criar_frame(module_frame, 1, 0, "nsew")
+    frame_avaliados.columnconfigure(0, minsize = 0, weight = 1)
     criar_label(frame_avaliados, 'Integrantes ainda não Avaliados', 'Calibri, 14', 0, 0, "w")
 
     indice = 2
 
-    for line in grade_to_submit:
+    for user_to_submit in grade_to_submit:
 
         frame_to_rate = criar_frame(frame_avaliados, indice, 0, "ew")
-        criar_label(frame_to_rate, get_role_name(line['role_id']), 'Calibri, 12', 0, 0, "w")  # linha para teste
-        criar_label(frame_to_rate, line['name'], 'Calibri, 12', 1, 0, "w")  # linha para teste
-        criar_button(frame_to_rate, 'Avaliar', 'Calibri, 12', 1, 1, "e")  # linha para teste
+        frame_to_rate.columnconfigure(0, minsize = 0, weight = 1)
+        criar_label(frame_to_rate, get_role_name(user_to_submit['role_id']), 'Calibri, 12', 0, 0, "w")  # linha para teste
+        criar_label(frame_to_rate, user_to_submit['name'], 'Calibri, 12', 1, 0, "w")  # linha para teste
+        criar_button(frame_to_rate, 'Avaliar', 'Calibri, 12', 1, 1, lambda u=user_to_submit: avaliar(u['id']), "e")  # linha para teste
         indice = indice + 1
 
 
-
-    criar_label(frame_avaliados, 'Integrantes já Avaliados', 'Calibri, 14', indice, 0, "w")
+        criar_label(frame_avaliados, 'Integrantes já Avaliados', 'Calibri, 14', indice, 0, "w")
 
     indice = indice + 1
 
-    for line in grade_submitted:
+    for user_submited in grade_submitted:
 
         frame_rated = criar_frame(frame_avaliados, indice, 0, "ew")
-        criar_label(frame_rated, get_role_name(line['role_id']), 'Calibri, 12', 0, 0, "w")  # linha para teste
-        criar_label(frame_rated, line['name'], 'Calibri, 12', 1, 0, "w")  # linha para teste
-        criar_button(frame_rated, 'Editar Avaliação', 'Calibri, 12', 1, 1, "e")  # linha para teste
+        frame_rated.columnconfigure(0, minsize = 0, weight = 1)
+        criar_label(frame_rated, get_role_name(user_submited['role_id']), 'Calibri, 12', 0, 0, "w")  # linha para teste
+        criar_label(frame_rated, user_submited['name'], 'Calibri, 12', 1, 0, "w")  # linha para teste
+        # criar_button(frame_rated, 'Editar Avaliação', 'Calibri, 12', 1, 1, "e")  # linha para teste
         indice = indice + 1
 
 
     return module_frame
 
-
+def avaliar (id):
+    from Front.Modules import avaliacao_teste
+    global module_frame
+    avaliacao_teste.run(module_frame.master, id)
