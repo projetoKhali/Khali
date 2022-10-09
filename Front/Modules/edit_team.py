@@ -48,7 +48,7 @@ def run(frame_parent):
 
     # seleciona os times pertencentes ao grupo do usuario logado
     teams_list = find_data_list_by_field_value_csv(TEAMS_PATH, 'group', CURRENT_USER.group_id)
-    print(f'times:{teams_list}')
+    # print(f'times:{teams_list}')
 
     # pra cada time
     for team_id, time_data in enumerate(teams_list):
@@ -67,7 +67,7 @@ def run(frame_parent):
     no_team_users = [i for i in find_data_list_by_field_value_csv(USERS_PATH, 'team_id', '') if int(i['role_id']) in [3, 4, 5]]
 
     # retorna caso não existam usuários sem time
-    print(len(no_team_users))
+    # print(len(no_team_users))
     if len(no_team_users) < 1: return
 
     frame_no_team_members_parent = create_team(frame_teams, None, team_id+1)
@@ -185,7 +185,7 @@ from Utils import edit_team_back
 
 def update_role(_, member_data, new_role):
     # print(member_data['name'])
-    print(new_role)
+    # print(new_role)
     edit_team_back.change_role(member_data['team_id'], member_data['email'], new_role)
     redraw()
 

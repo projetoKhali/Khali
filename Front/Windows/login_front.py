@@ -1,6 +1,5 @@
 from tkinter import *
 from Settings import RESOURCES_PATH, co0
-import stdiomask
 
 def run():
 

@@ -27,9 +27,9 @@ def run():
 
     # função de criar frame
     # row e column referem-se a posição do frame
-    def criar_frame(quadro, row, column):
+    def criar_frame(quadro, row, column, sticky="nw"):
         frame = Frame(quadro, background=co0)
-        frame.grid(row = row, column = column, sticky = "nw")
+        frame.grid(row = row, column = column, sticky = sticky)
         return frame
 
     # cria widget do tipo label
@@ -44,7 +44,7 @@ def run():
     global frame_coluna_A
     frame_coluna_A = criar_frame(janela, 0,0)
 
-    frame_logo = criar_frame(frame_coluna_A, 0, 0)
+    frame_logo = criar_frame(frame_coluna_A, 0, 0, 'news')
 
     #adiciona Logo
     img = PhotoImage(file=".\\" + Settings.RESOURCES_PATH + "\Logo_small.png")  # imagem que vai ser colocada na tela, tem que estar com formato gif
@@ -56,13 +56,15 @@ def run():
     global modules
     modules = ModulesManager.get_modules()
 
-    frame_tabs = criar_frame(frame_coluna_A, 1, 0)
+    frame_tabs = criar_frame(frame_coluna_A, 1, 0, 'news')
+    frame_tabs.rowconfigure(0, weight = 1)
+    frame_tabs.columnconfigure(0, weight = 1)
 
     for tab_index, module in enumerate(modules):
-        criar_button(frame_tabs, module.NAME, "Calibri, 14", lambda i=tab_index: run_module(i), tab_index, 0, 'w', 5, 5)  
+        criar_button(frame_tabs, module.NAME, "Calibri, 14", lambda i=tab_index: run_module(i), tab_index, 0, 'ew', 5, 5)  
 
     from Users.Authentication import sair
-    criar_button(frame_coluna_A, "sair", "arial", sair, 2, 0, "we", 5, 5)
+    criar_button(frame_tabs, "Sair", "Calibri, 14", sair, len(modules), 0, "ew", 5, 5)
 
     #adiciona botões
     #criar_button(frame_coluna_A, 'Meu Perfil', "Calibri, 14", None, 1,0, 'w', 5, 5)
@@ -81,14 +83,13 @@ def run():
         frame_coluna_B.columnconfigure(0, minsize = 800, weight = 1)
         frame_coluna_B.grid(row=0, column=1, sticky = "nsew")
         global current_module
-        try:
-            if current_module is not None:
-                print(f'current_module "{current_module}"')
-                current_module.configure(background = "red")
+        if current_module is not None:
+            try: 
                 current_module.destroy()
-        except:
-            pass
+            except: 
+                pass
         current_module = modules[m_index].run(frame_coluna_B)
 
-    run_module(0)    
+    if len(modules) > 0: run_module(0)
+
     return janela
