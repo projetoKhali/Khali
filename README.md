@@ -86,7 +86,7 @@
 ## Backlog do Produto
 
 <details>
- <summary> SPRINT 1- CRIAÇÃO DO SISTEMA DE CADASTRO DO USUÁRIO E AUTENTICAÇÃO </summary>
+ <summary> *SPRINT 1* - Criação do Sistema de Cadastro do Usuário e Autenticação </summary>
  <br>
  
   | USER STORY | PRIORIDADE |
@@ -102,7 +102,7 @@
 </details>
 
 <details>
-<summary>SPRINT 2 - CRIAÇÃO DO SISTEMA DE AVALIAÇÃO</summary>
+<summary> *SPRINT 2* - Criação do Sistema de Avaliação </summary>
  
  
   | USER STORY | PRIORIDADE |
@@ -115,7 +115,7 @@
  </details>
 
 <details>
-<summary>SPRINT 3 - CRIAÇÃO DO SISTEMA DE DASHBOARD </summary>
+<summary> *SPRINT 3* - CRIAÇÃO DO SISTEMA DE DASHBOARD Criação do Sistema de Dashboard </summary>
 
  
   | USER STORY | PRIORIDADE |
@@ -124,26 +124,13 @@
 | Como PO terei acesso a um dashboard com resultado do meu time nas avaliações para que eu possa acompanhar e analisar o desempenho do meu time | Importante |
  | Como LG terei acesso a um dashboard com resultado do meu time nas avaliações para que eu possa acompanhar e analisar o desempenho do meu time | Importante |
 
-	
- </details>
- 
-<details>
-<summary>SPRINT 4 - "NÃO VALIDADO AINDA" </summary>
- 
-  | USER STORY | PRIORIDADE |
-  |------------|------------|
-  | Como PO, terei acesso ao meu Dashboard individual e os Dashboards do meu time, para acompanhamento de desempenho |Importante|
-  | Como Líder Técnico, terei acesso ao meu Dashboard individual e aos Dashboards do meu time, para acompanhamento de desempenho |Importante|
-  | Como estudante, terei acesso ao meu Dashboard individual e ao Dashboard geral do time, para acompanhar o meu desempenho |Importante|
-
- </details>
 
 
 
 ### Backlog detalhado das sprints
 
 <details>
-<summary>SPRINT 1 - Sistema de cadastro do usuário e autenticação  </summary>
+<summary> *SPRINT 1* - Sistema de cadastro do usuário e autenticação  </summary>
 	
 
 * Criação do usuario *Administrador*
@@ -156,8 +143,9 @@
  </details>
 
 <details>
-<summary>SPRINT 2 - Sistema de avaliação </summary>
-	
+<summary> *SPRINT 2* - Sistema de avaliação </summary>
+
+
 * Cumprir as pendências da sprint 1
 * Criação da funcionalidade de avaliação
 * Criação da funcionalidade feedback
