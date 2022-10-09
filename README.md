@@ -127,7 +127,7 @@
 
 
 
-## Backlog Detalhado das Sprints
+## Backlog das Sprints
 
 <details>
 <summary> SPRINT 1 - Sistema de cadastro do usuário e autenticação  </summary>
