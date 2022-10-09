@@ -2,10 +2,9 @@ from tkinter import *
 from tkinter import ttk
 from Models.Role import get_role_name
 from Users.Authentication import CURRENT_USER
-from Utils.back_avaliacao import dados_autoavaliacao
 
 # Informações do modulo
-NAME = 'Avaliar'
+NAME = 'Avaliar Integrante'
 REQUIRED_PERMISSIONS_REG  = [None]
 REQUIRED_PERMISSIONS_RATE = [
     [3, 4, 5]
@@ -53,18 +52,18 @@ def run(frame_parent):
     frame_header.rowconfigure([0, 1, 2, 3, 4, 5, 6, 7], weight=1)
 
     # Textos gerais da tela
-    criar_label(frame_header, 'Autoavaliação', 30, 0, 0, 5, 5, 'w')
+    criar_label(frame_header, 'Avaliação', 30, 0, 0, 5, 5, 'w')
     criar_label(frame_header, CURRENT_USER.name, 20, 0, 1, 5, 5, 'w')
     criar_label(frame_header, get_role_name(CURRENT_USER.role_id), 15, 0, 2, 5, 5, 'w')
     criar_label(frame_header, 'Prazo para realizar a autoavaliação da {nº da Sprint}', 15, 0, 3, 5, 5, 'w')  # PUXAR DADO VINCULADO COM TELA DE RETORNO ???
     criar_label(frame_header, 'Esta avaliação 360° utiliza a escala Likert para medir o desempenho dos usuários. Notas abaixo ou iguais a 3 necessitam obrigatoriamente de Feedback (resposta descritiva)', 11, 0, 4, 5, 5, 'w')  
 
     perguntas = [
-        '1) Como você se avalia em trabalho em equipe, cooperação e descentralização de conhecimento?',
-        '2) Como você se avalia em iniciativa e proatividade?',
-        '3) Como você se avalia em autodidaxia e agregação de conhecimento ao grupo?',
-        '4) Como você se avalia em entrega de resultados e participação efetiva no projeto?',
-        '5) Como você se avalia em competência técnica?'
+        '1) Como você avalia o integrante em trabalho em equipe, cooperação e descentralização de conhecimento?',
+        '2) Como você avalia o integrante em iniciativa e proatividade?',
+        '3) Como você avalia o integrante em autodidaxia e agregação de conhecimento ao grupo?',
+        '4) Como você avalia o integrante em entrega de resultados e participação efetiva no projeto?',
+        '5) Como você avalia o integrante em competência técnica?'
     ]
 
     escalas = []
@@ -131,7 +130,7 @@ def run(frame_parent):
 
     def enviar_notas():
 
-        from Utils.back_avaliacao import dados_autoavaliacao
+        from Utils.back_avaliacao import dados_avaliacao
 
         to_user_id = None
         notas = []
@@ -155,7 +154,7 @@ def run(frame_parent):
             notas.append(nota)
             comentarios[i] = comentario
 
-        dados_autoavaliacao(notas, comentarios)
+        dados_avaliacao(to_user_id, notas, comentarios)
 
         # enviar_retorno()
 
