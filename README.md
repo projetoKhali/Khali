@@ -153,5 +153,6 @@
  </details>
 
 
-*Documento com a descrição completa dos Épicos, storys e tarefas da [1ª sprint](https://docs.google.com/document/d/e/2PACX-1vQ7dtt7AMiOUWYHD1UkAYsZ2ibkR9KMMcrm4DGZL1xgrUUiRh0o9ROnhx6awl8EsjuklAxMRILXGxCi/pub) [2ª sprint](https://docs.google.com/document/d/e/2PACX-1vR0gGrbL-q37uZ9rH8kDk77-N6vrqyoBJx5UkXnY3IQLeOXj8llaBxgqB1rR_bhH49mYFk0WGDlrVIV/pub)*
+*Documento com a descrição completa dos Épicos, storys e tarefas da [1ª sprint](https://docs.google.com/document/d/e/2PACX-1vQ7dtt7AMiOUWYHD1UkAYsZ2ibkR9KMMcrm4DGZL1xgrUUiRh0o9ROnhx6awl8EsjuklAxMRILXGxCi/pub) e [2ª sprint](https://docs.google.com/document/d/e/2PACX-1vR0gGrbL-q37uZ9rH8kDk77-N6vrqyoBJx5UkXnY3IQLeOXj8llaBxgqB1rR_bhH49mYFk0WGDlrVIV/pub)*
+
 *Fluxograma do sistema de cadastramento disponível pelo [Drive](https://drive.google.com/file/d/11j_OIrMpIdoHqzDNnrGinr8TQ7IvanjP/view?usp=sharing)*
