@@ -1,5 +1,7 @@
 from tkinter import * 
 from tkinter import ttk
+from Models.Role import get_role_name
+from Users.Authentication import CURRENT_USER
 
 # Informações do modulo
 NAME = 'Avaliar'
@@ -50,10 +52,11 @@ def run(frame_parent):
     frame_header.rowconfigure([0, 1, 2, 3, 4, 5, 6, 7], weight=1)
 
     # Textos gerais da tela
-    criar_label(frame_header, 'Autoavaliação', 30, 0, 0, 30, 30, 'w')
-    criar_label(frame_header, 'Nome do usuário', 20, 0, 1, 30, 0, 'w')  # PUXAR DADO VINCULADO COM TELA DE RETORNO - NOME E FUNÇÃO ???
-    criar_label(frame_header, 'Prazo para realizar a autoavaliação da {nº da Sprint}', 15, 0, 2, 30, 20, 'w')  # PUXAR DADO VINCULADO COM TELA DE RETORNO ???
-    criar_label(frame_header, 'Esta avaliação 360° utiliza a escala Likert para medir o desempenho dos usuários. Notas abaixo ou iguais a 3 necessitam obrigatoriamente de Feedback (resposta descritiva)', 13, 0, 3, 30, 10, 'w')  
+    criar_label(frame_header, 'Autoavaliação', 30, 0, 0, 5, 5, 'w')
+    criar_label(frame_header, CURRENT_USER.name, 20, 0, 1, 5, 5, 'w')
+    criar_label(frame_header, get_role_name(CURRENT_USER.role_id), 15, 0, 2, 5, 5, 'w')
+    criar_label(frame_header, 'Prazo para realizar a autoavaliação da {nº da Sprint}', 15, 0, 3, 5, 5, 'w')  # PUXAR DADO VINCULADO COM TELA DE RETORNO ???
+    criar_label(frame_header, 'Esta avaliação 360° utiliza a escala Likert para medir o desempenho dos usuários. Notas abaixo ou iguais a 3 necessitam obrigatoriamente de Feedback (resposta descritiva)', 11, 0, 4, 5, 5, 'w')  
 
     perguntas = [
         '1) Como você se avalia em trabalho em equipe, cooperação e descentralização de conhecimento?',
@@ -71,14 +74,15 @@ def run(frame_parent):
         frm_criteria = Frame(frm_avaliacao, bg='#fae8e8', relief=GROOVE, bd=3)
         frm_criteria.grid(row= i+1, column=0, columnspan=2, sticky='nsew')
         frm_criteria.columnconfigure(0, weight=1)
+        frm_criteria.rowconfigure([0, 1, 2, 3, 4], weight=1)
 
         frm_criteria_data = Frame(frm_criteria, bg='#fae8e8')
         frm_criteria_data.grid(row= 0, column=0, sticky='nsew')
         frm_criteria_data.columnconfigure(0, weight=1)
         frm_criteria_data.rowconfigure([0, 1, 2, 3, 4], weight=1)
 
-        criar_label(frm_criteria_data, perguntas[i], 11, 0, 4, 30, 10, 'w')
-        criar_label(frm_criteria_data, 'Péssimo (1)           Ruim (2)              Regular (3)                Bom (4)               Ótimo (5)', 10, 0, 5, 30, 0, 'w')
+        criar_label(frm_criteria_data, perguntas[i], 10, 0, 4, 5, 5, 'w')
+        criar_label(frm_criteria_data, 'Péssimo (1)           Ruim (2)              Regular (3)                Bom (4)               Ótimo (5)', 10, 0, 5, 5, 5, 'w')
         escalas.append(criar_escala(frm_criteria_data, 6, lambda _, index=i: computar_resposta(int(index))))
 
         frm_criterias.append(frm_criteria)
@@ -86,7 +90,7 @@ def run(frame_parent):
 
     def enviar_retorno():
         label=Label(master=frm_main, text='Avaliação enviada com sucesso!',
-        bg='#fae8e8', font=('Calibre', 10))
+        bg='#fae8e8', fg='#1a1d1a', font=('Calibre', 10))
         label.place(relx=0.78, rely=0.09, relheight=0.03, relwidth=0.17)
 
     # def criar_label(master, text, tamanho, column, row, padx, pady, sticky):
@@ -112,14 +116,15 @@ def run(frame_parent):
             frm_criteria_feedback = Frame(frm_criteria, bg='#fae8e8')
             frm_criteria_feedback.grid(row= 0, column=1, sticky='nsew')
             frm_criteria_feedback.columnconfigure(0, weight=1)
+            frm_criteria_feedback.rowconfigure([0, 1, 2, 3, 4], weight=1)
 
-            criar_label(frm_criteria_feedback, f'Feedback obrigatório para critério {i+1}: ', 10, 1, 0, 0, 24, 'w')
-            feedbacks[i] = criar_entrada(frm_criteria_feedback, 0, 2, 0, 0, 'w')
+            criar_label(frm_criteria_feedback, f'Feedback obrigatório para critério {i+1}: ', 10, 1, 3, 0, 0, 'w')
+            feedbacks[i] = criar_entrada(frm_criteria_feedback, 3, 2, 0, 10, 'w')
 
 
     # Função para criação de caixas de entrada
     def criar_entrada(master, row, column, padx, pady, sticky):
-        feedback=Entry(master=master, width=75, fg='#1a1d1a', font=('Calibre 10'))
+        feedback=Entry(master=master, width=60, fg='#1a1d1a', font=('Calibre 10'))
         feedback.grid(row=row, column=column, padx=padx, pady=pady, sticky=sticky)
         return feedback
 
@@ -162,16 +167,16 @@ def run(frame_parent):
 
     # Botão para enviar notas para o banco de dados
     button1=Button(master=frm_main, text='Enviar Avaliação', fg='#1a1d1a', bg='#d9d9d9', 
-        font='Calibre, 10', width=13, height=1, activebackground='#c5a8b0', command=enviar_notas
+        font='Calibre, 12', height=0, activebackground='#c5a8b0', command=(enviar_notas, enviar_retorno)
     )
-    button1.place(relx=0.69, rely=0.09, relheight=0.04, relwidth=0.08)
+    button1.place(relx=0.69, rely=0.09)
 
     # window.mainloop()
 
 
 # Função para criação de texto
 def criar_label(master, text, tamanho, column, row, padx, pady, sticky):
-    label=Label(master=master, text=text
+    label=Label(master=master, text=text, fg='#1a1d1a'
     , bg='#fae8e8', font=('Calibre', tamanho))
     label.grid(column=column, row=row, padx=padx, pady=pady, sticky=sticky)
 
@@ -180,6 +185,6 @@ def criar_escala(master, row, command):
         bg='#fae8e8', font='Calibre, 10', highlightcolor='#c5a8b0', troughcolor='#c5a8b0', state='normal', variable=IntVar(),
         command=command
     )
-    _escala.grid(column=0, row=row, padx=30, pady=0, sticky='w')
+    _escala.grid(column=0, row=row, padx=5, pady=5, sticky='w')
     _escala.set(1)
     return _escala

@@ -39,7 +39,7 @@ def run():
         Label(quadro, text=text, font=font, background=co0).grid(row=r, column=c, sticky=w, padx=padx, pady=pady)
 
     def criar_button(quadro, text, font, command, r, c, w, padx, pady):
-        Button(quadro, text=text, font=font, width=13, height=1, command=command, background=co3, fg='white').grid(row=r, column=c, sticky=w, padx=padx, pady=pady)
+        Button(quadro, text=text, font=font, width=10, height=1, command=command, background=co3, fg='white').grid(row=r, column=c, sticky=w, padx=padx, pady=pady)
 
     # COLUNA A --------------------------------------------------------------
     #frame widgets
