@@ -51,7 +51,10 @@ def initialize_test():
     register("develano", "develano-dev@dev.com", 0, 0, 5, custom_password='123')
     register("devano", "dev-ano@dev.com", 0, 0, 5, custom_password='123')
     register("fulanodev", "fulano-dev@dev.com", 0, 0, 5, custom_password='123')
-    register("fulanodev", "ful@dev.com", 0, 1, 5, custom_password='123')
+    register("dirce", "dirc@dev.com", 0, 0, 5, custom_password='123')
+    register("cleiton", "cleitin@dev.com", 0, 0, 5, custom_password='123')
+    register("cumpadi", "cmp@dev.com", 0, 0, 5, custom_password='123')
+    register("washington", "wash@dev.com", 0, 0, 5, custom_password='123')
 
 
 
