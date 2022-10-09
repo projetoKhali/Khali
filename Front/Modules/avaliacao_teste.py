@@ -91,7 +91,7 @@ def run(frame_parent, to_user_id):
     def enviar_retorno():
         label=Label(master=module_frame, text='Avaliação enviada com sucesso!',
         bg=co0, fg='#1a1d1a', font=('Calibre', 10))
-        label.place(relx=0.85, rely=0.09, relheight=0.03, relwidth=0.17)
+        label.place(relx=0.82, rely=0.09, relheight=0.03, relwidth=0.17)
 
     # def criar_label(master, text, tamanho, column, row, padx, pady, sticky):
     def computar_resposta(i):
