@@ -13,7 +13,6 @@ def run():
 
         #*****BOTÃO DE LOGIN*****
     def send_login():
-
         email = en_email.get()
         senha = en_senha.get()
         from Users.Authentication import login
