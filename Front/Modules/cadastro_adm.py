@@ -1,6 +1,7 @@
 # Importar bibliotecas
 from tkinter import *
 from tkinter import ttk
+from tkinter import END
 from Users.Authentication import register
 
 # Informações do modulo
@@ -57,7 +58,7 @@ def run (frame_parent):
         register(nome_lider, email_lider, group_id, None, 1)
         register(nome_client, email_client, group_id, None, 2)
 
-        tree.insert('', 'END', values=[codigo_str, nome_lider, email_lider, nome_client, email_client])
+        tree.insert('', END, values=[codigo_str, nome_lider, email_lider, nome_client, email_client])
         tree.place(relx=0.02, rely=0.02, relwidth=0.96, relheight=0.96)
 
     # window.configure(bg='#fae8e8')  # Cor do plano de fundo da tela
