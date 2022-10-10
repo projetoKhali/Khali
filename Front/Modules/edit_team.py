@@ -146,7 +146,6 @@ def create_member_role(frame_member_actions, member_data, color):
     frame_dropdown.grid(row=0, column=0)
     role_selected = StringVar()
 
-    
     role_selected.set(get_role_name(int(member_data['role_id'])))
     OptionMenu(
         frame_dropdown,

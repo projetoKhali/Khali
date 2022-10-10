@@ -118,6 +118,10 @@ def run(frame_parent):
         # criar_button(frame_rated, 'Editar Avaliação', 'Calibri, 12', 1, 1, "e")  # linha para teste
         indice = indice + 1
 
+    f = Frame(module_frame, pady=100, bg=co0)
+    Label(f, text='', bg=co0).grid(row=0, column=0, sticky="s")
+    f.grid(row=100, column=0, sticky="s")
+
 
     return module_frame
 

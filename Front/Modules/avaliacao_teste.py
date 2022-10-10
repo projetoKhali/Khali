@@ -168,6 +168,10 @@ def run(frame_parent, to_user_id):
     )
     button1.place(relx=0.69, rely=0.09)
 
+    f = Frame(module_frame, pady=100, bg=co0)
+    Label(f, text='', bg=co0).grid(row=0, column=0, sticky="s")
+    f.grid(row=100, column=0, sticky="s")
+
     # window.mainloop()
 
 
