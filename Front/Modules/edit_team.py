@@ -21,36 +21,62 @@ REQUIRED_PERMISSIONS_REG  = [
 REQUIRED_PERMISSIONS_RATE = [None]
 REQUIRED_PERMISSIONS_VIEW = [None]
 
-module_frame = None
+master_frame = None
 
 def run(frame_parent):
 
-    global module_frame
+    global master_frame
 
-    module_frame = Frame(frame_parent)
-    module_frame.columnconfigure(0, minsize = 0, weight = 1)
-    module_frame.grid(row=0, column=0, sticky='nsew')
+    # module_frame = Frame(frame_parent)
+    # module_frame.columnconfigure(0, minsize = 0, weight = 1)
+    # module_frame.grid(row=0, column=0, sticky='nsew')
 
-    # frm_main=Frame(frame_parent, bg='#fae8e8')
-    # #frm_main.pack(fill=BOTH, expand=1) 
-    # frm_main.grid(row=0, column=0, sticky='nsew')
 
-    # # O canvas aceita o scrollbar, mas ela só faz o papel da responsividade
-    # canvas=Canvas(frm_main, bg='#fae8e8')
-    # #canvas.pack(side=LEFT, fill=BOTH, expand=1)
-    # frm_main.grid(row=0, column=0, sticky='nsew')
 
-    # # Configurações do scrollbar
-    # scrollbar_ver = Scrollbar(frm_main, orient=VERTICAL, command=canvas.yview) # Comando xview para orientação HORIZONTAL
+    # Criar um frame para comportar o canvas
+    frm_main=Frame(frame_parent, bg=co0)
+    # frm_main.pack(fill=BOTH, expand=1) 
+    frm_main.columnconfigure(0, minsize = 0, weight = 1)
+    frm_main.rowconfigure(0, minsize = 0, weight = 1)
+    frm_main.grid(row=0, column=0, sticky='nsew')
+
+    # O canvas aceita o scrollbar, mas ela só faz o papel da responsividade
+    canvas=Canvas(frm_main, bg=co0)
+    # canvas.pack(side=LEFT, fill=BOTH, expand=1)
+    canvas.columnconfigure(0, minsize = 0, weight = 1)
+    canvas.grid(row=0, column=0, sticky='nsew')
+
+    # Configurações do scrollbar
+    scrollbar_ver = Scrollbar(frm_main, orient=VERTICAL, command=canvas.yview) # Comando xview para orientação HORIZONTAL
     # scrollbar_ver.pack(side=RIGHT, fill=Y)
+    scrollbar_ver.grid(row=0, column=1, sticky='nsw')
 
-    # # Configurações do canvas
-    # canvas.configure(yscrollcommand=scrollbar_ver.set) # xscrollcomand para barra horizontal
-    # module_frame=Frame(canvas, bg='#fae8e8', relief=FLAT, bd=3) # Não colocamos o frame com o .pack nesse caso
-    # module_frame.bind('<Configure>', lambda e: canvas.configure(scrollregion=canvas.bbox('all'))) # Seleciona qual parte do canvas o scrollbar deve identificar
+    # Configurações do canvas
+    canvas.configure(yscrollcommand=scrollbar_ver.set) # xscrollcomand para barra horizontal
 
-    # # Integração do frame geral a uma janela do canvas
-    # canvas.create_window((0,0), window=module_frame, anchor='nw')
+    parent_module=Frame(canvas, bg=co0, relief=FLAT, bd=3,) # Não colocamos o frame com o .pack nesse caso
+    parent_module.columnconfigure(0, minsize = 0, weight = 1)
+    parent_module.grid(row=0, column=0, sticky='nsew')
+    # parent_module.pack(side=LEFT, fill=X, expand=1)
+
+    parent_module.bind('<Configure>', lambda e: canvas.configure(scrollregion=canvas.bbox('all'))) # Seleciona qual parte do canvas o scrollbar deve identificar
+
+    # inbetween_frame = Frame(parent_module, bg='yellow', padx=2, pady=2)
+    # inbetween_frame.columnconfigure(0, minsize = 0, weight = 1)
+    # inbetween_frame.grid(row=0, column=0, sticky='nsew')
+
+    module_frame = Frame(parent_module)
+    module_frame.columnconfigure(0, minsize = 800, weight = 1)
+    module_frame.grid(row=0, column=0, sticky="news")
+    # module_frame.pack(side=LEFT, fill=BOTH, expand=1)
+
+    # return 
+
+    # Integração do frame geral a uma janela do canvas
+    canvas.create_window((0,0), window=parent_module, anchor='nw')
+
+
+    master_frame = frm_main
 
     # section 0
     frame_title = Frame(module_frame, padx=2, pady=2, bg=co3)
@@ -89,13 +115,17 @@ def run(frame_parent):
 
     # retorna caso não existam usuários sem time
     # print(len(no_team_users))
-    if len(no_team_users) < 1: return
+    if len(no_team_users) > 0:
 
-    frame_no_team_members_parent = create_team(frame_teams, None, team_id+1)
+        frame_no_team_members_parent = create_team(frame_teams, None, team_id+1)
 
-    for user_id, no_team_user_data in enumerate(no_team_users):
-        frame_member_actions = create_member(frame_no_team_members_parent, no_team_user_data, user_id)
-        create_member_add(frame_member_actions, no_team_user_data, teams_list)
+        for user_id, no_team_user_data in enumerate(no_team_users):
+            frame_member_actions = create_member(frame_no_team_members_parent, no_team_user_data, user_id)
+            create_member_add(frame_member_actions, no_team_user_data, teams_list)
+
+    f = Frame(module_frame, pady=100, bg=co0)
+    Label(f, text='', bg=co0).grid(row=0, column=0, sticky="s")
+    f.grid(row=100, column=0, sticky="s")
 
 
 def create_team(frame_teams_parent, team_data, team_id):
@@ -115,7 +145,6 @@ def create_team(frame_teams_parent, team_data, team_id):
     frame_members_parent.grid(row=team_id+1, column=0, sticky="ew")
 
     return frame_members_parent
-
 
 def create_member(frame_members_parent, member_data, row):
 
@@ -195,15 +224,13 @@ def create_member_remove(frame_member_actions, member_data):
         command=lambda md=member_data:remove_member(md)
     ).grid(row=0, column=0)
 
-
 def redraw():
-    global module_frame
-    if module_frame is None:
-        print(f'edit_team.redraw -- ERRO: redraw() sendo executado enquanto module_frame é None')
-    frame_parent = module_frame.master
-    module_frame.destroy()
+    global master_frame
+    if master_frame is None:
+        print(f'edit_team.redraw -- ERRO: redraw() sendo executado enquanto master_frame é None')
+    frame_parent = master_frame.master
+    master_frame.destroy()
     run(frame_parent)
-
 
 from Utils import edit_team_back
 
@@ -217,7 +244,6 @@ def add_member(member_data, team_id):
     # print(member_data)
     edit_team_back.add_user(member_data['email'], team_id)
     redraw()
-
 
 def remove_member(member_data):
     # print(member_data)
