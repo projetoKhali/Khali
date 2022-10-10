@@ -90,6 +90,6 @@ def run():
                 pass
         current_module = modules[m_index].run(frame_coluna_B)
 
-    if len(modules) > 0: run_module(2)
+    if len(modules) > 0: run_module(0)
 
     return janela
