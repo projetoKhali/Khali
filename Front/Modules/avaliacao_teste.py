@@ -163,7 +163,7 @@ def run(frame_parent, to_user_id):
     # resposta(p1, 0), resposta(p2, 5), resposta(p3, 10), resposta(p4, 15), resposta(p5, 20)
 
     # Botão para enviar notas para o banco de dados
-    button1=Button(master=module_frame, text='Enviar Avaliação', fg='#1a1d1a', bg='#d9d9d9', 
+    button1=Button(master=module_frame.winfo_toplevel(), text='Enviar Avaliação', fg='#1a1d1a', bg='#d9d9d9', 
         font='Calibre, 12', height=0, activebackground='#c5a8b0', command= lambda : enviar_notas(to_user_id)
     )
     button1.place(relx=0.69, rely=0.09)
