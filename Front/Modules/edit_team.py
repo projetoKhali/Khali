@@ -65,7 +65,7 @@ def run(frame_parent):
     # inbetween_frame.columnconfigure(0, minsize = 0, weight = 1)
     # inbetween_frame.grid(row=0, column=0, sticky='nsew')
 
-    module_frame = Frame(parent_module)
+    module_frame = Frame(parent_module, bg=co0)
     module_frame.columnconfigure(0, minsize = 800, weight = 1)
     module_frame.grid(row=0, column=0, sticky="news")
     # module_frame.pack(side=LEFT, fill=BOTH, expand=1)
@@ -85,7 +85,7 @@ def run(frame_parent):
     Label(frame_title, text="Editar Times", font='Calibri, 20', bg=co3, fg='white').grid(row=0, column=0)
 
     # section 1
-    frame_teams = Frame(module_frame, padx=2, pady=2, )
+    frame_teams = Frame(module_frame, padx=2, pady=2, bg=co0)
     frame_teams.rowconfigure(1, minsize = 0, weight = 1)
     frame_teams.columnconfigure(0, minsize = 0, weight = 1)
     frame_teams.grid(row=1, column=0, sticky="ew")
