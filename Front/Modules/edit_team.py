@@ -25,6 +25,8 @@ module_frame = None
 
 def run(frame_parent):
 
+    global module_frame
+
     module_frame = Frame(frame_parent)
     module_frame.columnconfigure(0, minsize = 0, weight = 1)
     module_frame.grid(row=0, column=0, sticky='nsew')
@@ -78,6 +80,7 @@ def run(frame_parent):
         # para cada membro
         for member_id, member_data in enumerate(members_list):
             frame_member_actions = create_member(frame_members_parent, member_data, member_id)
+            create_member_role(frame_member_actions, member_data, co0 if member_id % 2 == 1 else 'white')
             create_member_remove(frame_member_actions, member_data)
 
 
@@ -134,10 +137,16 @@ def create_member(frame_members_parent, member_data, row):
     frame_actions.columnconfigure(0, minsize = 0, weight = 1)
     frame_actions.grid(row=0, column=1, sticky="w")
 
+    return frame_actions
+
+def create_member_role(frame_member_actions, member_data, color):
+
     # cria o frame e dropdown de role dentro do ações
-    frame_dropdown = Frame(frame_actions, bg=color)
+    frame_dropdown = Frame(frame_member_actions, bg=color)
     frame_dropdown.grid(row=0, column=0)
     role_selected = StringVar()
+
+    
     role_selected.set(get_role_name(int(member_data['role_id'])))
     OptionMenu(
         frame_dropdown,
@@ -146,13 +155,11 @@ def create_member(frame_members_parent, member_data, row):
         role_selected,
 
         # lista que contém os valores selecionaveis no OptionMenu
-        *["Lider Técnico", "Product Owner", "Developer"],
+        *["Líder Técnico", "Product Owner", "Developer"],
 
         # comando que será executado ao selecionar uma opção
         command=(lambda _, md=member_data, rs = role_selected : update_role(_, md, get_role_id(rs.get())))
     ).grid(row=0, column=0)
-
-    return frame_actions
 
 def create_member_add(frame_member_actions, member_data, teams_list):
 
