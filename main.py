@@ -69,20 +69,7 @@ import os
 # if not os.path.exists(USERS_PATH + '.csv'):
 initialize_test()
 
-from Utils.edit_team_back import *
-
-# print(add_user("ful@dev.com", 0))
-# exit()
-
-# print(delete_user('ful@dev.com'))
-# exit()
-
-# print(change_role(1, 'lt2@o.com', 5))
-# exit()
-
-
-
-from Utils.edit_team_back import *
+# from Utils.edit_team_back import *
 
 # print(add_user("ful@dev.com", 0))
 # exit()
