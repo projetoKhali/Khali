@@ -34,34 +34,34 @@ def initialize_test():
     register("L do Gê",     "l@d.g",                    0,    None, 1,    custom_password='123')
 
     # cadastra cliente teste
-    register("clielano",    "c@c.c",                    0,    None, 2,    custom_password='123')
+    register("Clielano",    "c@c.c",                    0,    None, 2,    custom_password='123')
 
 
-    register("lt um", "lt1@o.com",   0, 0, 3, custom_password='123')
-    register("lt dois", "lt2@o.com", 0, 1, 3, custom_password='123')
-    register("lt tres", "lt3@o.com", 0, 2, 3, custom_password='123')
+    register("Lt um", "lt1@o.com",   0, 0, 3, custom_password='123')
+    register("Lt dois", "lt2@o.com", 0, 1, 3, custom_password='123')
+    register("Lt tres", "lt3@o.com", 0, 2, 3, custom_password='123')
 
 
-    register("po um", "po1@o.com",   0, 0, 4, custom_password='123')
-    register("po dois", "p02@o.com", 0, 1, 4, custom_password='123')
-    register("po tres", "p03@o.com", 0, 2, 4, custom_password='123')
+    register("PO um", "po1@o.com",   0, 0, 4, custom_password='123')
+    register("PO dois", "p02@o.com", 0, 1, 4, custom_password='123')
+    register("PO tres", "p03@o.com", 0, 2, 4, custom_password='123')
 
     # cadastra developer teste
-    register("deve", "d@e.v", 0, 0, 5, custom_password='123')
-    register("developano", "develop@dev.com", 0, 0, 5, custom_password='123')
-    register("develano", "develano-dev@dev.com", 0, 0, 5, custom_password='123')
-    register("devano", "dev-ano@dev.com", 0, 0, 5, custom_password='123')
-    register("fulanodev", "fulano-dev@dev.com", 0, 0, 5, custom_password='123')
-    register("dirce", "dirc@dev.com", 0, 0, 5, custom_password='123')
-    register("cleiton", "cleitin@dev.com", 0, 0, 5, custom_password='123')
-    register("cumpadi", "cmp@dev.com", 0, 0, 5, custom_password='123')
-    register("washington", "wash@dev.com", 0, 0, 5, custom_password='123')
+    register("Deve", "d@e.v", 0, 0, 5, custom_password='123')
+    register("Developano", "develop@dev.com", 0, 0, 5, custom_password='123')
+    register("Develano", "develano-dev@dev.com", 0, 0, 5, custom_password='123')
+    register("Devano", "dev-ano@dev.com", 0, 0, 5, custom_password='123')
+    register("Fulanodev", "fulano-dev@dev.com", 0, 0, 5, custom_password='123')
+    register("Dirce", "dirc@dev.com", 0, 0, 5, custom_password='123')
+    register("Cleiton", "cleitin@dev.com", 0, 0, 5, custom_password='123')
+    register("Lys", "lys@dev.com", 0, 0, 5, custom_password='123')
+    register("Mariano", "mari-ano@dev.com", 0, 0, 5, custom_password='123')
 
 
-    create_rating(3,  6,  4, 'muinto gente boa', 'sprint1', 0)
-    create_rating(3,  9,  4, 'muinto gente boa', 'sprint1', 0)
-    create_rating(10, 11, 4, 'muinto gente boa', 'sprint1', 0)
-    create_rating(9,  14, 4, 'muinto gente boa', 'sprint1', 0)
+    # create_rating(3,  6,  4, 'muinto gente boa', 'sprint1', 0)
+    # create_rating(3,  9,  4, 'muinto gente boa', 'sprint1', 0)
+    # create_rating(10, 11, 4, 'muinto gente boa', 'sprint1', 0)
+    # create_rating(9,  14, 4, 'muinto gente boa', 'sprint1', 0)
 
 
 # Inicializa os bancos de dados populado com informações teste caso não exista um arquivo users.csv
@@ -102,9 +102,9 @@ WindowManager.initialize()
 
 # teste - login automatico
 # login(email='a@d.m', senha='123')
-login(email='l@d.g', senha='123')
+# login(email='l@d.g', senha='123')
 # login(email='c@c.c', senha='123')
 # login(email='l@d.g', senha='123')
-# login(email='lt1@o.com', senha='123')
+login(email='lt1@o.com', senha='123')
 
 WindowManager.update()
