@@ -80,6 +80,21 @@ def LT ():
 
 
 
+def estudantes ():
+    multi_bar(
+        'Seu desempenho em comparativo ao seu time',
+        ['Sua média', 'Média dos seu time'],
+        'Criterios',
+        [
+            [2, 3, 2, 4, 5],
+            [3, 4, 2, 5, 4]
+        ],
+        None,
+        ['TG', 'PO', 'KE', 'PT', 'QU'],
+        ['orange', 'green']
+    )
+
+
 
 
 
