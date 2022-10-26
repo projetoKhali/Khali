@@ -74,25 +74,56 @@ def line (title, names, y_label, values, x_label, x_ticks, colors):
     plt.show()
 
 
-def teste():
-    names = []
-    values = []
+# Retorna um Dashboard com a media de um determinado time em cada criterio por sprint
+def time_media_sprints (team_id):
+    # medias = [
+    #     [2, 3, 4, 4, 5],
+    #     [2, 5, 3, 4, 2],
+    #     [5, 3, 4, 5, 2],
+    #     [5, 3, 4, 5, 3]
+    # ]
 
-    for i in range(10):
+    from CSV.CSVHandler import find_data_by_id_csv, find_data_list_by_field_value_csv, find_data_list_by_field_values_csv
+    from Settings import USERS_PATH, TEAMS_PATH, SPRINTS_PATH, RATINGS_PATH
+    from Models.Sprints import to_sprint
+    from Models.id_criteria import criteria
 
-        names.append(f'teste{i}')
-        values.append([3, 3, 3, 3, 3])
+    team = find_data_by_id_csv(TEAMS_PATH, team_id)
+    
+    sprints = [to_sprint(x) for x in find_data_list_by_field_value_csv(SPRINTS_PATH, 'group_id', team['group_id'])]
+    user_ids = [int(x['id']) for x in find_data_list_by_field_value_csv(USERS_PATH, 'team_id', team_id)]
+    ratings = find_data_list_by_field_values_csv(RATINGS_PATH, 'to_user_id', user_ids)
+
+    # [sprint] [criterio]
+    sums   = [[0] * len(criteria) for _ in sprints]
+    counts = sums.copy()
+
+    for i in range(len(criteria)):
+        for rating in ratings:
+            r_criteria_id = int(rating['criteria'])
+            if r_criteria_id != i:
+                print(f"{r_criteria_id} != {i}")
+                continue
+            r_sprint_id = int(rating['sprint_id'])
+            sums[r_sprint_id][i] += float(rating['value'])
+            sums[r_sprint_id][i] += 1.
+
+    medias = [[((s / c) if c != 0 else 0) for s, c in zip(sum, count)] for sum, count in zip(sums, counts)]
+    print(medias)
+
+
+
+        
 
     multi_bar(
-        'desempenho individual',
-        names,
-        'Notas',
-        values,
+        f'Média do time {team["name"]} ao longo das sprints',
+        [f'Sprint {i}' for i in range(len(sprints))],
+        'Médias',
+        sums,
         'Críterio avaliativo',
-        ['TG', 'PO', 'KE', 'PT', 'QU'],
-        ['orange', 'green', 'blue', 'pink', 'red', 'green', 'blue', 'magenta', 'black', 'gray']
+        criteria,
+        ['orange', 'yellow', 'red', 'green']
     )
-teste()
 
 
 
@@ -114,25 +145,6 @@ def PO():
         'Críterio avaliativo',
         ['TG', 'PO', 'KE', 'PT', 'QU'],
         ['orange', 'green', 'blue', 'pink']
-    )
-
-
-
-
-def LT ():
-    multi_bar(
-        'Seu desempenho em comparativo ao seu time',
-        ['Valeria', 'Simone', 'Vitor', 'lula'],
-        'Notas',
-        [
-            [2, 3, 4, 4, 5],
-            [2, 5, 3, 4, 2],
-            [5, 3, 4, 5, 2],
-            [5, 3, 4, 5, 3]
-        ],
-        'Críterio avaliativo',
-        ['TG', 'PO', 'KE', 'PT', 'QU'],
-        ['orange', 'yellow', 'red', 'green']
     )
 
 

@@ -24,6 +24,20 @@ class User:
         self.role_id    = _role_id
         self.password   = _pw
 
+# Converte um dicionario em objeto da classe User
+def to_user(user_data):
+    try: id = user_data['id']
+    except: id = None
+    return User(
+        user_data['name'],
+        user_data['email'],
+        user_data['group_id'],
+        user_data['team_id'],
+        user_data['role_id'],
+        user_data['password'],
+        id,
+    )
+
 # Cria um Usuário e salva na database
 def create_user (name, email, group_id, team_id, role_id, password):
     from CSV.CSVHandler import add_unique_csv_autoid

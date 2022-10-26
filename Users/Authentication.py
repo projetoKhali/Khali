@@ -1,8 +1,7 @@
-from ast import Global
 from CSV.CSVHandler import *
 from Front import WindowManager
 from Users.Gerar_Senha import gerar_senha
-from Models.User import User, create_user
+from Models.User import User, to_user, create_user
 from Models import Groups, Teams
 
 import Settings as settings
@@ -38,15 +37,7 @@ def login (email, senha):
     print("Authentication.login -- login sucesso")
 
     global CURRENT_USER
-    CURRENT_USER = User(
-        user_data['name'],
-        user_data['email'],
-        user_data['group_id'],
-        user_data['team_id'],
-        user_data['role_id'],
-        user_data['password'],
-        user_data['id'],
-    )
+    CURRENT_USER = to_user(user_data)
 
     WindowManager.next_state()
 

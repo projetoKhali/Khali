@@ -9,6 +9,5 @@ from Settings import RATINGS_PATH
 # comment       - Feedback
 # sprint        - Número da sprint
 # criterio      - 1 dos 5 critérios avaliativos
-
-def create_rating (from_user_id, to_user_id, value, comment, sprint, criteria):
-    return add_unique_csv_autoid(RATINGS_PATH, [from_user_id, to_user_id, value, comment, sprint, criteria])
+def create_rating (from_user_id, to_user_id, sprint, criteria, value, comment):
+    return add_unique_csv_autoid(RATINGS_PATH, [from_user_id, to_user_id, sprint, criteria, value, comment])
