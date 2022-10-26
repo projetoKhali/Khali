@@ -1,22 +1,66 @@
 import  matplotlib.pyplot as  plt 
 
-
-# Define a expessura da barra
-barWidth = .2 
-
 # Gera um grafico multi barra
-def multi_bar (title, names, y_label, values, x_label, x_ticks, colors):
+def multi_bar (title, names, y_label, matrix, x_label, x_ticks, colors):
 
+    # Esconde a barra de comandos do matplotlib
     plt.rcParams['toolbar'] = 'None'
 
     # Define a ampliação do grafico
     # plt.figure(figsize = (10, 5))
+    
+    # Define a largura de cada barra individual sendo 1 dividido pela quantidade de listas da matriz
+    # somado por um valor constante de espaçamento entre cada x_tick
+    bar_width = 1. / (len(matrix) + 1.75)
+
+    # Para cada lista na matriz
+    for i, lst in enumerate(matrix):
+
+        # Define a posição da barra. Indice da barra * espaçamento definido pela quantidade de barras por x_tick
+        offset = (i * bar_width) 
+
+        # move todas as barras para esquerda em (tamanho total da soma das barras / 2)
+        offset -= bar_width * int(len(matrix) / 2)
+
+        # caso o numero de barras seja par, move o metade do tamanho de UMA barra para a direita
+        if len(matrix) % 2 == 0: offset += bar_width / 2
+
+        # define a posição de cada barra da lista de indice 'i'
+        positions = [j + offset for j in range(len(x_ticks))]
+        
+        # Cria um grafico de barras para cada item da lista 'lst'  
+        plt.bar(positions, lst, color=colors[i], width=bar_width, label=names[i])
+
+    # Adiciona o título
+    plt.title(title)
+
+    # Adiciona a label e os marcadores x
+    plt.xlabel(x_label)
+    plt.xticks([r for r in range(len(x_ticks))], x_ticks)
+
+    # Adiciona a label y
+    plt.ylabel(y_label)
+
+    # Adiciona a legenda representando cada lista da matriz
+    plt.legend()
+
+    # Renderiza o grafico
+    plt.show()
+
+
+# Gera um grafico de linha
+def line (title, names, y_label, values, x_label, x_ticks, colors):
+    plt.rcParams['toolbar'] = 'None'
+
+    # Define a ampliação do grafico
+    # plt.figure(figsize = (10, 5))
+    barWidth = .2 
 
     for i, value in enumerate(values):
 
         # Aqui eu construo a barra
-        bar = [j + (i * barWidth) for j in range(len(x_ticks))]
-        plt.bar(bar, value, color=colors[i], width=barWidth, label=names[i])
+        positions = [j + barWidth for j in range(len(x_ticks))]
+        plt.plot(positions, value, color=colors[i], label=names[i])
 
     plt.title(title)
 
@@ -30,9 +74,25 @@ def multi_bar (title, names, y_label, values, x_label, x_ticks, colors):
     plt.show()
 
 
+def teste():
+    names = []
+    values = []
 
+    for i in range(10):
 
+        names.append(f'teste{i}')
+        values.append([3, 3, 3, 3, 3])
 
+    multi_bar(
+        'desempenho individual',
+        names,
+        'Notas',
+        values,
+        'Críterio avaliativo',
+        ['TG', 'PO', 'KE', 'PT', 'QU'],
+        ['orange', 'green', 'blue', 'pink', 'red', 'green', 'blue', 'magenta', 'black', 'gray']
+    )
+teste()
 
 
 
@@ -48,15 +108,13 @@ def PO():
             [4, 3, 5, 4, 2],
             [5, 4, 3, 4, 6],
             [4, 2, 4, 5, 4],
+            [4, 2, 4, 5, 4],
             [2, 3, 4, 5, 3]
         ],
         'Críterio avaliativo',
         ['TG', 'PO', 'KE', 'PT', 'QU'],
         ['orange', 'green', 'blue', 'pink']
     )
-
-
-
 
 
 
