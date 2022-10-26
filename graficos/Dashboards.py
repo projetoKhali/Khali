@@ -1,3 +1,4 @@
+import enum
 import  matplotlib.pyplot as  plt 
 
 # Gera um grafico multi barra
@@ -96,33 +97,37 @@ def time_media_sprints (team_id):
 
     # [sprint] [criterio]
     sums   = [[0] * len(criteria) for _ in sprints]
-    counts = sums.copy()
+    counts = [[0] * len(criteria) for _ in sprints]
+    medias = [[0] * len(criteria) for _ in sprints]
 
-    for i in range(len(criteria)):
+    for medias_index in range(len(criteria)):
         for rating in ratings:
             r_criteria_id = int(rating['criteria'])
-            if r_criteria_id != i:
-                print(f"{r_criteria_id} != {i}")
+            if r_criteria_id != medias_index:
                 continue
             r_sprint_id = int(rating['sprint_id'])
-            sums[r_sprint_id][i] += float(rating['value'])
-            sums[r_sprint_id][i] += 1.
+            sums[r_sprint_id][medias_index] += float(rating['value'])
+            counts[r_sprint_id][medias_index] += 1.
 
-    medias = [[((s / c) if c != 0 else 0) for s, c in zip(sum, count)] for sum, count in zip(sums, counts)]
-    print(medias)
+    for medias_index, sum_sprint in enumerate(sums):
+        for criteria_index, sum_criteria in enumerate(sum_sprint):
+            if counts[medias_index][criteria_index] == 0:
+                continue
+            medias[medias_index][criteria_index] = sum_criteria / counts[medias_index][criteria_index] 
 
+    print(f'sums: {sums}')
+    print(f'counts: {counts}')
 
-
-        
+    print(f'medias: {medias}')
 
     multi_bar(
         f'Média do time {team["name"]} ao longo das sprints',
         [f'Sprint {i}' for i in range(len(sprints))],
         'Médias',
-        sums,
+        medias,
         'Críterio avaliativo',
         criteria,
-        ['orange', 'yellow', 'red', 'green']
+        ['orange', 'yellow', 'red', 'green', 'blue', 'magenta', 'cyan', 'gray', ]
     )
 
 

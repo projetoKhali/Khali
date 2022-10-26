@@ -70,30 +70,30 @@ def initialize_test():
     for i in range(5):
         create_sprint(0, date(2022, 10, 20), date(2022, 10, 27), 5)
 
-        create_rating(3,  6,  i, 0, choice(x), 'muinto gente boa')
-        create_rating(3,  9,  i, 0, choice(x), 'muinto gente boa')
-        create_rating(10, 11, i, 0, choice(x), 'muinto gente boa')
-        create_rating(9,  14, i, 0, choice(x), 'muinto gente boa')
+        create_rating(3,  6,  i, 0, choice(x), 'feedback')
+        create_rating(3,  9,  i, 0, choice(x), 'feedback')
+        create_rating(10, 11, i, 0, choice(x), 'feedback')
+        create_rating(9,  14, i, 0, choice(x), 'feedback')
 
-        create_rating(3,  6,  i, 1, choice(x), 'muinto gente boa')
-        create_rating(3,  9,  i, 1, choice(x), 'muinto gente boa')
-        create_rating(10, 11, i, 1, choice(x), 'muinto gente boa')
-        create_rating(9,  14, i, 1, choice(x), 'muinto gente boa')
+        create_rating(3,  6,  i, 1, choice(x), 'feedback')
+        create_rating(3,  9,  i, 1, choice(x), 'feedback')
+        create_rating(10, 11, i, 1, choice(x), 'feedback')
+        create_rating(9,  14, i, 1, choice(x), 'feedback')
 
-        create_rating(3,  6,  i, 2, choice(x), 'muinto gente boa')
-        create_rating(3,  9,  i, 2, choice(x), 'muinto gente boa')
-        create_rating(10, 11, i, 2, choice(x), 'muinto gente boa')
-        create_rating(9,  14, i, 2, choice(x), 'muinto gente boa')
+        create_rating(3,  6,  i, 2, choice(x), 'feedback')
+        create_rating(3,  9,  i, 2, choice(x), 'feedback')
+        create_rating(10, 11, i, 2, choice(x), 'feedback')
+        create_rating(9,  14, i, 2, choice(x), 'feedback')
 
-        create_rating(3,  6,  i, 3, choice(x), 'muinto gente boa')
-        create_rating(3,  9,  i, 3, choice(x), 'muinto gente boa')
-        create_rating(10, 11, i, 3, choice(x), 'muinto gente boa')
-        create_rating(9,  14, i, 3, choice(x), 'muinto gente boa')
+        create_rating(3,  6,  i, 3, choice(x), 'feedback')
+        create_rating(3,  9,  i, 3, choice(x), 'feedback')
+        create_rating(10, 11, i, 3, choice(x), 'feedback')
+        create_rating(9,  14, i, 3, choice(x), 'feedback')
 
-        create_rating(3,  6,  i, 4, choice(x), 'muinto gente boa')
-        create_rating(3,  9,  i, 4, choice(x), 'muinto gente boa')
-        create_rating(10, 11, i, 4, choice(x), 'muinto gente boa')
-        create_rating(9,  14, i, 4, choice(x), 'muinto gente boa')
+        create_rating(3,  6,  i, 4, choice(x), 'feedback')
+        create_rating(3,  9,  i, 4, choice(x), 'feedback')
+        create_rating(10, 11, i, 4, choice(x), 'feedback')
+        create_rating(9,  14, i, 4, choice(x), 'feedback')
 
 
 # Inicializa os bancos de dados populado com informações teste caso não exista um arquivo users.csv
