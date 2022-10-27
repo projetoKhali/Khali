@@ -67,7 +67,7 @@ def initialize_test():
     from random import choice
     x = [0, 1, 2, 3, 4, 5]
 
-    for i in range(5):
+    for i in range(4):
         create_sprint(0, date(2022, 10, 20), date(2022, 10, 27), 5)
 
         create_rating(3,  6,  i, 0, choice(x), 'feedback')

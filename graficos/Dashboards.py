@@ -30,7 +30,7 @@ def multi_bar (title, names, y_label, matrix, x_label, x_ticks, colors):
         positions = [j + offset for j in range(len(x_ticks))]
         
         # Cria um grafico de barras para cada item da lista 'lst'  
-        plt.bar(positions, lst, color=colors[i], width=bar_width, label=names[i])
+        plt.bar(positions, lst, color=colors[i % len(colors)], width=bar_width, label=names[i])
 
     # Adiciona o título
     plt.title(title)
@@ -61,7 +61,7 @@ def line (title, names, y_label, values, x_label, x_ticks, colors):
 
         # Aqui eu construo a barra
         positions = [j + barWidth for j in range(len(x_ticks))]
-        plt.plot(positions, value, color=colors[i], label=names[i])
+        plt.plot(positions, value, color=colors[i % len(colors)], label=names[i])
 
     plt.title(title)
 
@@ -75,51 +75,98 @@ def line (title, names, y_label, values, x_label, x_ticks, colors):
     plt.show()
 
 
-# Retorna um Dashboard com a media de um determinado time em cada criterio por sprint
+# Retorna um Dashboard com a media de um determinado time em cada criterio de cada sprint
 def time_media_sprints (team_id):
-    # medias = [
-    #     [2, 3, 4, 4, 5],
-    #     [2, 5, 3, 4, 2],
-    #     [5, 3, 4, 5, 2],
-    #     [5, 3, 4, 5, 3]
-    # ]
 
+    # importa as funções do CSVHandler que serão usadas para requisitar informações dos bancos de dados
     from CSV.CSVHandler import find_data_by_id_csv, find_data_list_by_field_value_csv, find_data_list_by_field_values_csv
+    # importa as variaveis em Settings que correspondem ao caminho de cada banco de dados que será acessado
     from Settings import USERS_PATH, TEAMS_PATH, SPRINTS_PATH, RATINGS_PATH
+    # importa de Models.Sprints a função que converte um dicionario com os valores de uma sprint em um objeto da classe
     from Models.Sprints import to_sprint
+    # importa a lista de criterios utilizados nas avaliações
     from Models.id_criteria import criteria
 
+    # Objetivo:
+    #   - calcular a média do time para cada criterio em cada sprint
+    # Passos executados:
+    # 1 - Requisitar do banco de dados o time do id especifiado, o id dos usuarios do time e as sprints do grupo do time
+    # 2 - Requisitar do banco de dados todas as avaliações em que o usuario avaliado pertence ao time
+    # 3 - Calcular a média do time em cada criterio de cada sprint utilizando as avaliações do passo 2
+    # 4 - Gerar o gráfico com as informações adquiridas no passo 3
+
+    # carrega o time com o id especificado
     team = find_data_by_id_csv(TEAMS_PATH, team_id)
     
+    # Lista as sprints associadas ao grupo do time após converte-las para objetos da classe Sprint
     sprints = [to_sprint(x) for x in find_data_list_by_field_value_csv(SPRINTS_PATH, 'group_id', team['group_id'])]
+
+    # Lista o id de cada usuário pertencente ao time especificado após convertelos para numero inteiro
     user_ids = [int(x['id']) for x in find_data_list_by_field_value_csv(USERS_PATH, 'team_id', team_id)]
+
+    # Lista todas as avaliações em que o id do usuário avaliado corresponda a qualquer id da lista 'user_ids' 
     ratings = find_data_list_by_field_values_csv(RATINGS_PATH, 'to_user_id', user_ids)
 
-    # [sprint] [criterio]
+    # inicializa as listas de soma, contagem e medias 
+    # em que cada item da lista corresponde a uma lista com o valor para cada criterio:
+    # lista [index_sprint] [index_criterio] = valor
+    #
+    # lista [
+    #   sprint 1 [
+    #       valor criterio 1
+    #       ...
+    #   ]
+    #   sprint 2 [...]
+    #   sprint 3 [...]
+    # ]
+    #
     sums   = [[0] * len(criteria) for _ in sprints]
     counts = [[0] * len(criteria) for _ in sprints]
     medias = [[0] * len(criteria) for _ in sprints]
 
-    for medias_index in range(len(criteria)):
-        for rating in ratings:
-            r_criteria_id = int(rating['criteria'])
-            if r_criteria_id != medias_index:
-                continue
-            r_sprint_id = int(rating['sprint_id'])
-            sums[r_sprint_id][medias_index] += float(rating['value'])
-            counts[r_sprint_id][medias_index] += 1.
+    # Loop atraves do indice de cada criterio
+    for criteria_index in range(len(criteria)):
 
-    for medias_index, sum_sprint in enumerate(sums):
-        for criteria_index, sum_criteria in enumerate(sum_sprint):
-            if counts[medias_index][criteria_index] == 0:
+        # verifica cada avaliação da lista 
+        for rating in ratings:
+
+            # adquire o indice do criterio da avaliação
+            r_criteria_id = int(rating['criteria'])
+
+            # ignora a avaliação caso o criterio não seja o criterio da iteração atual do loop de criterios
+            if r_criteria_id != criteria_index:
                 continue
-            medias[medias_index][criteria_index] = sum_criteria / counts[medias_index][criteria_index] 
+
+            # criterio da avaliação é o criterio atual do loop
+            # adquire o indice da sprint especificado na avaliação 
+            r_sprint_id = int(rating['sprint_id'])
+
+            # soma o valor da avaliação na lista de somas com o indice da sprint seguido por indice do criterio
+            sums[r_sprint_id][criteria_index] += float(rating['value'])
+
+            # incrementa o contador do criterio na sprint
+            counts[r_sprint_id][criteria_index] += 1.
+
+            # Ao terminar o loop teremos uma lista de somas em que cada item é uma lista correspondendo a uma sprint
+            # & cada lista de sprint possui um valor de soma e de contagem para cada criterio
+
+    # Inicia um novo loop atraves da lista de somas 
+    for sprint_index, sum_sprint in enumerate(sums):
+
+        # pra cada criterio na sprint
+        for criteria_index, sum_criteria in enumerate(sum_sprint):
+
+            # ignora a media desse criterio na sprint caso não hajam avaliações (evvita divisão por 0)
+            if counts[sprint_index][criteria_index] == 0:
+                continue
+
+            # define a média desse criterio nessa sprint como a soma das notas dividida pela contagem de avaliações
+            medias[sprint_index][criteria_index] = sum_criteria / counts[sprint_index][criteria_index] 
 
     print(f'sums: {sums}')
-    print(f'counts: {counts}')
-
     print(f'medias: {medias}')
 
+    # Retorna o grafico representando as médias calculadas 
     multi_bar(
         f'Média do time {team["name"]} ao longo das sprints',
         [f'Sprint {i}' for i in range(len(sprints))],
@@ -127,7 +174,7 @@ def time_media_sprints (team_id):
         medias,
         'Críterio avaliativo',
         criteria,
-        ['orange', 'yellow', 'red', 'green', 'blue', 'magenta', 'cyan', 'gray', ]
+        ['orange', 'yellow', 'red', 'green', 'darkgoldenrod', 'brown', 'lightgreen', 'magenta', 'royalblue', 'pink', ]
     )
 
 
