@@ -85,9 +85,10 @@ def run(frame_parent):
     criar_label(frame_user_logado, CURRENT_USER.name, 'Calibri, 12',2, 0, "w")
 
     # frame com todas a lista de usuários, que ocupará apenas o canto superior direito da tela
-    frame_usuarios = criar_frame(module_frame, 1, 0, "nw", co1, co1, 2)
-    frame_usuarios.columnconfigure(0, minsize = 0, weight = 0)
-    frame_usuarios.rowconfigure(0, minsize = 0, weight = 0)
+    # para deixar essa tela menor, coloco nw apenas
+    frame_usuarios = criar_frame(module_frame, 1, 0, "nsw", co1, co1, 2)
+    frame_usuarios.columnconfigure(0, minsize = 0, weight = 1)
+    frame_usuarios.rowconfigure(0, minsize = 0, weight = 1)
     frame_usuarios = add_scrollbar(frame_usuarios)
     
 
@@ -100,7 +101,7 @@ def run(frame_parent):
     # frame_dashboard3 = criar_frame(module_frame, 3, 1, "nw")
     
     # teste
-    for i in range(50):
+    for i in range(10):
         criar_label(frame_dashboards, "teste", "Calibri, 30", i+2 , 0, "w")
 
    
