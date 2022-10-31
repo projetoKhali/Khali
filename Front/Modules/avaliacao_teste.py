@@ -1,7 +1,7 @@
 from tkinter import * 
 from tkinter import ttk
 from Models.Role import get_role_name
-from Users.Authentication import CURRENT_USER
+from Authentication import CURRENT_USER
 
 from Settings import co0
 

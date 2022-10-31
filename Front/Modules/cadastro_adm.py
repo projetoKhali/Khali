@@ -2,7 +2,7 @@
 from tkinter import *
 from tkinter import ttk
 from tkinter import END
-from Users.Authentication import register
+from Authentication import register
 
 # Informações do modulo
 NAME = 'Cadastrar'
@@ -45,7 +45,7 @@ def run (frame_parent):
             print("emails são iguais!!! por favor, insira emails diferentes")
             return
         
-        from Models.Groups import create_group
+        from Models.Group import create_group
 
         # TODO: codigo_str -> group_name
         # criar label e entry para definir o nome do grupo a ser criado

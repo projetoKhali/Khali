@@ -15,7 +15,7 @@ MODULES = [
 # Retorna os modulos disponiveis para o usuário logado
 def get_modules():
     console(6, f'ModulesManager.get_modules -- iniciando requisição de modulos')
-    from Users.Authentication import CURRENT_USER
+    from Authentication import CURRENT_USER
     from Models import Role 
 
     # define o tipo do usuário logado

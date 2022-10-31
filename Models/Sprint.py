@@ -47,3 +47,7 @@ def to_date(value:str):
 # rating_period - a quantidade de dias disponíveis para efetur as avaliações referentes a sprint
 def create_sprint (group_id:int, start:date, finish:date, rating_period:int):
     return add_unique_csv_autoid(SPRINTS_PATH, [group_id, start, finish, rating_period])
+
+# Retorna todas as sprints associadas ao grupo de id especificado após converte-las para objetos da classe Sprint
+def get_group_sprints (group_id):
+    return [to_sprint(x) for x in find_data_list_by_field_value_csv(SPRINTS_PATH, 'group_id', group_id)]

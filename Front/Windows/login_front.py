@@ -1,4 +1,3 @@
-from ipaddress import collapse_addresses
 from tkinter import *
 from Settings import RESOURCES_PATH, co0
 
@@ -15,7 +14,7 @@ def run():
     def send_login():
         email = en_email.get()
         senha = en_senha.get()
-        from Users.Authentication import login
+        from Authentication import login
         login(email=email, senha=senha)
 
     # criar imagem e distribuir pro intereior do label essa imagem

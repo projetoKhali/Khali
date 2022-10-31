@@ -1,4 +1,4 @@
-
+from CSV.CSVHandler import *
 from Settings import USERS_PATH
 
 # Define o objeto "Usuário"
@@ -40,5 +40,18 @@ def to_user(user_data):
 
 # Cria um Usuário e salva na database
 def create_user (name, email, group_id, team_id, role_id, password):
-    from CSV.CSVHandler import add_unique_csv_autoid
     return add_unique_csv_autoid(USERS_PATH, [name, email, group_id, team_id, role_id, password])
+
+# retorna o Usuário que corresponde ao id especificado 
+def get_user (id:int):
+    return to_user(find_data_by_id_csv(USERS_PATH, int(id)))
+
+# Retorna todos os Usuários to time especificado
+def get_users_of_team (team_id):
+    return [to_user(x) for x in find_data_list_by_field_value_csv(USERS_PATH, 'team_id', team_id)]
+
+# Retorna todos os Usuários to grupo especificado
+def get_users_of_group (group_id):
+    return [to_user(x) for x in find_data_list_by_field_value_csv(USERS_PATH, 'group_id', group_id)]
+
+

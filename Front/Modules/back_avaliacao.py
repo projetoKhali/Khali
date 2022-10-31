@@ -1,8 +1,8 @@
 from CSV import CSVHandler as handler
 from Front.Modules.avaliacao import resposta
 import Settings
-from Models import Ratings as rt
-from Users.Authentication import CURRENT_USER
+from Models import Rating as rt
+from Authentication import CURRENT_USER
 
 
 # Enviar as respotas para o banco de dados, com as identificações necessárias:

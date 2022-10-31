@@ -1,5 +1,5 @@
 from datetime import date, datetime
-from Users.Authentication import *
+from Authentication import *
 
 def initialize_test():
 
@@ -11,14 +11,14 @@ def initialize_test():
     delete_csv(TEAMS_PATH)
     delete_csv(RATINGS_PATH)
 
-    from Models.Groups import create_group
+    from Models.Group import create_group
 
     # cria 2 grupos
     create_group("Grupo do Develano")
     create_group("first group")
     create_group("second group")
 
-    from Models.Teams import create_team
+    from Models.Team import create_team
 
     # cria 2 times no primeiro grupo
     create_team("first_team_of_0", 0)
@@ -56,44 +56,43 @@ def initialize_test():
     register("cumpadi",    "cmp@dev.com",          0,    0,    5,    custom_password='123')
     register("washington", "wash@dev.com",         0,    0,    5,    custom_password='123')
 
-    from Models.Sprints import create_sprint
+    from Models.Sprint import create_sprint
 
     # create_sprint(0, date(2022, 10,  4), date(2022, 10, 11), 5)
     # create_sprint(0, date(2022, 10, 12), date(2022, 10, 19), 5)
     # create_sprint(0, date(2022, 10, 20), date(2022, 10, 27), 5)
 
 
-    from Models.Ratings import create_rating
-    from random import choice
-    x = [0, 1, 2, 3, 4, 5]
+    from Models.Rating import create_rating
+    from random import randint
 
     for i in range(4):
         create_sprint(0, date(2022, 10, 20), date(2022, 10, 27), 5)
 
-        create_rating(3,  6,  i, 0, choice(x), 'feedback')
-        create_rating(3,  9,  i, 0, choice(x), 'feedback')
-        create_rating(10, 11, i, 0, choice(x), 'feedback')
-        create_rating(9,  14, i, 0, choice(x), 'feedback')
+        create_rating(3,  6,  i, 0, randint(0, 5), 'feedback')
+        create_rating(3,  9,  i, 0, randint(0, 5), 'feedback')
+        create_rating(10, 11, i, 0, randint(0, 5), 'feedback')
+        create_rating(9,  14, i, 0, randint(0, 5), 'feedback')
 
-        create_rating(3,  6,  i, 1, choice(x), 'feedback')
-        create_rating(3,  9,  i, 1, choice(x), 'feedback')
-        create_rating(10, 11, i, 1, choice(x), 'feedback')
-        create_rating(9,  14, i, 1, choice(x), 'feedback')
+        create_rating(3,  6,  i, 1, randint(0, 5), 'feedback')
+        create_rating(3,  9,  i, 1, randint(0, 5), 'feedback')
+        create_rating(10, 11, i, 1, randint(0, 5), 'feedback')
+        create_rating(9,  14, i, 1, randint(0, 5), 'feedback')
 
-        create_rating(3,  6,  i, 2, choice(x), 'feedback')
-        create_rating(3,  9,  i, 2, choice(x), 'feedback')
-        create_rating(10, 11, i, 2, choice(x), 'feedback')
-        create_rating(9,  14, i, 2, choice(x), 'feedback')
+        create_rating(3,  6,  i, 2, randint(0, 5), 'feedback')
+        create_rating(3,  9,  i, 2, randint(0, 5), 'feedback')
+        create_rating(10, 11, i, 2, randint(0, 5), 'feedback')
+        create_rating(9,  14, i, 2, randint(0, 5), 'feedback')
 
-        create_rating(3,  6,  i, 3, choice(x), 'feedback')
-        create_rating(3,  9,  i, 3, choice(x), 'feedback')
-        create_rating(10, 11, i, 3, choice(x), 'feedback')
-        create_rating(9,  14, i, 3, choice(x), 'feedback')
+        create_rating(3,  6,  i, 3, randint(0, 5), 'feedback')
+        create_rating(3,  9,  i, 3, randint(0, 5), 'feedback')
+        create_rating(10, 11, i, 3, randint(0, 5), 'feedback')
+        create_rating(9,  14, i, 3, randint(0, 5), 'feedback')
 
-        create_rating(3,  6,  i, 4, choice(x), 'feedback')
-        create_rating(3,  9,  i, 4, choice(x), 'feedback')
-        create_rating(10, 11, i, 4, choice(x), 'feedback')
-        create_rating(9,  14, i, 4, choice(x), 'feedback')
+        create_rating(3,  6,  i, 4, randint(0, 5), 'feedback')
+        create_rating(3,  9,  i, 4, randint(0, 5), 'feedback')
+        create_rating(10, 11, i, 4, randint(0, 5), 'feedback')
+        create_rating(9,  14, i, 4, randint(0, 5), 'feedback')
 
 
 # Inicializa os bancos de dados populado com informações teste caso não exista um arquivo users.csv
@@ -103,7 +102,7 @@ initialize_test()
 
 from graficos import Dashboards
 
-from Models.Sprints import current_sprint
+from Models.Sprint import current_sprint
 print(current_sprint(0))
 Dashboards.time_media_sprints(0)
 exit()

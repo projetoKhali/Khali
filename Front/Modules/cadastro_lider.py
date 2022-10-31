@@ -358,10 +358,10 @@ def run (frame_parent):
         from Settings import COLS
 
         # importa o método que cria sprints
-        from Models.Sprints import create_sprint
+        from Models.Sprint import create_sprint
 
         # importa as informações do atual usuário logado no sistema
-        from Users.Authentication import CURRENT_USER
+        from Authentication import CURRENT_USER
 
         # define a função que converte o valor do tipo string 'value' em um valor do tipo date 
         def to_date(value:str):
@@ -405,8 +405,8 @@ def run (frame_parent):
                 print(COLS[2] + f'Erro ao criar sprint: {frame_sprint}' + COLS[0])
 
         # Importa as funções de criar time e cadastro de usuário
-        from Users.Authentication import register
-        from Models.Teams import create_team
+        from Authentication import register
+        from Models.Team import create_team
 
         # acessa as children do frame_parent_times e executa o próximo loop
         times = frame_parent_times.winfo_children()

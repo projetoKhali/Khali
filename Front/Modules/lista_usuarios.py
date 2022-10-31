@@ -50,7 +50,7 @@ def run(frame_parent):
     canvas.create_window((0,0), window=module_frame, anchor='nw')
 
     # importa o usuário logado
-    from Users.Authentication import CURRENT_USER
+    from Authentication import CURRENT_USER
 
     # cria uma lista com os usuários a serem avaliados pelo usuário logado
     grade_submitted = lista_usuarios_back.get_users(CURRENT_USER.email)[0]

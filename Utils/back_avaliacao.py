@@ -9,8 +9,8 @@
     # return add_unique_csv_autoid(RATINGS_PATH, [from_user_id, to_user_id, value, comment, sprint, criteria])
 
 def dados_avaliacao(to_user_id, notas, feedback):
-    from Models.Ratings import create_rating, current_sprint
-    from Users.Authentication import CURRENT_USER
+    from Models.Rating import create_rating, current_sprint
+    from Authentication import CURRENT_USER
     from Models.id_criteria import criteria
 
     for i, c in enumerate(criteria):

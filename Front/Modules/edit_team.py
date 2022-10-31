@@ -2,9 +2,9 @@ from Utils import edit_team_back
 from tkinter import *
 
 from CSV.CSVHandler import find_data_list_by_field_value_csv
-from Users.Authentication import CURRENT_USER
+from Authentication import CURRENT_USER
 from Settings import USERS_PATH, TEAMS_PATH
-from Models.Teams import get_team_name, get_team_id
+from Models.Team import get_team
 from Models.Role import get_role_name, get_role_id
 
 # cores
@@ -137,7 +137,7 @@ def create_team(frame_teams_parent, team_data, team_id):
 
     # coloca o nome do time
     team_name = 'Usuários sem time'
-    if team_data is not None: team_name = get_team_name(int(team_data['id']))
+    if team_data is not None: team_name = get_team(team_data['id']).name
     Label(frame_team, text=team_name, font='Calibri, 16', bg=co1).grid(row=0, column=0)
 
     frame_members_parent = Frame(frame_team)
@@ -205,7 +205,7 @@ def create_member_add(frame_member_actions, member_data, teams_list):
         *[team['name'] for team in teams_list],
 
         # comando que será executado ao selecionar uma opção
-        command=(lambda _, md=member_data, ts = team_selected : add_member(md, get_team_id(ts.get())))
+        command=(lambda _, md=member_data, ts = team_selected : add_member(md, get_team(ts.get()).id))
     ).grid(row=0, column=0)
 
 def create_member_remove(frame_member_actions, member_data):

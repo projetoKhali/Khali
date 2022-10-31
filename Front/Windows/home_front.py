@@ -63,7 +63,7 @@ def run():
     for tab_index, module in enumerate(modules):
         criar_button(frame_tabs, module.NAME, "Calibri, 14", lambda i=tab_index: run_module(i), tab_index, 0, 'ew', 5, 5)  
 
-    from Users.Authentication import sair
+    from Authentication import sair
     criar_button(frame_tabs, "Sair", "Calibri, 14", sair, len(modules), 0, "ew", 5, 5)
 
     #adiciona botões
