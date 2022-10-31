@@ -1,5 +1,5 @@
 import matplotlib.pyplot as  plt 
-from Integrador import *
+from .Integrador import *
 
 # Gera um grafico multi barra
 def multi_bar (title, names, y_label, matrix, x_label, x_ticks, colors):
@@ -32,6 +32,8 @@ def multi_bar (title, names, y_label, matrix, x_label, x_ticks, colors):
         # Cria um grafico de barras para cada item da lista 'lst'  
         plt.bar(positions, lst, color=colors[i % len(colors)], width=bar_width, label=names[i])
 
+    plt.ylim([0, 5])
+
     # Adiciona o título
     plt.title(title)
 
@@ -62,6 +64,8 @@ def line (title, names, y_label, values, x_label, x_ticks, colors):
         # Aqui eu construo a barra
         positions = [j + barWidth for j in range(len(x_ticks))]
         plt.plot(positions, value, color=colors[i % len(colors)], label=names[i])
+
+    plt.ylim([0, 5])
 
     plt.title(title)
 
@@ -113,8 +117,8 @@ def user_media_sprints (user_id):
     # Lista as sprints (em objeto da classe Sprint)
     sprints = get_group_sprints(user.group_id)
 
-    # Lista todas as avaliações em que o id do usuário avaliado corresponda a qualquer id da lista 'user_ids' 
-    ratings = get_ratings_to_user(user.team_id)
+    # Lista todas as avaliações em que o usuário está sendo avaliado 
+    ratings = get_ratings_to_user(user.id)
 
     # Retorna o grafico representando as médias calculadas 
     multi_bar(

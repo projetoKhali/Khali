@@ -161,6 +161,7 @@ def find_data_list_by_field_values_csv(path:str, field:str, values):
             # Retorna a linha formatada para dicionario
             lista.append(format_line_csv(lines[0].strip('\n').split(','), line))
 
+
     # Loop finalizado sem encontrar nenhum resultado
     return lista
 

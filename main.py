@@ -64,35 +64,18 @@ def initialize_test():
 
 
     from Models.Rating import create_rating
-    from random import randint
+    from random import randint, choice
+    from Models.User import get_users_of_team
+    from Models.id_criteria import criteria
 
-    for i in range(4):
+    users = [x.id for x in get_users_of_team(0)]
+
+    for s in range(4):
         create_sprint(0, date(2022, 10, 20), date(2022, 10, 27), 5)
-
-        create_rating(3,  6,  i, 0, randint(0, 5), 'feedback')
-        create_rating(3,  9,  i, 0, randint(0, 5), 'feedback')
-        create_rating(10, 11, i, 0, randint(0, 5), 'feedback')
-        create_rating(9,  14, i, 0, randint(0, 5), 'feedback')
-
-        create_rating(3,  6,  i, 1, randint(0, 5), 'feedback')
-        create_rating(3,  9,  i, 1, randint(0, 5), 'feedback')
-        create_rating(10, 11, i, 1, randint(0, 5), 'feedback')
-        create_rating(9,  14, i, 1, randint(0, 5), 'feedback')
-
-        create_rating(3,  6,  i, 2, randint(0, 5), 'feedback')
-        create_rating(3,  9,  i, 2, randint(0, 5), 'feedback')
-        create_rating(10, 11, i, 2, randint(0, 5), 'feedback')
-        create_rating(9,  14, i, 2, randint(0, 5), 'feedback')
-
-        create_rating(3,  6,  i, 3, randint(0, 5), 'feedback')
-        create_rating(3,  9,  i, 3, randint(0, 5), 'feedback')
-        create_rating(10, 11, i, 3, randint(0, 5), 'feedback')
-        create_rating(9,  14, i, 3, randint(0, 5), 'feedback')
-
-        create_rating(3,  6,  i, 4, randint(0, 5), 'feedback')
-        create_rating(3,  9,  i, 4, randint(0, 5), 'feedback')
-        create_rating(10, 11, i, 4, randint(0, 5), 'feedback')
-        create_rating(9,  14, i, 4, randint(0, 5), 'feedback')
+        for f in users:
+            for t in users:
+                for c in range(len(criteria)):
+                    create_rating(f, t, s, c, randint(0, 5), 'feedback')
 
 
 # Inicializa os bancos de dados populado com informações teste caso não exista um arquivo users.csv
@@ -100,11 +83,17 @@ def initialize_test():
 # if not os.path.exists(USERS_PATH + '.csv'):
 initialize_test()
 
-from graficos import Dashboards
 
 from Models.Sprint import current_sprint
 print(current_sprint(0))
-Dashboards.time_media_sprints(0)
+
+from random import choice
+from Models.User import get_users_of_group
+from graficos import Dashboards
+users = [x.id for x in get_users_of_group(0)]
+
+Dashboards.user_media_sprints(choice(users))
+# Dashboards.time_media_sprints(0)
 exit()
 
 # from Utils.edit_team_back import *

@@ -3,15 +3,15 @@ from Settings import RATINGS_PATH
 
 # Define a classe Rating para facilitar a utilização no código
 class Rating:
-    def __init__(self, from_user_id, to_user_id, sprint_id, criteria, value, comment):
+    def __init__(self, from_user_id, to_user_id, sprint_id, criteria_id, value, comment):
         self.from_user_id = from_user_id
         self.to_user_id = to_user_id
         self.sprint_id = sprint_id
-        self.criteria = criteria
+        self.criteria_id = criteria_id
         self.value = value
         self.comment = comment
     def __str__(self):
-        return f'Rating[from_user_id: {self.from_user_id}, to_user_id: {self.to_user_id}, sprint_id: {self.sprint_id}, criteria: {self.criteria}, value: {self.value}, comment: {self.comment}]'
+        return f'Rating[from_user_id: {self.from_user_id}, to_user_id: {self.to_user_id}, sprint_id: {self.sprint_id}, criteria_id: {self.criteria_id}, value: {self.value}, comment: {self.comment}]'
 
 
 # Converte dicionario em rating
@@ -20,7 +20,7 @@ def to_rating(rating_dict):
         int(rating_dict['from_user_id']),
         int(rating_dict['to_user_id']),
         int(rating_dict['sprint_id']),
-        int(rating_dict['criteria']),
+        int(rating_dict['criteria_id']),
         int(rating_dict['value']),
         rating_dict['comment']
     )
@@ -33,23 +33,23 @@ def to_rating(rating_dict):
 # comment       - Feedback
 # sprint        - Número da sprint
 # criterio      - 1 dos 5 critérios avaliativos
-def create_rating (from_user_id, to_user_id, sprint_id, criteria, value, comment):
-    return add_unique_csv_autoid(RATINGS_PATH, [from_user_id, to_user_id, sprint_id, criteria, value, comment])
+def create_rating (from_user_id, to_user_id, sprint_id, criteria_id, value, comment):
+    return add_unique_csv_autoid(RATINGS_PATH, [from_user_id, to_user_id, sprint_id, criteria_id, value, comment])
 
 # Retorna todas as avaliações associadas ao usuário de id especificado após converte-las para objetos da classe Rating
 def get_ratings_to_user (user_id):
-    return [to_rating(x) for x in find_data_list_by_field_value_csv(RATINGS_PATH, 'user_id', user_id)]
+    return [to_rating(x) for x in find_data_list_by_field_value_csv(RATINGS_PATH, 'to_user_id', user_id)]
 
 # Retorna todas as avaliações associadas a qualquer usuário em que o id esteja presente nas lista especificada 
 def get_ratings_to_users (user_ids):
-    return [to_rating(x) for x in find_data_list_by_field_values_csv(RATINGS_PATH, 'user_id', user_ids)]
+    return [to_rating(x) for x in find_data_list_by_field_values_csv(RATINGS_PATH, 'to_user_id', user_ids)]
 
 # Retorna todas as avaliações associadas ao usuário de id especificado após converte-las para objetos da classe Rating
 def get_ratings_to_team (team_id):
     from Models.User import get_users_of_team
-    return get_ratings_to_users(get_users_of_team(team_id))
+    return get_ratings_to_users([x.id for x in get_users_of_team(team_id)])
 
 # Retorna todas as avaliações associadas ao usuário de id especificado após converte-las para objetos da classe Rating
 def get_group_ratings (group_id):
     from Models.User import get_users_of_group
-    return get_ratings_to_users(get_users_of_group(group_id))
+    return get_ratings_to_users([x.id for x in get_users_of_group(group_id)])

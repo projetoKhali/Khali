@@ -27,7 +27,7 @@ def medias_por_sprint (criteria, sprints, ratings):
         for rating in ratings:
 
             # adquire o indice do criterio da avaliação
-            r_criteria_id = rating.criteria
+            r_criteria_id = rating.criteria_id
 
             # ignora a avaliação caso o criterio não seja o criterio da iteração atual do loop de criterios
             if r_criteria_id != criteria_index:
@@ -59,6 +59,6 @@ def medias_por_sprint (criteria, sprints, ratings):
             # define a média desse criterio nessa sprint como a soma das notas dividida pela contagem de avaliações
             medias[sprint_index][criteria_index] = sum_criteria / counts[sprint_index][criteria_index] 
 
-    print(f'sums: {sums}')
-    print(f'medias: {medias}')
+    # print(f'sums: {sums}')
+    # print(f'medias: {medias}')
     return medias

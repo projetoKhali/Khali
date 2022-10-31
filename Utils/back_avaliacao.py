@@ -9,12 +9,13 @@
     # return add_unique_csv_autoid(RATINGS_PATH, [from_user_id, to_user_id, value, comment, sprint, criteria])
 
 def dados_avaliacao(to_user_id, notas, feedback):
-    from Models.Rating import create_rating, current_sprint
+    from Models.Rating import create_rating
+    from Models.Sprint import current_sprint
     from Authentication import CURRENT_USER
     from Models.id_criteria import criteria
 
-    for i, c in enumerate(criteria):
-        create_rating(CURRENT_USER.id, to_user_id, current_sprint().id, c, notas[i], feedback[i])
+    for c in range(len(criteria)):
+        create_rating(CURRENT_USER.id, to_user_id, current_sprint().id, c, notas[c], feedback[c])
         
 # Localizar banco que registra os ids e vincular avaliador e avaliado
 # Localizar banco que registra sprints
