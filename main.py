@@ -55,7 +55,7 @@ def initialize_test():
     register("dirce", "dirc@dev.com", 0, 0, 5, custom_password='123')
     register("cleiton", "cleitin@dev.com", 0, 0, 5, custom_password='123')
     register("cumpadi", "cmp@dev.com", 0, 0, 5, custom_password='123')
-    register("washington", "wash@dev.com", 0, 0, 5, custom_password='123')
+    register("washington", "washoe@dev.com", 0, 0, 5, custom_password='123')
 
 
     create_rating(3,  6,  4, 'muinto gente boa', 'sprint1', 0)
@@ -80,7 +80,7 @@ from Utils.edit_team_back import *
 # print(change_role(1, 'lt2@o.com', 5))
 # exit()
 
-
+print(unsubscribe_student('washoe@dev.com'))
 
 from Utils.edit_team_back import *
 
