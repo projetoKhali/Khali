@@ -92,8 +92,9 @@ from Models.User import get_users_of_group
 from graficos import Dashboards
 users = [x.id for x in get_users_of_group(0)]
 
-Dashboards.user_media_sprints(choice(users))
+# Dashboards.user_media_sprints(choice(users))
 # Dashboards.time_media_sprints(0)
+Dashboards.user_media_x_team(choice(users))
 exit()
 
 # from Utils.edit_team_back import *

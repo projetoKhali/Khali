@@ -1,64 +1,70 @@
 
+def medias (criteria, ratings):
 
-# calcula as medias por sprint utilizando as avaliações especificadas
-def medias_por_sprint (criteria, sprints, ratings):
 
-    # inicializa as listas de soma, contagem e medias 
-    # em que cada item da lista corresponde a uma lista com o valor para cada criterio:
-    # lista [index_sprint] [index_criterio] = valor
-    #
-    # lista [
-    #   sprint 1 [
-    #       valor criterio 1
-    #       ...
-    #   ]
-    #   sprint 2 [...]
-    #   sprint 3 [...]
-    # ]
-    #
-    sums   = [[0] * len(criteria) for _ in sprints]
-    counts = [[0] * len(criteria) for _ in sprints]
-    medias = [[0] * len(criteria) for _ in sprints]
-
-    # Loop atraves do indice de cada criterio
-    for criteria_index in range(len(criteria)):
-
-        # verifica cada avaliação da lista 
-        for rating in ratings:
-
-            # adquire o indice do criterio da avaliação
-            r_criteria_id = rating.criteria_id
-
-            # ignora a avaliação caso o criterio não seja o criterio da iteração atual do loop de criterios
-            if r_criteria_id != criteria_index:
-                continue
-
-            # criterio da avaliação é o criterio atual do loop
-            # adquire o indice da sprint especificado na avaliação 
-            r_sprint_id = rating.sprint_id
-
-            # soma o valor da avaliação na lista de somas com o indice da sprint seguido por indice do criterio
-            sums[r_sprint_id][criteria_index] += rating.value
-
-            # incrementa o contador do criterio na sprint
-            counts[r_sprint_id][criteria_index] += 1.
-
-            # Ao terminar o loop teremos uma lista de somas em que cada item é uma lista correspondendo a uma sprint
-            # & cada lista de sprint possui um valor de soma e de contagem para cada criterio
+    # inicializa a lista de medias 
+    medias = [[[] for _ in criteria] for _ in ratings]
+    print(f'medias: {medias}')
 
     # Inicia um novo loop atraves da lista de somas 
-    for sprint_index, sum_sprint in enumerate(sums):
+    for separator_index, separator_list in enumerate(ratings):
+
+        # print(f'separator_list: {separator_list}')
 
         # pra cada criterio na sprint
-        for criteria_index, sum_criteria in enumerate(sum_sprint):
+        for criteria_index, criteria_list in enumerate(separator_list):
+            if len(criteria_list) == 0: continue
 
-            # ignora a media desse criterio na sprint caso não hajam avaliações (evvita divisão por 0)
-            if counts[sprint_index][criteria_index] == 0:
-                continue
+            # print(f'criteria_list: {criteria_list}')
 
             # define a média desse criterio nessa sprint como a soma das notas dividida pela contagem de avaliações
-            medias[sprint_index][criteria_index] = sum_criteria / counts[sprint_index][criteria_index] 
+            medias[separator_index][criteria_index] = sum(criteria_list) / len(criteria_list)
+            print(f'medias[{separator_index}][{criteria_index}] = {sum(criteria_list)} / {len(criteria_list)} = {sum(criteria_list) / len(criteria_list)}')
+            
+    print(f'medias: {medias}')
 
-    # print(f'sums: {sums}')
-    # print(f'medias: {medias}')
     return medias
+
+
+# Retorna a média por criterio por sprint das ratings especificadas
+def medias_por_sprint (criteria, sprints, ratings):
+
+    aisuh = [f'{str(r.value)}' for r in ratings]
+    # print(f'ratings: {aisuh}')
+
+    # inicializa uma lista para a classificação das ratings passadas como parametro
+    # classified é uma lista de separadores em que cada separador corresponde a uma sprint
+    # cada separador é uma lista que possui um indice para cada critério
+    # cada critério é uma lista onde será armazenado cada valor em ratings
+    # classified [
+    #     separator [
+    #         criteria [
+    #             nota
+    #             ...
+    #         ]
+    #     ]
+    # ]
+    classified = [[[] for _ in criteria] for _ in sprints]
+
+    print(f'classified: {classified}')
+
+    # loop através de ratings
+    for rating in ratings:
+
+        # Adiciona o valor da rating dentro da lista do critério de sua sprint
+        classified[rating.sprint_id][rating.criteria_id].append(rating.value)
+
+    # print(f'classified: {classified}')
+
+    # retorna o valor de médias para a lista classificada
+    return medias(criteria, classified)
+
+
+# Classifica as ratings em critério
+def classify_criteria (criteria, ratings):
+    classified = [[] for _ in criteria]
+    print(f'classified: {classified}')
+    for r in ratings:
+        classified[r.criteria_id].append(r.value)
+    print(f'classified: {classified}')
+    return classified

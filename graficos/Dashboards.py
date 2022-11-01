@@ -78,38 +78,34 @@ def line (title, names, y_label, values, x_label, x_ticks, colors):
 
     plt.show()
 
-# ------------------------------------------------------------------------------------------------------------------|
-#                          |    calculo    |    barras    |      label      |    acesso     |        função         |
-# ------------------------------------------------------------------------------------------------------------------|
-# media membro             | media sprint  | por sprint   | criterio        | PO LT DEV     | user_media_sprints    |
-# media membro / time      | media sprints | membro, time | criterio        | PO LT DEV     |                       |
-# media de cada time       | media sprints | time         | criterio        | LG FK         |                       |
-# media membros da função  |               | membro       |                 | LG FK         |                       |
-# ------------------------------------------------------------------------------------------------------------------|
-# media do time            | media sprint  | sprint       | criterio        | PO LT         | time_media_sprints    |
-# ------------------------------------------------------------------------------------------------------------------|
-# media membros time       | media sprint  | membro       | criterio        | PO LT         |                       |
-# media do grupo           | media sprint  | sprint       | criterio        | PO LT         |                       |
-# ------------------------------------------------------------------------------------------------------------------|
+# |------------------------------------------------------------------------------------------------------------------|
+# |
+# |------------------------------------------------------------------------------------------------------------------|
+# |                         |    calculo    |    barras     |      label      |    acesso     |       função         |
+# |------------------------------------------------------------------------------------------------------------------|
+# | media membro            |    sprint     |    sprint     |     criterio    | PO LT DEV     |  user_media_sprints  |
+# | media membro / time     |    sprints    | membro / time |     criterio    | PO LT DEV     |  user_media_x_team   |
+# | media de cada time      |    sprints    |     time      |     criterio    | LG FK         |                      |
+# | media membros da função |               |    membro     |                 | LG FK         |                      |
+# |------------------------------------------------------------------------------------------------------------------|
+# | media do time           |    sprint     |    sprint     |     criterio    | PO LT         |  time_media_sprints  |
+# |------------------------------------------------------------------------------------------------------------------|
+# | media membros time      |    sprint     |    membro     |     criterio    | PO LT         |                      |
+# | media do grupo          |    sprint     |    sprint     |     criterio    | PO LT         |                      |
+# |------------------------------------------------------------------------------------------------------------------|
 
 
+# importa a lista de criterios utilizados nas avaliações
+from Models.id_criteria import criteria
+from Models.Sprint import get_group_sprints
+
+
+# Renderiza um Dashboard comparando a media de um usuário com a média de seu time em cada criterio de cada sprint
 def user_media_sprints (user_id):
 
     # importa as funções de acesso ao banco de dados de cada modelo
     from Models.User import get_user
     from Models.Rating import get_ratings_to_user
-    from Models.Sprint import get_group_sprints
-
-    # importa a lista de criterios utilizados nas avaliações
-    from Models.id_criteria import criteria
-
-    # Objetivo:
-    #   - calcular a média do usuário para cada criterio em cada sprint
-    # Passos executados:
-    # 1 - Requisitar do banco de dados as sprints do grupo do usuário
-    # 2 - Requisitar do banco de dados todas as avaliações do usuário
-    # 3 - Calcular a média do usuário em cada criterio de cada sprint utilizando as avaliações do passo 2
-    # 4 - Gerar o gráfico com as informações adquiridas no passo 3
 
     # carrega as informações do usuário
     user = get_user(user_id)
@@ -120,36 +116,60 @@ def user_media_sprints (user_id):
     # Lista todas as avaliações em que o usuário está sendo avaliado 
     ratings = get_ratings_to_user(user.id)
 
-    # Retorna o grafico representando as médias calculadas 
+    # Renderiza o grafico representando as médias calculadas 
     multi_bar(
         f'Média de {user.name} ao longo das sprints',
         [f'Sprint {i}' for i in range(len(sprints))],
         'Médias',
         medias_por_sprint(criteria, sprints, ratings),
-        'Críterio avaliativo',
+        'Critério avaliativo',
         criteria,
         ['orange', 'yellow', 'red', 'green', 'darkgoldenrod', 'brown', 'lightgreen', 'magenta', 'royalblue', 'pink', ]
     )
 
 
-# Retorna um Dashboard com a media de um determinado time em cada criterio de cada sprint
+# Renderiza um Dashboard comparando a media de um usuário com a média de seu time em cada criterio de cada sprint
+def user_media_x_team (user_id):
+
+    # importa as funções de acesso ao banco de dados de cada modelo
+    from Models.User import get_user
+    from Models.Team import get_team
+    from Models.Rating import get_ratings_to_team ,get_ratings_to_user
+
+    # carrega as informações do usuário
+    user = get_user(user_id)
+
+    # carrega todas as avaliações do time
+    user_ratings = get_ratings_to_user(user_id)
+    team_ratings = get_ratings_to_team(user.team_id)
+
+    # cria uma lista de avaliações em que o primeiro indice corresponde às avaliações do usuário
+    # e o segundo índice corresponde às avaliações do time
+    ratings = [
+        classify_criteria(criteria, user_ratings), 
+        classify_criteria(criteria, team_ratings)
+    ]
+
+    team_name = get_team(user.team_id).name
+
+    # Renderiza o grafico representando as médias calculadas 
+    multi_bar(
+        f'Médias de {user.name} em comparativo ao time {team_name}',
+        [user.name, team_name],
+        'Médias',
+        medias(criteria, ratings),
+        'Critério avaliativo',
+        criteria,
+        ['orange', 'yellow', 'red', 'green', 'darkgoldenrod', 'brown', 'lightgreen', 'magenta', 'royalblue', 'pink', ]
+    )
+
+
+# Renderiza um Dashboard com a media de um determinado time em cada criterio de cada sprint
 def time_media_sprints (team_id):
 
     # importa as funções de acesso ao banco de dados de cada modelo
     from Models.Team import get_team
     from Models.Rating import get_ratings_to_team
-    from Models.Sprint import get_group_sprints
-
-    # importa a lista de criterios utilizados nas avaliações
-    from Models.id_criteria import criteria
-
-    # Objetivo:
-    #   - calcular a média do time para cada criterio em cada sprint
-    # Passos executados:
-    # 1 - Requisitar do banco de dados as sprints do grupo do time
-    # 2 - Requisitar do banco de dados todas as avaliações em que o usuario avaliado pertence ao time
-    # 3 - Calcular a média do time em cada criterio de cada sprint utilizando as avaliações do passo 2
-    # 4 - Gerar o gráfico com as informações adquiridas no passo 3
 
     # carrega o time com o id especificado
     team = get_team(team_id)
@@ -160,13 +180,13 @@ def time_media_sprints (team_id):
     # Lista todas as avaliações em que o id do usuário avaliado corresponda a qualquer id da lista 'user_ids' 
     ratings = get_ratings_to_team(team_id)
 
-    # Retorna o grafico representando as médias calculadas 
+    # Renderiza o grafico representando as médias calculadas 
     multi_bar(
         f'Média do time {team.name} ao longo das sprints',
         [f'Sprint {i}' for i in range(len(sprints))],
         'Médias',
         medias_por_sprint(criteria, sprints, ratings),
-        'Críterio avaliativo',
+        'Critério avaliativo',
         criteria,
         ['orange', 'yellow', 'red', 'green', 'darkgoldenrod', 'brown', 'lightgreen', 'magenta', 'royalblue', 'pink', ]
     )
@@ -188,7 +208,7 @@ def PO():
             [4, 2, 4, 5, 4],
             [2, 3, 4, 5, 3]
         ],
-        'Críterio avaliativo',
+        'Critério avaliativo',
         ['TG', 'PO', 'KE', 'PT', 'QU'],
         ['orange', 'green', 'blue', 'pink']
     )
