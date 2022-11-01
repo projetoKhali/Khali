@@ -85,10 +85,10 @@ def line (title, names, y_label, values, x_label, x_ticks, colors):
 # |------------------------------------------------------------------------------------------------------------------|
 # | media membro            |    sprint     |    sprint     |     criterio    | PO LT DEV     |  user_media_sprints  |
 # | media membro / time     |    sprints    | membro / time |     criterio    | PO LT DEV     |  user_media_x_team   |
-# | media de cada time      |    sprints    |     time      |     criterio    | LG FK         |                      |
-# | media membros da função |               |    membro     |                 | LG FK         |                      |
+# | media de cada time      |    sprints    |     time      |     criterio    | LG FK         |     teams_media      |
+# | media membros da função |    sprints    |    membro     |       time      | LG FK         |      role_media      |
 # |------------------------------------------------------------------------------------------------------------------|
-# | media do time           |    sprint     |    sprint     |     criterio    | PO LT         |  time_media_sprints  |
+# | media do time           |    sprint     |    sprint     |     criterio    | PO LT         |  team_media_sprints  |
 # |------------------------------------------------------------------------------------------------------------------|
 # | media membros time      |    sprint     |    membro     |     criterio    | PO LT         |                      |
 # | media do grupo          |    sprint     |    sprint     |     criterio    | PO LT         |                      |
@@ -128,7 +128,7 @@ def user_media_sprints (user_id):
     )
 
 
-# Renderiza um Dashboard comparando a media de um usuário com a média de seu time em cada criterio de cada sprint
+# Renderiza um Dashboard comparando a media de um usuário com a média de seu time em cada criterio
 def user_media_x_team (user_id):
 
     # importa as funções de acesso ao banco de dados de cada modelo
@@ -165,7 +165,7 @@ def user_media_x_team (user_id):
 
 
 # Renderiza um Dashboard com a media de um determinado time em cada criterio de cada sprint
-def time_media_sprints (team_id):
+def team_media_sprints (team_id):
 
     # importa as funções de acesso ao banco de dados de cada modelo
     from Models.Team import get_team
@@ -186,6 +186,34 @@ def time_media_sprints (team_id):
         [f'Sprint {i}' for i in range(len(sprints))],
         'Médias',
         medias_por_sprint(criteria, sprints, ratings),
+        'Critério avaliativo',
+        criteria,
+        ['orange', 'yellow', 'red', 'green', 'darkgoldenrod', 'brown', 'lightgreen', 'magenta', 'royalblue', 'pink', ]
+    )
+
+
+# Renderiza um Dashboard com a media de uma determinada função de cada time
+def role_media (group_id, role_id):
+
+    # importa as funções de acesso ao banco de dados de cada modelo
+    from Models.Rating import get_ratings_to_teams
+    from Models.Team import get_teams_of_group
+    from Models.Role import get_role
+    from Models.User import get_user
+
+
+    role = get_role(role_id)
+    teams = get_teams_of_group(group_id)
+    
+    # Lista todas as avaliações em que o id do usuário avaliado corresponda a qualquer id da lista 'user_ids' 
+    ratings = [r for r in get_ratings_to_teams(teams) if get_user(r.to_user_id) == role_id]
+
+    # Renderiza o grafico representando as médias calculadas 
+    multi_bar(
+        f'Média dos {role.name}s',
+        [team.name for team in teams],
+        'Médias',
+        medias(criteria, ratings),
         'Critério avaliativo',
         criteria,
         ['orange', 'yellow', 'red', 'green', 'darkgoldenrod', 'brown', 'lightgreen', 'magenta', 'royalblue', 'pink', ]

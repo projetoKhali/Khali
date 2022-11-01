@@ -93,7 +93,7 @@ from graficos import Dashboards
 users = [x.id for x in get_users_of_group(0)]
 
 # Dashboards.user_media_sprints(choice(users))
-# Dashboards.time_media_sprints(0)
+# Dashboards.team_media_sprints(0)
 Dashboards.user_media_x_team(choice(users))
 exit()
 
