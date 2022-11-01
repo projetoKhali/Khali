@@ -196,17 +196,18 @@ def team_media_sprints (team_id):
 def role_media (group_id, role_id):
 
     # importa as funções de acesso ao banco de dados de cada modelo
-    from Models.Rating import get_ratings_to_teams
+    from Models.Rating import get_ratings_to_team
     from Models.Team import get_teams_of_group
     from Models.Role import get_role
     from Models.User import get_user
-
 
     role = get_role(role_id)
     teams = get_teams_of_group(group_id)
     
     # Lista todas as avaliações em que o id do usuário avaliado corresponda a qualquer id da lista 'user_ids' 
-    ratings = [r for r in get_ratings_to_teams(teams) if get_user(r.to_user_id) == role_id]
+    ratings = [[]] * len(teams)
+    for i, team in enumerate(teams):
+        ratings[i] = [r for r in get_ratings_to_team(team) if get_user(r.to_user_id) == role_id]
 
     # Renderiza o grafico representando as médias calculadas 
     multi_bar(

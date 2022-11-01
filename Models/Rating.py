@@ -49,6 +49,16 @@ def get_ratings_to_team (team_id):
     from Models.User import get_users_of_team
     return get_ratings_to_users([x.id for x in get_users_of_team(team_id)])
 
+# def get_ratings_to_teams (team_ids):
+#     from Models.User import get_users_of_team
+#     return get_ratings_to_users([x.id for x in get_users_of_team(team_ids)])
+
+
+# Retorna todas as avaliações associadas ao usuário de id especificado após converte-las para objetos da classe Rating
+def get_ratings_to_group (team_id):
+    from Models.User import get_users_of_group
+    return get_ratings_to_users([x.id for x in get_users_of_group(team_id)])
+
 # Retorna todas as avaliações associadas ao usuário de id especificado após converte-las para objetos da classe Rating
 def get_group_ratings (group_id):
     from Models.User import get_users_of_group
