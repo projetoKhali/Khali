@@ -23,7 +23,7 @@ def multi_bar (title, names, y_label, matrix, x_label, x_ticks, colors):
         # move todas as barras para esquerda em (tamanho total da soma das barras / 2)
         offset -= bar_width * int(len(matrix) / 2)
 
-        # caso o numero de barras seja par, move o metade do tamanho de UMA barra para a direita
+        # caso o numero de barras seja par, move metade do tamanho de UMA barra para a direita
         if len(matrix) % 2 == 0: offset += bar_width / 2
 
         # define a posição de cada barra da lista de indice 'i'
@@ -90,14 +90,13 @@ def line (title, names, y_label, values, x_label, x_ticks, colors):
 # |--------------------------------------------------------------------------------------------------------------------|
 # | media do time           |    sprint     |     sprint     |     criterio     |     PO LT     |  team_media_sprints  |
 # |--------------------------------------------------------------------------------------------------------------------|
-# | media membros time      |    sprint     |     membro     |     criterio     |     PO LT     |                      |
+# | media membros time      |    sprint     |     membro     |     criterio     |     PO LT     |   users_media_team   |
 # | media do grupo          |    sprint     |     sprint     |     criterio     |     PO LT     |                      |
 # |--------------------------------------------------------------------------------------------------------------------|
 
 
-# importa a lista de criterios utilizados nas avaliações
-from Models.id_criteria import criteria
-from Models.Sprint import get_group_sprints
+from Models.id_criteria import criteria         # importa a lista de criterios utilizados nas avaliações
+from Models.Sprint import get_group_sprints     # função usada para durante a classificação de valores por sprint
 
 
 # Renderiza um Dashboard comparando a media de um usuário com a média de seu time em cada criterio de cada sprint
@@ -239,6 +238,31 @@ def role_media (role_id, group_id):
     )
 
 
+# Renderiza um Dashboard com a media de cada usuário de um time em cada criterio
+def users_media_team (team_id):
+
+    # importa as funções de acesso ao banco de dados de cada modelo
+    from Models.Team import get_team
+    from Models.User import get_users_of_team
+    from Models.Rating import get_ratings_to_user
+
+    # carrega o time com o id especificado e seus membros
+    team = get_team(team_id)
+    users = get_users_of_team(team_id)
+    
+    # Lista todas as avaliações em que o id do usuário avaliado corresponda a qualquer id da lista 'user_ids' 
+    ratings = [classify_criteria(criteria, get_ratings_to_user(user.id)) for user in users]
+
+    # Renderiza o grafico representando as médias calculadas 
+    multi_bar(
+        f'Média do time {team.name}',
+        [x.name for x in users],
+        'Médias',
+        medias(criteria, ratings),
+        'Critério avaliativo',
+        criteria,
+        ['orange', 'yellow', 'red', 'green', 'darkgoldenrod', 'brown', 'lightgreen', 'magenta', 'royalblue', 'pink', ]
+    )
 
 
 
