@@ -36,7 +36,7 @@ def to_rating(rating_dict):
 def create_rating (from_user_id, to_user_id, sprint_id, criteria_id, value, comment):
     return add_unique_csv_autoid(RATINGS_PATH, [from_user_id, to_user_id, sprint_id, criteria_id, value, comment])
 
-# Retorna todas as avaliações associadas ao usuário de id especificado após converte-las para objetos da classe Rating
+# Retorna todas as avaliações associadas ao usuário de id especificado
 def get_ratings_to_user (user_id):
     return [to_rating(x) for x in find_data_list_by_field_value_csv(RATINGS_PATH, 'to_user_id', user_id)]
 
@@ -44,22 +44,18 @@ def get_ratings_to_user (user_id):
 def get_ratings_to_users (user_ids):
     return [to_rating(x) for x in find_data_list_by_field_values_csv(RATINGS_PATH, 'to_user_id', user_ids)]
 
-# Retorna todas as avaliações associadas ao usuário de id especificado após converte-las para objetos da classe Rating
+# Retorna todas as avaliações associadas aos usuários do time especificado
 def get_ratings_to_team (team_id):
     from Models.User import get_users_of_team
     return get_ratings_to_users([x.id for x in get_users_of_team(team_id)])
 
+# Retorna as avaliações associadas aos usuários de todos os times especificados
 # def get_ratings_to_teams (team_ids):
 #     from Models.User import get_users_of_team
 #     return get_ratings_to_users([x.id for x in get_users_of_team(team_ids)])
 
-
-# Retorna todas as avaliações associadas ao usuário de id especificado após converte-las para objetos da classe Rating
-def get_ratings_to_group (team_id):
-    from Models.User import get_users_of_group
-    return get_ratings_to_users([x.id for x in get_users_of_group(team_id)])
-
-# Retorna todas as avaliações associadas ao usuário de id especificado após converte-las para objetos da classe Rating
-def get_group_ratings (group_id):
+# Retorna s avaliações de todos os usuários do grupo especificado
+def get_ratings_to_group (group_id):
     from Models.User import get_users_of_group
     return get_ratings_to_users([x.id for x in get_users_of_group(group_id)])
+

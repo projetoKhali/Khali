@@ -78,21 +78,21 @@ def line (title, names, y_label, values, x_label, x_ticks, colors):
 
     plt.show()
 
-# |------------------------------------------------------------------------------------------------------------------|
-# |
-# |------------------------------------------------------------------------------------------------------------------|
-# |                         |    calculo    |    barras     |      label      |    acesso     |       função         |
-# |------------------------------------------------------------------------------------------------------------------|
-# | media membro            |    sprint     |    sprint     |     criterio    | PO LT DEV     |  user_media_sprints  |
-# | media membro / time     |    sprints    | membro / time |     criterio    | PO LT DEV     |  user_media_x_team   |
-# | media de cada time      |    sprints    |     time      |     criterio    | LG FK         |     teams_media      |
-# | media membros da função |    sprints    |    membro     |       time      | LG FK         |      role_media      |
-# |------------------------------------------------------------------------------------------------------------------|
-# | media do time           |    sprint     |    sprint     |     criterio    | PO LT         |  team_media_sprints  |
-# |------------------------------------------------------------------------------------------------------------------|
-# | media membros time      |    sprint     |    membro     |     criterio    | PO LT         |                      |
-# | media do grupo          |    sprint     |    sprint     |     criterio    | PO LT         |                      |
-# |------------------------------------------------------------------------------------------------------------------|
+# |--------------------------------------------------------------------------------------------------------------------|
+# |                                         Gráficos a serem desenvolvidos                                             |
+# |--------------------------------------------------------------------------------------------------------------------|
+# |                         |    calculo    |     barras     |      label       |    acesso     |       função         |
+# |--------------------------------------------------------------------------------------------------------------------|
+# | media membro            |    sprint     |     sprint     |     criterio     |   PO LT DEV   |  user_media_sprints  |
+# | media membro / time     |    sprints    | membro / time  |     criterio     |   PO LT DEV   |  user_media_x_team   |
+# | media de cada time      |    sprints    |      time      |     criterio     |     LG FK     |     teams_media      |
+# | media membros da função |    sprints    |      time      |     criterio     |     LG FK     |      role_media      |
+# |--------------------------------------------------------------------------------------------------------------------|
+# | media do time           |    sprint     |     sprint     |     criterio     |     PO LT     |  team_media_sprints  |
+# |--------------------------------------------------------------------------------------------------------------------|
+# | media membros time      |    sprint     |     membro     |     criterio     |     PO LT     |                      |
+# | media do grupo          |    sprint     |     sprint     |     criterio     |     PO LT     |                      |
+# |--------------------------------------------------------------------------------------------------------------------|
 
 
 # importa a lista de criterios utilizados nas avaliações
@@ -193,25 +193,43 @@ def team_media_sprints (team_id):
 
 
 # Renderiza um Dashboard com a media de uma determinada função de cada time
-def role_media (group_id, role_id):
+def role_media (role_id, group_id):
 
     # importa as funções de acesso ao banco de dados de cada modelo
     from Models.Rating import get_ratings_to_team
     from Models.Team import get_teams_of_group
-    from Models.Role import get_role
-    from Models.User import get_user
 
-    role = get_role(role_id)
+    # Pega todos os times do grupo especificado
     teams = get_teams_of_group(group_id)
     
-    # Lista todas as avaliações em que o id do usuário avaliado corresponda a qualquer id da lista 'user_ids' 
-    ratings = [[]] * len(teams)
-    for i, team in enumerate(teams):
-        ratings[i] = [r for r in get_ratings_to_team(team) if get_user(r.to_user_id) == role_id]
+    # Inicializa uma lista para as avaliações que serão classificadas / filtradas
+    ratings = []
+
+    # para cada time do grupo
+    for team in teams:
+
+        # Adquire todas as avaliações do time
+        ratings_team = get_ratings_to_team(team.id)
+        # print(f'team {team.name}: {len(ratings_team)} ratings')
+
+        # Caso o time não possua avaliações, oculta ele do dashboard
+        if len(ratings_team) == 0: continue
+
+        # Para cada avaliação do time
+        for r in ratings_team:
+
+            # Caso o usuário avaliado na avaliação não seja da role especificada 
+            if r.to_user_id != role_id:
+
+                # remova-o da lista de avaliações do time
+                ratings_team.remove(r)
+
+        # Adiciona a lista de avaliações filtrada para a lista ratings 
+        ratings.append(classify_criteria(criteria, ratings_team))
 
     # Renderiza o grafico representando as médias calculadas 
     multi_bar(
-        f'Média dos {role.name}s',
+        f'Média dos {["Líderes Técnicos", "Product Owners", "Desenvolvedores"][role_id-3]}',
         [team.name for team in teams],
         'Médias',
         medias(criteria, ratings),

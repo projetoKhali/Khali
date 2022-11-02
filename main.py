@@ -29,8 +29,7 @@ def initialize_test():
     create_team("first_team_of_1", 1)
     create_team("second_team_of_1", 1)
 
-    #           nome          email                     grupo time  role         senha
-
+    #           nome         email                 grupo time  role         senha
     # cadastra o develano
     register("A de Emmy",  "a@d.m",                None, None, 0,    custom_password='123')
 
@@ -40,21 +39,21 @@ def initialize_test():
     # cadastra cliente teste
     register("clielano",   "c@c.c",                0,    None, 2,    custom_password='123')
     register("lt um",      "lt1@o.com",            0,    0,    3,    custom_password='123')
-    # register("lt dois",    "lt2@o.com",            0,    1,    3,    custom_password='123')
-    # register("lt tres",    "lt3@o.com",            0,    2,    3,    custom_password='123')
+    register("lt dois",    "lt2@o.com",            0,    1,    3,    custom_password='123')
+    register("lt tres",    "lt3@o.com",            0,    2,    3,    custom_password='123')
     register("po um",      "po1@o.com",            0,    0,    4,    custom_password='123')
-    # register("po dois",    "p02@o.com",            0,    1,    4,    custom_password='123')
-    # register("po tres",    "p03@o.com",            0,    2,    4,    custom_password='123')
+    register("po dois",    "p02@o.com",            0,    1,    4,    custom_password='123')
+    register("po tres",    "p03@o.com",            0,    2,    4,    custom_password='123')
 
-    register("deve",       "d@e.v",                0,    0,    5,    custom_password='123')
-    register("developano", "develop@dev.com",      0,    0,    5,    custom_password='123')
     register("develano",   "develano-dev@dev.com", 0,    0,    5,    custom_password='123')
-    register("devano",     "dev-ano@dev.com",      0,    0,    5,    custom_password='123')
-    register("fulanodev",  "fulano-dev@dev.com",   0,    0,    5,    custom_password='123')
-    register("dirce",      "dirc@dev.com",         0,    0,    5,    custom_password='123')
     register("cleiton",    "cleitin@dev.com",      0,    0,    5,    custom_password='123')
-    register("cumpadi",    "cmp@dev.com",          0,    0,    5,    custom_password='123')
     register("washington", "wash@dev.com",         0,    0,    5,    custom_password='123')
+    register("deve",       "d@e.v",                0,    1,    5,    custom_password='123')
+    register("developano", "develop@dev.com",      0,    1,    5,    custom_password='123')
+    register("dirce",      "dirc@dev.com",         0,    1,    5,    custom_password='123')
+    register("cumpadi",    "cmp@dev.com",          0,    2,    5,    custom_password='123')
+    register("devano",     "dev-ano@dev.com",      0,    2,    5,    custom_password='123')
+    register("fulanodev",  "fulano-dev@dev.com",   0,    2,    5,    custom_password='123')
 
     from Models.Sprint import create_sprint
 
@@ -65,10 +64,10 @@ def initialize_test():
 
     from Models.Rating import create_rating
     from random import randint, choice
-    from Models.User import get_users_of_team
+    from Models.User import get_users_of_group
     from Models.id_criteria import criteria
 
-    users = [x.id for x in get_users_of_team(0)]
+    users = [x.id for x in get_users_of_group(0)]
 
     for s in range(4):
         create_sprint(0, date(2022, 10, 20), date(2022, 10, 27), 5)
@@ -81,11 +80,13 @@ def initialize_test():
 # Inicializa os bancos de dados populado com informações teste caso não exista um arquivo users.csv
 # import os
 # if not os.path.exists(USERS_PATH + '.csv'):
-initialize_test()
+
+
+# initialize_test()
 
 
 from Models.Sprint import current_sprint
-print(current_sprint(0))
+print(f'current sprint(0): {current_sprint(0)}')
 
 from random import choice
 from Models.User import get_users_of_group
@@ -94,7 +95,8 @@ users = [x.id for x in get_users_of_group(0)]
 
 # Dashboards.user_media_sprints(choice(users))
 # Dashboards.team_media_sprints(0)
-Dashboards.user_media_x_team(choice(users))
+# Dashboards.user_media_x_team(choice(users))
+Dashboards.role_media(3, 0)
 exit()
 
 # from Utils.edit_team_back import *
