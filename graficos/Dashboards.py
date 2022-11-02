@@ -91,7 +91,7 @@ def line (title, names, y_label, values, x_label, x_ticks, colors):
 # | media do time           |    sprint     |     sprint     |     criterio     |     PO LT     |  team_media_sprints  |
 # |--------------------------------------------------------------------------------------------------------------------|
 # | media membros time      |    sprint     |     membro     |     criterio     |     PO LT     |   users_media_team   |
-# | media do grupo          |    sprint     |     sprint     |     criterio     |     PO LT     |                      |
+# | media do grupo          |    sprint     |     sprint     |     criterio     |     PO LT     | group_media_sprints  |
 # |--------------------------------------------------------------------------------------------------------------------|
 
 
@@ -264,6 +264,33 @@ def users_media_team (team_id):
         ['orange', 'yellow', 'red', 'green', 'darkgoldenrod', 'brown', 'lightgreen', 'magenta', 'royalblue', 'pink', ]
     )
 
+
+# Renderiza um Dashboard com a media de um determinado time em cada criterio de cada sprint
+def group_media_sprints (group_id):
+
+    # importa as funções de acesso ao banco de dados de cada modelo
+    from Models.Group import get_group
+    from Models.Rating import get_ratings_to_group
+
+    # carrega o time com o id especificado
+    group = get_group(group_id)
+    
+    # Lista as sprints (em objeto da classe Sprint)
+    sprints = get_group_sprints(group_id)
+
+    # Lista todas as avaliações em que o id do usuário avaliado corresponda a qualquer id da lista 'user_ids' 
+    ratings = get_ratings_to_group(group_id)
+
+    # Renderiza o grafico representando as médias calculadas 
+    multi_bar(
+        f'Média do grupo {group.name} ao longo das sprints',
+        [f'Sprint {i}' for i in range(len(sprints))],
+        'Médias',
+        medias_por_sprint(criteria, sprints, ratings),
+        'Critério avaliativo',
+        criteria,
+        ['orange', 'yellow', 'red', 'green', 'darkgoldenrod', 'brown', 'lightgreen', 'magenta', 'royalblue', 'pink', ]
+    )
 
 
 

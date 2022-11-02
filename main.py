@@ -97,8 +97,8 @@ users = [x.id for x in get_users_of_group(0)]
 # Dashboards.team_media_sprints(0)
 # Dashboards.user_media_x_team(choice(users))
 # Dashboards.role_media(3, 0)
-Dashboards.users_media_team(0)
-
+# Dashboards.users_media_team(0)
+Dashboards.group_media_sprints(0)
 exit()
 
 # from Utils.edit_team_back import *

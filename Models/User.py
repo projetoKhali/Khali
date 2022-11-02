@@ -26,16 +26,14 @@ class User:
 
 # Converte um dicionario em objeto da classe User
 def to_user(user_data):
-    try: id = user_data['id']
-    except: id = None
     return User(
         user_data['name'],
         user_data['email'],
-        user_data['group_id'],
-        user_data['team_id'],
-        user_data['role_id'],
+        (lambda x: int(x) if x is not '' else x)(user_data['group_id']),
+        (lambda x: int(x) if x is not '' else x)(user_data['team_id']),
+        (lambda x: int(x) if x is not '' else x)(user_data['role_id']),
         user_data['password'],
-        id,
+        (lambda x: int(x) if x is not '' else x)(user_data['id']),
     )
 
 # Cria um Usuário e salva na database

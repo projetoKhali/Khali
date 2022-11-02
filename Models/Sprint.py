@@ -4,13 +4,14 @@ from Settings import SPRINTS_PATH
 
 # Define a classe Sprint para facilitar a utilização no código
 class Sprint:
-    def __init__(self, group_id, start, finish, rating_period):
+    def __init__(self, group_id, start, finish, rating_period, id = None):
+        self.id = id
         self.group_id = group_id
         self.start = start
         self.finish = finish
         self.rating_period = rating_period
     def __str__(self):
-        return f'Sprint[group_id: {self.group_id}, start: {self.start}, finish: {self.finish}, rating_period: {self.rating_period}]'
+        return f'Sprint[id: {self.id}, group_id: {self.group_id}, start: {self.start}, finish: {self.finish}, rating_period: {self.rating_period}]'
 
 # Retorna a sprint atual conforme a data de hoje 
 def current_sprint(group_id):
@@ -31,7 +32,8 @@ def to_sprint(sprint_dict):
         int(sprint_dict['group_id']),
         to_date(sprint_dict['start']),
         to_date(sprint_dict['finish']),
-        int(sprint_dict['rating_period'])
+        int(sprint_dict['rating_period']),
+        int(sprint_dict['id']),
     )
 
 # Converte uma data de str para date
