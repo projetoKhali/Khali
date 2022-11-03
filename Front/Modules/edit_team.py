@@ -1,11 +1,9 @@
 from Utils import edit_team_back
 from tkinter import *
 
-from CSV.CSVHandler import find_data_list_by_field_value_csv
-from Authentication import CURRENT_USER
-from Settings import USERS_PATH, TEAMS_PATH
-from Models.Team import get_team
+from Models.Team import Team, get_team, get_teams_of_group
 from Models.Role import get_role_name, get_role_id
+from Models.User import User, get_users_of_team, get_users_of_group
 
 # cores
 co0 = "#FAE8E8"  # rosa
@@ -26,6 +24,8 @@ master_frame = None
 def run(frame_parent):
 
     global master_frame
+
+    from Authentication import CURRENT_USER
 
     # module_frame = Frame(frame_parent)
     # module_frame.columnconfigure(0, minsize = 0, weight = 1)
@@ -93,7 +93,7 @@ def run(frame_parent):
     # print(f'group_id:{CURRENT_USER.group_id}')
 
     # seleciona os times pertencentes ao grupo do usuario logado
-    teams_list = find_data_list_by_field_value_csv(TEAMS_PATH, 'group', CURRENT_USER.group_id)
+    teams_list = get_teams_of_group(CURRENT_USER.group_id)
     # print(f'times:{teams_list}')
 
     # pra cada time
@@ -101,7 +101,7 @@ def run(frame_parent):
         frame_members_parent = create_team(frame_teams, time_data, team_id)
 
         # seleciona os membros do time
-        members_list = find_data_list_by_field_value_csv(USERS_PATH, 'team_id', team_id)
+        members_list = get_users_of_team(team_id)
 
         # para cada membro
         for member_id, member_data in enumerate(members_list):
@@ -111,7 +111,7 @@ def run(frame_parent):
 
 
     # seleciona todos os usuarios com role 3, 4 ou 5 que não possuam time 
-    no_team_users = [i for i in find_data_list_by_field_value_csv(USERS_PATH, 'team_id', '') if int(i['role_id']) in [3, 4, 5]]
+    no_team_users = [user for user in get_users_of_group(CURRENT_USER.group_id) if int(user.role_id) in [3, 4, 5]]
 
     # retorna caso não existam usuários sem time
     # print(len(no_team_users))
@@ -136,8 +136,7 @@ def create_team(frame_teams_parent, team_data, team_id):
     frame_team.grid(row=team_id, column=0, sticky="ew")
 
     # coloca o nome do time
-    team_name = 'Usuários sem time'
-    if team_data is not None: team_name = get_team(team_data['id']).name
+    team_name = 'Usuários sem time' if team_data is None else team_data.name
     Label(frame_team, text=team_name, font='Calibri, 16', bg=co1).grid(row=0, column=0)
 
     frame_members_parent = Frame(frame_team)
@@ -146,7 +145,7 @@ def create_team(frame_teams_parent, team_data, team_id):
 
     return frame_members_parent
 
-def create_member(frame_members_parent, member_data, row):
+def create_member(frame_members_parent, member_data:User, row):
 
     color = co0 if row % 2 == 1 else 'white'
 
@@ -159,7 +158,7 @@ def create_member(frame_members_parent, member_data, row):
     frame_member_name = Frame(frame_members_parent, padx=2, pady=2, bg=color)
     # frame_member_name.columnconfigure(0, minsize = 0, weight = 1)
     frame_member_name.grid(row=row, column=0, sticky="w")
-    Label(frame_member_name, text=member_data['name'], font='Calibri, 12', justify='left', padx=2, pady=2, bg=color).grid(row=0, column=0, sticky="ew")
+    Label(frame_member_name, text=member_data.name, font='Calibri, 12', justify='left', padx=2, pady=2, bg=color).grid(row=0, column=0, sticky="ew")
 
     # cria um frame parent para as ações
     frame_actions = Frame(frame_member, bg=color)
@@ -168,14 +167,14 @@ def create_member(frame_members_parent, member_data, row):
 
     return frame_actions
 
-def create_member_role(frame_member_actions, member_data, color):
+def create_member_role(frame_member_actions, member_data:User, color):
 
     # cria o frame e dropdown de role dentro do ações
     frame_dropdown = Frame(frame_member_actions, bg=color)
     frame_dropdown.grid(row=0, column=0)
     role_selected = StringVar()
 
-    role_selected.set(get_role_name(int(member_data['role_id'])))
+    role_selected.set(get_role_name(member_data.role_id))
     OptionMenu(
         frame_dropdown,
 
@@ -189,7 +188,7 @@ def create_member_role(frame_member_actions, member_data, color):
         command=(lambda _, md=member_data, rs = role_selected : update_role(_, md, get_role_id(rs.get())))
     ).grid(row=0, column=0)
 
-def create_member_add(frame_member_actions, member_data, teams_list):
+def create_member_add(frame_member_actions, member_data:User, teams_list:list[Team]):
 
     frame_adicionar = Frame(frame_member_actions)
     frame_adicionar.grid(row=0, column=1)
@@ -202,7 +201,7 @@ def create_member_add(frame_member_actions, member_data, teams_list):
         team_selected,
 
         # lista que contém os valores selecionaveis no OptionMenu
-        *[team['name'] for team in teams_list],
+        *[team.name for team in teams_list],
 
         # comando que será executado ao selecionar uma opção
         command=(lambda _, md=member_data, ts = team_selected : add_member(md, get_team(ts.get()).id))
@@ -234,19 +233,19 @@ def redraw():
 
 from Utils import edit_team_back
 
-def update_role(_, member_data, new_role):
-    # print(member_data['name'])
+def update_role(_, member_data:User, new_role):
+    # print(member_data.name)
     # print(new_role)
-    edit_team_back.change_role(member_data['team_id'], member_data['email'], new_role)
+    edit_team_back.change_role(member_data.team_id, member_data.email, new_role)
     redraw()
 
-def add_member(member_data, team_id):
+def add_member(member_data:User, team_id):
     # print(member_data)
-    edit_team_back.add_user(member_data['email'], team_id)
+    edit_team_back.add_user(member_data.email, team_id)
     redraw()
 
 def remove_member(member_data):
     # print(member_data)
-    edit_team_back.delete_user(member_data['email'])
+    edit_team_back.delete_user(member_data.email)
     redraw()
 

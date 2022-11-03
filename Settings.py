@@ -10,7 +10,7 @@ RESOURCES_PATH  = "resources"
 # Os campos que cada banco de dados irá possuir ao ser inicializado
 PATH_FIELDS = {
     USERS_PATH:   ['id', 'name', 'email', 'group_id', 'team_id', 'role_id', 'password'],
-    GROUPS_PATH:  ['id', 'name'],
+    GROUPS_PATH:  ['id', 'name' 'leader_id', 'client_id'],
     SPRINTS_PATH: ['id', 'group_id', 'start', 'finish', 'rating_period'],
     TEAMS_PATH:   ['id', 'group_id', 'name'],
     RATINGS_PATH: ['id', 'from_user_id', 'to_user_id', 'sprint_id', 'criteria_id', 'value', 'comment'],

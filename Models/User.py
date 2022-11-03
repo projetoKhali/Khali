@@ -24,16 +24,19 @@ class User:
         self.role_id    = _role_id
         self.password   = _pw
 
+    def __str__(self):
+        return f'User[id: {self.id}, name: "{self.name}", email: "{self.email}", group_id: {self.group_id}, team_id: {self.team_id}, role_id: {self.role_id}]'
+
 # Converte um dicionario em objeto da classe User
 def to_user(user_data):
     return User(
         user_data['name'],
         user_data['email'],
-        (lambda x: int(x) if x is not '' else x)(user_data['group_id']),
-        (lambda x: int(x) if x is not '' else x)(user_data['team_id']),
-        (lambda x: int(x) if x is not '' else x)(user_data['role_id']),
+        (lambda x: int(x) if x != '' else x)(user_data['group_id']),
+        (lambda x: int(x) if x != '' else x)(user_data['team_id']),
+        (lambda x: int(x) if x != '' else x)(user_data['role_id']),
         user_data['password'],
-        (lambda x: int(x) if x is not '' else x)(user_data['id']),
+        (lambda x: int(x) if x != '' else x)(user_data['id']),
     )
 
 # Cria um Usuário e salva na database

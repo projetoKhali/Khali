@@ -7,7 +7,7 @@ from Models import Group, Team
 import Settings as settings
 from Models.Role import *
 
-CURRENT_USER = None
+CURRENT_USER : User = None
 
 # Efetua o login de Usuário e, se efetuado com sucesso, retorna o User logado 
 def login (email, senha):
@@ -45,6 +45,7 @@ def login (email, senha):
 
 # Define que não não tem usuário logado e envia para a tela de login
 def sair():
+    global CURRENT_USER
     CURRENT_USER = None
     from Front.WindowManager import reset
     reset()
