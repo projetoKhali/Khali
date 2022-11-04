@@ -13,19 +13,6 @@ class Sprint:
     def __str__(self):
         return f'Sprint[id: {self.id}, group_id: {self.group_id}, start: {self.start}, finish: {self.finish}, rating_period: {self.rating_period}]'
 
-# Retorna a sprint atual conforme a data de hoje 
-def current_sprint(group_id):
-    from CSV.CSVHandler import find_data_list_by_field_value_csv
-    import datetime
-
-    today = date.today()
-
-    # requisita as sprints salvas no banco de dados e faz um loop pela lista retornada
-    # após converter cada sprint dicionario em objeto da classe Sprint 
-    for sprint in [to_sprint(x) for x in find_data_list_by_field_value_csv(SPRINTS_PATH, 'group_id', group_id)]:
-        if today >= sprint.start and today <= sprint.finish + datetime.timedelta(days=sprint.rating_period):
-            return sprint
-
 # Converte dicionario em sprint
 def to_sprint(sprint_dict):
     return Sprint(
@@ -40,6 +27,30 @@ def to_sprint(sprint_dict):
 def to_date(value:str):
     fields = [int(s) for s in value.split('-')]
     return date(fields[0], fields[1], fields[2])
+
+# Retorna a sprint atual conforme a data de hoje 
+def current_sprint(group_id):
+    from datetime import timedelta
+
+    # armazena a data atual na variavel
+    today = date.today()
+
+    # faz um loop através das sprints do grupo
+    for sprint in get_group_sprints(group_id):
+        if today >= sprint.start and today <= sprint.finish + timedelta(days=sprint.rating_period):
+            return sprint
+
+# Retorna a sprint do período de avaliação atual conforme a data de hoje 
+def current_rating_period(group_id):
+    from datetime import timedelta
+
+    # armazena a data atual na variavel
+    today = date.today()
+
+    # faz um loop através das sprints do grupo
+    for sprint in get_group_sprints(group_id):
+        if today >= sprint.finish and today <= sprint.finish + timedelta(days=sprint.rating_period):
+            return sprint
 
 # Cria uma sprint e salva na database
 # parametros:
