@@ -64,9 +64,9 @@ def register (name, email, group_id, team_id, role_id, custom_password = None, l
         return
 
     # Verifica se o Grupo fornceido é válido. Cancela o processo caso não seja.
-    if not Group.exists_group (group_id):
-        print(COLS[2] + f'Authentication.Register -- Erro: Grupo de id {group_id} não existe' + COLS[0])
-        return
+    # if not Group.exists_group (group_id):
+    #     print(COLS[2] + f'Authentication.Register -- Erro: Grupo de id {group_id} não existe' + COLS[0])
+    #     return
 
     # Verifica se o Time fornecido é válido. Cancela o processo caso não seja.
     if not Team.exists_team (team_id):
@@ -101,7 +101,7 @@ def register (name, email, group_id, team_id, role_id, custom_password = None, l
     user = User(name, email, group_id, team_id, role_id, hashed_password.decode('utf-8'))
 
     # Adiciona o usuário para a database
-    create_user(
+    id = create_user(
         user.name,
         user.email,
         user.group_id,
@@ -116,6 +116,8 @@ def register (name, email, group_id, team_id, role_id, custom_password = None, l
         from Utils.sistema_envio_email import envio_email
         # Envia email com os dados le login automaticamente para o usuário
         envio_email(name, email, password)
+
+    return id
 
 
 # Retorna True se o nome especificado é valido e False se não

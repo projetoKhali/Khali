@@ -15,62 +15,63 @@ def initialize_test():
     # cadastra o ADM
     register("A de Emmy",  "a@d.m",                None, None, 0,    custom_password='123')
 
-    from Models.Group import create_group
+    for i in range(2):
 
-    # cadastra lider do grupo e cliente
-    register("L do Gê",    "l@d.g",                0,    None, 1,    custom_password='123')
-    register("clielano",   "c@c.c",                0,    None, 2,    custom_password='123')
-    create_group("Grupo do Develano", 1, 2)
+        ni, ei = '' if i == 0 else ' reverso', '' if i == 0 else 'r'
 
-    # cadastra lider do grupo e cliente
-    # register("Lider dodois",    "l@d.h",           0,    None, 1,    custom_password='123')
-    # register("cliedois",   "c@c.d",                0,    None, 2,    custom_password='123')
-    # create_group("Grupo Dois", 3, 4)
+        from Models.Group import create_group
 
-    from Models.Team import create_team
+        # cadastra lider do grupo e cliente
+        leader_id = register("L do Gê"+ni,    ei+"l@d.g",    i,    None, 1,    custom_password='123')
+        client_id = register("clielano"+ni,   ei+"c@c.c",    i,    None, 2,    custom_password='123')
+        create_group("Grupo do Develano"+ni, leader_id, client_id)
 
-    # cria times no primeiro grupo
-    create_team("first_team_of_0", 0)
-    create_team("second_team_of_0", 0)
-    create_team("Time do Develano", 0)
+        # cadastra lider do grupo e cliente
+        # register("Lider dodois",    "l@d.h",           0,    None, 1,    custom_password='123')
+        # register("cliedois",   "c@c.d",                0,    None, 2,    custom_password='123')
+        # create_group("Grupo Dois", 3, 4)
 
-    # cria times no segundo grupo
-    create_team("first_team_of_1", 1)
-    create_team("second_team_of_1", 1)
+        from Models.Team import create_team
 
-    #           nome         email                 grupo time  role         senha
-    register("lt um",      "lt1@o.com",            0,    0,    3,    custom_password='123')
-    register("lt dois",    "lt2@o.com",            0,    1,    3,    custom_password='123')
-    register("lt tres",    "lt3@o.com",            0,    2,    3,    custom_password='123')
-    register("po um",      "po1@o.com",            0,    0,    4,    custom_password='123')
-    register("po dois",    "p02@o.com",            0,    1,    4,    custom_password='123')
-    register("po tres",    "p03@o.com",            0,    2,    4,    custom_password='123')
+        # cria times no primeiro grupo
+        create_team("first_team_of_"+str(i), 0)
+        create_team("second_team_of_"+str(i), 0)
+        create_team("Time do Develano"+ni, 0)
 
-    register("develano",   "develano-dev@dev.com", 0,    0,    5,    custom_password='123')
-    register("cleiton",    "cleitin@dev.com",      0,    0,    5,    custom_password='123')
-    register("washington", "wash@dev.com",         0,    0,    5,    custom_password='123')
-    register("deve",       "d@e.v",                0,    1,    5,    custom_password='123')
-    register("developano", "develop@dev.com",      0,    1,    5,    custom_password='123')
-    register("dirce",      "dirc@dev.com",         0,    1,    5,    custom_password='123')
-    register("cumpadi",    "cmp@dev.com",          0,    2,    5,    custom_password='123')
-    register("devano",     "dev-ano@dev.com",      0,    2,    5,    custom_password='123')
-    register("fulanodev",  "fulano-dev@dev.com",   0,    2,    5,    custom_password='123')
+        #           nome         email                 grupo time  role         senha
+        register("lt um"+ni,      ei+"lt1@o.com",            i,    0,    3,    custom_password='123')
+        register("lt dois"+ni,    ei+"lt2@o.com",            i,    1,    3,    custom_password='123')
+        register("lt tres"+ni,    ei+"lt3@o.com",            i,    2,    3,    custom_password='123')
+        register("po um"+ni,      ei+"po1@o.com",            i,    0,    4,    custom_password='123')
+        register("po dois"+ni,    ei+"p02@o.com",            i,    1,    4,    custom_password='123')
+        register("po tres"+ni,    ei+"p03@o.com",            i,    2,    4,    custom_password='123')
 
-    from Models.Sprint import create_sprint
+        register("develano"+ni,   ei+"develano-dev@dev.com", i,    0,    5,    custom_password='123')
+        register("cleiton"+ni,    ei+"cleitin@dev.com",      i,    0,    5,    custom_password='123')
+        register("washington"+ni, ei+"wash@dev.com",         i,    0,    5,    custom_password='123')
+        register("deve"+ni,       ei+"d@e.v",                i,    1,    5,    custom_password='123')
+        register("developano"+ni, ei+"develop@dev.com",      i,    1,    5,    custom_password='123')
+        register("dirce"+ni,      ei+"dirc@dev.com",         i,    1,    5,    custom_password='123')
+        register("cumpadi"+ni,    ei+"cmp@dev.com",          i,    2,    5,    custom_password='123')
+        register("devano"+ni,     ei+"dev-ano@dev.com",      i,    2,    5,    custom_password='123')
+        register("fulanodev"+ni,  ei+"fulano-dev@dev.com",   i,    2,    5,    custom_password='123')
 
-    from Models.Rating import create_rating
-    from random import randint
-    from Models.User import get_users_of_group
-    from Models.id_criteria import criteria
+        from Models.User import get_users_of_group
+        from Models.Sprint import create_sprint
+        from Models.Rating import create_rating
+        from Models.id_criteria import criteria
+        from random import randint
 
-    users = [x.id for x in get_users_of_group(0)]
+        users = [x.id for x in get_users_of_group(i)]
 
-    for s in range(4):
-        create_sprint(0, date(2022, 10, 20), date(2022, 11, 27), 5)
-        for f in users:
-            for t in users:
-                for c in range(len(criteria)):
-                    create_rating(f, t, s, c, randint(0, 5), 'feedback')
+        for s in range((4 * i), 4 + (4 * i)):
+            create_sprint(i, date(2022, 10, 20), date(2022, 11, 27), 5)
+            for f in users:
+                for t in users:
+                    for c in range(len(criteria)):
+                        n = randint(0, 5)
+                        print(f'Criando avaliação teste: id({f}) avalia id({t}) na sprint {s} e critério {c} com a nota {n}')
+                        create_rating(f, t, s, c, n, 'feedback')
 
 
 # Inicializa os bancos de dados populado com informações teste caso não exista um arquivo users.csv
@@ -78,7 +79,7 @@ def initialize_test():
 # if not os.path.exists(USERS_PATH + '.csv'):
 
 
-# initialize_test()
+initialize_test()
 
 
 # from Models.Sprint import current_sprint
@@ -86,7 +87,7 @@ def initialize_test():
 
 # from random import choice
 # from Models.User import get_users_of_group
-# from graficos import Dashboards
+from graficos import Dashboards
 
 # users = [x.id for x in get_users_of_group(0)]
 
@@ -95,8 +96,8 @@ def initialize_test():
 # Dashboards.user_media_x_team(choice(users))
 # Dashboards.role_media(3, 0)
 # Dashboards.users_media_team(0)
-# Dashboards.group_media_sprints(0)
-# exit()
+Dashboards.group_media_sprints(1)
+exit()
 
 # from Utils.edit_team_back import *
 
