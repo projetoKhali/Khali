@@ -1,5 +1,7 @@
 from datetime import date, datetime
 from Authentication import *
+from tkinter import *
+
 
 def initialize_test():
 
@@ -81,20 +83,27 @@ def initialize_test():
 # Inicializa os bancos de dados populado com informações teste caso não exista um arquivo users.csv
 # import os
 # if not os.path.exists(USERS_PATH + '.csv'):
-initialize_test()
+# initialize_test()
 
 
 from Models.Sprint import current_sprint
-print(current_sprint(0))
+# print(current_sprint(0))
 
 from random import choice
 from Models.User import get_users_of_group
 from graficos import Dashboards
+from Front.Modules import dashboards
+from tkinter import *
+
+window = Tk()
+dashboards.run(window)
+window.mainloop()
+
 users = [x.id for x in get_users_of_group(0)]
 
 # Dashboards.user_media_sprints(choice(users))
 # Dashboards.team_media_sprints(0)
-Dashboards.user_media_x_team(choice(users))
+# Dashboards.user_media_x_team(choice(users))
 exit()
 
 # from Utils.edit_team_back import *

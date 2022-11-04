@@ -63,8 +63,8 @@ def medias_por_sprint (criteria, sprints, ratings):
 # Classifica as ratings em critério
 def classify_criteria (criteria, ratings):
     classified = [[] for _ in criteria]
-    print(f'classified: {classified}')
+    # print(f'classified: {classified}')
     for r in ratings:
         classified[r.criteria_id].append(r.value)
-    print(f'classified: {classified}')
+    # print(f'classified: {classified}')
     return classified

@@ -1,6 +1,91 @@
+import matplotlib
 import matplotlib.pyplot as  plt 
 from .Integrador import *
+import numpy as np
+def teste():
 
+    labels = ['G1', 'G2', 'G3', 'G4', 'G5']
+    men_means = [20, 34, 30, 35, 27]
+    women_means = [25, 32, 34, 20, 25]
+
+    x = np.arange(len(labels))  # the label locations
+    width = 0.35  # the width of the bars
+
+    fig, ax = plt.subplots()
+    rects1 = ax.bar(x - width/2, men_means, width, label='Men')
+    rects2 = ax.bar(x + width/2, women_means, width, label='Women')
+
+    # Add some text for labels, title and custom x-axis tick labels, etc.
+    ax.set_ylabel('Scores')
+    ax.set_title('Scores by group and gender')
+    ax.set_xticks(x, labels)
+    ax.legend()
+
+    ax.bar_label(rects1, padding=3)
+    ax.bar_label(rects2, padding=3)
+
+    fig.tight_layout()
+    return fig
+
+########################################################################
+# reescrevendo as funções
+def multi_bar_fig (matriz, names=list, y_label=str, title=str, x_label = list):
+    ind = np.arange(len(x_label))  # the x locations for the groups
+    # width = 0.2  # the width of the bars
+    fig, ax = plt.subplots()
+    width = 1. / (len(matriz) + 1.75)
+
+    rects = []
+    for i, lista in enumerate(matriz):
+        
+        if i % 2 == 0:
+            rect = ax.bar(ind[i] - width/2, lista, width, label=names[i])
+        else: 
+            rect = ax.bar(ind[i] + width/2, lista, width, label=names[i])
+        rects.append(rect)
+
+    # Add some text for labels, title and custom x-axis tick labels, etc.
+    ax.set_ylabel(y_label)
+    ax.set_title(title)
+    ax.set_xticks(ind)
+    ax.set_xticklabels(x_label)
+    ax.legend()
+    for item in rects:
+        ax.bar_label(item, padding=3)
+    fig.tight_layout()
+    # plt.show()
+    return fig
+
+  
+from Models.id_criteria import criteria
+from Models.Sprint import get_group_sprints
+
+def user_media_sprints_fig (user_id):
+     # importa as funções de acesso ao banco de dados de cada modelo
+    from Models.User import get_user
+    from Models.Rating import get_ratings_to_user
+
+    # carrega as informações do usuário
+    user = get_user(user_id)
+
+    # Lista as sprints (em objeto da classe Sprint)
+    sprints = get_group_sprints(user.group_id)
+
+    # Lista todas as avaliações em que o usuário está sendo avaliado 
+    ratings = get_ratings_to_user(user.id)
+
+    matrix = medias_por_sprint(criteria, sprints, ratings)
+
+    names =[]
+    for i in range(len(sprints)):
+        names.append(f'Sprint {i}')
+
+    # names = (f'Sprint {i}' for i in range(len(sprints)))
+
+    fig = multi_bar_fig(matrix, names, 'Médias', f'Média de {user.name} ao longo das sprints', criteria)
+    return fig
+    
+########################################################################
 # Gera um grafico multi barra
 def multi_bar (title, names, y_label, matrix, x_label, x_ticks, colors):
 
@@ -46,9 +131,10 @@ def multi_bar (title, names, y_label, matrix, x_label, x_ticks, colors):
 
     # Adiciona a legenda representando cada lista da matriz
     plt.legend()
-
+    # return plt
+    # plt.figure(figsize = (10, 5))
     # Renderiza o grafico
-    plt.show()
+    # plt.show()
 
 
 # Gera um grafico de linha
@@ -142,7 +228,7 @@ def user_media_x_team (user_id):
     # carrega todas as avaliações do time
     user_ratings = get_ratings_to_user(user_id)
     team_ratings = get_ratings_to_team(user.team_id)
-
+    print(user_ratings)
     # cria uma lista de avaliações em que o primeiro indice corresponde às avaliações do usuário
     # e o segundo índice corresponde às avaliações do time
     ratings = [
@@ -207,7 +293,7 @@ def role_media (group_id, role_id):
     # Lista todas as avaliações em que o id do usuário avaliado corresponda a qualquer id da lista 'user_ids' 
     ratings = [[]] * len(teams)
     for i, team in enumerate(teams):
-        ratings[i] = [r for r in get_ratings_to_team(team) if get_user(r.to_user_id) == role_id]
+        ratings[i] = [r for r in get_ratings_to_team(team) if get_user(r.to_user_id).role_id != role_id]
 
     # Renderiza o grafico representando as médias calculadas 
     multi_bar(
