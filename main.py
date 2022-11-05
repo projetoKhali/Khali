@@ -2,6 +2,12 @@ from datetime import date, datetime
 from Authentication import *
 from tkinter import *
 
+# cores
+co0 = "#FAE8E8"  # rosa
+co1 = "#D9D9D9"  # cinza
+co2 = "#1A1D1A"  # preta
+co3 = "#26413C"  # verde
+
 
 def initialize_test():
 
@@ -96,6 +102,7 @@ from Front.Modules import dashboards
 from tkinter import *
 
 window = Tk()
+window.configure(background = co0)
 dashboards.run(window)
 window.mainloop()
 
