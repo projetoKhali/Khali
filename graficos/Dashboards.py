@@ -29,8 +29,8 @@ def teste():
 
 ########################################################################
 # reescrevendo as funções
-def multi_bar_fig (matriz, names=list, y_label=str, title=str, x_label = list):
-    ind = np.arange(len(x_label))  # the x locations for the groups
+def multi_bar_fig (matriz, names=list, y_label=str, x_label=str,title=str, x_ticks = list):
+    ind = np.arange(len(x_ticks))  # the x locations for the groups
     # width = 0.2  # the width of the bars
     fig, ax = plt.subplots()
     width = 1. / (len(matriz) + 1.75)
@@ -39,16 +39,17 @@ def multi_bar_fig (matriz, names=list, y_label=str, title=str, x_label = list):
     for i, lista in enumerate(matriz):
         
         if i % 2 == 0:
-            rect = ax.bar(ind[i] - width/2, lista, width, label=names[i])
+            rect = ax.bar(ind - width/2, lista, width, label=names[i])
         else: 
-            rect = ax.bar(ind[i] + width/2, lista, width, label=names[i])
+            rect = ax.bar(ind + width/2, lista, width, label=names[i])
         rects.append(rect)
 
     # Add some text for labels, title and custom x-axis tick labels, etc.
     ax.set_ylabel(y_label)
+    ax.set_xlabel(x_label)
     ax.set_title(title)
     ax.set_xticks(ind)
-    ax.set_xticklabels(x_label)
+    ax.set_xticklabels(x_ticks)
     ax.legend()
     for item in rects:
         ax.bar_label(item, padding=3)
@@ -76,15 +77,49 @@ def user_media_sprints_fig (user_id):
 
     matrix = medias_por_sprint(criteria, sprints, ratings)
 
-    names =[]
-    for i in range(len(sprints)):
-        names.append(f'Sprint {i}')
+    # names =[]
+    # for i in range(len(sprints)):
+    #     names.append(f'Sprint {i}')
 
-    # names = (f'Sprint {i}' for i in range(len(sprints)))
+    names = [f'Sprint {i}' for i in range(len(sprints))]
 
-    fig = multi_bar_fig(matrix, names, 'Médias', f'Média de {user.name} ao longo das sprints', criteria)
+    fig = multi_bar_fig(matrix, names, 'Médias', 'Critério Avaliativo', f'Média de {user.name} ao longo das sprints', criteria)
     return fig
     
+def user_media_x_team_fig (user_id):
+
+    # importa as funções de acesso ao banco de dados de cada modelo
+    from Models.User import get_user
+    from Models.Team import get_team
+    from Models.Rating import get_ratings_to_team ,get_ratings_to_user
+
+    # carrega as informações do usuário
+    user = get_user(user_id)
+
+    # carrega todas as avaliações do time
+    user_ratings = get_ratings_to_user(user_id)
+    team_ratings = get_ratings_to_team(user.team_id)
+    
+    # cria uma lista de avaliações em que o primeiro indice corresponde às avaliações do usuário
+    # e o segundo índice corresponde às avaliações do time
+    ratings = [
+        classify_criteria(criteria, user_ratings), 
+        classify_criteria(criteria, team_ratings)
+    ]
+
+    team_name = get_team(user.team_id).name
+
+    # Renderiza o grafico representando as médias calculadas 
+    fig = multi_bar_fig(
+        medias(criteria, ratings),
+        [user.name, team_name],
+        'Médias',
+        'Critério Avaliativo',
+        f'Médias de {user.name} em comparativo ao time {team_name}',
+        criteria)
+    return fig
+       
+
 ########################################################################
 # Gera um grafico multi barra
 def multi_bar (title, names, y_label, matrix, x_label, x_ticks, colors):
@@ -134,7 +169,7 @@ def multi_bar (title, names, y_label, matrix, x_label, x_ticks, colors):
     # return plt
     # plt.figure(figsize = (10, 5))
     # Renderiza o grafico
-    # plt.show()
+    plt.show()
 
 
 # Gera um grafico de linha

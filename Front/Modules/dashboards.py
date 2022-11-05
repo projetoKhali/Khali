@@ -30,7 +30,8 @@ def run(frame_parent):
     # criar_label(frame_parent, "oi com boi", "Calibri, 10", 0, 0)
     
     # figure = Dashboards.teste()
-    figure = Dashboards.user_media_sprints_fig(6)
+    # figure = Dashboards.user_media_sprints_fig(6)
+    figure = Dashboards.user_media_x_team_fig(6)
     canvas = FigureCanvasTkAgg(figure, master = frame_parent)
     # canvas.show()
     canvas.get_tk_widget().grid(row=0, column=0, sticky='wens')
