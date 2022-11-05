@@ -1,5 +1,9 @@
 from Utils import lista_usuarios_back
 from tkinter import *
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.figure import Figure
 
 # cores
 co0 = "#fae8e8"  # rosa
@@ -75,6 +79,11 @@ def run(frame_parent):
         Button(quadro, text = text, font = font, background = co0, justify=RIGHT, fg=co2, command=command,
                width=13, height=0, activebackground='#c5a8b0').grid(row=r, column=c, sticky= sticky)
 
+    
+
+    
+
+
    # importa a função que transforma role_id em nome da role
     from Models.Role import get_role_name
    
@@ -89,34 +98,17 @@ def run(frame_parent):
     frame_usuarios = criar_frame(module_frame, 1, 0, "nsw", co1, co1, 2)
     frame_usuarios.columnconfigure(0, minsize = 0, weight = 1)
     frame_usuarios.rowconfigure(0, minsize = 0, weight = 1)
-    frame_usuarios = add_scrollbar(frame_usuarios)
+    # frame_usuarios = add_scrollbar(frame_usuarios)
     
 
     frame_dashboards = criar_frame(module_frame, 1, 1, "nsw", co0, co0, 1)
+    ## grafico pizza
+    # data = [len(grade_submitted), len(grade_to_submit)]
+    # figure = graphic_pie(data)
+    # canvas = FigureCanvasTkAgg(figure, master = frame_dashboards)
+    # canvas.get_tk_widget().grid(row=0, column=0, sticky='wens')
     
-    # frame_dashboard1 = criar_frame(module_frame, 1, 1, "nsw")
-    dashboard_1 = criar_label(frame_dashboards, "Dash 1", "Calibri, 30", 0 , 0, "w")
-    # frame_dashboard2 = criar_frame(module_frame, 2, 1, "nw")
-    dashboard_2 = criar_label(frame_dashboards, "Dash 2", "Calibri, 30", 1 , 0, "w")
-    # frame_dashboard3 = criar_frame(module_frame, 3, 1, "nw")
-    
-    # teste
-    for i in range(10):
-        criar_label(frame_dashboards, "teste", "Calibri, 30", i+2 , 0, "w")
-
-   
-
-    
-
-    # ###testes
-    # user_group_members = handler.find_data_list_by_field_value_csv(Settings.USERS_PATH, 'group_id', grupo_id)
-    #
-
-
-
-    
-
-    # frame com os usuários que devem ser analisados por quem está logado
+   # frame com os usuários que devem ser analisados por quem está logado
     frame_avaliados = criar_frame(frame_usuarios, 1, 0, "nsew", co0, co0, 1)
     frame_avaliados.columnconfigure(0, minsize = 0, weight = 1)
     criar_label(frame_avaliados, 'Integrantes ainda não Avaliados', 'Calibri, 14', 0, 0, "w")
@@ -157,3 +149,21 @@ def avaliar (id):
     from Front.Modules import avaliacao_teste
     global module_frame
     avaliacao_teste.run(module_frame, id)
+
+def graphic_pie(data = list):
+    global grade_submitted
+    global grade_to_submit
+
+    plt.style.use('_mpl-gallery-nogrid')
+
+    # make data
+    # n_submitted = len(grade_submitted)
+    # n_to_submit = len(grade_to_submit)
+    # data = [n_submitted, n_to_submit]
+    colors = plt.get_cmap('Pastel2')(np.linspace(0.2, 0.7, len(data)))
+
+    # plot
+    fig, ax = plt.subplots()
+    ax.pie(data, colors = colors, radius = 3, center = (4,4), wedgeprops={"linewidth": 1, "edgecolor": "white"}, frame=True)
+    ax.set(xlim = (0,8), xticks = np.arange(1,8), ylim=(0,8), yticks=np.arange(1,8))
+    return fig
