@@ -2,7 +2,7 @@
 class Role:
     
     # Cria um novo tipo de Usuário
-    def __init__(self, _name, _permissions_reg, _permissions_rate, _permissions_view=None):
+    def __init__(self, _name, _permissions_reg, _permissions_rate, _permissions_view):
         self.name = _name
         self.permissions_reg = _permissions_reg
         self.permissions_rate = _permissions_rate
@@ -10,19 +10,19 @@ class Role:
 
 # Lista de Funções existentes
 ROLES = [
-    #       permissions:         REG              RATE
-    Role("ADM",             [0, 1, 2      ], [             ]),
+    #       permissions:         REG              RATE              VIEW
+    Role("ADM",             [0, 1, 2      ], [             ], [             ]),
 
     # 1 por Grupo
-    Role("Líder do Grupo",  [3, 4, 5, 6, 7], [3            ]),
-    Role("Cliente",         [             ], [4            ]),
+    Role("Líder do Grupo",  [3, 4, 5, 6, 7], [3            ], [ 11          ]),
+    Role("Cliente",         [             ], [4            ], [ 11          ]),
 
     # 1 por Time
-    Role("Líder Técnico",   [             ], [3, 4, 5      ]),
-    Role("Product Owner",   [             ], [3, 4, 5      ]),
+    Role("Líder Técnico",   [             ], [3, 4, 5      ], [ 11          ]),
+    Role("Product Owner",   [             ], [3, 4, 5      ], [ 11          ]),
 
     # 0+ por Time
-    Role("Developer",       [             ], [3, 4, 5      ])
+    Role("Developer",       [             ], [3, 4, 5      ], [ 11          ])
 ]
 
 # Retorna a função com id solicitado

@@ -73,9 +73,9 @@ def register (name, email, group_id, team_id, role_id, custom_password = None, l
     if not Team.exists_team (team_id):
         print(COLS[2] + f'Authentication.Register -- Erro: Time de id {team_id} não existe' + COLS[0])
         return
-    if Team.get_team(team_id).group_id != group_id:
-        print(COLS[2] + f'Authentication.Register -- Erro: Time de id {team_id} não é do grupo {group_id} do usuário sendo cadastrado' + COLS[0])
-        return
+    # if Team.get_team(team_id).group_id != group_id:
+    #     print(COLS[2] + f'Authentication.Register -- Erro: Time de id {team_id} não é do grupo {group_id} do usuário sendo cadastrado' + COLS[0])
+    #     return
 
     # Verifica se a Função fornecida é válida. Cancela o processo caso não seja.
     if not get_role(role_id) is not None:

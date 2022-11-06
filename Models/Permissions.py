@@ -22,7 +22,10 @@ PERMISSIONS = [
 # ]
 # permissões de visualização de avaliações 
 # PERMISSIONS_VIEW = [
-    # 'VIEW_USER_RATING_PRODUCTOWNER',    # 11 #
-    # 'VIEW_USER_RATING_TECHLEADER',      # 12 #
-    # 'VIEW_USER_RATING_DEVELOPER',       # 13 #
+    "VIEW_DASHBOARDS"                   # 11 #
+#     'VIEW_USER_RATING_PRODUCTOWNER',    # 12 #
+#     'VIEW_USER_RATING_TECHLEADER',      # 13 #
+#     'VIEW_USER_RATING_DEVELOPER',       # 14 #
+#     'VIEW_USER_RATING_GROUPLEADER',     # 15 #
+#     'VIEW_USER_RATING_FAKECLIENT'       # 16 #
 ]

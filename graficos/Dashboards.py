@@ -5,7 +5,8 @@ def multi_bar (title, names, y_label, matriz, x_label, x_ticks):
     from matplotlib import pyplot
 
     # ind = np.arange(len(x_ticks))  # the x locations for the groups
-    fig, ax = pyplot.subplots()
+    fig, ax = pyplot.subplots(figsize = (5,5))
+    ax.set_ylim([1, 5])
     bar_width = 1. / (len(matriz) + 1.75)
 
     for i, lst in enumerate(matriz):
@@ -212,8 +213,7 @@ def teams_media (group_id):
         medias(criteria, ratings),
         'Critério avaliativo',
         criteria,
-        ['orange', 'yellow', 'red', 'green', 'darkgoldenrod', 'brown', 'lightgreen', 'magenta', 'royalblue', 'pink', ]
-    )
+        )
 
 
 # Renderiza um Dashboard com a media de uma determinada função de cada time
