@@ -33,6 +33,7 @@ def set_state(new_state:int):
 
 # Seta CURRENT_STATE pra 0 para chamar a tela de login e deslogar usuário
 def reset():
+    global CURRENT_STATE
     CURRENT_STATE = 0
     set_state(0)
 
@@ -52,5 +53,10 @@ def launch():
 
 
 def update():
+    def on_closing():
+        from matplotlib import pyplot
+        pyplot.close("all")
+        CURRENT_WINDOW_INSTANCE.destroy()
+    CURRENT_WINDOW_INSTANCE.protocol("WM_DELETE_WINDOW", on_closing)
     CURRENT_WINDOW_INSTANCE.mainloop()
 

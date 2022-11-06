@@ -33,11 +33,11 @@ def run(frame_parent):
     
     frame_dashboards = criar_frame(frame_parent, 1, 0)
     # figure = Dashboards.teste()
-    figure1 = Dashboards.user_media_sprints_fig(6)
+    figure1 = Dashboards.user_media_sprints(6)
     canvas = FigureCanvasTkAgg(figure1, master = frame_dashboards)
     # canvas.show()
     canvas.get_tk_widget().grid(row=0, column=0, sticky='wens')
-    figure2 = Dashboards.user_media_x_team_fig(6)
+    figure2 = Dashboards.user_media_x_team(6)
     canvas = FigureCanvasTkAgg(figure2, master = frame_dashboards)
     # canvas.show()
     canvas.get_tk_widget().grid(row=0, column=1, sticky='wens')

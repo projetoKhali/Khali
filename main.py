@@ -104,9 +104,14 @@ from tkinter import *
 window = Tk()
 window.configure(background = co0)
 dashboards.run(window)
+def on_closing():
+    from matplotlib import pyplot as plt
+    plt.close("all")
+    window.destroy()
+window.protocol("WM_DELETE_WINDOW", on_closing)
 window.mainloop()
 
-users = [x.id for x in get_users_of_group(0)]
+# users = [x.id for x in get_users_of_group(0)]
 
 # Dashboards.user_media_sprints(choice(users))
 # Dashboards.team_media_sprints(0)
@@ -114,6 +119,7 @@ users = [x.id for x in get_users_of_group(0)]
 exit()
 
 # from Utils.edit_team_back import *
+
 
 # print(add_user("ful@dev.com", 0))
 # exit()
