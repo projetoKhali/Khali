@@ -40,7 +40,7 @@ def initialize_test():
             create_team("Time do Develano"+ni, i)
         ]
 
-        #           nome             email                  grupo  time role         senha
+        #           nome             email                  grupo  time    role        senha
         register("lt um"+ni,      ei+"lt1@o.com",            i,    t[0],    3,    custom_password='123')
         register("lt dois"+ni,    ei+"lt2@o.com",            i,    t[1],    3,    custom_password='123')
         register("lt tres"+ni,    ei+"lt3@o.com",            i,    t[2],    3,    custom_password='123')
@@ -87,9 +87,6 @@ def initialize_test():
 # from Models.Sprint import current_sprint
 # print(f'current sprint(0): {current_sprint(0)}')
 
-from random import choice
-from Models.User import get_users_of_group
-from graficos import Dashboards
 from Front.Modules import dashboards
 from tkinter import *
 
@@ -103,15 +100,6 @@ def on_closing():
 window.protocol("WM_DELETE_WINDOW", on_closing)
 window.mainloop()
 
-users = [x.id for x in get_users_of_group(0)]
-
-# Dashboards.user_media_sprints(choice(users))
-Dashboards.team_media_sprints(0)                    # !!!!!!!!
-Dashboards.user_media_x_team(choice(users))
-Dashboards.role_media(3, 0)
-Dashboards.users_media_team(0)
-Dashboards.group_media_sprints(1)
-Dashboards.teams_media(0)
 exit()
 print(unsubscribe_student('washoe@dev.com'))
 
