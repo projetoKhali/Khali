@@ -34,27 +34,29 @@ def initialize_test():
         from Models.Team import create_team
 
         # cria times no primeiro grupo
-        create_team("first_team_of_"+str(i), 0)
-        create_team("second_team_of_"+str(i), 0)
-        create_team("Time do Develano"+ni, 0)
+        t = [
+            create_team("first_team_of_"+str(i), i),
+            create_team("second_team_of_"+str(i), i),
+            create_team("Time do Develano"+ni, i)
+        ]
 
-        #           nome         email                 grupo time  role         senha
-        register("lt um"+ni,      ei+"lt1@o.com",            i,    0,    3,    custom_password='123')
-        register("lt dois"+ni,    ei+"lt2@o.com",            i,    1,    3,    custom_password='123')
-        register("lt tres"+ni,    ei+"lt3@o.com",            i,    2,    3,    custom_password='123')
-        register("po um"+ni,      ei+"po1@o.com",            i,    0,    4,    custom_password='123')
-        register("po dois"+ni,    ei+"p02@o.com",            i,    1,    4,    custom_password='123')
-        register("po tres"+ni,    ei+"p03@o.com",            i,    2,    4,    custom_password='123')
+        #           nome             email                  grupo  time role         senha
+        register("lt um"+ni,      ei+"lt1@o.com",            i,    t[0],    3,    custom_password='123')
+        register("lt dois"+ni,    ei+"lt2@o.com",            i,    t[1],    3,    custom_password='123')
+        register("lt tres"+ni,    ei+"lt3@o.com",            i,    t[2],    3,    custom_password='123')
+        register("po um"+ni,      ei+"po1@o.com",            i,    t[0],    4,    custom_password='123')
+        register("po dois"+ni,    ei+"p02@o.com",            i,    t[1],    4,    custom_password='123')
+        register("po tres"+ni,    ei+"p03@o.com",            i,    t[2],    4,    custom_password='123')
 
-        register("develano"+ni,   ei+"develano-dev@dev.com", i,    0,    5,    custom_password='123')
-        register("cleiton"+ni,    ei+"cleitin@dev.com",      i,    0,    5,    custom_password='123')
-        register("washington"+ni, ei+"wash@dev.com",         i,    0,    5,    custom_password='123')
-        register("deve"+ni,       ei+"d@e.v",                i,    1,    5,    custom_password='123')
-        register("developano"+ni, ei+"develop@dev.com",      i,    1,    5,    custom_password='123')
-        register("dirce"+ni,      ei+"dirc@dev.com",         i,    1,    5,    custom_password='123')
-        register("cumpadi"+ni,    ei+"cmp@dev.com",          i,    2,    5,    custom_password='123')
-        register("devano"+ni,     ei+"dev-ano@dev.com",      i,    2,    5,    custom_password='123')
-        register("fulanodev"+ni,  ei+"fulano-dev@dev.com",   i,    2,    5,    custom_password='123')
+        register("develano"+ni,   ei+"develano-dev@dev.com", i,    t[0],    5,    custom_password='123')
+        register("cleiton"+ni,    ei+"cleitin@dev.com",      i,    t[0],    5,    custom_password='123')
+        register("washington"+ni, ei+"wash@dev.com",         i,    t[0],    5,    custom_password='123')
+        register("deve"+ni,       ei+"d@e.v",                i,    t[1],    5,    custom_password='123')
+        register("developano"+ni, ei+"develop@dev.com",      i,    t[1],    5,    custom_password='123')
+        register("dirce"+ni,      ei+"dirc@dev.com",         i,    t[1],    5,    custom_password='123')
+        register("cumpadi"+ni,    ei+"cmp@dev.com",          i,    t[2],    5,    custom_password='123')
+        register("devano"+ni,     ei+"dev-ano@dev.com",      i,    t[2],    5,    custom_password='123')
+        register("fulanodev"+ni,  ei+"fulano-dev@dev.com",   i,    t[2],    5,    custom_password='123')
 
         from Models.User import get_users_of_group
         from Models.Sprint import create_sprint
@@ -79,24 +81,25 @@ def initialize_test():
 # if not os.path.exists(USERS_PATH + '.csv'):
 
 
-initialize_test()
+# initialize_test()
 
 
 # from Models.Sprint import current_sprint
 # print(f'current sprint(0): {current_sprint(0)}')
 
-# from random import choice
-# from Models.User import get_users_of_group
+from random import choice
+from Models.User import get_users_of_group
 from graficos import Dashboards
 
-# users = [x.id for x in get_users_of_group(0)]
+users = [x.id for x in get_users_of_group(0)]
 
 # Dashboards.user_media_sprints(choice(users))
-# Dashboards.team_media_sprints(0)
+Dashboards.team_media_sprints(0)                    # !!!!!!!!
 # Dashboards.user_media_x_team(choice(users))
 # Dashboards.role_media(3, 0)
 # Dashboards.users_media_team(0)
-Dashboards.group_media_sprints(1)
+# Dashboards.group_media_sprints(1)
+# Dashboards.teams_media(0)
 exit()
 
 # from Utils.edit_team_back import *

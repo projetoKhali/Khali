@@ -2,7 +2,8 @@ from CSV.CSVHandler import *
 from Front import WindowManager
 from Utils.Gerar_Senha import gerar_senha
 from Models.User import User, to_user, create_user
-from Models import Group, Team
+from Models.Group import Group
+from Models import Team
 
 import Settings as settings
 from Models.Role import *
@@ -71,6 +72,9 @@ def register (name, email, group_id, team_id, role_id, custom_password = None, l
     # Verifica se o Time fornecido é válido. Cancela o processo caso não seja.
     if not Team.exists_team (team_id):
         print(COLS[2] + f'Authentication.Register -- Erro: Time de id {team_id} não existe' + COLS[0])
+        return
+    if Team.get_team(team_id).group_id != group_id:
+        print(COLS[2] + f'Authentication.Register -- Erro: Time de id {team_id} não é do grupo {group_id} do usuário sendo cadastrado' + COLS[0])
         return
 
     # Verifica se a Função fornecida é válida. Cancela o processo caso não seja.

@@ -53,23 +53,15 @@ def medias_por_sprint (criteria:list[str], sprints:list[Sprint], ratings:list[Ra
     # cada separador é uma lista que possui um indice para cada critério
     # cada critério é uma lista onde será armazenado cada valor em ratings
     classified = [[[] for _ in criteria] for _ in sprints] 
-    # print(f'classified: {classified}')
-
-    print(f'sprints: {sprints}')
 
     # Cria um dicionário que 
     sprint_indexes = { sprint.id : i for i, sprint in enumerate(sprints) }
-    print(f'sprint_indexes: {sprint_indexes}')
 
     # loop através de ratings
     for rating in ratings:
 
-        print(f'rating.sprint_id: {rating.sprint_id}')
-
         # Adiciona o valor da rating dentro da lista do critério de sua sprint
         classified[sprint_indexes[rating.sprint_id]][rating.criteria_id].append(rating.value)
-
-    # print(f'classified: {classified}')
 
     # retorna o valor de médias para a lista classificada
     return medias(criteria, classified)

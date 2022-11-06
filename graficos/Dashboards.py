@@ -79,6 +79,9 @@ def line (title, names, y_label, values, x_label, x_ticks, colors):
     plt.show()
 
 
+def pie_chart ():
+    pass
+
 # |--------------------------------------------------------------------------------------------------------------------|
 # |                                         Gráficos a serem desenvolvidos                                             |
 # |--------------------------------------------------------------------------------------------------------------------|
@@ -92,7 +95,7 @@ def line (title, names, y_label, values, x_label, x_ticks, colors):
 # | media do time           |    sprint     |     sprint     |     criterio     |     PO LT     |  team_media_sprints  |
 # |--------------------------------------------------------------------------------------------------------------------|
 # | media membros time      |    sprint     |     membro     |     criterio     |     PO LT     |   users_media_team   |
-# | media do grupo          |    sprint     |     sprint     |     criterio     |     PO LT     | group_media_sprints  |
+# | media do grupo          |    sprints    |     sprint     |     criterio     |     PO LT     | group_media_sprints  |
 # |--------------------------------------------------------------------------------------------------------------------|
 
 
@@ -193,6 +196,38 @@ def team_media_sprints (team_id):
 
 
 # Renderiza um Dashboard com a media de uma determinada função de cada time
+def teams_media (group_id):
+
+    # importa as funções de acesso ao banco de dados de cada modelo
+    from Models.Rating import get_ratings_to_team
+    from Models.Team import get_teams_of_group
+    from Models.Group import get_group
+
+    # Pega todos os times do grupo especificado
+    teams = get_teams_of_group(group_id)
+    
+    # Inicializa uma lista para as avaliações que serão classificadas / filtradas
+    ratings = [[] for _ in teams]
+
+    # Adiciona a lista de avaliações filtrada para a lista ratings 
+    for i, team in enumerate(teams):
+        ratings[i] = classify_criteria(criteria, get_ratings_to_team(team.id))
+
+    # print(ratings)
+
+    # Renderiza o grafico representando as médias calculadas 
+    multi_bar(
+        f'Média dos times no grupo {get_group(group_id).name}',
+        [team.name for team in teams],
+        'Médias',
+        medias(criteria, ratings),
+        'Critério avaliativo',
+        criteria,
+        ['orange', 'yellow', 'red', 'green', 'darkgoldenrod', 'brown', 'lightgreen', 'magenta', 'royalblue', 'pink', ]
+    )
+
+
+# Renderiza um Dashboard com a media de uma determinada função de cada time
 def role_media (role_id, group_id):
 
     # importa as funções de acesso ao banco de dados de cada modelo
@@ -255,7 +290,7 @@ def users_media_team (team_id):
     ratings = [classify_criteria(criteria, get_ratings_to_user(user.id)) for user in users]
 
     # Renderiza o grafico representando as médias calculadas 
-    multi_bar(
+    line(
         f'Média do time {team.name}',
         [x.name for x in users],
         'Médias',
