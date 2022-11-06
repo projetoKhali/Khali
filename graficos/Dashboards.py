@@ -7,6 +7,7 @@ def multi_bar (title, names, y_label, matriz, x_label, x_ticks):
     # ind = np.arange(len(x_ticks))  # the x locations for the groups
     fig, ax = pyplot.subplots(figsize = (5,5))
     ax.set_ylim([1, 5])
+    fig.set_facecolor("#fae8e8")
     bar_width = 1. / (len(matriz) + 1.75)
 
     for i, lst in enumerate(matriz):

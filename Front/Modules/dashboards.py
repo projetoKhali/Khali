@@ -30,6 +30,7 @@ def run(frame_parent):
     global master_frame
     # from Front.Scrollbar import add_scrollbar
     # master_frame = add_scrollbar(frame_parent)
+    frame_parent.configure(background = co0)
     master_frame = Frame(frame_parent, background = co0)
     master_frame.grid(sticky = 'nw')
     master_frame.columnconfigure(0, minsize = 0, weight = 1)

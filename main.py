@@ -132,6 +132,6 @@ login(email='l@d.g', senha='123')
 # login(email='c@c.c', senha='123')
 # login(email='l@d.g', senha='123')
 # login(email='lt1@o.com', senha='123')
-# login(email='fulano-dev@dev.com', senha ='123')
+login(email='fulano-dev@dev.com', senha ='123')
 
 WindowManager.update()
