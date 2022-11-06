@@ -176,9 +176,12 @@ Figma, Asana, Youtube, Google drive e Google Docs.
  
   | USER STORY | PRIORIDADE |
   |------------|------------|
-  | Como estudante terei acesso a um dashboard dos meus resultados individuais nas avaliações para que eu possa acompanhar e analisar o meu desempenho | Importante|
-| Como PO terei acesso a um dashboard com resultado do meu time nas avaliações para que eu possa acompanhar e analisar o desempenho do meu time | Importante |
- | Como LG terei acesso a um dashboard com resultado do meu time nas avaliações para que eu possa acompanhar e analisar o desempenho do meu time | Importante |
+  | Como estudante quero ter acesso a um dashboard que apresente os meus resultados individuais nas avaliações para que eu possa acompanhar e analisar o meu desempenho frente às avaliações realizadas por mim e pelos demais integrantes do meu Time | Importante|
+| Como líder do grupo quero ter acesso a um dashboard com os  resultados dos meus times  nas avaliações para que eu possa acompanhá-los e analisá-los | Importante |
+ | Como líder do grupo quero ter acesso a um dashboard com os resultados dos PO´s e Líderes técnicos do meu grupo.  | Importante |
+ | Como Fake client quero ter acesso a um dashboard com os resultados dos meus times  nas avaliações para que eu possa acompanhá-los e analisá-los| Importante |
+ | Como fake client quero ter acesso a um dashboard com os resultados dos PO´s e Líderes técnicos do meu grupo | Importante |
+
  </details>
 
 
@@ -206,9 +209,19 @@ Figma, Asana, Youtube, Google drive e Google Docs.
 * Criação da funcionalidade de avaliação
 * Criação da funcionalidade feedback
 * Integração do sistema de avaliação ao perfil dos usuários com o retorno das sprints e integrantes que ele deve avaliar
+* Criação da funcionalidade de Logout
+ </details>
+ 
+ <details>
+<summary> SPRINT 3 - Dashboards de desempenho </summary>
+
+
+* Criação dos dashboards individuis dos estudantes
+* Criação dos dashboard de acompanhamento do grupo
+* Retorno da funcionalidade de dashboard na tela home
  </details>
 
 
-*Documento com a descrição completa dos Épicos, storys e tarefas da [1ª sprint](https://docs.google.com/document/d/e/2PACX-1vQ7dtt7AMiOUWYHD1UkAYsZ2ibkR9KMMcrm4DGZL1xgrUUiRh0o9ROnhx6awl8EsjuklAxMRILXGxCi/pub) e [2ª sprint](https://docs.google.com/document/d/e/2PACX-1vR0gGrbL-q37uZ9rH8kDk77-N6vrqyoBJx5UkXnY3IQLeOXj8llaBxgqB1rR_bhH49mYFk0WGDlrVIV/pub)*
+*Documento com a descrição completa dos Épicos, storys e tarefas da [1ª sprint](https://docs.google.com/document/d/e/2PACX-1vQ7dtt7AMiOUWYHD1UkAYsZ2ibkR9KMMcrm4DGZL1xgrUUiRh0o9ROnhx6awl8EsjuklAxMRILXGxCi/pub) , [2ª sprint](https://docs.google.com/document/d/e/2PACX-1vR0gGrbL-q37uZ9rH8kDk77-N6vrqyoBJx5UkXnY3IQLeOXj8llaBxgqB1rR_bhH49mYFk0WGDlrVIV/pub) e [3ª sprint](https://docs.google.com/document/d/e/2PACX-1vR0zHG2dyVfBpuVXZiCNbIZvQNeJg16XWkVrrtmuTApfnywUYzdQonlN2Ebh3RIhoqCxD_BUKGHg237/pub)*
 
 *Fluxograma do sistema de cadastramento disponível pelo [Drive](https://drive.google.com/file/d/11j_OIrMpIdoHqzDNnrGinr8TQ7IvanjP/view?usp=sharing)*
