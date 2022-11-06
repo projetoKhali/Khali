@@ -176,10 +176,9 @@ Figma, Asana, Youtube, Google drive e Google Docs.
   |------------|------------|
   | Como estudante quero ter acesso a um dashboard que apresente os meus resultados individuais nas avaliações para que eu possa acompanhar e analisar o meu desempenho frente às avaliações realizadas por mim e pelos demais integrantes do meu Time | Importante|
 | Como líder do grupo quero ter acesso a um dashboard com os  resultados dos meus times  nas avaliações para que eu possa acompanhá-los e analisá-los | Importante |
- | Como líder do grupo quero ter acesso a um dashboard com os resultados dos Líderes técnicos do meu time para que eu possa acompanhá-los e analisa-los  | Importante |
- | Como Fake client quero ter acesso a um dashboard com os resultados dos meus times nas avaliações para que eu possa acompanhá-los e analisá-los| Importante |
- | Como fake client quero ter acesso a um dashboard com os resultados dos PO´s dos meus times para que eu possa acompanhá-los e analisa-los | Importante |
-
+| Como líder do grupo quero ter acesso a um dashboard com os resultados dos Líderes técnicos do meu time para que eu possa acompanhá-los e analisa-los  | Importante |
+| Como Fake client quero ter acesso a um dashboard com os resultados dos meus times nas avaliações para que eu possa acompanhá-los e analisá-los| Importante |
+| Como fake client quero ter acesso a um dashboard com os resultados dos PO´s dos meus times para que eu possa acompanhá-los e analisa-los | Importante |
  </details>
 
 
@@ -216,7 +215,7 @@ Figma, Asana, Youtube, Google drive e Google Docs.
 
 * Criação dos dashboards individuis dos estudantes
 * Criação dos dashboards de acompanhamento do grupo
-* Retorno da funcionalidade de dashboard 
+* Retorno da funcionalidade de dashboard
  </details>
 
 
