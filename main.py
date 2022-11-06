@@ -74,7 +74,7 @@ def initialize_test():
                         n = randint(0, 5)
                         print(f'Criando avaliação teste: id({f}) avalia id({t}) na sprint {s} e critério {c} com a nota {n}')
                         create_rating(f, t, s, c, n, 'feedback')
-
+    print("Geração de dados teste finalizada!")
 
 # Inicializa os bancos de dados populado com informações teste caso não exista um arquivo users.csv
 # import os

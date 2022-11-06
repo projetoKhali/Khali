@@ -136,7 +136,7 @@ def user_media_x_team (user_id):
     # carrega todas as avaliações do time
     user_ratings = get_ratings_to_user(user_id)
     team_ratings = get_ratings_to_team(user.team_id)
-    print(user_ratings)
+    # print(user_ratings)
     # cria uma lista de avaliações em que o primeiro indice corresponde às avaliações do usuário
     # e o segundo índice corresponde às avaliações do time
     ratings = [
