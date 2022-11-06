@@ -103,15 +103,15 @@ def on_closing():
 window.protocol("WM_DELETE_WINDOW", on_closing)
 window.mainloop()
 
-# users = [x.id for x in get_users_of_group(0)]
+users = [x.id for x in get_users_of_group(0)]
 
 # Dashboards.user_media_sprints(choice(users))
 Dashboards.team_media_sprints(0)                    # !!!!!!!!
-# Dashboards.user_media_x_team(choice(users))
-# Dashboards.role_media(3, 0)
-# Dashboards.users_media_team(0)
-# Dashboards.group_media_sprints(1)
-# Dashboards.teams_media(0)
+Dashboards.user_media_x_team(choice(users))
+Dashboards.role_media(3, 0)
+Dashboards.users_media_team(0)
+Dashboards.group_media_sprints(1)
+Dashboards.teams_media(0)
 exit()
 print(unsubscribe_student('washoe@dev.com'))
 
