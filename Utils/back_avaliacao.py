@@ -15,7 +15,7 @@ def dados_avaliacao(to_user_id, notas, feedback):
     from Models.id_criteria import criteria
 
     for c in range(len(criteria)):
-        create_rating(CURRENT_USER.id, to_user_id, current_sprint().id, c, notas[c], feedback[c])
+        create_rating(CURRENT_USER.id, to_user_id, current_sprint(CURRENT_USER.group_id).id, c, notas[c], feedback[c])
         
 # Localizar banco que registra os ids e vincular avaliador e avaliado
 # Localizar banco que registra sprints
