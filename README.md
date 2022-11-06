@@ -22,8 +22,6 @@
     * [Requisitos Funcionais](#requisitos-funcionais)
     * [Requisitos Não Funcionais](#requisitos-não-funcionais)
     * [Backlog do Produto](#backlog-do-produto)
-      * [Backlog da Sprint 1](#backlog-detalhado-da-sprint-1)
-    
     
 ##
 ## *Projeto API*
@@ -89,8 +87,8 @@
 > - [x] 15/08 a 19/08 - *Kick-off*
 > - [x] 29/08 a 18/09 - *Primeira Sprint*
 > - [x] 19/09 a 09/10 - *Segunda Sprint*
-> - [ ] 09/10 a 15/10 - *Recesso Escolar*
-> - [ ] 17/10 a 06/11 - *Terceira Sprint*
+> - [x] 09/10 a 15/10 - *Recesso Escolar*
+> - [x] 17/10 a 06/11 - *Terceira Sprint*
 > - [ ] 07/11 a 27/11 - *Quarta Sprint*
 > - [ ] 08/12 - *Feira de Soluções e Apresentação Final API*
 
@@ -171,33 +169,27 @@ Figma, Asana, Youtube, Google drive e Google Docs.
  </details>
 
 <details>
-<summary>SPRINT 3 - CRIAÇÃO DO SISTEMA DE DASHBOARD </summary>
+<summary> SPRINT 3 - Criação do Sistema de Dashboard </summary>
 
  
   | USER STORY | PRIORIDADE |
   |------------|------------|
-  | Como estudante terei acesso a um dashboard dos meus resultados individuais nas avaliações para que eu possa acompanhar e analisar o meu desempenho | Importante|
-| Como PO terei acesso a um dashboard com resultado do meu time nas avaliações para que eu possa acompanhar e analisar o desempenho do meu time | Importante |
- | Como LG terei acesso a um dashboard com resultado do meu time nas avaliações para que eu possa acompanhar e analisar o desempenho do meu time | Importante |
+  | Como estudante quero ter acesso a um dashboard que apresente os meus resultados individuais nas avaliações para que eu possa acompanhar e analisar o meu desempenho frente às avaliações realizadas por mim e pelos demais integrantes do meu Time | Importante|
+| Como líder do grupo quero ter acesso a um dashboard com os  resultados dos meus times  nas avaliações para que eu possa acompanhá-los e analisá-los | Importante |
+ | Como líder do grupo quero ter acesso a um dashboard com os resultados dos PO´s e Líderes técnicos do meu grupo.  | Importante |
+ | Como Fake client quero ter acesso a um dashboard com os resultados dos meus times  nas avaliações para que eu possa acompanhá-los e analisá-los| Importante |
+ | Como fake client quero ter acesso a um dashboard com os resultados dos PO´s e Líderes técnicos do meu grupo | Importante |
 
-	
  </details>
- 
+
+
+
+## Backlog das Sprints
+
 <details>
-<summary>SPRINT 4 - "NÃO VALIDADO AINDA" </summary>
- 
-  | USER STORY | PRIORIDADE |
-  |------------|------------|
-  | Como PO, terei acesso ao meu Dashboard individual e os Dashboards do meu time, para acompanhamento de desempenho |Importante|
-  | Como Líder Técnico, terei acesso ao meu Dashboard individual e aos Dashboards do meu time, para acompanhamento de desempenho |Importante|
-  | Como estudante, terei acesso ao meu Dashboard individual e ao Dashboard geral do time, para acompanhar o meu desempenho |Importante|
+<summary> SPRINT 1 - Sistema de cadastro do usuário e autenticação  </summary>
+	
 
- </details>
-
-
-
-### Backlog detalhado da Sprint 1
-#### *Criação do sistema de usuário*
 * Criação do usuario *Administrador*
 * Sistema de cadastramento de grupos e usuários (Líder do Grupo e Fake Client) por parte do *Administrador* 
 * Sistema de cadastramento e configuração de Sprints pelo *Líder do Grupo*
@@ -205,7 +197,29 @@ Figma, Asana, Youtube, Google drive e Google Docs.
 * Sistema de cadastramento de usuários pelo *Líder do Grupo*
 * Criação da funcionalidade de Login
 * Retorno para os usuários das Sprints e usuários que ele deve avaliar
+ </details>
 
-*Documento com a descrição completa dos Épicos, storys e tarefas da [1ª Sprint](https://docs.google.com/document/d/e/2PACX-1vQ7dtt7AMiOUWYHD1UkAYsZ2ibkR9KMMcrm4DGZL1xgrUUiRh0o9ROnhx6awl8EsjuklAxMRILXGxCi/pub)*
+<details>
+<summary> SPRINT 2 - Sistema de avaliação </summary>
+
+
+* Cumprir as pendências da sprint 1
+* Criação da funcionalidade de avaliação
+* Criação da funcionalidade feedback
+* Integração do sistema de avaliação ao perfil dos usuários com o retorno das sprints e integrantes que ele deve avaliar
+* Criação da funcionalidade de Logout
+ </details>
+ 
+ <details>
+<summary> SPRINT 3 - Dashboards de desempenho </summary>
+
+
+* Criação dos dashboards individuis dos estudantes
+* Criação dos dashboard de acompanhamento do grupo
+* Retorno da funcionalidade de dashboard na tela home
+ </details>
+
+
+*Documento com a descrição completa dos Épicos, storys e tarefas da [1ª sprint](https://docs.google.com/document/d/e/2PACX-1vQ7dtt7AMiOUWYHD1UkAYsZ2ibkR9KMMcrm4DGZL1xgrUUiRh0o9ROnhx6awl8EsjuklAxMRILXGxCi/pub) , [2ª sprint](https://docs.google.com/document/d/e/2PACX-1vR0gGrbL-q37uZ9rH8kDk77-N6vrqyoBJx5UkXnY3IQLeOXj8llaBxgqB1rR_bhH49mYFk0WGDlrVIV/pub) e [3ª sprint](https://docs.google.com/document/d/e/2PACX-1vR0zHG2dyVfBpuVXZiCNbIZvQNeJg16XWkVrrtmuTApfnywUYzdQonlN2Ebh3RIhoqCxD_BUKGHg237/pub)*
 
 *Fluxograma do sistema de cadastramento disponível pelo [Drive](https://drive.google.com/file/d/11j_OIrMpIdoHqzDNnrGinr8TQ7IvanjP/view?usp=sharing)*
