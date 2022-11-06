@@ -79,11 +79,6 @@ def run(frame_parent):
         Button(quadro, text = text, font = font, background = co0, justify=RIGHT, fg=co2, command=command,
                width=13, height=0, activebackground='#c5a8b0').grid(row=r, column=c, sticky= sticky)
 
-    
-
-    
-
-
    # importa a função que transforma role_id em nome da role
     from Models.Role import get_role_name
    
@@ -95,7 +90,7 @@ def run(frame_parent):
 
     # frame com todas a lista de usuários, que ocupará apenas o canto superior direito da tela
     # para deixar essa tela menor, coloco nw apenas
-    frame_usuarios = criar_frame(module_frame, 1, 0, "ne", co0, co1, 3)
+    frame_usuarios = criar_frame(module_frame, 1, 0, "nes", co0, co1, 3)
     frame_usuarios.columnconfigure(0, minsize = 0, weight = 1)
     frame_usuarios.rowconfigure(0, minsize = 0, weight = 1)
     # frame_usuarios = add_scrollbar(frame_usuarios)
@@ -119,7 +114,7 @@ def run(frame_parent):
 
         for user_to_submit in grade_to_submit:
 
-            frame_to_rate = criar_frame(frame_avaliados, indice, 0, "ew", co0, co0, 1)
+            frame_to_rate = criar_frame(frame_avaliados, indice, 0, "ews", co0, co0, 1)
             frame_to_rate.columnconfigure(0, minsize = 0, weight = 1)
             criar_label(frame_to_rate, get_role_name(user_to_submit['role_id']), 'Calibri, 12', co0, 0, 0, "w")  # linha para teste
             criar_label(frame_to_rate, user_to_submit['name'], 'Calibri, 12', co0, 1, 0, "w")  # linha para teste
@@ -133,7 +128,7 @@ def run(frame_parent):
 
         for user_submited in grade_submitted:
 
-            frame_rated = criar_frame(frame_avaliados, indice, 0, "ew", co0, co0, 1)
+            frame_rated = criar_frame(frame_avaliados, indice, 0, "ews", co0, co0, 1)
             frame_rated.columnconfigure(0, minsize = 0, weight = 1)
             criar_label(frame_rated, get_role_name(user_submited['role_id']), 'Calibri, 12', co0, 0, 0, "w")  # linha para teste
             criar_label(frame_rated, user_submited['name'], 'Calibri, 12', co0, 1, 0, "w")  # linha para teste
@@ -148,9 +143,9 @@ def run(frame_parent):
     return module_frame
 
 def avaliar (id):
-    from Front.Modules import avaliacao_teste
+    from Front.Modules import avaliacao
     global module_frame
-    avaliacao_teste.run(module_frame, id)
+    avaliacao.run(module_frame, id)
 
 
 
@@ -165,24 +160,3 @@ def graphic_pie(data=list, labels = list):
     ax.set_title("Relação de avaliações concluídas e pendentes")
     fig.set_facecolor(co0)
     return fig
-
-
-# def graphic_pie2(data = list, labels = list):
-#     global grade_submitted
-#     global grade_to_submit
-
-#     plt.style.use('_mpl-gallery-nogrid')
-   
-#     # make data
-#     # n_submitted = len(grade_submitted)
-#     # n_to_submit = len(grade_to_submit)
-#     # data = [n_submitted, n_to_submit]
-#     colors = plt.get_cmap('Paired')(np.linspace(0.2, 0.7, len(data)))
-   
-#     # plot
-#     fig, ax = plt.subplots(figsize = (4,4), subplot_kw=dict(aspect="equal"))
-    
-#     ax.pie(data, labels = labels, autopct='%.1f%%', colors = colors, shadow = True, radius = 1.5, center = (2,2), frame=True)
-#     ax.set(xlim = (0,4), xticks = np.arange(0,4), ylim=(0,4), yticks=np.arange(0,4))
-#     ax.set_title('oi')
-#     return fig
