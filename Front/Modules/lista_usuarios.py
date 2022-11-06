@@ -7,8 +7,7 @@ from matplotlib.figure import Figure
 
 # cores
 co0 = "#fae8e8"  # rosa
-# co1 = "#d9d9d9"  # cinza
-co1 = "#e4e5de"
+co1 = "#d9d9d9"
 co2 = "#1a1d1a"  # preta
 
 # Informações do modulo
@@ -96,7 +95,7 @@ def run(frame_parent):
 
     # frame com todas a lista de usuários, que ocupará apenas o canto superior direito da tela
     # para deixar essa tela menor, coloco nw apenas
-    frame_usuarios = criar_frame(module_frame, 1, 0, "ne", co1, co1, 2)
+    frame_usuarios = criar_frame(module_frame, 1, 0, "ne", co0, co1, 3)
     frame_usuarios.columnconfigure(0, minsize = 0, weight = 1)
     frame_usuarios.rowconfigure(0, minsize = 0, weight = 1)
     # frame_usuarios = add_scrollbar(frame_usuarios)
@@ -110,39 +109,40 @@ def run(frame_parent):
     canvas = FigureCanvasTkAgg(figure, master = frame_dashboards)
     canvas.get_tk_widget().grid(row=0, column=0, sticky='n')
     
-   # frame com os usuários que devem ser analisados por quem está logado
-    frame_avaliados = criar_frame(frame_usuarios, 1, 0, "nsew", co1, co1, 1)
-    frame_avaliados.columnconfigure(0, minsize = 0, weight = 1)
-    criar_label(frame_avaliados, 'Integrantes ainda não Avaliados', 'Calibri, 14', co1, 0, 0, "w")
-
     indice = 2
+    frame_avaliados = criar_frame(frame_usuarios, 1, 0, "nsew", co0, co0, 1)
+    frame_avaliados.columnconfigure(0, minsize = 0, weight = 1)
+    if len(grade_to_submit)!=0:
+        # frame com os usuários que devem ser analisados por quem está logado
+        criar_label(frame_avaliados, 'Integrantes ainda não Avaliados', 'Calibri, 14', co0, 0, 0, "w")
 
-    for user_to_submit in grade_to_submit:
 
-        frame_to_rate = criar_frame(frame_avaliados, indice, 0, "ew", co1, co1, 1)
-        frame_to_rate.columnconfigure(0, minsize = 0, weight = 1)
-        criar_label(frame_to_rate, get_role_name(user_to_submit['role_id']), 'Calibri, 12', co1, 0, 0, "w")  # linha para teste
-        criar_label(frame_to_rate, user_to_submit['name'], 'Calibri, 12', co1, 1, 0, "w")  # linha para teste
-        criar_button(frame_to_rate, 'Avaliar', 'Calibri, 12', 1, 1, lambda u=user_to_submit: avaliar(u['id']), "e")  # linha para teste
+        for user_to_submit in grade_to_submit:
+
+            frame_to_rate = criar_frame(frame_avaliados, indice, 0, "ew", co0, co0, 1)
+            frame_to_rate.columnconfigure(0, minsize = 0, weight = 1)
+            criar_label(frame_to_rate, get_role_name(user_to_submit['role_id']), 'Calibri, 12', co0, 0, 0, "w")  # linha para teste
+            criar_label(frame_to_rate, user_to_submit['name'], 'Calibri, 12', co0, 1, 0, "w")  # linha para teste
+            criar_button(frame_to_rate, 'Avaliar', 'Calibri, 12', 1, 1, lambda u=user_to_submit: avaliar(u['id']), "e")  # linha para teste
+            indice = indice + 1
+
+    if len(grade_submitted)!=0:
+        criar_label(frame_avaliados, 'Integrantes já Avaliados', 'Calibri, 14', co0, indice, 0, "w")
+
         indice = indice + 1
 
+        for user_submited in grade_submitted:
 
-    criar_label(frame_avaliados, 'Integrantes já Avaliados', 'Calibri, 14', co1, indice, 0, "w")
+            frame_rated = criar_frame(frame_avaliados, indice, 0, "ew", co0, co0, 1)
+            frame_rated.columnconfigure(0, minsize = 0, weight = 1)
+            criar_label(frame_rated, get_role_name(user_submited['role_id']), 'Calibri, 12', co0, 0, 0, "w")  # linha para teste
+            criar_label(frame_rated, user_submited['name'], 'Calibri, 12', co0, 1, 0, "w")  # linha para teste
+            # criar_button(frame_rated, 'Editar Avaliação', 'Calibri, 12', 1, 1, "e")  # linha para teste
+            indice = indice + 1
 
-    indice = indice + 1
-
-    for user_submited in grade_submitted:
-
-        frame_rated = criar_frame(frame_avaliados, indice, 0, "ew", co1, co1, 1)
-        frame_rated.columnconfigure(0, minsize = 0, weight = 1)
-        criar_label(frame_rated, get_role_name(user_submited['role_id']), 'Calibri, 12', co1, 0, 0, "w")  # linha para teste
-        criar_label(frame_rated, user_submited['name'], 'Calibri, 12', co1, 1, 0, "w")  # linha para teste
-        # criar_button(frame_rated, 'Editar Avaliação', 'Calibri, 12', 1, 1, "e")  # linha para teste
-        indice = indice + 1
-
-    f = Frame(frame_usuarios, pady=100, bg=co1)
-    Label(f, text='', bg=co1).grid(row=0, column=0, sticky="s")
-    f.grid(row=100, column=0, sticky="s")
+        f = Frame(frame_usuarios, pady=100, bg=co0)
+        Label(f, text='', bg=co0).grid(row=0, column=0, sticky="s")
+        f.grid(row=100, column=0, sticky="s")
 
 
     return module_frame
