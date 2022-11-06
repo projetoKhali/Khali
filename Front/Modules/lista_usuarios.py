@@ -127,7 +127,7 @@ def run(frame_parent):
         indice = indice + 1
 
 
-        criar_label(frame_avaliados, 'Integrantes já Avaliados', 'Calibri, 14', co1, indice, 0, "w")
+    criar_label(frame_avaliados, 'Integrantes já Avaliados', 'Calibri, 14', co1, indice, 0, "w")
 
     indice = indice + 1
 

@@ -1,6 +1,7 @@
 from datetime import date
 from Authentication import *
 from Front.Modules import ModulesManager
+from Models import Role 
 
 def initialize_test():
 
@@ -90,18 +91,21 @@ def initialize_test():
 from Front.Modules import dashboards
 from tkinter import *
 
-window = Tk()
-window.configure(background = co0)
-dashboards.run(window)
-def on_closing():
-    from matplotlib import pyplot as plt
-    plt.close("all")
-    window.destroy()
-window.protocol("WM_DELETE_WINDOW", on_closing)
-window.mainloop()
+# window = Tk()
+# window.configure(background = co0)
+# window.columnconfigure([0], minsize = 0, weight = 1)
+# window.rowconfigure([0], minsize = 0, weight = 1)
 
-exit()
-print(unsubscribe_student('washoe@dev.com'))
+# dashboards.run(window)
+# def on_closing():
+#     from matplotlib import pyplot as plt
+#     plt.close("all")
+#     window.destroy()
+# window.protocol("WM_DELETE_WINDOW", on_closing)
+# window.mainloop()
+
+# exit()
+# print(unsubscribe_student('washoe@dev.com'))
 
 # from Utils.edit_team_back import *
 
@@ -126,7 +130,8 @@ WindowManager.initialize()
 # login(email='a@d.m', senha='123')
 # login(email='l@d.g', senha='123')
 # login(email='c@c.c', senha='123')
-# login(email='l@d.g', senha='123')
-login(email='lt1@o.com', senha='123')
+login(email='l@d.g', senha='123')
+# login(email='lt1@o.com', senha='123')
+# login(email='fulano-dev@dev.com', senha ='123')
 
 WindowManager.update()
