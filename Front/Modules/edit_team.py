@@ -268,7 +268,7 @@ def remove_member(member_data):
 
 def unsubscribe_user(member_data):
     # print(member_data)
-    edit_team_back.unsubscribe_student(member_data.email)
+    edit_team_back.unsubscribe_user(member_data.email)
     redraw()
 
 

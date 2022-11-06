@@ -106,7 +106,7 @@ def change_role(team, email, role):
 
     handler.save_file_csv(Settings.USERS_PATH, Settings.PATH_FIELDS[Settings.USERS_PATH], matriz)
 
-def unsubscribe_student(email):
+def unsubscribe_user(email):
      # abre e lê arquivo csv
     with open(Settings.USERS_PATH + '.csv', 'r') as file:
         # Lê as linhas do arquivo e salva na variavel 'lines'. Cada linha é uma única string
