@@ -89,8 +89,8 @@
 > - [x] 15/08 a 19/08 - *Kick-off*
 > - [x] 29/08 a 18/09 - *Primeira Sprint*
 > - [x] 19/09 a 09/10 - *Segunda Sprint*
-> - [ ] 09/10 a 15/10 - *Recesso Escolar*
-> - [ ] 17/10 a 06/11 - *Terceira Sprint*
+> - [x] 09/10 a 15/10 - *Recesso Escolar*
+> - [x] 17/10 a 06/11 - *Terceira Sprint*
 > - [ ] 07/11 a 27/11 - *Quarta Sprint*
 > - [ ] 08/12 - *Feira de Soluções e Apresentação Final API*
 
