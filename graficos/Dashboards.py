@@ -1,82 +1,128 @@
-import matplotlib.pyplot as  plt 
+# from matplotlib.figure import Figure
 from .Integrador import *
 
-# Gera um grafico multi barra
-def multi_bar (title, names, y_label, matrix, x_label, x_ticks, colors):
+def multi_bar (title, names, y_label, matriz, x_label, x_ticks):
+    from matplotlib import pyplot
 
-    # Esconde a barra de comandos do matplotlib
-    plt.rcParams['toolbar'] = 'None'
+    # ind = np.arange(len(x_ticks))  # the x locations for the groups
+    fig, ax = pyplot.subplots()
+    bar_width = 1. / (len(matriz) + 1.75)
 
-    # Define a ampliação do grafico
-    # plt.figure(figsize = (10, 5))
-    
-    # Define a largura de cada barra individual sendo 1 dividido pela quantidade de listas da matriz
-    # somado por um valor constante de espaçamento entre cada x_tick
-    bar_width = 1. / (len(matrix) + 1.75)
-
-    # Para cada lista na matriz
-    for i, lst in enumerate(matrix):
+    for i, lst in enumerate(matriz):
 
         # Define a posição da barra. Indice da barra * espaçamento definido pela quantidade de barras por x_tick
         offset = (i * bar_width) 
 
         # move todas as barras para esquerda em (tamanho total da soma das barras / 2)
-        offset -= bar_width * int(len(matrix) / 2)
+        offset -= bar_width * int(len(matriz) / 2)
 
-        # caso o numero de barras seja par, move metade do tamanho de UMA barra para a direita
-        if len(matrix) % 2 == 0: offset += bar_width / 2
+        # caso o numero de barras seja par, move o metade do tamanho de UMA barra para a direita
+        if len(matriz) % 2 == 0: offset += bar_width / 2
 
         # define a posição de cada barra da lista de indice 'i'
         positions = [j + offset for j in range(len(x_ticks))]
+
+        ax.bar_label(
+            ax.bar(positions, lst, width=bar_width, label=names[i]
+        ), fmt='%.1f', padding=3)
+
+    # Add some text for labels, title and custom x-axis tick labels, etc.
+    ax.set_ylabel(y_label)
+    ax.set_xlabel(x_label)
+
+    ax.set_title(title)
+
+    ax.set_xticks([i for i in range(len(x_ticks))])
+    ax.set_xticklabels(x_ticks)
+
+    ax.legend()
+
+    fig.tight_layout()
+
+    return fig
+
+
+########################################################################
+# Gera um grafico multi barra
+# def multi_bar (title, names, y_label, matrix, x_label, x_ticks, colors):
+#     from matplotlib import pyplot
+
+#     # Esconde a barra de comandos do matplotlib
+#     pyplot.rcParams['toolbar'] = 'None'
+
+#     # Define a ampliação do grafico
+#     # pyplot.figure(figsize = (10, 5))
+    
+#     # Define a largura de cada barra individual sendo 1 dividido pela quantidade de listas da matriz
+#     # somado por um valor constante de espaçamento entre cada x_tick
+#     bar_width = 1. / (len(matrix) + 1.75)
+
+#     # Para cada lista na matriz
+#     for i, lst in enumerate(matrix):
+
+#         # Define a posição da barra. Indice da barra * espaçamento definido pela quantidade de barras por x_tick
+#         offset = (i * bar_width) 
+
+#         # move todas as barras para esquerda em (tamanho total da soma das barras / 2)
+#         offset -= bar_width * int(len(matrix) / 2)
+
+#         # caso o numero de barras seja par, move o metade do tamanho de UMA barra para a direita
+#         if len(matrix) % 2 == 0: offset += bar_width / 2
+
+#         # define a posição de cada barra da lista de indice 'i'
+#         positions = [j + offset for j in range(len(x_ticks))]
         
-        # Cria um grafico de barras para cada item da lista 'lst'  
-        plt.bar(positions, lst, color=colors[i % len(colors)], width=bar_width, label=names[i])
+#         # Cria um grafico de barras para cada item da lista 'lst'  
+#         pyplot.bar(positions, lst, color=colors[i % len(colors)], width=bar_width, label=names[i])
 
-    plt.ylim([0, 5])
+#     pyplot.ylim([0, 5])
 
-    # Adiciona o título
-    plt.title(title)
+#     # Adiciona o título
+#     pyplot.title(title)
 
-    # Adiciona a label e os marcadores x
-    plt.xlabel(x_label)
-    plt.xticks([r for r in range(len(x_ticks))], x_ticks)
+#     # Adiciona a label e os marcadores x
+#     pyplot.xlabel(x_label)
+#     pyplot.xticks([r for r in range(len(x_ticks))], x_ticks)
 
-    # Adiciona a label y
-    plt.ylabel(y_label)
+#     # Adiciona a label y
+#     pyplot.ylabel(y_label)
 
-    # Adiciona a legenda representando cada lista da matriz
-    plt.legend()
-
-    # Renderiza o grafico
-    plt.show()
+#     # Adiciona a legenda representando cada lista da matriz
+#     pyplot.legend()
+#     # return plt
+#     # pyplot.figure(figsize = (10, 5))
+#     # Renderiza o grafico
+#     pyplot.show()
 
 
 # Gera um grafico de linha
 def line (title, names, y_label, values, x_label, x_ticks, colors):
-    plt.rcParams['toolbar'] = 'None'
+    from matplotlib import pyplot
+
+    pyplot.rcParams['toolbar'] = 'None'
 
     # Define a ampliação do grafico
-    # plt.figure(figsize = (10, 5))
+    # pyplot.figure(figsize = (10, 5))
     barWidth = .2 
 
     for i, value in enumerate(values):
 
         # Aqui eu construo a barra
         positions = [j + barWidth for j in range(len(x_ticks))]
-        plt.plot(positions, value, color=colors[i % len(colors)], label=names[i])
+        pyplot.plot(positions, value, color=colors[i % len(colors)], label=names[i])
 
-    plt.ylim([0, 5])
+    pyplot.ylim([0, 5])
 
-    plt.title(title)
+    pyplot.title(title)
 
-    plt.xlabel(x_label)
-    plt.xticks([r + barWidth for r in range(len(x_ticks))], x_ticks)
+    pyplot.xlabel(x_label)
+    pyplot.xticks([r + barWidth for r in range(len(x_ticks))], x_ticks)
 
-    plt.ylabel(y_label)
+    pyplot.ylabel(y_label)
 
-    plt.legend()
+    pyplot.legend()
 
-    plt.show()
+    pyplot.show()
 
 
 def pie_chart ():
@@ -120,14 +166,13 @@ def user_media_sprints (user_id):
     ratings = get_ratings_to_user(user.id)
 
     # Renderiza o grafico representando as médias calculadas 
-    multi_bar(
+    return multi_bar(
         f'Média de {user.name} ao longo das sprints',
         [f'Sprint {i}' for i in range(len(sprints))],
         'Médias',
         medias_por_sprint(criteria, sprints, ratings),
         'Critério avaliativo',
-        criteria,
-        ['orange', 'yellow', 'red', 'green', 'darkgoldenrod', 'brown', 'lightgreen', 'magenta', 'royalblue', 'pink', ]
+        criteria
     )
 
 
@@ -145,7 +190,7 @@ def user_media_x_team (user_id):
     # carrega todas as avaliações do time
     user_ratings = get_ratings_to_user(user_id)
     team_ratings = get_ratings_to_team(user.team_id)
-
+    print(user_ratings)
     # cria uma lista de avaliações em que o primeiro indice corresponde às avaliações do usuário
     # e o segundo índice corresponde às avaliações do time
     ratings = [
@@ -156,14 +201,13 @@ def user_media_x_team (user_id):
     team_name = get_team(user.team_id).name
 
     # Renderiza o grafico representando as médias calculadas 
-    multi_bar(
+    return multi_bar(
         f'Médias de {user.name} em comparativo ao time {team_name}',
         [user.name, team_name],
         'Médias',
         medias(criteria, ratings),
         'Critério avaliativo',
         criteria,
-        ['orange', 'yellow', 'red', 'green', 'darkgoldenrod', 'brown', 'lightgreen', 'magenta', 'royalblue', 'pink', ]
     )
 
 
@@ -184,14 +228,13 @@ def team_media_sprints (team_id):
     ratings = get_ratings_to_team(team_id)
 
     # Renderiza o grafico representando as médias calculadas 
-    multi_bar(
+    return multi_bar(
         f'Média do time {team.name} ao longo das sprints',
         [f'Sprint {i}' for i in range(len(sprints))],
         'Médias',
         medias_por_sprint(criteria, sprints, ratings),
         'Critério avaliativo',
         criteria,
-        ['orange', 'yellow', 'red', 'green', 'darkgoldenrod', 'brown', 'lightgreen', 'magenta', 'royalblue', 'pink', ]
     )
 
 
@@ -211,13 +254,11 @@ def teams_media (group_id):
 
     # Adiciona a lista de avaliações filtrada para a lista ratings 
     for i, team in enumerate(teams):
-        ratings[i] = classify_criteria(criteria, get_ratings_to_team(team.id))
-
-    # print(ratings)
+        ratings[i] = [r for r in get_ratings_to_team(team) if get_user(r.to_user_id) == role_id]
 
     # Renderiza o grafico representando as médias calculadas 
     multi_bar(
-        f'Média dos times no grupo {get_group(group_id).name}',
+        f'Média dos {role.name}s',
         [team.name for team in teams],
         'Médias',
         medias(criteria, ratings),
@@ -227,104 +268,62 @@ def teams_media (group_id):
     )
 
 
-# Renderiza um Dashboard com a media de uma determinada função de cada time
-def role_media (role_id, group_id):
 
-    # importa as funções de acesso ao banco de dados de cada modelo
-    from Models.Rating import get_ratings_to_team
-    from Models.Team import get_teams_of_group
 
-    # Pega todos os times do grupo especificado
-    teams = get_teams_of_group(group_id)
-    
-    # Inicializa uma lista para as avaliações que serão classificadas / filtradas
-    ratings = []
 
-    # para cada time do grupo
-    for team in teams:
 
-        # Adquire todas as avaliações do time
-        ratings_team = get_ratings_to_team(team.id)
-        # print(f'team {team.name}: {len(ratings_team)} ratings')
-
-        # Caso o time não possua avaliações, oculta ele do dashboard
-        if len(ratings_team) == 0: continue
-
-        # Para cada avaliação do time
-        for r in ratings_team:
-
-            # Caso o usuário avaliado na avaliação não seja da role especificada 
-            if r.to_user_id != role_id:
-
-                # remova-o da lista de avaliações do time
-                ratings_team.remove(r)
-
-        # Adiciona a lista de avaliações filtrada para a lista ratings 
-        ratings.append(classify_criteria(criteria, ratings_team))
-
-    # Renderiza o grafico representando as médias calculadas 
+def PO():
     multi_bar(
-        f'Média dos {["Líderes Técnicos", "Product Owners", "Desenvolvedores"][role_id-3]}',
-        [team.name for team in teams],
-        'Médias',
-        medias(criteria, ratings),
+        'desempenho individual',
+        ['Rodrigo', 'rogerio', 'marta', 'Cleitinho'],
+        'Notas',
+        [
+            [4, 3, 5, 4, 2],
+            [5, 4, 3, 4, 6],
+            [4, 2, 4, 5, 4],
+            [4, 2, 4, 5, 4],
+            [2, 3, 4, 5, 3]
+        ],
         'Critério avaliativo',
-        criteria,
-        ['orange', 'yellow', 'red', 'green', 'darkgoldenrod', 'brown', 'lightgreen', 'magenta', 'royalblue', 'pink', ]
+        ['TG', 'PO', 'KE', 'PT', 'QU'],
+        ['orange', 'green', 'blue', 'pink']
     )
 
 
-# Renderiza um Dashboard com a media de cada usuário de um time em cada criterio
-def users_media_team (team_id):
-
-    # importa as funções de acesso ao banco de dados de cada modelo
-    from Models.Team import get_team
-    from Models.User import get_users_of_team
-    from Models.Rating import get_ratings_to_user
-
-    # carrega o time com o id especificado e seus membros
-    team = get_team(team_id)
-    users = get_users_of_team(team_id)
-    
-    # Lista todas as avaliações em que o id do usuário avaliado corresponda a qualquer id da lista 'user_ids' 
-    ratings = [classify_criteria(criteria, get_ratings_to_user(user.id)) for user in users]
-
-    # Renderiza o grafico representando as médias calculadas 
-    line(
-        f'Média do time {team.name}',
-        [x.name for x in users],
-        'Médias',
-        medias(criteria, ratings),
-        'Critério avaliativo',
-        criteria,
-        ['orange', 'yellow', 'red', 'green', 'darkgoldenrod', 'brown', 'lightgreen', 'magenta', 'royalblue', 'pink', ]
-    )
 
 
-# Renderiza um Dashboard com a media de um determinado time em cada criterio de cada sprint
-def group_media_sprints (group_id):
-
-    # importa as funções de acesso ao banco de dados de cada modelo
-    from Models.Group import get_group
-    from Models.Rating import get_ratings_to_group
-
-    # carrega o time com o id especificado
-    group = get_group(group_id)
-    
-    # Lista as sprints (em objeto da classe Sprint)
-    sprints = get_group_sprints(group_id)
-
-    # Lista todas as avaliações em que o id do usuário avaliado corresponda a qualquer id da lista 'user_ids' 
-    ratings = get_ratings_to_group(group_id)
-
-    # Renderiza o grafico representando as médias calculadas 
+def estudantes ():
     multi_bar(
-        f'Média do grupo {group.name} ao longo das sprints',
-        [f'Sprint {i}' for i in range(len(sprints))],
-        'Médias',
-        medias_por_sprint(criteria, sprints, ratings),
-        'Critério avaliativo',
-        criteria,
-        ['orange', 'yellow', 'red', 'green', 'darkgoldenrod', 'brown', 'lightgreen', 'magenta', 'royalblue', 'pink', ]
+        'Seu desempenho em comparativo ao seu time',
+        ['Sua média', 'Média dos seu time'],
+        'Criterios',
+        [
+            [2, 3, 2, 4, 5],
+            [3, 4, 2, 5, 4]
+        ],
+        None,
+        ['TG', 'PO', 'KE', 'PT', 'QU'],
+        ['orange', 'green']
     )
+
+
+
+
+
+def Estudante_2 ():
+    multi_bar(
+        'Desempenho ao decorrer das Sprints',
+        ['Sprint 1', 'Sprint 2', 'Sprint 3', 'Sprint 4'],
+        'Criterios',
+        [
+            [2, 3, 2, 4, 5],
+            [3, 4, 2, 5, 4],
+            [4, 4, 3, 4, 3],
+            [4, 5, 4, 5, 4]
+        ],
+        None,
+        ['TG', 'PO', 'KE', 'PT', 'QU'],
+        ['orange', 'green', 'blue', 'red']
+    )
+
 
