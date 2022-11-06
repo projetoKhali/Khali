@@ -22,7 +22,6 @@
     * [Requisitos Funcionais](#requisitos-funcionais)
     * [Requisitos Não Funcionais](#requisitos-não-funcionais)
     * [Backlog do Produto](#backlog-do-produto)
-      * [Backlog da Sprint 1](#backlog-detalhado-da-sprint-1)
     
     
 ##
