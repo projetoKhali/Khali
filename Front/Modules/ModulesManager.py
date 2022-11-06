@@ -18,8 +18,18 @@ def get_modules():
     from Authentication import CURRENT_USER
     from Models import Role 
 
+    from Models.Group import get_group
+
     # define o tipo do usuário logado
-    role = Role.get_role(int(CURRENT_USER.role_id))
+    role = Role.get_role(CURRENT_USER.role_id)
+
+    # Caso o usuário logado seja o lider ou cliente do próprio grupo, sobreescreva a função armazenada
+    # em role pela função que consta no csv do grupo
+    group = get_group(CURRENT_USER.group_id)
+    if CURRENT_USER.role_id == group.leader_id:
+        role = Role.get_role(group.leader_id)
+    if CURRENT_USER.role_id == group.client_id:
+        role = Role.get_role(group.client_id)
 
     # inicializa uma lista de modulos a serem retornados
     allowed_modules = []
