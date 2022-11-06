@@ -101,6 +101,7 @@ Dashboards.team_media_sprints(0)                    # !!!!!!!!
 # Dashboards.group_media_sprints(1)
 # Dashboards.teams_media(0)
 exit()
+print(unsubscribe_student('washoe@dev.com'))
 
 # from Utils.edit_team_back import *
 

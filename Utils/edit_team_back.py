@@ -1,7 +1,9 @@
+from operator import index
 from CSV import CSVHandler as handler
 import Settings
 from array import *
 
+# mudo o time de um estudante já cadastrado para um novo time
 def add_user(email, team):
 
     #abre e lê arquivo csv
@@ -104,5 +106,37 @@ def change_role(team, email, role):
 
     handler.save_file_csv(Settings.USERS_PATH, Settings.PATH_FIELDS[Settings.USERS_PATH], matriz)
 
+def unsubscribe_student(email):
+     # abre e lê arquivo csv
+    with open(Settings.USERS_PATH + '.csv', 'r') as file:
+        # Lê as linhas do arquivo e salva na variavel 'lines'. Cada linha é uma única string
+        lines = file.readlines()
+
+    matriz = []
+
+    for i, item in enumerate(lines[1:]):
+        # retorna a linha em um dicionário e armazena em data_student
+        data_student = (handler.format_line_csv(Settings.PATH_FIELDS[Settings.USERS_PATH], item))
+        if data_student['email'] == email:
+            index_to_delete = i + 1
+    
+    data_to_delete = lines[index_to_delete]
+    lines.remove(data_to_delete)
+    
+    for i,item in enumerate(lines[1:]):
+        data_student = (handler.format_line_csv(Settings.PATH_FIELDS[Settings.USERS_PATH], item))
+        line = []
+        for valor in list(data_student.values()):
+            line.append(str(valor))
+            # print(f'line: {line}')
+
+        matriz.append(line)
+
+    handler.save_file_csv(Settings.USERS_PATH, Settings.PATH_FIELDS[Settings.USERS_PATH], matriz)
 
 
+
+            
+
+    
+    
