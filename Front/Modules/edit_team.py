@@ -122,6 +122,7 @@ def run(frame_parent):
         for user_id, no_team_user_data in enumerate(no_team_users):
             frame_member_actions = create_member(frame_no_team_members_parent, no_team_user_data, user_id)
             create_member_add(frame_member_actions, no_team_user_data, teams_list)
+            create_member_unsubscribe(frame_member_actions, no_team_user_data)
 
     f = Frame(module_frame, pady=100, bg=co0)
     Label(f, text='', bg=co0).grid(row=0, column=0, sticky="s")
@@ -223,6 +224,22 @@ def create_member_remove(frame_member_actions, member_data):
         command=lambda md=member_data:remove_member(md)
     ).grid(row=0, column=0)
 
+def create_member_unsubscribe(frame_member_actions, member_data):
+
+    # cria o frame e button remover dentro do ações
+    frame_remover = Frame(frame_member_actions)
+    frame_remover.grid(row=0, column=2)
+    Button(
+        frame_remover,
+        text='deletar',
+        font='Calibri, 12',
+        padx=8, pady=2,
+
+        # comando que será executado ao clicar: 
+        # chama a função remove_member com o member_data atual do loop como parametro
+        command=lambda md=member_data:unsubscribe_user(md)
+    ).grid(row=0, column=0)
+
 def redraw():
     global master_frame
     if master_frame is None:
@@ -248,4 +265,10 @@ def remove_member(member_data):
     # print(member_data)
     edit_team_back.delete_user(member_data.email)
     redraw()
+
+def unsubscribe_user(member_data):
+    # print(member_data)
+    edit_team_back.unsubscribe_student(member_data.email)
+    redraw()
+
 
