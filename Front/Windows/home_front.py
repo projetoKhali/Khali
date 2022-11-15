@@ -15,15 +15,7 @@ frame_coluna_B = None
 
 def run():
 
-    # cria a janela
-    janela = Tk()
-    janela.title('')
-    janela.geometry('1300x670')  # tamanho da tela, largura x altura
-
-    # tentativa de dar numero de linhas e colunas para a tabela. Se deixo ativado, os labels ficam espalhados pela tela.
-    janela.rowconfigure(0, minsize=800, weight=1)
-    janela.columnconfigure(1, minsize=800, weight=1)
-    janela.configure(background=co0)
+    janela = criar_janela()
 
     # função de criar frame
     # row e column referem-se a posição do frame
@@ -66,30 +58,42 @@ def run():
     from Authentication import sair
     criar_button(frame_tabs, "Sair", "Calibri, 14", sair, len(modules), 0, "ew", 5, 5)
 
-    #adiciona botões
-    #criar_button(frame_coluna_A, 'Meu Perfil', "Calibri, 14", None, 1,0, 'w', 5, 5)
-
-    # COLUNA B --------------------------------------------------------------
-    #frame da segunda coluna, que muda se apertar "Cadastro" ou "Meu Perfil"
-    # frame_coluna_B = criar_frame(janela, 0,1)
-    # frame_coluna_B.configure(background="green")
-    # frame_coluna_B.grid(row=0, column=1, sticky="nsew")
-
-
-    def run_module (m_index):
-        global frame_coluna_B
-        frame_coluna_B = Frame(janela)
-        frame_coluna_B.rowconfigure(0, minsize = 800, weight = 1)
-        frame_coluna_B.columnconfigure(0, minsize = 800, weight = 1)
-        frame_coluna_B.grid(row=0, column=1, sticky = "nsew")
-        global current_module
-        if current_module is not None:
-            try: 
-                current_module.destroy()
-            except: 
-                pass
-        current_module = modules[m_index].run(frame_coluna_B)
-
-    if len(modules) > 0: run_module(0)
+    if len(modules) > 0: run_module(janela, 0)
 
     return janela
+
+
+def criar_janela ():
+
+    # cria a janela
+    janela = Tk()
+    janela.title('')
+
+    # tamanho padrão de janela
+    janela.minsize(1300, 670)  # tamanho da tela, largura x altura
+
+    # janela maximizada
+    janela.state('zoomed')
+    # janela.geometry("%dx%d+0+0" % (janela.winfo_screenwidth(), janela.winfo_screenheight()))
+
+    # tentativa de dar numero de linhas e colunas para a tabela. Se deixo ativado, os labels ficam espalhados pela tela.
+    janela.rowconfigure(0, minsize=800, weight=1)
+    janela.columnconfigure(1, minsize=800, weight=1)
+    janela.configure(background=co0)
+
+    return janela
+
+
+def run_module (janela, m_index):
+    global frame_coluna_B
+    frame_coluna_B = Frame(janela)
+    frame_coluna_B.rowconfigure(0, minsize = 800, weight = 1)
+    frame_coluna_B.columnconfigure(0, minsize = 800, weight = 1)
+    frame_coluna_B.grid(row=0, column=1, sticky = "nsew")
+    global current_module
+    if current_module is not None:
+        try: 
+            current_module.destroy()
+        except: 
+            pass
+    current_module = modules[m_index].run(frame_coluna_B)

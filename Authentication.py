@@ -1,21 +1,17 @@
-from CSV.CSVHandler import *
-from Front import WindowManager
-from Utils.Gerar_Senha import gerar_senha
-from Models.User import User, to_user, create_user
-from Models.Group import Group
-from Models import Team
 
-import Settings as settings
-from Models.Role import *
+from Models.User import User
 
+# O usuário logado no momento
 CURRENT_USER : User = None
 
 # Efetua o login de Usuário e, se efetuado com sucesso, retorna o User logado 
 def login (email, senha):
+    from CSV.CSVHandler import find_data_csv
+    from Settings import USERS_PATH
 
     # Acessa o usuário que corresponde ao email fornecido na database
     try:
-        user_data = find_data_csv(settings.USERS_PATH, email)
+        user_data = find_data_csv(USERS_PATH, email)
         hashed_pw = user_data["password"]
 
     # em caso de erro, retorna o erro 0 - dado não encontrado
@@ -37,10 +33,12 @@ def login (email, senha):
     # comparação de senhas retorna True, login retornará o Usuário
     print("Authentication.login -- login sucesso")
 
+    from Models.User import to_user
     global CURRENT_USER
     CURRENT_USER = to_user(user_data)
 
-    WindowManager.next_state()
+    from Events import trigger
+    trigger('login')
 
     return CURRENT_USER
 
@@ -53,6 +51,7 @@ def sair():
 
 # Efetua o Cadastro de um novo Usuário e, se efetuado com sucesso, o armazena na database .csv
 def register (name, email, group_id, team_id, role_id, custom_password = None, log = True):
+    from Settings import COLS
 
     # Verifica se o Nome do Usuário fornecido é válido. Cancela o processo caso não seja.
     if not validate_user_name (name):
@@ -69,13 +68,18 @@ def register (name, email, group_id, team_id, role_id, custom_password = None, l
     #     print(COLS[2] + f'Authentication.Register -- Erro: Grupo de id {group_id} não existe' + COLS[0])
     #     return
 
+
+    from Models.Team import exists_team, get_team
+
     # Verifica se o Time fornecido é válido. Cancela o processo caso não seja.
-    if not Team.exists_team (team_id):
+    if not exists_team (team_id):
         print(COLS[2] + f'Authentication.Register -- Erro: Time de id {team_id} não existe' + COLS[0])
         return
-    if group_id != None and team_id != None and Team.get_team(team_id).group_id != group_id:
+    if group_id != None and team_id != None and get_team(team_id).group_id != group_id:
         print(COLS[2] + f'Authentication.Register -- Erro: Time de id {team_id} não é do grupo {group_id} do usuário sendo cadastrado' + COLS[0])
         return
+
+    from Models.Role import get_role
 
     # Verifica se a Função fornecida é válida. Cancela o processo caso não seja.
     if not get_role(role_id) is not None:
@@ -85,6 +89,7 @@ def register (name, email, group_id, team_id, role_id, custom_password = None, l
     # Inicializa variável senha para armazenamento
     password = str(custom_password)
     if password is None:
+        from Utils.Gerar_Senha import gerar_senha
 
         # Atualiza a senha toda vez que uma senha gerada é inválida
         while not validate_user_password(password):
@@ -104,6 +109,8 @@ def register (name, email, group_id, team_id, role_id, custom_password = None, l
     # Cria o Usuário com as informações especificadas        !! decodifica senha antes de salvar: remove b' e ' da string !! 
     user = User(name, email, group_id, team_id, role_id, hashed_password.decode('utf-8'))
 
+    from Models.User import create_user
+
     # Adiciona o usuário para a database
     id = create_user(
         user.name,
@@ -114,7 +121,8 @@ def register (name, email, group_id, team_id, role_id, custom_password = None, l
         user.password
     )
 
-    if settings.SEND_EMAIL_ON_REGISTER:
+    from Settings import SEND_EMAIL_ON_REGISTER
+    if SEND_EMAIL_ON_REGISTER:
         # from Utils import sistema_email
         # sistema_email.enviar_email(name, email, password)
         from Utils.sistema_envio_email import envio_email
@@ -130,7 +138,8 @@ def validate_user_name(name:str):
     # Nome fornecido é INVALIDO se descumprir qualquer uma das seguintes condições:
     # Numero de caracteres é maior ou igual ao minimo predefinido -> USER_NAME_MIN_MAX[0] 
     # Numero de caracteres é menor que o maximo predefinido       -> USER_NAME_MIN_MAX[1]
-    if len(name) < settings.USER_NAME_MIN_MAX[0] or len(name) >= settings.USER_NAME_MIN_MAX[1]:
+    from Settings import USER_NAME_MIN_MAX
+    if len(name) < USER_NAME_MIN_MAX[0] or len(name) >= USER_NAME_MIN_MAX[1]:
         return False
 
     # Cria uma variavel string para armazenar o caractere anterior no proximo loop
@@ -182,7 +191,8 @@ def validate_user_password(password:str):
     # Senha fornecida é INVALIDA se descumprir qualquer uma das seguintes condições:
     # Numero de caracteres é maior ou igual ao minimo predefinido -> PASSWORD_MIN_MAX[0] 
     # Numero de caracteres é menor que o maximo predefinido       -> PASSWORD_MIN_MAX[1]
-    if password is None or len(password) < settings.PASSWORD_MIN_MAX[0] or len(password) >= settings.PASSWORD_MIN_MAX[1]:
+    from Settings import PASSWORD_MIN_MAX
+    if password is None or len(password) < PASSWORD_MIN_MAX[0] or len(password) >= PASSWORD_MIN_MAX[1]:
         return False
 
     # Importa a biblioteca de utilidades para strings

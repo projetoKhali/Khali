@@ -1,7 +1,7 @@
 from .Windows import home_front, login_front
 
 # O estado atual do WindowManager corresponde a qual janela dentro da lista STATES deve estar aberta
-CURRENT_STATE = 0
+CURRENT_STATE = None
 
 # Armazena uma função de janela 
 STATES = [
@@ -23,6 +23,7 @@ def initialize():
     # Inicia a janela correspondente ao estado 0
     set_state(0)
 
+
 def set_state(new_state:int):
     global CURRENT_STATE
     
@@ -38,11 +39,13 @@ def reset():
     set_state(0)
 
 def next_state():
+    if CURRENT_STATE is None: return
     set_state(CURRENT_STATE + 1)
 
 # Inicia a janela correspondente ao estado atual (CURRENT_STATE) do WindowManager
 def launch():
     global CURRENT_WINDOW_INSTANCE, STATES, CURRENT_STATE
+    if CURRENT_STATE is None: return
 
     # Se a atual janela aberta não é nula, destrua
     if CURRENT_WINDOW_INSTANCE is not None:
@@ -53,6 +56,7 @@ def launch():
 
 
 def update():
+    if CURRENT_STATE is None: return
     def on_closing():
         from matplotlib import pyplot
         pyplot.close("all")
