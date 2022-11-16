@@ -13,7 +13,11 @@ modules = []
 frame_coluna_A = None
 frame_coluna_B = None
 
-def run():
+janela = None
+
+def run(init_module = True):
+
+    global janela
 
     from Front.WindowManager import create_window
     janela = create_window(co0)
@@ -40,8 +44,8 @@ def run():
     frame_logo = criar_frame(frame_coluna_A, 0, 0, 'news')
 
     #adiciona Logo
-    img = PhotoImage(file='.\\' + Settings.RESOURCES_PATH + '\Logo_small.png')  # imagem que vai ser colocada na tela, tem que estar com formato gif
-    logo = Label(frame_logo, image=img, bg=co0)
+    img = PhotoImage(file=Settings.RESOURCES_PATH + "\Logo_small.png")  # imagem que vai ser colocada na tela, tem que estar com formato gif
+    logo = Label(frame_logo, image=img)
     logo.photo = img
     logo.grid(row = 0, column = 0, sticky = 'n')
 
@@ -52,6 +56,12 @@ def run():
     frame_tabs = criar_frame(frame_coluna_A, 1, 0, 'news')
     frame_tabs.rowconfigure(0, weight = 1)
     frame_tabs.columnconfigure(0, weight = 1)
+
+
+
+
+
+
 
     for tab_index, module in enumerate(modules):
         criar_button(frame_tabs, module.NAME, "Calibri, 14", lambda i=tab_index: run_module(i), tab_index, 0, 'ew', 5, 5)  
@@ -65,16 +75,23 @@ def run():
 
 
 
-def run_module (janela, m_index):
+    if init_module:
+        run_module(0)
+
+    return janela
+
+def run_module (m_index):
+    global janela
     global frame_coluna_B
     frame_coluna_B = Frame(janela)
-    frame_coluna_B.rowconfigure(0, minsize = 800, weight = 1)
-    frame_coluna_B.columnconfigure(0, minsize = 800, weight = 1)
     frame_coluna_B.grid(row=0, column=1, sticky = "nsew")
     global current_module
     if current_module is not None:
-        try: 
-            current_module.destroy()
-        except: 
-            pass
+        current_module.configure(background = "red")
+        current_module.destroy()
     current_module = modules[m_index].run(frame_coluna_B)
+
+    run_module(0)
+
+    return janela
+
