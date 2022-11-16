@@ -70,6 +70,9 @@ def create_test_data():
         # pega o id dos usuários do grupo i que foram cadrastados
         users = [x.id for x in get_users_of_group(i)]
 
+        u = len(users)*len(users)*5*4
+        j = 0
+
         # pra cada sprint
         for s in range((4 * i), 4 + (4 * i)):
 
@@ -88,8 +91,11 @@ def create_test_data():
                         # cria uma nota aleatória entre 1 (inclusivo) e 6 (exclusivo)
                         n = randint(1, 6)
 
+                        p = j/(u+1)
+                        j += 1
+
                         # printa a avaliação que será criada
-                        print(f'Criando avaliação teste: id({f}) avalia id({t}) na sprint {s} e critério {c} com a nota {n}')
+                        print(f'grupo {i}: {int(p*100)}% |Criando avaliação teste: id({f}) avalia id({t}) na sprint {s} e critério {c} com a nota {n}')
 
                         # cria a avaliação
                         create_rating(f, t, s, c, n, 'feedback')
