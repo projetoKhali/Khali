@@ -88,7 +88,7 @@ def get_users(email):
 
     # print(grade_submitted)
     # print(grade_to_submit)
-    return [grade_submitted, grade_to_submit]
+    return [grade_to_submit, grade_submitted]
 
 
 # print(get_users('lt1@o.com'))

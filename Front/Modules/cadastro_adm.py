@@ -53,10 +53,12 @@ def run (frame_parent):
         grupo_num += 1
         codigo_str = f'GRUPO-{grupo_num}'
 
-        group_id = create_group(codigo_str)
 
-        register(nome_lider, email_lider, group_id, None, 1)
-        register(nome_client, email_client, group_id, None, 2)
+        group_id = create_group(
+            codigo_str,
+            register(nome_lider, email_lider, None, None, 1),
+            register(nome_client, email_client, None, None, 2)
+        )
 
         tree.insert('', END, values=[codigo_str, nome_lider, email_lider, nome_client, email_client])
         tree.place(relx=0.02, rely=0.02, relwidth=0.96, relheight=0.96)

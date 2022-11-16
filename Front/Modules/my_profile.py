@@ -25,24 +25,34 @@ def run(frame_parent):
     # cria uma lista com os usuários a serem avaliados pelo usuário logado
     grades = lista_usuarios_back.get_users(CURRENT_USER.email)
     
-    criar_piechart(module_frame, [len(grades[0]), len(grades[1])])
+    criar_piechart(module_frame, [len(grades[1]), len(grades[0])])
 
-    frame_usuarios = criar_frame(module_frame, 1, 0, "nes", co0, co1, 3)
-    frame_usuarios.columnconfigure(0, minsize = 0, weight = 1)
-    frame_usuarios.rowconfigure(0, minsize = 0, weight = 1)
+    frame_section_lista = criar_frame(module_frame, 0, 0, "nes", co0, co1, 3)
+    frame_section_lista.columnconfigure(0, minsize = 0, weight = 1)
+    frame_section_lista.rowconfigure(0, minsize = 0, weight = 1)
 
-    indice = 2
-    frame_avaliados = criar_frame(frame_usuarios, 1, 0, "nsew", co0, co0, 1)
-    frame_avaliados.columnconfigure(0, minsize = 0, weight = 1)
-    for grade in grades:
-        for user in grade:
+    frame_listas = criar_frame(frame_section_lista, 0, 0, "nsew", co0, co0, 1)
+    frame_listas.columnconfigure(0, minsize = 0, weight = 1)
+    lista_titles = ['Integrantes ainda não Avaliados', 'Integrantes já Avaliados']
 
-            frame_rated = criar_frame(frame_avaliados, indice, 0, "ews", co0, co0, 1)
-            frame_rated.columnconfigure(0, minsize = 0, weight = 1)
-            criar_label(frame_rated, get_role_name(user['role_id']), 'Calibri, 12', co0, 0, 0, "w")  # linha para teste
-            criar_label(frame_rated, grade['name'], 'Calibri, 12', co0, 1, 0, "w")  # linha para teste
+    # grades = grades[:1]
+
+    for i, grade in enumerate(grades):
+
+        if len(grade) < 1: continue
+            
+        frame_lista = criar_frame(frame_listas, i, 0, "ews", co0, co0, 1)
+        frame_lista.columnconfigure(0, minsize = 0, weight = 1)
+        criar_label(frame_lista, lista_titles[i], 'Calibri, 14', co0, 0, 0, "w")
+        frame_parent_users = criar_frame(frame_lista, 1, 0, "ews", co0, co0, 1)
+
+        for j, user in enumerate(grade):
+
+            frame_user = criar_frame(frame_parent_users, j, 0, 'ew', co0, co0, 0)
+
+            criar_label(frame_user, get_role_name(user['role_id']), 'Calibri, 12', co0, 0, 0, "w")  # linha para teste
+            criar_label(frame_user, user['name'], 'Calibri, 12', co0, 1, 0, "w")  # linha para teste
             # criar_button(frame_rated, 'Editar Avaliação', 'Calibri, 12', 1, 1, "e")  # linha para teste
-            indice = indice + 1
 
 
 
@@ -55,11 +65,11 @@ def criar_frame(quadro, row, column, sticky, background, highlightbackground, hi
 # cria widget do tipo label
 def criar_label(quadro, text, font, background, r, c, sticky='n'):
     from tkinter import Label
-    Label(quadro, text=text, font=font, background = background , justify='LEFT').grid(row=r, column=c, sticky= sticky)
+    Label(quadro, text=text, font=font, background = background , justify='left').grid(row=r, column=c, sticky= sticky)
 
 def criar_button(quadro, text, font, r, c, command, sticky='ne'):
     from tkinter import Button
-    Button(quadro, text = text, font = font, background = COLS[0], justify='RIGHT', fg=COLS[2], command=command,
+    Button(quadro, text = text, font = font, background = COLS[0], justify='right', fg=COLS[2], command=command,
         width=13, height=0, activebackground='#c5a8b0').grid(row=r, column=c, sticky= sticky)
 
 def criar_piechart (module_frame, data):
