@@ -3,12 +3,9 @@ from Settings import RESOURCES_PATH, co0
 
 def run():
 
-    #criando janela
-    janela = Tk()
-    janela.title('')
-    janela.geometry('1300x670') #aqui coloco o tamanho da tela, largura x altura
-    janela.configure(background=co0)
-    janela.resizable(width=True, height=True)
+    # criando janela
+    from Front.WindowManager import create_window
+    janela = create_window(co0)
 
         #*****BOTÃO DE LOGIN*****
     def send_login():
@@ -64,8 +61,5 @@ def run():
     botao_login = Button(frame_botao, text = 'Entrar', font = ("Calibri,15"), width=10, height=1, command=send_login, bg='#d9d9d9', activebackground='#c5a8b0', fg='#1a1d1a')
     botao_login.grid(row = 0, column= 0)
 
-    #dividindo a janela
-    # frame_cima = Frame(janela, width=1300, height=50, bg=co0, relief='flat')
-    # frame
-    # janela.mainloop()
+    # dividindo a janela
     return janela

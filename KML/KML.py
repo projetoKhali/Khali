@@ -1,7 +1,6 @@
 from . import KMLFunctions
 from Settings import COLS
 from .KMLUtils import *
-from KML import KMLUtils
 
 # Representa uma Tag que contem informações para a criação de um objeto tkinter
 class Tag:
@@ -47,16 +46,18 @@ class button (Tag):
     def run(self, parent):
         return super().run(parent)
 
+tags:list[type] = [Tag, window, frame, label, entry, button]
+
 # Mapeia os parametros das funções do tkinter aos seus tipos de variavel aceitados
 PARAM_MAP = {
     # param     :  [types] , [priority values], default value
     'title'     : [[str], [], ['unnamed window'], ''],
     'res'       : [[], value_is_resolution, '400x300'],
 
-    'bg'        : [[str], ['white','black','red','green','blue','cyan','yellow','magenta',], 'white'],
+    'bg'        : [[], value_is_color, 'white'],
     'r'         : [[int], [], 0],
     'c'         : [[int], [], 0],
-    'sticky'    : [[], ['n','e','w','s','ne','nw','se','sw','ns','ew','new','sew','nse','nsw','news'], None],
+    'sticky'    : [[], sticky_values, None],
 
     'padx'      : [[], [], 0],
     'pady'      : [[], [], 0],
@@ -74,7 +75,7 @@ PARAM_MAP = {
 def check_param_type (field, value):
     result = type(value) in PARAM_MAP[field][0]
     if not result:
-        result = PARAM_MAP[field][1](value) if KMLUtils.value_is_function(PARAM_MAP[field][1]) else value in PARAM_MAP[field][1]
+        result = PARAM_MAP[field][1](value) if value_is_function(PARAM_MAP[field][1]) else value in PARAM_MAP[field][1]
     print(f'KML.check_param_type -- field: "{field}" | value: "{value}" | result: "{result}"')
     return result
 

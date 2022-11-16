@@ -3,7 +3,6 @@ from tkinter import *
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from matplotlib.figure import Figure
 
 # cores
 co0 = "#fae8e8"  # rosa

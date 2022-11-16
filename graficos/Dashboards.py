@@ -39,7 +39,7 @@ def multi_bar (title, names, y_label, matriz, x_label, x_ticks):
 
     ax.legend()
 
-    fig.tight_layout()
+    # fig.tight_layout()
 
     return fig
 

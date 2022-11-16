@@ -46,3 +46,5 @@ COLS = [
 co0 = "#FAE8E8" #rosa
 co1 = "#D9D9D9" #cinza
 co2 = "1A1D1A" #preta
+
+CORES = [co0, co1, co2]

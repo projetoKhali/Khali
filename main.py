@@ -39,7 +39,4 @@ login(email='l@d.g', senha='123')
 # login(email='lt1@o.com', senha='123')
 # login(email='fulano-dev@dev.com', senha ='123')
 
-# from Front.Modules import lista_usuarios
-# modulo = lista_usuarios.run()
-
 WindowManager.update()

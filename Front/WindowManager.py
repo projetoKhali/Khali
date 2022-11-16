@@ -64,3 +64,25 @@ def update():
     CURRENT_WINDOW_INSTANCE.protocol("WM_DELETE_WINDOW", on_closing)
     CURRENT_WINDOW_INSTANCE.mainloop()
 
+def create_window (background):
+    from tkinter import Tk
+
+    # cria a janela
+    window = Tk()
+    window.title('')
+
+    # tamanho padrão de janela
+    window.minsize(1300, 670)  # tamanho da tela, largura x altura
+    window.resizable(width=True, height=True)
+
+    # janela maximizada
+    window.state('zoomed')
+    # janela.geometry("%dx%d+0+0" % (janela.winfo_screenwidth(), janela.winfo_screenheight()))
+
+    # tentativa de dar numero de linhas e colunas para a tabela. Se deixo ativado, os labels ficam espalhados pela tela.
+    window.rowconfigure(0, minsize=800, weight=1)
+    window.columnconfigure(1, minsize=800, weight=1)
+    window.configure(background=background)
+
+    return window
+

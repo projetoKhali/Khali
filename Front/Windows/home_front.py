@@ -15,7 +15,8 @@ frame_coluna_B = None
 
 def run():
 
-    janela = criar_janela()
+    from Front.WindowManager import create_window
+    janela = create_window(co0)
 
     # função de criar frame
     # row e column referem-se a posição do frame
@@ -62,26 +63,6 @@ def run():
 
     return janela
 
-
-def criar_janela ():
-
-    # cria a janela
-    janela = Tk()
-    janela.title('')
-
-    # tamanho padrão de janela
-    janela.minsize(1300, 670)  # tamanho da tela, largura x altura
-
-    # janela maximizada
-    janela.state('zoomed')
-    # janela.geometry("%dx%d+0+0" % (janela.winfo_screenwidth(), janela.winfo_screenheight()))
-
-    # tentativa de dar numero de linhas e colunas para a tabela. Se deixo ativado, os labels ficam espalhados pela tela.
-    janela.rowconfigure(0, minsize=800, weight=1)
-    janela.columnconfigure(1, minsize=800, weight=1)
-    janela.configure(background=co0)
-
-    return janela
 
 
 def run_module (janela, m_index):
