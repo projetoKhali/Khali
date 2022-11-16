@@ -1,7 +1,7 @@
 from tkinter import *
 
 def grid (obj, r, c, s):
-    if s:
+    if s != None:
         obj.grid(row=r, column=c, sticky=s)
     else:
         obj.grid(row=r, column=c)

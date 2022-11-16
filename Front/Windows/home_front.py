@@ -15,7 +15,7 @@ frame_coluna_B = None
 
 janela = None
 
-def run(init_module = True):
+def run():
 
     global janela
 
@@ -56,27 +56,14 @@ def run(init_module = True):
     frame_tabs = criar_frame(frame_coluna_A, 1, 0, 'news')
     frame_tabs.rowconfigure(0, weight = 1)
     frame_tabs.columnconfigure(0, weight = 1)
-
-
-
-
-
-
-
+    
     for tab_index, module in enumerate(modules):
         criar_button(frame_tabs, module.NAME, "Calibri, 14", lambda i=tab_index: run_module(i), tab_index, 0, 'ew', 5, 5)  
 
     from Authentication import sair
     criar_button(frame_tabs, "Sair", "Calibri, 14", sair, len(modules), 0, "ew", 5, 5)
 
-    if len(modules) > 0: run_module(janela, 0)
-
-    return janela
-
-
-
-    if init_module:
-        run_module(0)
+    if len(modules) > 0: run_module(0)
 
     return janela
 
@@ -84,14 +71,14 @@ def run_module (m_index):
     global janela
     global frame_coluna_B
     frame_coluna_B = Frame(janela)
+    frame_coluna_B.rowconfigure(0, minsize = 800, weight = 1)
+    frame_coluna_B.columnconfigure(0, minsize = 800, weight = 1)
     frame_coluna_B.grid(row=0, column=1, sticky = "nsew")
     global current_module
     if current_module is not None:
         current_module.configure(background = "red")
         current_module.destroy()
     current_module = modules[m_index].run(frame_coluna_B)
-
-    run_module(0)
 
     return janela
 

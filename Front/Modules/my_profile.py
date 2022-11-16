@@ -8,7 +8,7 @@ REQUIRED_PERMISSIONS_RATE = [
 REQUIRED_PERMISSIONS_VIEW = [None]
 
 def run(frame_parent):
-    from KML.KML import frame, label
+    from KML.KML import module, frame, label
 
     # from Front.Scrollbar import add_scrollbar
     # module_frame = add_scrollbar(frame_parent)
@@ -21,13 +21,13 @@ def run(frame_parent):
             'green',
             0,0,
             'ns',
-            label('asiyugdiauhs'),
+            label('verde'),
         ),
         frame(
-            'green',
+            'blue',
             1,0,
             'ns',
-            label('asiyugdiauhs'),
+            label('azul'),
 
         ),
 

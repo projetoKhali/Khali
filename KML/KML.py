@@ -73,8 +73,8 @@ PARAM_MAP = {
     'title'     : [[str], [], 'unnamed window'],
     'res'       : [[], value_is_resolution, '400x300'],
 
-    'bg'        : [[], value_is_color, 'white'],
-    'fg'        : [[], value_is_color, 'white'],
+    'bg'        : [[], value_is_color, None],
+    'fg'        : [[], value_is_color, None],
 
     'file'      : [[], value_is_file, 'None.png'],
 
@@ -98,7 +98,7 @@ def check_param_type (field, value):
     result = type(value) in PARAM_MAP[field][0]
     if not result:
         result = PARAM_MAP[field][1](value) if value_is_function(PARAM_MAP[field][1]) else value in PARAM_MAP[field][1]
-    print(f'KML.check_param_type -- field: "{field}" | value: "{value}" | result: "{result}"')
+    # print(f'KML.check_param_type -- field: "{field}" | value: "{value}" | result: "{result}"')
     return result
 
 
@@ -180,8 +180,8 @@ def get_params(fields, tag):
         if value in tag_taken_content:
             return None
         tag_taken_content.append(value)
-        if debug is not None:
-            print(COLS[7] + f'value "{value}" {debug}' + COLS[0])
+        # if debug is not None:
+        #     print(COLS[7] + f'value "{value}" {debug}' + COLS[0])
         return value
 
     # Para cada campo na lista fields
@@ -197,7 +197,7 @@ def get_params(fields, tag):
         if value is None:
             print(COLS[4] + f'KML.get_params -- field "{field}" ignored' + COLS[0])
         else:
-            print(COLS[3] + f'KML.get_params -- field: "{field}" value: "{value}"' + COLS[0])
+            print(COLS[3] + f'KML.get_params -- field: "{field}" value: "{value}"' + COLS[0])  
 
         params.update({field: value})
 
