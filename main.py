@@ -5,7 +5,7 @@ Events.initialize()
 
 # Cria dados de teste para popular os bancos de dados com usuários, grupos, times e avaliações
 from _test import create_test_data
-create_test_data()
+# create_test_data()
 
 
 
@@ -33,8 +33,8 @@ WindowManager.initialize()
 
 # teste - login automatico
 from Authentication import login
-# login(email='a@d.m', senha='123')
-login(email='l@d.g', senha='123')
+login(email='a@d.m', senha='123')
+# login(email='l@d.g', senha='123')
 # login(email='c@c.c', senha='123')
 # login(email='lt1@o.com', senha='123')
 # login(email='fulano-dev@dev.com', senha ='123')

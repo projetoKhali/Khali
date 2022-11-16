@@ -28,10 +28,11 @@ def get_modules():
     # Caso o usuário logado seja o lider ou cliente do próprio grupo, sobreescreva a função armazenada
     # em role pela função que consta no csv do grupo
     group = get_group(CURRENT_USER.group_id)
-    if CURRENT_USER.role_id == group.leader_id:
-        role = Role.get_role(group.leader_id)
-    if CURRENT_USER.role_id == group.client_id:
-        role = Role.get_role(group.client_id)
+    if group is not None:
+        if CURRENT_USER.role_id == group.leader_id:
+            role = Role.get_role(group.leader_id)
+        if CURRENT_USER.role_id == group.client_id:
+            role = Role.get_role(group.client_id)
 
     # inicializa uma lista de modulos a serem retornados
     allowed_modules = []

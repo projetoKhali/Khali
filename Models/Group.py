@@ -37,4 +37,4 @@ def get_group_name (id:int):
 
 # retorna o Grupo que corresponde ao id especificado 
 def get_group (id:int):
-    return to_group(find_data_by_id_csv(GROUPS_PATH, int(id)))
+    return None if id == '' or id is None else to_group(find_data_by_id_csv(GROUPS_PATH, int(id)))

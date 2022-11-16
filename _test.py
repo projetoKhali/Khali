@@ -91,7 +91,7 @@ def create_test_data():
                         # cria uma nota aleatória entre 1 (inclusivo) e 6 (exclusivo)
                         n = randint(1, 6)
 
-                        p = j/(u+1)
+                        p = (j/(u+1))
                         j += 1
 
                         # printa a avaliação que será criada
