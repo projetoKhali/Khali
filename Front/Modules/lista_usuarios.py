@@ -134,9 +134,9 @@ def run(frame_parent):
             # criar_button(frame_rated, 'Editar Avaliação', 'Calibri, 12', 1, 1, "e")  # linha para teste
             indice = indice + 1
 
-        f = Frame(frame_usuarios, pady=100, bg=co0)
-        Label(f, text='', bg=co0).grid(row=0, column=0, sticky="s")
-        f.grid(row=100, column=0, sticky="s")
+    # f = Frame(frame_usuarios, pady=100, bg=co0)
+    # Label(f, text='', bg=co0).grid(row=0, column=0, sticky="s")
+    # f.grid(row=100, column=0, sticky="s")
 
 
     return module_frame
@@ -151,7 +151,10 @@ def avaliar (id):
 def graphic_pie(data=list, labels = list):
     fig, ax = plt.subplots(figsize = (7,4), subplot_kw=dict(aspect="equal"))
     def func (pct, allvals):
-        absolute = int(pct/100.*np.sum(allvals))
+        valsum = 0
+        for i in allvals:
+            valsum += i
+        absolute = int(pct/100.*valsum)
         return "{:.1f}%\n({:d})".format(pct, absolute)
     wedges, texts, autotexts = ax.pie(data, autopct=lambda pct: func(pct, data), textprops=dict(color="black"))
     ax.legend(wedges, labels, title="Avaliações", loc="center left", bbox_to_anchor=(1,0,0.5,1))
