@@ -83,7 +83,10 @@ def run (frame_parent):
                 criar_label(frame_sprint, "Dias para avaliação:", "Calibri, 10", i, 5)
                 criar_entry(frame_sprint, "Calibri, 10", i, 6)
         else:
+            import tkinter.messagebox
             print("número muito grande de sprints!!, por favor, insira um valor menor")
+            tkinter.messagebox.showinfo("Khali Group",  "número muito grande de sprints!!, por favor, insira um valor menor")
+
 
     def entry_times():
         valor = get_entry_int(en_numtimes)
@@ -102,7 +105,9 @@ def run (frame_parent):
                 # lista.append(criar_button(frame_time_data, "Cadastrar", "Calibri, 10", i, 3, command = entry_alunos(en_numalunos)))
                 criar_button(frame_time_data, "Cadastrar",           "Calibri, 10", row, 5, command = update_member_forms)
         else:
-            print("são muitos times!! por favor, insira um valor menor")
+            import tkinter.messagebox
+            tkinter.messagebox.showinfo("Khali Group",  "São muitos times! Insira um valor menor.")
+
 
     # Atualiza a tela para criar os formularios para cada membro de acordo com o numero de membros especificado em cada time
     def update_member_forms():
