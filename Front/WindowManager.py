@@ -75,7 +75,7 @@ def create_window (background):
     # tamanho padrão de janela
     window.minsize(1300, 670)  # tamanho da tela, largura x altura
     window.resizable(width=True, height=True)
-
+    
     # janela maximizada
     window.state('zoomed')
     # janela.geometry("%dx%d+0+0" % (janela.winfo_screenwidth(), janela.winfo_screenheight()))

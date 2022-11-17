@@ -51,10 +51,10 @@ def create_test_data():
         register("po tres"+ni,    ei+"p03@o.com",            i,    t[2],    4,    custom_password='123')
 
         # devs
-        register("develano"+ni,   ei+"develano-dev@dev.com", i,    t[0],    5,    custom_password='123')
+        register("develano"+ni,   ei+"d@e.v",                i,    t[0],    5,    custom_password='123')
         register("cleiton"+ni,    ei+"cleitin@dev.com",      i,    t[0],    5,    custom_password='123')
         register("washington"+ni, ei+"wash@dev.com",         i,    t[0],    5,    custom_password='123')
-        register("deve"+ni,       ei+"d@e.v",                i,    t[1],    5,    custom_password='123')
+        register("deve"+ni,       ei+"deve@dev.dev",         i,    t[1],    5,    custom_password='123')
         register("developano"+ni, ei+"develop@dev.com",      i,    t[1],    5,    custom_password='123')
         register("dirce"+ni,      ei+"dirc@dev.com",         i,    t[1],    5,    custom_password='123')
         register("cumpadi"+ni,    ei+"cmp@dev.com",          i,    t[2],    5,    custom_password='123')

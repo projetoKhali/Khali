@@ -28,14 +28,13 @@ def get_users(email):
         # retorna lista com todos os usuários que são do mesmo time que o logado
         rate_users = handler.find_data_list_by_field_value_csv(Settings.USERS_PATH, 'team_id', user["team_id"])
         for member in rate_users:
-            auxiliar = 0
-            if ratings is not None:
-                for rating in ratings:
-                    if member["id"] == rating["to_user_id"] and rating["value"] != '':
-                        auxiliar = 1
-                        break
-            if auxiliar == 1:
-                grade_submitted.append(member)
+            if ratings is None:
+                grade_to_submit.append(member)
+                continue
+            for rating in ratings:
+                if member["id"] == rating["to_user_id"] and rating["value"] != '':
+                    grade_submitted.append(member)
+                    break
             else:
                 grade_to_submit.append(member)
 
@@ -63,16 +62,14 @@ def get_users(email):
             # print('pular iteração')
             continue
 
-        auxiliar = 0
+        if ratings is None: 
+            grade_to_submit.append(group_member)
+            continue
 
-        if ratings is not None:
-            for rating in ratings:
-                if group_member["id"] == rating["to_user_id"] and rating["value"] != '':
-                    auxiliar = 1
-                    # print('incluiu na sumbmitted')
-                    break
-        if auxiliar == 1:
-            grade_submitted.append(group_member)
+        for rating in ratings:
+            if group_member["id"] == rating["to_user_id"] and rating["value"] != '':
+                grade_submitted.append(group_member)
+                break
         else:
             # print('incluiu na to_submit')
             grade_to_submit.append(group_member)
