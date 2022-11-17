@@ -300,10 +300,10 @@ def run (frame_parent):
 
 
     # título
-    criar_label(frame_sprints, "Sprints", "Calibri, 12", 0, 0)
+    criar_label(frame_sprints, "Sprints", "Calibri 12 bold", 0, 0)
 
     # input: label, entry, button
-    criar_label(frame_sprints, "Número de Sprints:    ", "Calibri, 10", 1, 0)
+    criar_label(frame_sprints, "Número de Sprints:    ", "Calibri 10", 1, 0)
     en_numsprints = criar_entry(frame_sprints, "Calibri, 10", 1, 1)
     criar_button(frame_sprints, "Cadastrar", "Calibri, 10", 1, 2, command = entry_sprint)
 
@@ -338,7 +338,7 @@ def run (frame_parent):
     # times_header.grid_columnconfigure(0, weight=1)
 
     # título
-    criar_label(times_header, "Times", "Calibri, 12", 0, 0)
+    criar_label(times_header, "Times", "Calibri 12 bold", 0, 0)
 
     # input: label, entry, button
     criar_label(times_header, "Quantidade de Times:", "Calibri, 10", 1, 0)
