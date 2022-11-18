@@ -36,6 +36,17 @@ def to_rating(rating_dict):
 def create_rating (from_user_id, to_user_id, sprint_id, criteria_id, value, comment):
     return add_unique_csv_autoid(RATINGS_PATH, [from_user_id, to_user_id, sprint_id, criteria_id, value, comment])
 
+
+def get_ratings(from_user_id='IGNORE', to_user_id='IGNORE', sprint_id='IGNORE', criteria_id='IGNORE', value='IGNORE', comment='IGNORE'):
+    kvps = {}
+    if from_user_id != 'IGNORE': kvps.update({'from_user_id':from_user_id})
+    if to_user_id != 'IGNORE': kvps.update({'to_user_id':to_user_id})
+    if sprint_id != 'IGNORE': kvps.update({'sprint_id':sprint_id})
+    if criteria_id != 'IGNORE': kvps.update({'criteria_id':criteria_id})
+    if value != 'IGNORE': kvps.update({'value':value})
+    if comment != 'IGNORE': kvps.update({'comment':comment})
+    return [to_rating(x) for x in find_data_list_by_fields_value_csv(RATINGS_PATH, kvps)]
+
 # Retorna todas as avaliações associadas ao usuário de id especificado
 def get_ratings_to_user (user_id):
     return [to_rating(x) for x in find_data_list_by_field_value_csv(RATINGS_PATH, 'to_user_id', user_id)]

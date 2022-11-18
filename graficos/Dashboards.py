@@ -97,6 +97,42 @@ from Models.id_criteria import criteria         # importa a lista de criterios u
 from Models.Sprint import get_group_sprints     # função usada para durante a classificação de valores por sprint
 
 
+def user_pentagon (user_id, color, background, fig_size_x, fig_size_y):
+    from .RadialChart import radar_factory
+    import matplotlib.pyplot as plt
+    from Models.Sprint import previous_sprint
+    from Models.User import get_user
+    from Models.Rating import get_ratings
+    from Models.id_criteria import criteria
+
+    user = get_user(user_id)
+    target_sprint = previous_sprint(user.group_id)
+
+    if target_sprint is None: return None
+
+    ratings = get_ratings(to_user_id=user_id, sprint_id=target_sprint.id)
+    data = medias(criteria, [classify_criteria(criteria, ratings)])[0]
+
+    N = 5
+
+    theta = radar_factory(N, frame='polygon')
+
+    fig, ax = plt.subplots(figsize=(fig_size_x, fig_size_y), subplot_kw=dict(projection='radar'))
+    fig.set_facecolor(background)
+
+    ax.set_rgrids([1, 2, 3, 4, 5])
+    ax.axes.get_yaxis().set_ticklabels([])
+    ax.set_ylim([1,5])
+
+
+    ax.plot(theta, data, color=color)
+    ax.fill(theta, data, facecolor=color, alpha=0.25, label='_nolegend_')
+
+    ax.set_varlabels(criteria)
+    
+    return fig
+
+
 # Renderiza um Dashboard comparando a media de um usuário com a média de seu time em cada criterio de cada sprint
 def user_media_sprints (user_id):
 

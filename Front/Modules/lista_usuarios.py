@@ -60,8 +60,8 @@ def run(frame_parent):
     from Authentication import CURRENT_USER
 
     # cria uma lista com os usuários a serem avaliados pelo usuário logado
-    grade_submitted = lista_usuarios_back.get_users(CURRENT_USER.email)[0]
-    grade_to_submit = lista_usuarios_back.get_users(CURRENT_USER.email)[1]
+    grade_submitted = lista_usuarios_back.get_users(CURRENT_USER.email)[1]
+    grade_to_submit = lista_usuarios_back.get_users(CURRENT_USER.email)[0]
 
     # função de criar frame
     # row e column referem-se a posição do frame

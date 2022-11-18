@@ -166,6 +166,48 @@ def find_data_list_by_field_values_csv(path:str, field:str, values):
     return lista
 
 
+# Retorna uma lista contendo todos os valores em que os campos especificados no dicionario possuem o valor associado
+def find_data_list_by_fields_value_csv(path:str, kvps:dict):
+    
+    # Tenta executar o próximo código
+    try:
+    
+        # Abre o arquivo
+        with open(path + '.csv', 'r') as file:
+
+            # Lê as linhas do arquivo e salva na variavel 'lines'
+            lines = file.readlines()
+
+    # Em caso de falha
+    except:
+        log(COLS[2] + "CSVHandler.find_data_list_by_field_value_csv: Erro ao ler arquivo" + COLS[0])
+        return None
+
+    lista = []
+
+    # Pra cada linha carregada na variavel 'lines'
+    for line in lines:
+
+        # adquire os valores dessa linha
+        line_values = format_line_csv(lines[0].strip('\n').split(','), line)
+
+        # para cada valor especificado no dicionario
+        for key in kvps:
+
+            # Se o valor da chave key na linha corresponde ao valor da mesma chave no dicionario kvps
+            if line_values[key] == str(kvps[key]):
+
+                # adiciona a linha formatada para a lista de retorno
+                lista.append(format_line_csv(lines[0].strip('\n').split(','), line))
+
+                # sai do loop kvps
+                break
+
+
+    # Loop finalizado sem encontrar nenhum resultado
+    return lista
+
+
 # Formata uma linha de arquivo .csv em um dicionario python
 def format_line_csv (fields, line:str):
 

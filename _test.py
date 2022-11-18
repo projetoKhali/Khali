@@ -73,11 +73,18 @@ def create_test_data():
         u = len(users)*len(users)*5*4
         j = 0
 
+        sprint_dates = [
+            [date(2022, 8,  29), date(2022, 9,  18)],
+            [date(2022, 9,  19), date(2022, 10,  9)],
+            [date(2022, 10, 17), date(2022, 11,  6)],
+            [date(2022, 11,  7), date(2022, 11, 27)]
+        ]
+
         # pra cada sprint
         for s in range((4 * i), 4 + (4 * i)):
 
             # cria a sprint
-            create_sprint(i, date(2022, 10, 20), date(2022, 11, 27), 5)
+            create_sprint(i, sprint_dates[s % 4][0], sprint_dates[s % 4][1], 5)
 
             # pra cada usuário do grupo
             for f in users:

@@ -91,7 +91,11 @@ def get_users(email):
 # print(get_users('lt1@o.com'))
 
 
-
+def get_feedbacks (user_id):
+    return [
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse quis suscipit lectus. Cras convallis enim tempor tellus ornare, sit amet.' 
+        for _ in range(10)
+    ]
 
 
 
