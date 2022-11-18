@@ -6,6 +6,11 @@ CURRENT_USER : User = None
 
 # Efetua o login de Usuário e, se efetuado com sucesso, retorna o User logado 
 def login (email, senha):
+    global CURRENT_USER
+    if CURRENT_USER is not None: 
+        print(f'Authentication.login -- Tentativa de login enquanto um usuário já está logado. Um novo login não pode ser efetuado')
+        return CURRENT_USER
+
     from CSV.CSVHandler import find_data_csv
     from Settings import USERS_PATH
 
@@ -16,7 +21,7 @@ def login (email, senha):
 
     # em caso de erro, retorna o erro 0 - dado não encontrado
     except:
-        print("Authentication.login -- Dado não encontrado")
+        print("Authentication.login -- Usuário não encontrado")
         return 0
 
     # importa a biblioteca de criptografia
@@ -27,14 +32,13 @@ def login (email, senha):
 
         # caso a comparação retorne False, significa que as senhas não são iguais
         # retorna o código de erro 1 - dado invalido
-        print("Authentication.login -- Dado inválido")
+        print("Authentication.login -- Senha inválida")
         return 1
 
     # comparação de senhas retorna True, login retornará o Usuário
     print("Authentication.login -- login sucesso")
 
     from Models.User import to_user
-    global CURRENT_USER
     CURRENT_USER = to_user(user_data)
 
     from Events import trigger

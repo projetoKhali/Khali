@@ -57,15 +57,11 @@ def launch():
 
 
 def update():
-    if CURRENT_STATE is None: return
-    def on_closing():
-        from matplotlib import pyplot
-        pyplot.close("all")
-        CURRENT_WINDOW_INSTANCE[1].destroy()
-    CURRENT_WINDOW_INSTANCE[1].protocol("WM_DELETE_WINDOW", on_closing)
+    global CURRENT_WINDOW_INSTANCE
+    if CURRENT_WINDOW_INSTANCE is None: return
     CURRENT_WINDOW_INSTANCE[1].mainloop()
 
-def create_window (background):
+def create_window (background, module = None):
     from tkinter import Tk
 
     # cria a janela
@@ -84,6 +80,12 @@ def create_window (background):
     window.rowconfigure(0, minsize=800, weight=1)
     window.columnconfigure(1, minsize=800, weight=1)
     window.configure(background=background)
+
+    def on_closing():
+        from matplotlib import pyplot
+        pyplot.close("all")
+        window.destroy()
+    window.protocol("WM_DELETE_WINDOW", on_closing)
 
     return window
 

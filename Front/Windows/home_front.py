@@ -20,7 +20,7 @@ def run():
     global janela
 
     from Front.WindowManager import create_window
-    janela = create_window(co0)
+    janela = create_window(co0, current_module)
 
     # função de criar frame
     # row e column referem-se a posição do frame
@@ -75,9 +75,9 @@ def run_module (m_index):
     frame_coluna_B.columnconfigure(0, minsize = 800, weight = 1)
     frame_coluna_B.grid(row=0, column=1, sticky = "nsew")
     global current_module
-    if current_module is not None:
-        current_module.configure(background = "red")
-        current_module.destroy()
+    # if current_module is not None:
+        # current_module.configure(background = "red")
+        # current_module.destroy()
     current_module = modules[m_index].run(frame_coluna_B)
 
     return janela

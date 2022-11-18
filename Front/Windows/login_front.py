@@ -11,6 +11,7 @@ def run():
     def send_login():
         email = en_email.get()
         senha = en_senha.get()
+        if email is None or email == '' or senha is None or senha == '': return
         from Authentication import login
         login(email=email, senha=senha)
 
@@ -46,6 +47,8 @@ def run():
 
     # entry email
     en_email = Entry(frame_entrada, bd=2, font=("Calibri", 15), justify=LEFT) #bd é a borda
+    en_email.bind('<Return>', lambda _:send_login())
+    en_email.focus()
     en_email.grid(row= 0, column= 1)
 
     # label senha
@@ -55,6 +58,7 @@ def run():
 
     # entry senha
     en_senha = Entry(frame_entrada, bd=2, font=("Calibri", 15), justify=LEFT,show="*")
+    en_senha.bind('<Return>', lambda _:send_login())
     en_senha.grid(row = 1, column= 1)
 
     # ******Botão de login*******

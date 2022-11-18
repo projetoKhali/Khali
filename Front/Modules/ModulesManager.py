@@ -22,6 +22,8 @@ def get_modules():
 
     from Models.Group import get_group
 
+    if CURRENT_USER is None: return []
+
     # define o tipo do usuário logado
     role = Role.get_role(CURRENT_USER.role_id)
 
