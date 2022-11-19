@@ -26,7 +26,8 @@ def run(frame_parent):
 
     # cria o frame principal do modulo
     module_frame = criar_frame(frame_parent, 0, 0, "news", co0, co0, 0, 0, 0)
-    module_frame.columnconfigure(1, weight = 1)
+    module_frame.columnconfigure(0, weight = 4)
+    module_frame.columnconfigure(1, weight = 4)
     module_frame.rowconfigure(0, weight = 1)
 
     # cria a seção da esquerda onde estará a lista de usuários avaliados e pendentes
@@ -42,7 +43,7 @@ def criar_section_ratings():
     from Front.Scrollbar import add_scrollbar
 
     # Cria o frame principal da seção
-    frame_section = criar_frame(module_frame, 0, 0, "nws", co0, co1, 2, 0, 0)
+    frame_section = criar_frame(module_frame, 0, 0, "nwes", co0, co1, 2, 0, 0)
     frame_section.columnconfigure(0, weight = 1)
     frame_section.rowconfigure(2, weight = 1)
 
@@ -68,20 +69,35 @@ def criar_section_ratings():
     #       avaliados   = indice 1
     # ]
     grades = lista_usuarios_back.get_users(CURRENT_USER.email)
+
     grades = [grades[0], grades[0]]
+
+    g = [
+        len(grades[0]),
+        len(grades[1])
+    ]
 
     # Cria o pie chart utilizando a informação de usuários
     criar_piechart(frame_section_header, [len(grades[0]), len(grades[1])])
 
     # Cria o Frame parent de ambas as listas
-    frame_listas = criar_frame(frame_section, 2, 0, "nsew", co3, co3, 0, 0, 0)
-    frame_listas.columnconfigure(0, weight = 1)
-    # frame_listas.rowconfigure([0,1], weight = 1)
+    frame_listas_parent = criar_frame(frame_section, 2, 0, "nsew", co0 if g[1] == 0 else co1, co1, 0, 0, 0)
+    frame_listas_parent.columnconfigure(0, weight = 1)
+    frame_listas_parent.rowconfigure(0, weight = 4 if g[1] == 0 else 0)
+    frame_listas_parent.rowconfigure(1, weight = 4 if g[0] == 0 else 0)
+    frame_listas_parent.rowconfigure(2, weight = 1)
+
+    # print([i for i in range((1 if g[0] > 0 else 0) + (1 if g[1] > 0 else 0))])
+    frame_whitespace = criar_frame(frame_listas_parent, 2, 0, 'news', co0 if g[1] == 0 else co3, co0, 0, 0, 0)
+    frame_whitespace.rowconfigure(0, weight=1)
+    frame_whitespace.columnconfigure(0, weight=1)
+
     lista_titles = ['Integrantes ainda não Avaliados', 'Integrantes já Avaliados']
     lista_colors = [col_to_rate, col_rated]
 
     # para cada lista
     for i, grade in enumerate(grades):
+        glen=len(grade+grade+grade)
 
         # se a lista não possui usuários, ignore-a - não cria os frames da lista
         if len(grade) < 1: continue
@@ -89,9 +105,9 @@ def criar_section_ratings():
         lista_col = [co0, co1][i]
 
         # Cria o frame da lista
-        frame_lista = criar_frame(frame_listas, i, 0, "news", lista_col, lista_col, 0, 0, 0)
+        frame_lista = criar_frame(frame_listas_parent, i, 0, "news", lista_col, lista_col, 0, 0, 0)
         frame_lista.columnconfigure(0, weight = 1)
-        frame_lista.rowconfigure(1, weight = 1)
+        frame_lista.rowconfigure(1, weight=1)
 
         # Coloca o título da lista 
         criar_label(frame_lista, lista_titles[i], 'Calibri, 14', lista_colors[i], 0, 0, "we")
@@ -99,14 +115,19 @@ def criar_section_ratings():
         # Cria um frame parent para os usuários dessa lista
         frame_parent_users = criar_frame(frame_lista, 1, 0, "news", lista_col, lista_col, 0, 0, 0)
         frame_parent_users.columnconfigure(0, weight=1)
+        frame_parent_users.rowconfigure(0, weight=1)
 
         # Scrollbar condicional: Apenas utilize Scrollbar nas listas caso o numero total de usuários em ambas seja maior que 10
         # se não fica mt feio seloko xD
-        # if len(grades[0] + grades[1]) > 10:
-        frame_parent_users = add_scrollbar(criar_frame(frame_parent_users, 0, 0, 'nsew', lista_col, lista_col, 0, 0, 0), lista_col, 0)
+        # if len(grades[0] + grades[1]) > 10 and len(grades[0]) > 0 and len(grades[1] > 0):
+        if lambda g=glen, g0=g[0], g1=g[1]: True if g0 > 0 and g1 > 0 and g0+g1 >= 12 else True if g >= 12 else False:
+            frame_parent_users = criar_frame(frame_parent_users, 0, 0, 'nsew', lista_col, lista_col, 0, 0, 0)
+            frame_parent_users.columnconfigure(0, minsize=0, weight=1)
+            frame_parent_users.rowconfigure(0, minsize=0, weight=1)
+            frame_parent_users = add_scrollbar(frame_parent_users, lista_col, 0)
 
         # para cada usuário nessa lista
-        for j, user in enumerate(grade + grade):
+        for j, user in enumerate(grade + grade + grade):
 
             # Cria um frame para o usuário
             frame_user = criar_frame(frame_parent_users, j, 0, 'nsew', lista_col, co1, 0, 0, 0)
@@ -124,7 +145,7 @@ def criar_section_ratings():
             frame_user_button = criar_frame(frame_user, 0, 1, 'ew', co0, co0, 0, 0, 0)
 
             # insere o botão correspondente ao tipo da lista. Pendentes: avaliar; Avaliados: editar
-            if i == 0: criar_button(frame_user_button, 'Avaliar', 'Calibri, 12', 1, 1, lambda u=user: avaliar(u['id']), "w"),  # linha para teste
+            if i == 0: criar_button(frame_user_button, 'Avaliar', 'Calibri, 12', 1, 1, lambda u=user: avaliar(u['id']), "e"),  # linha para teste
             # else: criar_button(frame_user_button, 'Editar Avaliação', 'Calibri, 12', 1, 1, lambda u=user: avaliar(u['id']), "w"),  # linha para teste
 
 
@@ -289,10 +310,14 @@ def criar_seção_perfil(frame_section):
     frame_fb_title = criar_frame(frame_feedbacks, 1, 0, "ew", co2, co1, 4, 0, 0)
     criar_label(frame_fb_title, 'Feedbacks recebidos durante a sprint x:', 'Calibri, 12 bold', co2, 0, 0, 'w', 'center').configure(fg='white')
 
-    frame_feedback_list = add_scrollbar(criar_frame(frame_feedbacks, 2, 0, "nsew", co1, co1, 2, 2, 2), co0, 0)
+    frame_feedback_list = criar_frame(frame_feedbacks, 2, 0, "nsew", co1, co1, 2, 2, 2)
+    frame_feedback_list.columnconfigure(0, minsize=0, weight=1)
+    frame_feedback_list.rowconfigure(0, minsize=0, weight=1)
+    frame_feedback_list = add_scrollbar(frame_feedback_list, co0, 0)
 
     for i, fb in enumerate(feedbacks):
-        frame_fb = criar_frame(frame_feedback_list, i, 0, "nsew", co0, co2, 2, 4, 4)
-        criar_label(frame_fb, fb, 'Calibri, 10', co1, 0, 0, 'we', 'center').configure(wraplength=400)
+        frame_fb = criar_frame(frame_feedback_list, i, 0, "ns", co0, co2, 2, 4, 4)
+        frame_fb.columnconfigure(0, weight=1)
+        criar_label(frame_fb, fb, 'Calibri, 10', co1, 0, 0, 'we', 'left').configure(wraplength=400, anchor='n')
 
 
