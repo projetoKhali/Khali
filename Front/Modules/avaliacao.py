@@ -58,13 +58,22 @@ def run(frame_parent, to_user_id):
     criar_label(frame_header, 'Prazo para realizar a autoavaliação da {nº da Sprint}', 15, 0, 3, 5, 5, 'w')  # PUXAR DADO VINCULADO COM TELA DE RETORNO ???
     criar_label(frame_header, 'Esta avaliação 360° utiliza a escala Likert para medir o desempenho dos usuários. Notas abaixo ou iguais a 3 necessitam obrigatoriamente de Feedback (resposta descritiva)', 11, 0, 4, 5, 5, 'w')  
 
-    perguntas = [
-        '1) Como você se avalia em trabalho em equipe, cooperação e descentralização de conhecimento?',
-        '2) Como você se avalia em iniciativa e proatividade?',
-        '3) Como você se avalia em autodidaxia e agregação de conhecimento ao grupo?',
-        '4) Como você se avalia em entrega de resultados e participação efetiva no projeto?',
-        '5) Como você se avalia em competência técnica?'
-    ]
+    if to_user_id == CURRENT_USER:
+        perguntas = [
+            '1) Como você se avalia em trabalho em equipe, cooperação e descentralização de conhecimento?',
+            '2) Como você se avalia em iniciativa e proatividade?',
+            '3) Como você se avalia em autodidaxia e agregação de conhecimento ao grupo?',
+            '4) Como você se avalia em entrega de resultados e participação efetiva no projeto?',
+            '5) Como você se avalia em competência técnica?'
+        ]
+    else:
+        perguntas = [
+            '1) Como você avalia o integrante em trabalho em equipe, cooperação e descentralização de conhecimento?',
+            '2) Como você avalia o integrante em iniciativa e proatividade?',
+            '3) Como você avalia o integrante em autodidaxia e agregação de conhecimento ao grupo?',
+            '4) Como você avalia o integrante em entrega de resultados e participação efetiva no projeto?',
+            '5) Como você avalia o integrante em competência técnica?'
+        ]
 
     escalas = []
     feedbacks = [None, None, None, None, None]
@@ -116,8 +125,14 @@ def run(frame_parent, to_user_id):
             frm_criteria_feedback.columnconfigure(0, weight=1)
             frm_criteria_feedback.rowconfigure([0, 1, 2, 3, 4], weight=1)
 
-            criar_label(frm_criteria_feedback, f'Feedback obrigatório para critério {i+1}: ', 10, 1, 3, 0, 0, 'w')
-            feedbacks[i] = criar_entrada(frm_criteria_feedback, 3, 2, 0, 10, 'w')
+            criar_label(frm_criteria_feedback, f'Deixe um feedback para o critério {i+1}: ', 10, 0, 0, 0, 0, 'w')
+            # feedbacks[i] = criar_entrada(frm_criteria_feedback, 3, 2, 0, 10, 'w')
+            feedbacks[i] = caixa_texto(frm_criteria_feedback, width=15, height=5, row=2, column=0)
+    
+    def caixa_texto(master, width, height, row, column):
+        my_text = Text(master=master, width=width, height=height, font = "Calibre 10")
+        my_text.grid(row = row, column = column, sticky = 'news')
+        return my_text
 
 
     # Função para criação de caixas de entrada
@@ -145,7 +160,7 @@ def run(frame_parent, to_user_id):
             #     comentario = ''
             print(f'feedbacks[i] is None: {feedbacks[i] is None}')
 
-            comentario = feedbacks[i].get() if feedbacks[i] is not None else ''
+            comentario = feedbacks[i].get(1.0, END) if feedbacks[i] is not None else ''
             print(f'comentario: {comentario}')
 
             notas.append(nota)
