@@ -15,25 +15,35 @@ def add_scrollbar (target_frame, bg=co0, bd=3):
     canvas.rowconfigure(0, minsize=0, weight=1)
     canvas.grid(row=0, column=0, sticky='news')
 
+    canvas.grid_columnconfigure(0, minsize=0, weight=1)
+    canvas.grid_rowconfigure(0, minsize=0, weight=1)
+
     # inicializa a scrollbar
     scrollbar_ver=Scrollbar(frm_main, orient=VERTICAL, command=canvas.yview)
-    scrollbar_ver.grid(row=0, column=0, sticky='nse')
+    scrollbar_ver.grid(row=0, column=1, sticky='nse')
 
     # configura o canvas com o comando da scrollbar
     canvas.configure(yscrollcommand=scrollbar_ver.set)
 
+    # expande os widgets dentro do canvas para preencher todo o espaço disponivel 
+    def canvas_configure(event):
+        canvas = event.widget
+        canvas.itemconfigure(1, width=canvas.winfo_width())
+    canvas.bind("<Configure>", canvas_configure)
+
     # cria outro Frame dentro do Canvas
     module_frame=Frame(canvas, bg=bg, relief = FLAT, bd = bd)
     module_frame.columnconfigure(0, minsize = 0, weight = 1)
-    # module_frame.rowconfigure(0, minsize = 0, weight = 1)
-    # module_frame.grid(row=0, column=0, sticky="nsew")
-    module_frame.bind('<Configure>', lambda e: canvas.configure(scrollregion=canvas.bbox('all')))
-    
+    module_frame.rowconfigure(0, minsize = 0, weight = 1)
+    module_frame.grid(row=0, column=0, sticky="nsew")
+    module_frame.bind('<Configure>', lambda _: canvas.configure(scrollregion=canvas.bbox('all')))
+
     # adicionar a nova frame a uma janela no canvas
     canvas.create_window((0,0), window=module_frame, anchor='nw')
-    
- 
 
+    # adiciona um evento ao module_frame para permitir rolagem com scroll wheel enquanto o mouse estiver sobre ele
+    module_frame.bind('<Enter>', lambda _: canvas.bind_all("<MouseWheel>", lambda e: canvas.yview_scroll(int(-1*(e.delta/120)), "units")))
+    module_frame.bind('<Leave>', lambda _: canvas.unbind_all("<MouseWheel>"))
 
     # retorna o novo frame onde estará o conteudo da tela
     return module_frame

@@ -107,6 +107,7 @@ def create_test_data():
                         # cria a avaliação
                         create_rating(f, t, s, c, n, 'feedback')
 
+
     # print do sucesso
     print("Geração de dados teste finalizada!")
 

@@ -97,18 +97,13 @@ from Models.id_criteria import criteria         # importa a lista de criterios u
 from Models.Sprint import get_group_sprints     # função usada para durante a classificação de valores por sprint
 
 
-def user_pentagon (user_id, color, background, fig_size_x, fig_size_y):
+def user_pentagon (user_id, target_sprint, color, background, fig_size_x, fig_size_y):
+    if target_sprint is None: return None
+
     from .RadialChart import radar_factory
     import matplotlib.pyplot as plt
-    from Models.Sprint import previous_sprint
-    from Models.User import get_user
     from Models.Rating import get_ratings
     from Models.id_criteria import criteria
-
-    user = get_user(user_id)
-    target_sprint = previous_sprint(user.group_id)
-
-    if target_sprint is None: return None
 
     ratings = get_ratings(to_user_id=user_id, sprint_id=target_sprint.id)
     data = medias(criteria, [classify_criteria(criteria, ratings)])[0]

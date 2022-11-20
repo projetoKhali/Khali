@@ -16,6 +16,7 @@ REQUIRED_PERMISSIONS_RATE = [
 REQUIRED_PERMISSIONS_VIEW = [None]
 
 global module_frame
+global sel_sprint
 
 def run(frame_parent):
     global module_frame
@@ -29,12 +30,20 @@ def run(frame_parent):
     module_frame.columnconfigure(0, weight = 4)
     module_frame.columnconfigure(1, weight = 4)
     module_frame.rowconfigure(0, weight = 1)
+    module_frame.rowconfigure(1, weight = 3)
 
     # cria a seção da esquerda onde estará a lista de usuários avaliados e pendentes
     criar_section_ratings()    
 
+    from Authentication import CURRENT_USER
+    from Models.Sprint import get_group_sprints
+    sprints = get_group_sprints(CURRENT_USER.group_id)
+
+    global sel_sprint
+    sel_sprint = len(sprints) - 1
+
     # cria a seção da direita onde estarão as informações do usuário logado
-    criar_section_profile()    
+    criar_section_profile(sprints)    
 
     return module_frame
 
@@ -70,7 +79,7 @@ def criar_section_ratings():
     # ]
     grades = lista_usuarios_back.get_users(CURRENT_USER.email)
 
-    grades = [grades[0], grades[0]]
+    grades = [grades[0], grades[0]] # -----------------------------------------------------------------------------------------
 
     g = [
         len(grades[0]),
@@ -83,14 +92,14 @@ def criar_section_ratings():
     # Cria o Frame parent de ambas as listas
     frame_listas_parent = criar_frame(frame_section, 2, 0, "nsew", co0 if g[1] == 0 else co1, co1, 0, 0, 0)
     frame_listas_parent.columnconfigure(0, weight = 1)
-    frame_listas_parent.rowconfigure(0, weight = 4 if g[1] == 0 else 0)
-    frame_listas_parent.rowconfigure(1, weight = 4 if g[0] == 0 else 0)
+    if g[0] > 0: frame_listas_parent.rowconfigure(0, weight = 250 if g[1] == 0 else 10)
+    if g[1] > 0: frame_listas_parent.rowconfigure(1, weight = 250 if g[0] == 0 else 10)
     frame_listas_parent.rowconfigure(2, weight = 1)
 
     # print([i for i in range((1 if g[0] > 0 else 0) + (1 if g[1] > 0 else 0))])
-    frame_whitespace = criar_frame(frame_listas_parent, 2, 0, 'news', co0 if g[1] == 0 else co3, co0, 0, 0, 0)
-    frame_whitespace.rowconfigure(0, weight=1)
-    frame_whitespace.columnconfigure(0, weight=1)
+    # frame_whitespace = criar_frame(frame_listas_parent, 2, 0, 'news', co0 if g[1] == 0 else co3, co0, 0, 0, 0)
+    # frame_whitespace.rowconfigure(0, weight=1)
+    # frame_whitespace.columnconfigure(0, weight=1)
 
     lista_titles = ['Integrantes ainda não Avaliados', 'Integrantes já Avaliados']
     lista_colors = [col_to_rate, col_rated]
@@ -116,6 +125,7 @@ def criar_section_ratings():
         frame_parent_users = criar_frame(frame_lista, 1, 0, "news", lista_col, lista_col, 0, 0, 0)
         frame_parent_users.columnconfigure(0, weight=1)
         frame_parent_users.rowconfigure(0, weight=1)
+        # frame_parent_users.configure(bg='green')
 
         # Scrollbar condicional: Apenas utilize Scrollbar nas listas caso o numero total de usuários em ambas seja maior que 10
         # se não fica mt feio seloko xD
@@ -124,7 +134,9 @@ def criar_section_ratings():
             frame_parent_users = criar_frame(frame_parent_users, 0, 0, 'nsew', lista_col, lista_col, 0, 0, 0)
             frame_parent_users.columnconfigure(0, minsize=0, weight=1)
             frame_parent_users.rowconfigure(0, minsize=0, weight=1)
+            # frame_parent_users.configure(bg='red')
             frame_parent_users = add_scrollbar(frame_parent_users, lista_col, 0)
+            # frame_parent_users.configure(bg='red')
 
         # para cada usuário nessa lista
         for j, user in enumerate(grade + grade + grade):
@@ -132,6 +144,7 @@ def criar_section_ratings():
             # Cria um frame para o usuário
             frame_user = criar_frame(frame_parent_users, j, 0, 'nsew', lista_col, co1, 0, 0, 0)
             frame_user.columnconfigure(0, weight=1)
+            # frame_user.configure(bg='red')
 
             # Cria um frame pro nome e role
             frame_user_data = criar_frame(frame_user, 0, 0, 'ew', lista_col, lista_col, 0, 0, 0)
@@ -149,7 +162,12 @@ def criar_section_ratings():
             # else: criar_button(frame_user_button, 'Editar Avaliação', 'Calibri, 12', 1, 1, lambda u=user: avaliar(u['id']), "w"),  # linha para teste
 
 
-def criar_section_profile():
+def criar_section_profile(sprints):
+    
+    mf_children = module_frame.winfo_children()
+    if mf_children and len(mf_children) > 2 and mf_children[1] is not None:
+        mf_children[1].destroy()
+
 
     # Cria o frame principal da seção
     frame_section = criar_frame(module_frame, 0, 1, "nwes", co0, co1, 2, 0, 0)
@@ -195,7 +213,7 @@ def criar_section_profile():
 
         # caso contrario, usuário padrão
         else:
-            criar_seção_perfil(frame_section)
+            criar_seção_perfil(frame_section, sprints)
 
 
 def criar_frame(quadro, row, column, sticky, background, highlightbackground, highlightthickness, px = 5, py = 5):
@@ -249,7 +267,7 @@ def avaliar (id):
     avaliacao.run(module_frame, id)
 
 
-def criar_seção_perfil(frame_section):
+def criar_seção_perfil(frame_section, sprints):
     from Authentication import CURRENT_USER
 
     frame_user_pentagon = criar_frame(frame_section, 1, 0, "ew", co1, co1, 0, 2, 2)
@@ -259,7 +277,7 @@ def criar_seção_perfil(frame_section):
     from graficos.Dashboards import user_pentagon
     from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
-    figure = user_pentagon(CURRENT_USER.id, co3, co1, 2.75, 2.25)
+    figure = user_pentagon(CURRENT_USER.id, sprints[sel_sprint], co3, co1, 2.75, 2.25)
 
     canvas = FigureCanvasTkAgg(figure, master=frame_user_pentagon)
 
@@ -276,47 +294,64 @@ def criar_seção_perfil(frame_section):
 
     from Models.Rating import get_ratings
     from Models.id_criteria import criteria
-    from Models.Sprint import previous_sprint
     from graficos.Integrador import classify_criteria, medias
-    target_sprint = previous_sprint(CURRENT_USER.group_id)
+    target_sprint = sprints[sel_sprint]
     ratings = get_ratings(to_user_id=CURRENT_USER.id, sprint_id=target_sprint.id)
     u_medias = medias(criteria, [classify_criteria(criteria, ratings)])[0]
 
+    frame_legenda_title = criar_frame(frame_legenda, 0, 0, "ew", co0, co2, 0, 4, 4)
+    criar_label(frame_legenda_title, f'Medias durante a sprint {sel_sprint+1}', 'Calibri, 10 bold', co0, 0, 0, 'we', 'center')
+
     for c_index, c in enumerate(criteria):
-        frame_criterio = criar_frame(frame_legenda, c_index, 0, "nsew", co0, co2, 0, 4, 4)
+        frame_criterio = criar_frame(frame_legenda, c_index+1, 0, "nsew", co0, co2, 0, 4, 4)
         frame_criterio.columnconfigure(1, weight=1)
         criar_label(frame_criterio, f'{c}: ', 'Calibri, 10 bold', co0, 0, 0, 'we', 'center')
         criar_label(frame_criterio, f'Nome do Critério: ', 'Calibri, 10', co0, 0, 1, 'we', 'center')
         criar_label(frame_criterio, f'{u_medias[c_index]:.1f}', 'Calibri, 10 bold', co0, 0, 2, 'e', 'center').configure(fg=co3)
 
-    frame_feedbacks = criar_frame(frame_section, 2, 0, "nsew", co0, co2, 0, 0, 0)
+    frame_section_feedbacks = criar_frame(frame_section, 2, 0, "nsew", co0, co2, 0, 0, 0)
+    frame_section_feedbacks.columnconfigure(0, weight=1)
+    frame_section_feedbacks.rowconfigure(2, weight=1)
+    create_sprint_selectors(frame_section_feedbacks, sprints)
+
+
+def create_sprint_selectors(frame_section_feedbacks, sprints):
+    from Authentication import CURRENT_USER
+
+    frame_feedbacks = criar_frame(frame_section_feedbacks, 2, 0, "nsew", co0, co2, 0, 0, 0)
     frame_feedbacks.columnconfigure(0, weight=1)
     frame_feedbacks.rowconfigure(2, weight=1)
-
-    from Models.Sprint import get_group_sprints
-    sprints = get_group_sprints(CURRENT_USER.group_id)
 
     frame_sprint_selector = criar_frame(frame_feedbacks, 0, 0, "ew", co3, co3, 2, 0, 0)
     frame_sprint_selector.columnconfigure([i for i in range(len(sprints))], weight=1)
 
-    for i, sprint in enumerate(sprints):
-        criar_button(frame_sprint_selector, f'Sprint {i+1}', 'Calibri, 12 bold', 0, i, lambda e, i=i, s=sprint:print(f'{i}: {s}'), 'ns', 0)
+    def select_sprint(_, sprints, sprint_index):
+        global sel_sprint
+        sel_sprint = sprint_index
+        from matplotlib import pyplot
+        pyplot.close()
+        criar_section_profile(sprints)
+
+    for index, sprint in enumerate(sprints):
+        sprint_btn = criar_button(frame_sprint_selector, f'Sprint {index+1}', 'Calibri, 12 bold', 0, index, 
+            lambda e=None, s=sprints, i=index: select_sprint(e, s, i), 'ew', 0)
+        sprint_btn.configure(fg=co3 if index == sel_sprint else co1, bg=co1 if index == sel_sprint else co3)
 
     from Front.Scrollbar import add_scrollbar
 
     from Utils.lista_usuarios_back import get_feedbacks
-    feedbacks = get_feedbacks(CURRENT_USER.id)
+    feedbacks = get_feedbacks(CURRENT_USER.id, sprints[sel_sprint].id)
 
     frame_fb_title = criar_frame(frame_feedbacks, 1, 0, "ew", co2, co1, 4, 0, 0)
-    criar_label(frame_fb_title, 'Feedbacks recebidos durante a sprint x:', 'Calibri, 12 bold', co2, 0, 0, 'w', 'center').configure(fg='white')
+    criar_label(frame_fb_title, f'Feedbacks recebidos durante a sprint {sel_sprint + 1}:', 'Calibri, 12 bold', co2, 0, 0, 'w', 'center').configure(fg='white')
 
     frame_feedback_list = criar_frame(frame_feedbacks, 2, 0, "nsew", co1, co1, 2, 2, 2)
     frame_feedback_list.columnconfigure(0, minsize=0, weight=1)
     frame_feedback_list.rowconfigure(0, minsize=0, weight=1)
     frame_feedback_list = add_scrollbar(frame_feedback_list, co0, 0)
 
-    for i, fb in enumerate(feedbacks):
-        frame_fb = criar_frame(frame_feedback_list, i, 0, "ns", co0, co2, 2, 4, 4)
+    for index, fb in enumerate(feedbacks):
+        frame_fb = criar_frame(frame_feedback_list, index, 0, "ns", co0, co2, 2, 4, 4)
         frame_fb.columnconfigure(0, weight=1)
         criar_label(frame_fb, fb, 'Calibri, 10', co1, 0, 0, 'we', 'left').configure(wraplength=400, anchor='n')
 
