@@ -27,8 +27,8 @@ def run(frame_parent):
 
     # cria o frame principal do modulo
     module_frame = criar_frame(frame_parent, 0, 0, "news", co0, co0, 0, 0, 0)
-    module_frame.columnconfigure(0, weight = 4)
-    module_frame.columnconfigure(1, weight = 4)
+    module_frame.columnconfigure(0, weight = 2)
+    module_frame.columnconfigure(1, weight = 6)
     module_frame.rowconfigure(0, weight = 1)
     module_frame.rowconfigure(1, weight = 3)
 
@@ -266,7 +266,9 @@ def graphic_pie(data=list,):
 def avaliar (id):
     from Front.Modules import avaliacao
     # global module_frame
-    avaliacao.run(module_frame.master.master, id)
+    target_frame = module_frame.master.master
+    module_frame.master.destroy()
+    avaliacao.run(target_frame, id)
 
 
 def criar_section_profile(frame_section, sprints):
