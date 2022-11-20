@@ -5,7 +5,7 @@ Events.initialize()
 
 # Cria dados de teste para popular os bancos de dados com usuários, grupos, times e avaliações
 from _test import create_test_data
-create_test_data()
+# create_test_data()
 
 
 
