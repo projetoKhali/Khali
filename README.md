@@ -29,7 +29,7 @@
 
 ### Integrantes da Equipe Khali
 
-![integrantes](https://user-images.githubusercontent.com/111442399/202913159-805931f6-781a-4dd1-987a-1135276bc2c5.png)
+![header read me (1)](https://user-images.githubusercontent.com/111442399/202913933-0357e3d5-1376-48ee-8190-2903ce77ff0c.png)
 
 | Integrantes | Redes Sociais |
 |-------|--------|
@@ -108,6 +108,11 @@
   | Como Líder do Grupo, preciso definir a função dos usuário dentro de um Time, que será utilizada como base para suas respectivas permissões |Essencial|
   | Como Líder do Grupo, preciso criar um cronograma de Sprints dentro do meu grupo, que será a base para os prazos das avaliações |Essencial|
   | Como Líder do Grupo, terei a funcionalidade de desativar usuários e times para possíveis desligamentos ou finalização do projeto |Desejável|
+
+  ### Sistema de Login e Cadastro pelo Administrador
+  ![Tela_cadastroadm](https://user-images.githubusercontent.com/111442399/202913947-627354e7-440b-42db-8c73-49b53f03e58b.gif)
+  ### Sistema de Login e Cadastro pelo Líder do Grupo
+  ![Tela_cadastrolider](https://user-images.githubusercontent.com/111442399/202914009-cd01e180-6b9c-4738-8138-ddbb188a1d67.gif)
  
 </details>
 
