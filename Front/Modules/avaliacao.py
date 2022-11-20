@@ -62,7 +62,7 @@ def run(frame_parent, to_user_id):
     criar_label(frame_header, 'Prazo para realizar a autoavaliação da {nº da Sprint}', 15, 0, 3, 5, 5, 'w')  # PUXAR DADO VINCULADO COM TELA DE RETORNO ???
     criar_label(frame_header, 'Esta avaliação 360° utiliza a escala Likert para medir o desempenho dos usuários. Notas abaixo ou iguais a 3 necessitam obrigatoriamente de Feedback (resposta descritiva)', 11, 0, 4, 5, 5, 'w')  
 
-    if to_user_id == CURRENT_USER:
+    if to_user_id == CURRENT_USER.id:
         perguntas = [
             '1) Como você se avalia em trabalho em equipe, cooperação e descentralização de conhecimento?',
             '2) Como você se avalia em iniciativa e proatividade?',
@@ -100,6 +100,11 @@ def run(frame_parent, to_user_id):
 
         frm_criterias.append(frm_criteria)
     
+    # def retorno_feedback_pendente():
+    #     label=Label(master=module_frame, text='Feedbacks são obrigatórios\npara notas iguais ou menores que 3.',
+    #     bg=co0, fg='#1a1d1a', font=('Calibre', 8))
+    #     label.place(relx=0.82, rely=0.09, relheight=0.03, relwidth=0.17)
+
     def retorno_feedback_pendente():
         messagebox.showinfo("Khali Group", "Feedback pendente de preenchimento. Para notas iguais ou menores que três, o feedback é obrigatório.")  
             
@@ -153,7 +158,6 @@ def run(frame_parent, to_user_id):
         return feedback
 
     def enviar_notas(_to_user_id):
-        
 
         from Utils.back_avaliacao import dados_avaliacao
 
@@ -168,7 +172,6 @@ def run(frame_parent, to_user_id):
             # print(f'escalas[i]: {escalas[i]} | escalas[i].get {escalas[i].get}')
 
             nota = escalas[i].get()
-            
 
             # try:
             #     comentario = feedbacks[i].get()
@@ -191,21 +194,13 @@ def run(frame_parent, to_user_id):
                 print('feedback pendente')
                 feedbacks_pendentes.append(i)
         
-        # dict = {'from_user_id': CURRENT_USER.id,'to_user_id': to_user_id}
-        
-        # if feedbacks_pendentes == [] and if find_data_list_by_field_values_csv(RATINGS_PATH, dict) == None:
-        
-        if feedbacks_pendentes == [] :
+        if feedbacks_pendentes == []:
             dados_avaliacao(_to_user_id, notas, comentarios)
 
             enviar_retorno()
-           
-            
-
-
         else:
             retorno_feedback_pendente()
-     
+            
 
 
     # Botão para registrar notas e conferir a necessidade de feedback
@@ -216,7 +211,7 @@ def run(frame_parent, to_user_id):
 
     # Botão para enviar notas para o banco de dados
     button1=Button(master=module_frame.winfo_toplevel(), text='Enviar Avaliação', fg='#1a1d1a', bg='#d9d9d9', 
-        font=('Calibre', 12), height=0, activebackground='#c5a8b0', command= lambda : enviar_notas(to_user_id), state = NORMAL
+        font=('Calibri', 12), height=0, activebackground='#c5a8b0', command= lambda : enviar_notas(to_user_id)
     )
     button1.place(relx=0.6, rely=0.09)
 
@@ -232,7 +227,7 @@ def criar_label(master, text, tamanho, column, row, padx, pady, sticky):
 
 def criar_escala(master, row, command):
     _escala = Scale(master=master, from_=1, to=5, length=500, tickinterval=1, orient=HORIZONTAL, 
-        bg=co0, font=('Calibre', 10), highlightcolor='#c5a8b0', troughcolor='#c5a8b0', state='normal', variable=IntVar(),
+        bg=co0, font=('Calibri', 10), highlightcolor='#c5a8b0', troughcolor='#c5a8b0', state='normal', variable=IntVar(),
         command=command
     )
     _escala.grid(column=0, row=row, padx=5, pady=5, sticky='w')

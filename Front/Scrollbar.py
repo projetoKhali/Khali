@@ -5,7 +5,7 @@ def add_scrollbar (target_frame, bg=co0, bd=3):
 
     # cria um frame dentro do target_frame, que é a frame "root"
     frm_main = Frame(target_frame, bg=bg)
-    frm_main.columnconfigure(0, minsize=0, weight=1)
+    frm_main.columnconfigure(0, minsize=1, weight=1)
     frm_main.rowconfigure(0, minsize=0, weight=1)
     frm_main.grid(row=0, column=0, sticky='news')
 
