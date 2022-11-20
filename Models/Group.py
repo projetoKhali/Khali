@@ -33,7 +33,7 @@ def exists_group (id:int):
 
 # retorna o nome do Grupo que corresponde ao id especificado 
 def get_group_name (id:int):
-    return get_group(id).name 
+    return None if id == '' or id is None else get_group(id).name 
 
 # retorna o Grupo que corresponde ao id especificado 
 def get_group (id:int):

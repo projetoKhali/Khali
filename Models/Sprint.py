@@ -1,6 +1,7 @@
 from datetime import date, timedelta
 from CSV.CSVHandler import *
 from Settings import SPRINTS_PATH 
+from Time import today
 
 # Define que o período avaliativo das sprints começa x dias depois do fim da sprint
 # 0: começa no ultimo dia da sprint
@@ -40,23 +41,17 @@ def to_date(value:str):
 # Retorna a sprint atual conforme a data de hoje 
 def current_sprint(group_id):
 
-    # armazena a data atual na variavel
-    today = date.today()
-
     # faz um loop através das sprints do grupo
     for sprint in get_group_sprints(group_id):
-        if today >= sprint.start and today <= sprint.finish + timedelta(days=sprint.rating_period):
+        if today() >= sprint.start and today() <= sprint.finish + timedelta(days=sprint.rating_period):
             return sprint
 
 # Retorna a sprint do período de avaliação atual conforme a data de hoje 
 def current_rating_period(group_id):
 
-    # armazena a data atual na variavel
-    today = date.today()
-
     # faz um loop através das sprints do grupo
     for sprint in get_group_sprints(group_id):
-        if today >= sprint.finish and today <= sprint.finish + timedelta(days=sprint.rating_period):
+        if today() >= sprint.finish and today() <= sprint.finish + timedelta(days=sprint.rating_period):
             return sprint
 
 def previous_sprint (group_id):
@@ -70,16 +65,13 @@ def previous_sprint (group_id):
 
 def next_rating_period (group_id):
 
-    # armazena a data atual na variavel
-    today = date.today()
-
     next_rating_period_sprint = None
     min_time_until_start = None
 
     # faz um loop através das sprints do grupo
     for sprint in get_group_sprints(group_id):
-        if today > sprint.finish: continue
-        time_until_start = sprint.finish + timedelta(days=sprint.rating_period) - today
+        if today() > sprint.finish: continue
+        time_until_start = sprint.finish + timedelta(days=sprint.rating_period) - today()
         if min_time_until_start is None or time_until_start < min_time_until_start: 
             min_time_until_start = time_until_start
             next_rating_period_sprint = sprint

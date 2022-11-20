@@ -31,9 +31,12 @@ def exists_team (id:int):
 
 # retorna o Time que corresponde ao id especificado 
 def get_team (id:int):
-    return to_team(find_data_by_id_csv(TEAMS_PATH, int(id)))
+    return None if id is None or id == '' else to_team(find_data_by_id_csv(TEAMS_PATH, int(id)))
+
+def get_team_name (id:int):
+    return None if id == '' or id is None else get_team(id).name 
 
 def get_teams_of_group (group_id):
-    return [to_team(team) for team in find_data_list_by_field_value_csv(TEAMS_PATH, 'group_id', group_id)]
+    return None if group_id is None or group_id == '' else [to_team(team) for team in find_data_list_by_field_value_csv(TEAMS_PATH, 'group_id', group_id)]
 
 
