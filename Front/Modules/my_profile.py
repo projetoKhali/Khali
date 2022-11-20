@@ -33,7 +33,7 @@ def run(frame_parent):
     module_frame.rowconfigure(1, weight = 3)
 
     # cria a seção da esquerda onde estará a lista de usuários avaliados e pendentes
-    criar_section_ratings()    
+    criar_section_1()    
 
     from Authentication import CURRENT_USER
     from Models.Sprint import get_group_sprints
@@ -43,11 +43,11 @@ def run(frame_parent):
     sel_sprint = len(sprints) - 1
 
     # cria a seção da direita onde estarão as informações do usuário logado
-    criar_section_profile(sprints)    
+    criar_section_2(sprints)    
 
     return module_frame
 
-def criar_section_ratings():
+def criar_section_1():
     from Utils import lista_usuarios_back
     from Front.Scrollbar import add_scrollbar
 
@@ -162,10 +162,12 @@ def criar_section_ratings():
             # else: criar_button(frame_user_button, 'Editar Avaliação', 'Calibri, 12', 1, 1, lambda u=user: avaliar(u['id']), "w"),  # linha para teste
 
 
-def criar_section_profile(sprints):
+def criar_section_2(sprints):
     
     mf_children = module_frame.winfo_children()
     if mf_children and len(mf_children) > 2 and mf_children[1] is not None:
+        from matplotlib import pyplot
+        pyplot.close()
         mf_children[1].destroy()
 
 
@@ -213,7 +215,7 @@ def criar_section_profile(sprints):
 
         # caso contrario, usuário padrão
         else:
-            criar_seção_perfil(frame_section, sprints)
+            criar_section_profile(frame_section, sprints)
 
 
 def criar_frame(quadro, row, column, sticky, background, highlightbackground, highlightthickness, px = 5, py = 5):
@@ -263,11 +265,11 @@ def graphic_pie(data=list,):
 
 def avaliar (id):
     from Front.Modules import avaliacao
-    global module_frame
-    avaliacao.run(module_frame, id)
+    # global module_frame
+    avaliacao.run(module_frame.master.master, id)
 
 
-def criar_seção_perfil(frame_section, sprints):
+def criar_section_profile(frame_section, sprints):
     from Authentication import CURRENT_USER
 
     frame_user_pentagon = criar_frame(frame_section, 1, 0, "ew", co1, co1, 0, 2, 2)
@@ -328,9 +330,7 @@ def create_sprint_selectors(frame_section_feedbacks, sprints):
     def select_sprint(_, sprints, sprint_index):
         global sel_sprint
         sel_sprint = sprint_index
-        from matplotlib import pyplot
-        pyplot.close()
-        criar_section_profile(sprints)
+        criar_section_2(sprints)
 
     for index, sprint in enumerate(sprints):
         sprint_btn = criar_button(frame_sprint_selector, f'Sprint {index+1}', 'Calibri, 12 bold', 0, index, 
