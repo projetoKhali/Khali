@@ -1,13 +1,12 @@
-
 # inicializa o sistema de eventos
 import Events
+
 Events.initialize()
 
 # Cria dados de teste para popular os bancos de dados com usuários, grupos, times e avaliações
 from _test import create_test_data
+
 # create_test_data()
-
-
 
 # from tkinter import *
 # window = Tk()
@@ -34,6 +33,7 @@ from _test import create_test_data
 
 
 from Front import WindowManager
+
 WindowManager.initialize()
 
 # teste - login automatico
