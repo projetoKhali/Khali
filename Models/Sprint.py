@@ -1,6 +1,11 @@
-from datetime import date
+from datetime import date, timedelta
 from CSV.CSVHandler import *
 from Settings import SPRINTS_PATH 
+
+# Define que o período avaliativo das sprints começa x dias depois do fim da sprint
+# 0: começa no ultimo dia da sprint
+# 1: começa no dia seguinte do fim da sprint
+RATING_PERIOD_START_DELAY = 1
 
 # Define a classe Sprint para facilitar a utilização no código
 class Sprint:
@@ -12,6 +17,10 @@ class Sprint:
         self.rating_period = rating_period
     def __str__(self):
         return f'Sprint[id: {self.id}, group_id: {self.group_id}, start: {self.start}, finish: {self.finish}, rating_period: {self.rating_period}]'
+    def rating_period_start(self):
+        return self.finish + timedelta(days=RATING_PERIOD_START_DELAY)
+    def rating_period_end(self):
+        return self.finish + timedelta(days=self.rating_period + RATING_PERIOD_START_DELAY)
 
 # Converte dicionario em sprint
 def to_sprint(sprint_dict):
@@ -30,7 +39,6 @@ def to_date(value:str):
 
 # Retorna a sprint atual conforme a data de hoje 
 def current_sprint(group_id):
-    from datetime import timedelta
 
     # armazena a data atual na variavel
     today = date.today()
@@ -42,7 +50,6 @@ def current_sprint(group_id):
 
 # Retorna a sprint do período de avaliação atual conforme a data de hoje 
 def current_rating_period(group_id):
-    from datetime import timedelta
 
     # armazena a data atual na variavel
     today = date.today()
@@ -61,6 +68,22 @@ def previous_sprint (group_id):
             prev_sprint = sprint
     return prev_sprint
 
+def next_rating_period (group_id):
+
+    # armazena a data atual na variavel
+    today = date.today()
+
+    next_rating_period_sprint = None
+    min_time_until_start = None
+
+    # faz um loop através das sprints do grupo
+    for sprint in get_group_sprints(group_id):
+        if today > sprint.finish: continue
+        time_until_start = sprint.finish + timedelta(days=sprint.rating_period) - today
+        if min_time_until_start is None or time_until_start < min_time_until_start: 
+            min_time_until_start = time_until_start
+            next_rating_period_sprint = sprint
+    return next_rating_period_sprint
 
 # Cria uma sprint e salva na database
 # parametros:

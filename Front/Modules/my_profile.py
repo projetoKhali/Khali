@@ -27,8 +27,8 @@ def run(frame_parent):
 
     # cria o frame principal do modulo
     module_frame = criar_frame(frame_parent, 0, 0, "news", co0, co0, 0, 0, 0)
-    module_frame.columnconfigure(0, weight = 0)
-    module_frame.columnconfigure(1, weight = 4)
+    module_frame.columnconfigure(0, weight = 2)
+    module_frame.columnconfigure(1, weight = 6)
     module_frame.rowconfigure(0, weight = 1)
     module_frame.rowconfigure(1, weight = 3)
 
@@ -46,6 +46,7 @@ def run(frame_parent):
     criar_section_2(sprints)    
 
     return module_frame
+
 
 def criar_section_1():
     from Utils import lista_usuarios_back
@@ -66,10 +67,43 @@ def criar_section_1():
 
     # Frame para a timeline / datas importantes da sprint / periodo avaliativo
     frame_sprint_timeline = criar_frame(frame_section, 1, 0, "ew", co0, co1, 0, 2, 2)
-    sprint_timeline_str = 'Sprint x | periodo avaliativo acaba em y dias'
-    criar_label(frame_sprint_timeline, sprint_timeline_str, 'Calibri, 10', co0, 1, 0, 'ew')
 
     from Authentication import CURRENT_USER
+    from Models.Sprint import current_rating_period, next_rating_period, get_group_sprints
+    from datetime import date
+
+    today = date.today()
+    sprint = current_rating_period(CURRENT_USER.group_id)
+    sprint_timeline_str = ''
+
+    # Retorna o indice da sprint dentro da lista com as sprints do grupo
+    def sprint_n(s):
+        for i, s in enumerate(get_group_sprints(CURRENT_USER.group_id)): 
+            if s.id == sprint.id: return i + 1
+
+    # Caso possuirmos uma sprint cujo periodo avaliativo encontra-se ativo
+    if sprint is not None:
+
+        # informa sprint atual + quantidade de dias até o fim do periodo avaliativo
+        cur_ratings_end = sprint.rating_period_end() - today
+        sprint_timeline_str = f'Sprint {sprint_n(sprint)} | periodo avaliativo acaba em {cur_ratings_end.days} dias'
+
+    # Caso contrário, a sprint com o periodo avaliativo mais proximo será considerada
+    else: 
+        sprint = next_rating_period(CURRENT_USER.group_id)
+        if sprint is not None:
+
+            # informa sprint atual + quantidade de dias até o começo do periodo avaliativo
+            next_ratings_start = sprint.rating_period_start() - today
+            sprint_timeline_str = f'Sprint {sprint_n(sprint)} | periodo avaliativo começa em {next_ratings_start.days} dias'
+
+        # nenhuma informação relacionada a periodo avaliativo encontrada, mensagem genérica
+        else:
+            sprint_timeline_str = 'Nenhum período avaliativo previsto'
+
+    # cria a label com as informações do periodo avaliativo
+    criar_label(frame_sprint_timeline, sprint_timeline_str, 'Calibri, 10', co0, 1, 0, 'ew')
+
     from Models.Role import get_role_name
 
     # cria uma lista com os usuários a serem avaliados pelo usuário logado
@@ -79,12 +113,10 @@ def criar_section_1():
     # ]
     grades = lista_usuarios_back.get_users(CURRENT_USER.email)
 
-    grades = [grades[0], grades[0]] # -----------------------------------------------------------------------------------------
+    # grades = [grades[0], grades[0]] # -----------------------------------------------------------------------------------------
 
-    g = [
-        len(grades[0]),
-        len(grades[1])
-    ]
+    # variavel com o tamanho das listas
+    g = [len(grades[0]), len(grades[1])]
 
     # Cria o pie chart utilizando a informação de usuários
     criar_piechart(frame_section_header, [len(grades[0]), len(grades[1])])
@@ -96,17 +128,13 @@ def criar_section_1():
     if g[1] > 0: frame_listas_parent.rowconfigure(1, weight = 250 if g[0] == 0 else 10)
     frame_listas_parent.rowconfigure(2, weight = 1)
 
-    # print([i for i in range((1 if g[0] > 0 else 0) + (1 if g[1] > 0 else 0))])
-    # frame_whitespace = criar_frame(frame_listas_parent, 2, 0, 'news', co0 if g[1] == 0 else co3, co0, 0, 0, 0)
-    # frame_whitespace.rowconfigure(0, weight=1)
-    # frame_whitespace.columnconfigure(0, weight=1)
-
+    # listas para facilitar o acesso a informações dentro do loop 'i'
     lista_titles = ['Integrantes ainda não Avaliados', 'Integrantes já Avaliados']
     lista_colors = [col_to_rate, col_rated]
 
     # para cada lista
     for i, grade in enumerate(grades):
-        glen=len(grade+grade+grade)
+        glen=len(grade)
 
         # se a lista não possui usuários, ignore-a - não cria os frames da lista
         if len(grade) < 1: continue
@@ -125,26 +153,21 @@ def criar_section_1():
         frame_parent_users = criar_frame(frame_lista, 1, 0, "news", lista_col, lista_col, 0, 0, 0)
         frame_parent_users.columnconfigure(0, weight=1)
         frame_parent_users.rowconfigure(0, weight=1)
-        # frame_parent_users.configure(bg='green')
 
-        # Scrollbar condicional: Apenas utilize Scrollbar nas listas caso o numero total de usuários em ambas seja maior que 10
+        # Scrollbar condicional: Apenas utilize Scrollbar nas listas caso o numero total de usuários em ambas seja maior que (...)
         # se não fica mt feio seloko xD
-        # if len(grades[0] + grades[1]) > 10 and len(grades[0]) > 0 and len(grades[1] > 0):
         if lambda g=glen, g0=g[0], g1=g[1]: True if g0 > 0 and g1 > 0 and g0+g1 >= 12 else True if g >= 12 else False:
             frame_parent_users = criar_frame(frame_parent_users, 0, 0, 'nsew', lista_col, lista_col, 0, 0, 0)
             frame_parent_users.columnconfigure(0, minsize=0, weight=1)
             frame_parent_users.rowconfigure(0, minsize=0, weight=1)
-            # frame_parent_users.configure(bg='red')
             frame_parent_users = add_scrollbar(frame_parent_users, lista_col, 0)
-            # frame_parent_users.configure(bg='red')
 
         # para cada usuário nessa lista
-        for j, user in enumerate(grade + grade + grade):
+        for j, user in enumerate(grade):
 
             # Cria um frame para o usuário
             frame_user = criar_frame(frame_parent_users, j, 0, 'nsew', lista_col, co1, 0, 0, 0)
             frame_user.columnconfigure(0, weight=1)
-            # frame_user.configure(bg='red')
 
             # Cria um frame pro nome e role
             frame_user_data = criar_frame(frame_user, 0, 0, 'ew', lista_col, lista_col, 0, 0, 0)
@@ -164,12 +187,12 @@ def criar_section_1():
 
 def criar_section_2(sprints):
     
+    # destroy o frame_section_2 anterior caso já exista 
     mf_children = module_frame.winfo_children()
     if mf_children and len(mf_children) > 2 and mf_children[1] is not None:
         from matplotlib import pyplot
         pyplot.close()
         mf_children[1].destroy()
-
 
     # Cria o frame principal da seção
     frame_section = criar_frame(module_frame, 0, 1, "nwes", co0, co1, 2, 0, 0)
@@ -189,6 +212,7 @@ def criar_section_2(sprints):
     from Models.Group import get_group_name
     from Models.Team import get_team
 
+    # Cria o cabeçalho do perfil contendo informações do usuário: nome, função, grupo e time
     frame_header_data = criar_frame(frame_section_header, 1, 0, "ew", co0, co2, 2, 0, 0)
     frame_header_data.columnconfigure([0, 1], weight = 1)
     frame_header_data.columnconfigure([0, 1], weight = 1)
@@ -198,6 +222,8 @@ def criar_section_2(sprints):
     criar_label(frame_header_data, f'Time: {get_team(CURRENT_USER.team_id).name}', 'Calibri, 12', co0, 1, 1, 'e')
 
     from Models.Sprint import previous_sprint
+
+    # pega a sprint anterior do grupo do usuário logado
     target_sprint = previous_sprint(CURRENT_USER.group_id)
 
     # sem target_sprint: renderiza informações sobre a avaliação 360
@@ -206,7 +232,7 @@ def criar_section_2(sprints):
         frame_ratings_info = criar_frame(frame_section, 1, 0, "ew", co1, co1, 0, 2, 2)
         criar_label(frame_ratings_info, 'informações sobre a avaliação 360', 'Calibri, 12', co1, 0, 0, 'nwes')
 
-    # Renderiza a seção2 com as informações releantes ao usuário
+    # Renderiza a seção2 com as informações referentes as avaliações feitas ao usuário
     else:
 
         # caso o usuário logado seja instrutor
@@ -216,59 +242,6 @@ def criar_section_2(sprints):
         # caso contrario, usuário padrão
         else:
             criar_section_profile(frame_section, sprints)
-
-
-def criar_frame(quadro, row, column, sticky, background, highlightbackground, highlightthickness, px = 5, py = 5):
-    from tkinter import Frame
-    frame = Frame(quadro, background=background, highlightbackground=highlightbackground, highlightthickness=highlightthickness)
-    frame.grid(row = row, column = column, sticky = sticky, padx = px, pady = py)
-    return frame
-
-
-# cria widget do tipo label
-def criar_label(quadro, text, font, background, r, c, sticky='n', justify='left'):
-    from tkinter import Label
-    widget = Label(quadro, text=text, font=font, background = background , justify=justify)
-    widget.grid(row=r, column=c, sticky= sticky)
-    return widget
-
-
-def criar_button(quadro, text, font, r, c, command, sticky='ne', width=12):
-    from tkinter import Button
-    widget = Button(quadro, text = text, font = font, background = co0, justify='right', fg=co2, command=command,
-        width=width, height=0, activebackground='#c5a8b0')
-    widget.grid(row=r, column=c, sticky= sticky)
-    return widget
-
-
-def criar_piechart (module_frame, data):
-    from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-    frame_dashboards = criar_frame(module_frame, 0, 1, "ne", co3, co3, 0, 0, 0)
-    figure = graphic_pie(data)
-    canvas = FigureCanvasTkAgg(figure, master = frame_dashboards)
-    canvas.get_tk_widget().grid(row=0, column=0, sticky='e')
-
-
-def graphic_pie(data=list,):
-    import matplotlib.pyplot as plt
-    fig, ax = plt.subplots(figsize = (.65,.65), subplot_kw=dict(aspect="equal"))
-    ax.set_anchor('E')
-    def func (pct, allvals):
-        absolute = int(pct/100.*sum(allvals))
-        return "{:.0f}%\n({:d})".format(pct, absolute)
-    _, _, autotexts = ax.pie(data, autopct=lambda pct: func(pct, data), textprops=dict(color="white"), colors=[col_to_rate, col_rated])
-    plt.subplots_adjust(left=0, bottom=0, right=1, top=1, wspace=0, hspace=0)
-    plt.setp(autotexts, size=7, weight='bold')
-    fig.set_facecolor(co3)
-    return fig
-
-
-def avaliar (id):
-    from Front.Modules import avaliacao
-    # global module_frame
-    target_frame = module_frame.master.master
-    module_frame.master.destroy()
-    avaliacao.run(target_frame, id)
 
 
 def criar_section_profile(frame_section, sprints):
@@ -334,7 +307,7 @@ def create_sprint_selectors(frame_section_feedbacks, sprints):
         sel_sprint = sprint_index
         criar_section_2(sprints)
 
-    for index, sprint in enumerate(sprints):
+    for index, _ in enumerate(sprints):
         sprint_btn = criar_button(frame_sprint_selector, f'Sprint {index+1}', 'Calibri, 12 bold', 0, index, 
             lambda e=None, s=sprints, i=index: select_sprint(e, s, i), 'ew', 0)
         sprint_btn.configure(fg=co3 if index == sel_sprint else co1, bg=co1 if index == sel_sprint else co3)
@@ -356,5 +329,56 @@ def create_sprint_selectors(frame_section_feedbacks, sprints):
         frame_fb = criar_frame(frame_feedback_list, index, 0, "ns", co0, co2, 2, 4, 4)
         frame_fb.columnconfigure(0, weight=1)
         criar_label(frame_fb, fb, 'Calibri, 10', co1, 0, 0, 'we', 'left').configure(wraplength=400, anchor='n')
+
+
+# funções genéricas de widgets do tkinter
+def criar_frame(quadro, row, column, sticky, background, highlightbackground, highlightthickness, px = 5, py = 5):
+    from tkinter import Frame
+    frame = Frame(quadro, background=background, highlightbackground=highlightbackground, highlightthickness=highlightthickness)
+    frame.grid(row = row, column = column, sticky = sticky, padx = px, pady = py)
+    return frame
+
+def criar_label(quadro, text, font, background, r, c, sticky='n', justify='left'):
+    from tkinter import Label
+    widget = Label(quadro, text=text, font=font, background = background , justify=justify)
+    widget.grid(row=r, column=c, sticky= sticky)
+    return widget
+
+def criar_button(quadro, text, font, r, c, command, sticky='ne', width=12):
+    from tkinter import Button
+    widget = Button(quadro, text = text, font = font, background = co0, justify='right', fg=co2, command=command,
+        width=width, height=0, activebackground='#c5a8b0')
+    widget.grid(row=r, column=c, sticky= sticky)
+    return widget
+
+
+# função que cria e coloca o grafico pentagono em um canvas dentro do frame parametro
+def criar_piechart (module_frame, data):
+    from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+    frame_dashboards = criar_frame(module_frame, 0, 1, "ne", co3, co3, 0, 0, 0)
+    figure = graphic_pie(data)
+    canvas = FigureCanvasTkAgg(figure, master = frame_dashboards)
+    canvas.get_tk_widget().grid(row=0, column=0, sticky='e')
+
+# função que cria o grafico pentagono com as informações parametro
+def graphic_pie(data=list):
+    import matplotlib.pyplot as plt
+    fig, ax = plt.subplots(figsize = (.65,.65), subplot_kw=dict(aspect="equal"))
+    ax.set_anchor('E')
+    def func (pct, allvals):
+        absolute = int(pct/100.*sum(allvals))
+        return "{:.0f}%\n({:d})".format(pct, absolute)
+    _, _, autotexts = ax.pie(data, autopct=lambda pct: func(pct, data), textprops=dict(color="white"), colors=[col_to_rate, col_rated])
+    plt.subplots_adjust(left=0, bottom=0, right=1, top=1, wspace=0, hspace=0)
+    plt.setp(autotexts, size=7, weight='bold')
+    fig.set_facecolor(co3)
+    return fig
+
+# função que muda para a tela de avaliação para o usuário de id parametro
+def avaliar (id):
+    from Front.Modules import avaliacao
+    target_frame = module_frame.master.master
+    module_frame.master.destroy()
+    avaliacao.run(target_frame, id)
 
 
