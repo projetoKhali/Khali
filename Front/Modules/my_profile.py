@@ -37,7 +37,9 @@ def run(frame_parent):
 
     from Authentication import CURRENT_USER
     from Models.Sprint import get_group_sprints
-    sprints = get_group_sprints(CURRENT_USER.group_id)
+    from Time import today
+
+    sprints = [s for s in get_group_sprints(CURRENT_USER.group_id) if today() > s.rating_period_end()]
 
     global sel_sprint
     sel_sprint = len(sprints) - 1
@@ -70,9 +72,8 @@ def criar_section_1():
 
     from Authentication import CURRENT_USER
     from Models.Sprint import current_rating_period, next_rating_period, get_group_sprints
-    from datetime import date
+    from Time import today
 
-    today = date.today()
     sprint = current_rating_period(CURRENT_USER.group_id)
     sprint_timeline_str = ''
 
@@ -85,7 +86,7 @@ def criar_section_1():
     if sprint is not None:
 
         # informa sprint atual + quantidade de dias até o fim do periodo avaliativo
-        cur_ratings_end = sprint.rating_period_end() - today
+        cur_ratings_end = sprint.rating_period_end() - today()
         sprint_timeline_str = f'Sprint {sprint_n(sprint)} | periodo avaliativo acaba em {cur_ratings_end.days} dias'
 
     # Caso contrário, a sprint com o periodo avaliativo mais proximo será considerada
@@ -94,7 +95,7 @@ def criar_section_1():
         if sprint is not None:
 
             # informa sprint atual + quantidade de dias até o começo do periodo avaliativo
-            next_ratings_start = sprint.rating_period_start() - today
+            next_ratings_start = sprint.rating_period_start() - today()
             sprint_timeline_str = f'Sprint {sprint_n(sprint)} | periodo avaliativo começa em {next_ratings_start.days} dias'
 
         # nenhuma informação relacionada a periodo avaliativo encontrada, mensagem genérica
@@ -185,6 +186,7 @@ def criar_section_1():
             # else: criar_button(frame_user_button, 'Editar Avaliação', 'Calibri, 12', 1, 1, lambda u=user: avaliar(u['id']), "w"),
 
 
+# Cria a parte direita da tela, chamando a função apropriada dependendo do usuário logado e da sprint atual
 def criar_section_2(sprints):
     
     # destroy o frame_section_2 anterior caso já exista 
@@ -199,32 +201,12 @@ def criar_section_2(sprints):
     frame_section.columnconfigure(0, weight = 1)
     frame_section.rowconfigure(2, weight = 1)
 
-    # Cria o frame de cabeçalho
-    frame_section_header = criar_frame(frame_section, 0, 0, "we", co3, co3, 0, 0, 0)
-    frame_section_header.columnconfigure(0, weight = 1)
-
-    # Cria um frame para a label de título dentro do cabeçalho
-    frame_header_title = criar_frame(frame_section_header, 0, 0, "ns", co0, co3, 0, 0, 0)
-    criar_label(frame_header_title, 'Perfil', 'Calibri, 20', co3, 0, 0, 'nwes').configure(fg='white')
-
-    from Authentication import CURRENT_USER
-    from Models.Role import get_role_name
-    from Models.Group import get_group_name
-    from Models.Team import get_team
-
-    # Cria o cabeçalho do perfil contendo informações do usuário: nome, função, grupo e time
-    frame_header_data = criar_frame(frame_section_header, 1, 0, "ew", co0, co2, 2, 0, 0)
-    frame_header_data.columnconfigure([0, 1], weight = 1)
-    frame_header_data.columnconfigure([0, 1], weight = 1)
-    criar_label(frame_header_data, f'Nome: {CURRENT_USER.name}', 'Calibri, 14', co0, 0, 0, 'w')
-    criar_label(frame_header_data, f'Função: {get_role_name(CURRENT_USER.role_id)}', 'Calibri, 12', co0, 1, 0, 'w')
-    criar_label(frame_header_data, f'Grupo: {get_group_name(CURRENT_USER.group_id)}', 'Calibri, 14', co0, 0, 1, 'e')
-    criar_label(frame_header_data, f'Time: {get_team(CURRENT_USER.team_id).name}', 'Calibri, 12', co0, 1, 1, 'e')
-
     from Models.Sprint import previous_sprint
+    from Authentication import CURRENT_USER
 
     # pega a sprint anterior do grupo do usuário logado
     target_sprint = previous_sprint(CURRENT_USER.group_id)
+    print(target_sprint)
 
     # sem target_sprint: renderiza informações sobre a avaliação 360
     if target_sprint is None:
@@ -247,6 +229,28 @@ def criar_section_2(sprints):
 # Cria informações adicionais na seção 2 caso o usuário seja aluno
 def criar_section_profile(frame_section, sprints):
     from Authentication import CURRENT_USER
+
+    # Cria o frame de cabeçalho
+    frame_section_header = criar_frame(frame_section, 0, 0, "we", co3, co3, 0, 0, 0)
+    frame_section_header.columnconfigure(0, weight = 1)
+
+    # Cria um frame para a label de título dentro do cabeçalho
+    frame_header_title = criar_frame(frame_section_header, 0, 0, "ns", co0, co3, 0, 0, 0)
+    criar_label(frame_header_title, 'Perfil', 'Calibri, 20', co3, 0, 0, 'nwes').configure(fg='white')
+
+    from Authentication import CURRENT_USER
+    from Models.Role import get_role_name
+    from Models.Group import get_group_name
+    from Models.Team import get_team_name
+
+    # Cria o cabeçalho do perfil contendo informações do usuário: nome, função, grupo e time
+    frame_header_data = criar_frame(frame_section_header, 1, 0, "ew", co0, co2, 2, 0, 0)
+    frame_header_data.columnconfigure([0, 1], weight = 1)
+    frame_header_data.columnconfigure([0, 1], weight = 1)
+    criar_label(frame_header_data, f'Nome: {CURRENT_USER.name}', 'Calibri, 14', co0, 0, 0, 'w')
+    criar_label(frame_header_data, f'Função: {get_role_name(CURRENT_USER.role_id)}', 'Calibri, 12', co0, 1, 0, 'w')
+    criar_label(frame_header_data, f'Grupo: {get_group_name(CURRENT_USER.group_id)}', 'Calibri, 14', co0, 0, 1, 'e')
+    criar_label(frame_header_data, f'Time: {get_team_name(CURRENT_USER.team_id)}', 'Calibri, 12', co0, 1, 1, 'e')
 
     # Cria o frame para o grafico pentagono
     frame_user_pentagon = criar_frame(frame_section, 1, 0, "ew", co1, co1, 0, 2, 2)
