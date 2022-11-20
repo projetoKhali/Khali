@@ -1,7 +1,9 @@
 from tkinter import * 
+from tkinter import messagebox
 from tkinter import ttk
 from Models.Role import get_role_name
 from Authentication import CURRENT_USER
+from CSV.CSVHandler import *
 
 from Settings import co0
 from Settings import co1
@@ -99,14 +101,17 @@ def run(frame_parent, to_user_id):
         frm_criterias.append(frm_criteria)
     
     def retorno_feedback_pendente():
-        label=Label(master=module_frame, text='Feedbacks são obrigatórios\npara notas iguais ou menores que 3.',
-        bg=co0, fg='#1a1d1a', font=('Calibre', 8))
-        label.place(relx=0.82, rely=0.09, relheight=0.03, relwidth=0.17)
+        messagebox.showinfo("Khali Group", "Feedback pendente de preenchimento. Para notas iguais ou menores que três, o feedback é obrigatório.")  
+            
+
+        # label=Label(master=module_frame, text='Feedbacks são obrigatórios\npara notas iguais ou menores que 3.',
+        # bg=co0, fg='#1a1d1a', font=('Calibre', 8))
+        # label.place(relx=0.82, rely=0.09, relheight=0.03, relwidth=0.17)
 
     def enviar_retorno():
         label=Label(master=module_frame, text='Avaliação enviada com sucesso!',
         bg=co0, fg='#1a1d1a', font=('Calibre', 10))
-        label.place(relx=0.82, rely=0.09, relheight=0.03, relwidth=0.17)
+        label.place(relx=0.55, rely=0.09, relheight=0.03, relwidth=0.17)
 
     # def criar_label(master, text, tamanho, column, row, padx, pady, sticky):
     def computar_resposta(i):
@@ -186,13 +191,21 @@ def run(frame_parent, to_user_id):
                 print('feedback pendente')
                 feedbacks_pendentes.append(i)
         
-        if feedbacks_pendentes == []:
+        # dict = {'from_user_id': CURRENT_USER.id,'to_user_id': to_user_id}
+        
+        # if feedbacks_pendentes == [] and if find_data_list_by_field_values_csv(RATINGS_PATH, dict) == None:
+        
+        if feedbacks_pendentes == [] :
             dados_avaliacao(_to_user_id, notas, comentarios)
 
             enviar_retorno()
+           
+            
+
+
         else:
             retorno_feedback_pendente()
-            
+     
 
 
     # Botão para registrar notas e conferir a necessidade de feedback
@@ -203,9 +216,9 @@ def run(frame_parent, to_user_id):
 
     # Botão para enviar notas para o banco de dados
     button1=Button(master=module_frame.winfo_toplevel(), text='Enviar Avaliação', fg='#1a1d1a', bg='#d9d9d9', 
-        font=('Calibre', 12), height=0, activebackground='#c5a8b0', command= lambda : enviar_notas(to_user_id)
+        font=('Calibre', 12), height=0, activebackground='#c5a8b0', command= lambda : enviar_notas(to_user_id), state = NORMAL
     )
-    button1.place(relx=0.69, rely=0.09)
+    button1.place(relx=0.6, rely=0.09)
 
     f = Frame(module_frame, pady=100, bg=co0)
     Label(f, text='', bg=co0).grid(row=0, column=0, sticky="s")
@@ -223,5 +236,5 @@ def criar_escala(master, row, command):
         command=command
     )
     _escala.grid(column=0, row=row, padx=5, pady=5, sticky='w')
-    _escala.set(1)
+    _escala.set(5)
     return _escala
