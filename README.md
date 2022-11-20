@@ -1,18 +1,15 @@
 ![header read me](https://user-images.githubusercontent.com/111442399/194777358-24905c4f-e62b-414d-8754-b3ccaf878547.png)
-
 # API 1º Semestre - Tecnologia em Banco de Dados 2022
 
-## Sumário
-  * [Projeto API](#projeto-API)
+## 📍 Sumário
+  * [Projeto API](#projeto-api)
     * [Integrantes da Equipe Khali](#integrantes-da-equipe-khali) 
     * [Tema](#tema)
-    * [Objetivo](#objetivo)
+    * [Objetivo](#objetivos)
     * [Tríade da API](#tríade-da-api)
     * [Prazos](#prazos)
    
-  
-     
-  * [Produto Khali](#descrição-do-produto)
+  * [Produto Khali](#produto)
     * [Tecnologias Utilizadas](#tecnologias-utilizadas)
     * [Wireframe do Produto](#wireframe-do-produto)
     * [Fluxograma do produto](#fluxograma-do-produto)
@@ -21,9 +18,7 @@
     * [Vídeos com funcionalidades](#vídeos-com-funcionalidades)
     * [Requisitos Funcionais](#requisitos-funcionais)
     * [Requisitos Não Funcionais](#requisitos-não-funcionais)
-    * [Backlog do Produto](#backlog-do-produto)
-    
-    
+    * [Backlog do Produto](#backlog-do-produto)    
 ##
 ## *Projeto API*
 
@@ -43,7 +38,7 @@
 ### Tema 
 * Desenvolvimento de uma solução computacional que viabilize a aplicação da técnica de **Avaliação 360°** e a análise dos dados obtidos pelos alunos e instrutores da instituição de ensino PBLTeX, especializada em cursos e práticas de ensino aplicando PBL (*Problem Based Learning*)
 
-### Objetivo
+### Objetivos
 > * Atender à necessidade da instituição fictícia e desenvolver uma solução computacional que exercite a capacidade de pesquisa e autodidaxia dos integrantes dos grupos, no que tange:
 > * A aplicação de técnicas de programação para a construção de algoritmos
 > * O uso de uma ferramenta que possibilite um Ambiente de Desenvolvimento Integrado (IDE) para o desenvolvimento da solução computacional
@@ -71,6 +66,13 @@
 
 ### Tecnologias Utilizadas
 ![tecnologias](https://user-images.githubusercontent.com/111442399/202913166-eb48d03a-c90a-4f53-aeeb-675551fbc5eb.png)
+
+### Configurando o Ambiente para a Execução do Programa
+#### Digite em seu terminal os seguintes comandos: 
+1. Instale o virtual environment: `python -m venv venv`
+2. Ative o virtual environment: `.\venv\Scripts\activate`
+3. Instale as dependências do programa: `pip install -r requirements.txt`
+4. Execute o programa: `python main.py`
 
 ### Wireframe do Produto
 * Wireframe disponível pelo [Figma](https://www.figma.com/file/U1apWrrVuZHbtNIumUgUoo/Api?node-id=56%3A3)
