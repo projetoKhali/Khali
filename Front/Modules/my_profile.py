@@ -174,15 +174,15 @@ def criar_section_1():
             frame_user_data.columnconfigure(0, weight=1)
 
             # cria as labels de nome e role
-            criar_label(frame_user_data, user['name'], 'Calibri, 12', lista_col, 0, 0, "w")  # linha para teste
-            criar_label(frame_user_data, get_role_name(user['role_id']), 'Calibri, 10', lista_col, 1, 0, "w")  # linha para teste
+            criar_label(frame_user_data, user['name'], 'Calibri, 12', lista_col, 0, 0, "w")
+            criar_label(frame_user_data, get_role_name(user['role_id']), 'Calibri, 10', lista_col, 1, 0, "w")
 
             # Cria um frame pro botão
             frame_user_button = criar_frame(frame_user, 0, 1, 'ew', co0, co0, 0, 0, 0)
 
             # insere o botão correspondente ao tipo da lista. Pendentes: avaliar; Avaliados: editar
-            if i == 0: criar_button(frame_user_button, 'Avaliar', 'Calibri, 12', 1, 1, lambda u=user: avaliar(u['id']), "e"),  # linha para teste
-            # else: criar_button(frame_user_button, 'Editar Avaliação', 'Calibri, 12', 1, 1, lambda u=user: avaliar(u['id']), "w"),  # linha para teste
+            if i == 0: criar_button(frame_user_button, 'Avaliar', 'Calibri, 12', 1, 1, lambda u=user: avaliar(u['id']), "e"),
+            # else: criar_button(frame_user_button, 'Editar Avaliação', 'Calibri, 12', 1, 1, lambda u=user: avaliar(u['id']), "w"),
 
 
 def criar_section_2(sprints):
@@ -270,7 +270,7 @@ def criar_section_profile(frame_section, sprints):
     frame_legenda.rowconfigure([i for i in range(len(criteria))], weight = 1)
 
     from Models.Rating import get_ratings
-    from Models.id_criteria import criteria
+    from Models.id_criteria import criteria, criteria_full
     from graficos.Integrador import classify_criteria, medias
     target_sprint = sprints[sel_sprint]
     ratings = get_ratings(to_user_id=CURRENT_USER.id, sprint_id=target_sprint.id)
@@ -283,7 +283,7 @@ def criar_section_profile(frame_section, sprints):
         frame_criterio = criar_frame(frame_legenda, c_index+1, 0, "nsew", co0, co2, 0, 4, 4)
         frame_criterio.columnconfigure(1, weight=1)
         criar_label(frame_criterio, f'{c}: ', 'Calibri, 10 bold', co0, 0, 0, 'we', 'center')
-        criar_label(frame_criterio, f'Nome do Critério: ', 'Calibri, 10', co0, 0, 1, 'we', 'center')
+        criar_label(frame_criterio, f'{criteria_full[c_index]}: ', 'Calibri, 10', co0, 0, 1, 'we', 'center')
         criar_label(frame_criterio, f'{u_medias[c_index]:.1f}', 'Calibri, 10 bold', co0, 0, 2, 'e', 'center').configure(fg=co3)
 
     frame_section_feedbacks = criar_frame(frame_section, 2, 0, "nsew", co0, co2, 0, 0, 0)
