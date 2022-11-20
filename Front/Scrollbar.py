@@ -36,6 +36,7 @@ def add_scrollbar (target_frame, bg=co0, bd=3):
     module_frame.columnconfigure(0, minsize = 0, weight = 1)
     module_frame.rowconfigure(0, minsize = 0, weight = 1)
     module_frame.grid(row=0, column=0, sticky="nsew")
+
     module_frame.bind('<Configure>', lambda _: canvas.configure(scrollregion=canvas.bbox('all')))
 
     # adicionar a nova frame a uma janela no canvas

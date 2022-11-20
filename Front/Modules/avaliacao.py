@@ -1,9 +1,13 @@
 from tkinter import * 
+from tkinter import messagebox
 from tkinter import ttk
 from Models.Role import get_role_name
 from Authentication import CURRENT_USER
+from CSV.CSVHandler import *
 
 from Settings import co0
+from Settings import co1
+from Settings import co2
 
 # Informações do modulo
 NAME = 'Avaliar'
@@ -58,13 +62,22 @@ def run(frame_parent, to_user_id):
     criar_label(frame_header, 'Prazo para realizar a autoavaliação da {nº da Sprint}', 15, 0, 3, 5, 5, 'w')  # PUXAR DADO VINCULADO COM TELA DE RETORNO ???
     criar_label(frame_header, 'Esta avaliação 360° utiliza a escala Likert para medir o desempenho dos usuários. Notas abaixo ou iguais a 3 necessitam obrigatoriamente de Feedback (resposta descritiva)', 11, 0, 4, 5, 5, 'w')  
 
-    perguntas = [
-        '1) Como você se avalia em trabalho em equipe, cooperação e descentralização de conhecimento?',
-        '2) Como você se avalia em iniciativa e proatividade?',
-        '3) Como você se avalia em autodidaxia e agregação de conhecimento ao grupo?',
-        '4) Como você se avalia em entrega de resultados e participação efetiva no projeto?',
-        '5) Como você se avalia em competência técnica?'
-    ]
+    if to_user_id == CURRENT_USER:
+        perguntas = [
+            '1) Como você se avalia em trabalho em equipe, cooperação e descentralização de conhecimento?',
+            '2) Como você se avalia em iniciativa e proatividade?',
+            '3) Como você se avalia em autodidaxia e agregação de conhecimento ao grupo?',
+            '4) Como você se avalia em entrega de resultados e participação efetiva no projeto?',
+            '5) Como você se avalia em competência técnica?'
+        ]
+    else:
+        perguntas = [
+            '1) Como você avalia o integrante em trabalho em equipe, cooperação e descentralização de conhecimento?',
+            '2) Como você avalia o integrante em iniciativa e proatividade?',
+            '3) Como você avalia o integrante em autodidaxia e agregação de conhecimento ao grupo?',
+            '4) Como você avalia o integrante em entrega de resultados e participação efetiva no projeto?',
+            '5) Como você avalia o integrante em competência técnica?'
+        ]
 
     escalas = []
     feedbacks = [None, None, None, None, None]
@@ -81,17 +94,24 @@ def run(frame_parent, to_user_id):
         frm_criteria_data.columnconfigure(0, weight=1)
         frm_criteria_data.rowconfigure([0, 1, 2, 3, 4], weight=1)
 
-        criar_label(frm_criteria_data, perguntas[i], 10, 0, 4, 5, 5, 'w')
-        criar_label(frm_criteria_data, 'Péssimo (1)           Ruim (2)              Regular (3)                Bom (4)               Ótimo (5)', 10, 0, 5, 5, 5, 'w')
-        escalas.append(criar_escala(frm_criteria_data, 6, lambda _, index=i: computar_resposta(int(index))))
+        criar_label(frm_criteria_data, perguntas[i], 10, 0, 0, 5, 5, 'w')
+        criar_label(frm_criteria_data, 'Péssimo (1)           Ruim (2)              Regular (3)                Bom (4)               Ótimo (5)', 10, 0, 1, 5, 5, 'w')
+        escalas.append(criar_escala(frm_criteria_data, 2, lambda _, index=i: computar_resposta(int(index))))
 
         frm_criterias.append(frm_criteria)
     
+    def retorno_feedback_pendente():
+        messagebox.showinfo("Khali Group", "Feedback pendente de preenchimento. Para notas iguais ou menores que três, o feedback é obrigatório.")  
+            
+
+        # label=Label(master=module_frame, text='Feedbacks são obrigatórios\npara notas iguais ou menores que 3.',
+        # bg=co0, fg='#1a1d1a', font=('Calibre', 8))
+        # label.place(relx=0.82, rely=0.09, relheight=0.03, relwidth=0.17)
 
     def enviar_retorno():
         label=Label(master=module_frame, text='Avaliação enviada com sucesso!',
         bg=co0, fg='#1a1d1a', font=('Calibre', 10))
-        label.place(relx=0.82, rely=0.09, relheight=0.03, relwidth=0.17)
+        label.place(relx=0.55, rely=0.09, relheight=0.03, relwidth=0.17)
 
     # def criar_label(master, text, tamanho, column, row, padx, pady, sticky):
     def computar_resposta(i):
@@ -116,8 +136,14 @@ def run(frame_parent, to_user_id):
             frm_criteria_feedback.columnconfigure(0, weight=1)
             frm_criteria_feedback.rowconfigure([0, 1, 2, 3, 4], weight=1)
 
-            criar_label(frm_criteria_feedback, f'Feedback obrigatório para critério {i+1}: ', 10, 1, 3, 0, 0, 'w')
-            feedbacks[i] = criar_entrada(frm_criteria_feedback, 3, 2, 0, 10, 'w')
+            criar_label(frm_criteria_feedback, f'Deixe um feedback para o critério {i+1}: ', 10, 0, 1, 4, 4, 'w')
+            # feedbacks[i] = criar_entrada(frm_criteria_feedback, 3, 2, 0, 10, 'w')
+            feedbacks[i] = caixa_texto(frm_criteria_feedback, width=15, height=5, row=2, column=0)
+    
+    def caixa_texto(master, width, height, row, column):
+        my_text = Text(master=master, width=width, height=height, font = ('Calibre', 10))
+        my_text.grid(row = row, column = column, sticky = 'news')
+        return my_text
 
 
     # Função para criação de caixas de entrada
@@ -127,33 +153,59 @@ def run(frame_parent, to_user_id):
         return feedback
 
     def enviar_notas(_to_user_id):
+        
 
         from Utils.back_avaliacao import dados_avaliacao
 
         notas = []
         comentarios = [None, None, None, None, None]
 
+        
+        feedbacks_pendentes = []
+
         for i in range(5):
 
             # print(f'escalas[i]: {escalas[i]} | escalas[i].get {escalas[i].get}')
 
             nota = escalas[i].get()
+            
 
             # try:
             #     comentario = feedbacks[i].get()
             # except:
             #     comentario = ''
-            print(f'feedbacks[i] is None: {feedbacks[i] is None}')
+            # print(f'feedbacks[i] is None: {feedbacks[i] is None}')
+            
 
-            comentario = feedbacks[i].get() if feedbacks[i] is not None else ''
+            comentario = feedbacks[i].get(1.0, END) if feedbacks[i] is not None else ''
             print(f'comentario: {comentario}')
+            # print(f'feedback é alphanumerico: {comentario.isalnum()}')
+            
 
             notas.append(nota)
             comentarios[i] = comentario
 
-        dados_avaliacao(_to_user_id, notas, comentarios)
+            print(len(comentario))
 
-        enviar_retorno()
+            if nota <= 3 and len(comentario) == 1:
+                print('feedback pendente')
+                feedbacks_pendentes.append(i)
+        
+        # dict = {'from_user_id': CURRENT_USER.id,'to_user_id': to_user_id}
+        
+        # if feedbacks_pendentes == [] and if find_data_list_by_field_values_csv(RATINGS_PATH, dict) == None:
+        
+        if feedbacks_pendentes == [] :
+            dados_avaliacao(_to_user_id, notas, comentarios)
+
+            enviar_retorno()
+           
+            
+
+
+        else:
+            retorno_feedback_pendente()
+     
 
 
     # Botão para registrar notas e conferir a necessidade de feedback
@@ -164,9 +216,9 @@ def run(frame_parent, to_user_id):
 
     # Botão para enviar notas para o banco de dados
     button1=Button(master=module_frame.winfo_toplevel(), text='Enviar Avaliação', fg='#1a1d1a', bg='#d9d9d9', 
-        font='Calibre, 12', height=0, activebackground='#c5a8b0', command= lambda : enviar_notas(to_user_id)
+        font=('Calibre', 12), height=0, activebackground='#c5a8b0', command= lambda : enviar_notas(to_user_id), state = NORMAL
     )
-    button1.place(relx=0.69, rely=0.09)
+    button1.place(relx=0.6, rely=0.09)
 
     f = Frame(module_frame, pady=100, bg=co0)
     Label(f, text='', bg=co0).grid(row=0, column=0, sticky="s")
@@ -180,9 +232,9 @@ def criar_label(master, text, tamanho, column, row, padx, pady, sticky):
 
 def criar_escala(master, row, command):
     _escala = Scale(master=master, from_=1, to=5, length=500, tickinterval=1, orient=HORIZONTAL, 
-        bg=co0, font='Calibre, 10', highlightcolor='#c5a8b0', troughcolor='#c5a8b0', state='normal', variable=IntVar(),
+        bg=co0, font=('Calibre', 10), highlightcolor='#c5a8b0', troughcolor='#c5a8b0', state='normal', variable=IntVar(),
         command=command
     )
     _escala.grid(column=0, row=row, padx=5, pady=5, sticky='w')
-    _escala.set(1)
+    _escala.set(5)
     return _escala
