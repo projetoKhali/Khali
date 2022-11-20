@@ -5,6 +5,7 @@
 ## Sumário
   * [Projeto API](#projeto-API)
     * [Integrantes da Equipe Khali](#integrantes-da-equipe-khali) 
+    * [Tema](#tema)
     * [Objetivo](#objetivo)
     * [Tríade da API](#tríade-da-api)
     * [Prazos](#prazos)
@@ -12,7 +13,6 @@
   
      
   * [Produto Khali](#descrição-do-produto)
-    * [Tema](#tema)
     * [Tecnologias Utilizadas](#tecnologias-utilizadas)
     * [Wireframe do Produto](#wireframe-do-produto)
     * [Fluxograma do produto](#fluxograma-do-produto)
@@ -29,6 +29,8 @@
 
 ### Integrantes da Equipe Khali
 
+![integrantes](https://user-images.githubusercontent.com/111442399/202913159-805931f6-781a-4dd1-987a-1135276bc2c5.png)
+
 | Integrantes | Redes Sociais |
 |-------|--------|
 |[Danielle Tiemi](https://github.com/daniiwamoto) | <a href="https://www.linkedin.com/in/danielle-tiemi-i-095757133/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a> <a href = "mailto:daniiwamoto@gmail.com"><img src="https://img.shields.io/badge/-Gmail-%23333?style=for-the-badge&logo=gmail&logoColor=white" target="_blank"></a> <a href="https://www.instagram.com/daniiwamot0/" target="_blank"><img src="https://img.shields.io/badge/-Instagram-%23E4405F?style=for-the-badge&logo=instagram&logoColor=white" target="_blank"></a>|
@@ -38,17 +40,20 @@
 |[Paulo Granthon](https://github.com/paulo-granthon) | <a href="https://www.linkedin.com/in/paulo-granthon/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a> <a href = "mailto:pv.granthon@gmail.com"><img src="https://img.shields.io/badge/-Gmail-%23333?style=for-the-badge&logo=gmail&logoColor=white" target="_blank"></a> <a href="https://www.instagram.com/p.granthon/?next=%2F"><img src="https://img.shields.io/badge/-Instagram-%23E4405F?style=for-the-badge&logo=instagram&logoColor=white" target="_blank"></a> |
 |[Tânia Cruz](https://github.com/taniacruzz) | <a href="https://www.linkedin.com/in/t%C3%A2nia-cruz-30ab5812a/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a> <a href = "mailto:tanicruz112@gmail.com"><img src="https://img.shields.io/badge/-Gmail-%23333?style=for-the-badge&logo=gmail&logoColor=white" target="_blank"></a> <a href="https://www.instagram.com/tanicruz_/?next=%2F"><img src="https://img.shields.io/badge/-Instagram-%23E4405F?style=for-the-badge&logo=instagram&logoColor=white" target="_blank"></a> |
 
+### Tema 
+* Desenvolvimento de uma solução computacional que viabilize a aplicação da técnica de **Avaliação 360°** e a análise dos dados obtidos pelos alunos e instrutores da instituição de ensino PBLTeX, especializada em cursos e práticas de ensino aplicando PBL (*Problem Based Learning*)
+
 ### Objetivo
-* Atender à necessidade da instituição fictícia e desenvolver uma solução computacional que exercite a capacidade de pesquisa e autodidaxia dos integrantes dos grupos, no que tange:
-* A aplicação de técnicas de programação para a construção de algoritmos
-* O uso de uma ferramenta que possibilite um Ambiente de Desenvolvimento Integrado (IDE) para o desenvolvimento da solução computacional
-* O aprendizado e aplicação de uma ou mais linguagens de programação para concepção do projeto
-* O exercício do compromisso, responsabilidade e trabalho em equipe dos membros do Time
+> * Atender à necessidade da instituição fictícia e desenvolver uma solução computacional que exercite a capacidade de pesquisa e autodidaxia dos integrantes dos grupos, no que tange:
+> * A aplicação de técnicas de programação para a construção de algoritmos
+> * O uso de uma ferramenta que possibilite um Ambiente de Desenvolvimento Integrado (IDE) para o desenvolvimento da solução computacional
+> * O aprendizado e aplicação de uma ou mais linguagens de programação para concepção do projeto
+> * O exercício do compromisso, responsabilidade e trabalho em equipe dos membros do Time
 
 ### Tríade da API
-* Algoritmos - *Prof. Lucas Gonçalves Nadalete*
-* Laboratório de Desenvolvimento em Banco de Dados - *Prof. Lucas Gonçalves Nadalete*
-* Arquitetura e Organização de Computadores - *Prof. Fabiano Sabha Walczak*
+> * Algoritmos - *Prof. Lucas Gonçalves Nadalete*
+> * Laboratório de Desenvolvimento em Banco de Dados - *Prof. Lucas Gonçalves Nadalete*
+> * Arquitetura e Organização de Computadores - *Prof. Fabiano Sabha Walczak*
 
 ### Prazos
 > - [x] 09/08 a 13/08 - *Dinamica Disruptiva*
@@ -65,6 +70,7 @@
 ## *Produto*
 
 ### Tecnologias Utilizadas
+![tecnologias](https://user-images.githubusercontent.com/111442399/202913166-eb48d03a-c90a-4f53-aeeb-675551fbc5eb.png)
 
 ### Wireframe do Produto
 * Wireframe disponível pelo [Figma](https://www.figma.com/file/U1apWrrVuZHbtNIumUgUoo/Api?node-id=56%3A3)
