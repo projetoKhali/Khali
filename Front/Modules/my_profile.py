@@ -108,8 +108,8 @@ def criar_section_1():
 
     # cria uma lista com os usuários a serem avaliados pelo usuário logado
     # grades = [
-    #       pendentes   = indice 0
-    #       avaliados   = indice 1
+    #       pendentes = indice 0
+    #       avaliados = indice 1
     # ]
     grades = lista_usuarios_back.get_users(CURRENT_USER.email)
 
@@ -244,9 +244,11 @@ def criar_section_2(sprints):
             criar_section_profile(frame_section, sprints)
 
 
+# Cria informações adicionais na seção 2 caso o usuário seja aluno
 def criar_section_profile(frame_section, sprints):
     from Authentication import CURRENT_USER
 
+    # Cria o frame para o grafico pentagono
     frame_user_pentagon = criar_frame(frame_section, 1, 0, "ew", co1, co1, 0, 2, 2)
     frame_user_pentagon.columnconfigure(1, weight = 1)
     # frame_user_pentagon.rowconfigure(1, weight = 1)
@@ -254,31 +256,35 @@ def criar_section_profile(frame_section, sprints):
     from graficos.Dashboards import user_pentagon
     from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
+    # Cria o grafico pentagono
     figure = user_pentagon(CURRENT_USER.id, sprints[sel_sprint], co3, co1, 2.75, 2.25)
 
     canvas = FigureCanvasTkAgg(figure, master=frame_user_pentagon)
-
     canvas_tkw = canvas.get_tk_widget()
     canvas_tkw.columnconfigure(1, weight = 1)
     canvas_tkw.grid(row=0, column=0, sticky='wens')
 
     from Models.id_criteria import criteria
 
+    # Cria um frame para a legenda do grafico pentagono
     frame_legenda = criar_frame(frame_user_pentagon, 0, 1, "nsew", co0, co2, 2, 8, 32)
-
     frame_legenda.columnconfigure(0, weight = 1)
     frame_legenda.rowconfigure([i for i in range(len(criteria))], weight = 1)
 
     from Models.Rating import get_ratings
     from Models.id_criteria import criteria, criteria_full
     from graficos.Integrador import classify_criteria, medias
+
+    # adquire as notas usuário 
     target_sprint = sprints[sel_sprint]
     ratings = get_ratings(to_user_id=CURRENT_USER.id, sprint_id=target_sprint.id)
     u_medias = medias(criteria, [classify_criteria(criteria, ratings)])[0]
 
+    # cria um título no frame legenda
     frame_legenda_title = criar_frame(frame_legenda, 0, 0, "ew", co0, co2, 0, 4, 4)
     criar_label(frame_legenda_title, f'Medias durante a sprint {sel_sprint+1}', 'Calibri, 10 bold', co0, 0, 0, 'we', 'center')
 
+    # cria um frame pra cada critério contendo criteria, criteria_full e média do criterio
     for c_index, c in enumerate(criteria):
         frame_criterio = criar_frame(frame_legenda, c_index+1, 0, "nsew", co0, co2, 0, 4, 4)
         frame_criterio.columnconfigure(1, weight=1)
@@ -286,6 +292,7 @@ def criar_section_profile(frame_section, sprints):
         criar_label(frame_criterio, f'{criteria_full[c_index]}: ', 'Calibri, 10', co0, 0, 1, 'we', 'center')
         criar_label(frame_criterio, f'{u_medias[c_index]:.1f}', 'Calibri, 10 bold', co0, 0, 2, 'e', 'center').configure(fg=co3)
 
+    # cria um frame para renderizar o retorno dos feedbacks do usuario
     frame_section_feedbacks = criar_frame(frame_section, 2, 0, "nsew", co0, co2, 0, 0, 0)
     frame_section_feedbacks.columnconfigure(0, weight=1)
     frame_section_feedbacks.rowconfigure(2, weight=1)
@@ -295,36 +302,46 @@ def criar_section_profile(frame_section, sprints):
 def create_sprint_selectors(frame_section_feedbacks, sprints):
     from Authentication import CURRENT_USER
 
+    # cria um frame parent para o seletor de sprints e retorno de feedbacks
     frame_feedbacks = criar_frame(frame_section_feedbacks, 2, 0, "nsew", co0, co2, 0, 0, 0)
     frame_feedbacks.columnconfigure(0, weight=1)
     frame_feedbacks.rowconfigure(2, weight=1)
 
+    # frame dos botões de selecionar sprint
     frame_sprint_selector = criar_frame(frame_feedbacks, 0, 0, "ew", co3, co3, 2, 0, 0)
     frame_sprint_selector.columnconfigure([i for i in range(len(sprints))], weight=1)
 
+    # define a função que seleciona uma sprint ao clicar no botão
     def select_sprint(_, sprints, sprint_index):
         global sel_sprint
         sel_sprint = sprint_index
         criar_section_2(sprints)
 
+    # Cria os botões que selecionam a sprint
     for index, _ in enumerate(sprints):
         sprint_btn = criar_button(frame_sprint_selector, f'Sprint {index+1}', 'Calibri, 12 bold', 0, index, 
             lambda e=None, s=sprints, i=index: select_sprint(e, s, i), 'ew', 0)
         sprint_btn.configure(fg=co3 if index == sel_sprint else co1, bg=co1 if index == sel_sprint else co3)
 
-    from Front.Scrollbar import add_scrollbar
 
+    # oi Tânia
     from Utils.lista_usuarios_back import get_feedbacks
     feedbacks = get_feedbacks(CURRENT_USER.id, sprints[sel_sprint].id)
 
+    # Cria um pseudo título para o retorno de feedbacks 
     frame_fb_title = criar_frame(frame_feedbacks, 1, 0, "ew", co2, co1, 4, 0, 0)
     criar_label(frame_fb_title, f'Feedbacks recebidos durante a sprint {sel_sprint + 1}:', 'Calibri, 12 bold', co2, 0, 0, 'w', 'center').configure(fg='white')
 
+    # Cria um frame parent pros feedbacks
     frame_feedback_list = criar_frame(frame_feedbacks, 2, 0, "nsew", co1, co1, 2, 2, 2)
     frame_feedback_list.columnconfigure(0, minsize=0, weight=1)
     frame_feedback_list.rowconfigure(0, minsize=0, weight=1)
+    
+    # substitui o frame pelo resultado retornado do add_scrollbar 
+    from Front.Scrollbar import add_scrollbar
     frame_feedback_list = add_scrollbar(frame_feedback_list, co0, 0)
 
+    # cria cada feedback
     for index, fb in enumerate(feedbacks):
         frame_fb = criar_frame(frame_feedback_list, index, 0, "ns", co0, co2, 2, 4, 4)
         frame_fb.columnconfigure(0, weight=1)
