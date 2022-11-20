@@ -27,7 +27,7 @@ def run(frame_parent):
 
     # cria o frame principal do modulo
     module_frame = criar_frame(frame_parent, 0, 0, "news", co0, co0, 0, 0, 0)
-    module_frame.columnconfigure(0, weight = 4)
+    module_frame.columnconfigure(0, weight = 0)
     module_frame.columnconfigure(1, weight = 4)
     module_frame.rowconfigure(0, weight = 1)
     module_frame.rowconfigure(1, weight = 3)
