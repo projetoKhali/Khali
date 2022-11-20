@@ -206,24 +206,15 @@ def criar_section_2(sprints):
 
     # pega a sprint anterior do grupo do usuário logado
     target_sprint = previous_sprint(CURRENT_USER.group_id)
-    print(target_sprint)
 
     # sem target_sprint: renderiza informações sobre a avaliação 360
-    if target_sprint is None:
-        # TODO
-        frame_ratings_info = criar_frame(frame_section, 1, 0, "ew", co1, co1, 0, 2, 2)
-        criar_label(frame_ratings_info, 'informações sobre a avaliação 360', 'Calibri, 12', co1, 0, 0, 'nwes')
+    if target_sprint is None: criar_section_info(frame_section) # TODO: seção com informações da avaliação 360
 
-    # Renderiza a seção2 com as informações referentes as avaliações feitas ao usuário
-    else:
+    # caso o usuário logado seja instrutor
+    elif CURRENT_USER.role_id not in [3, 4, 5]: criar_section_instructor(frame_section) # TODO: seção de instrutor
 
-        # caso o usuário logado seja instrutor
-        if CURRENT_USER.role_id not in [3, 4, 5]:
-            pass # TODO: seção com as informações de instrutor
-
-        # caso contrario, usuário padrão
-        else:
-            criar_section_profile(frame_section, sprints)
+    # caso contrario, cria a seção com informações sobre o usuário logado
+    else: criar_section_profile(frame_section, sprints)
 
 
 # Cria informações adicionais na seção 2 caso o usuário seja aluno
@@ -248,9 +239,9 @@ def criar_section_profile(frame_section, sprints):
     frame_header_data.columnconfigure([0, 1], weight = 1)
     frame_header_data.columnconfigure([0, 1], weight = 1)
     criar_label(frame_header_data, f'Nome: {CURRENT_USER.name}', 'Calibri, 14', co0, 0, 0, 'w')
-    criar_label(frame_header_data, f'Função: {get_role_name(CURRENT_USER.role_id)}', 'Calibri, 12', co0, 1, 0, 'w')
-    criar_label(frame_header_data, f'Grupo: {get_group_name(CURRENT_USER.group_id)}', 'Calibri, 14', co0, 0, 1, 'e')
-    criar_label(frame_header_data, f'Time: {get_team_name(CURRENT_USER.team_id)}', 'Calibri, 12', co0, 1, 1, 'e')
+    (lambda d=get_role_name(CURRENT_USER.role_id):   criar_label(frame_header_data, f'Função: {d}', 'Calibri, 12', co0, 1, 0, 'w') if d is not None else None)()
+    (lambda d=get_group_name(CURRENT_USER.group_id): criar_label(frame_header_data, f'Grupo: {d}', 'Calibri, 14', co0, 0, 1, 'e') if d is not None else None)()
+    (lambda d=get_team_name(CURRENT_USER.team_id):   criar_label(frame_header_data, f'Time: {d}', 'Calibri, 12', co0, 1, 1, 'e') if d is not None else None)()
 
     # Cria o frame para o grafico pentagono
     frame_user_pentagon = criar_frame(frame_section, 1, 0, "ew", co1, co1, 0, 2, 2)
@@ -300,10 +291,11 @@ def criar_section_profile(frame_section, sprints):
     frame_section_feedbacks = criar_frame(frame_section, 2, 0, "nsew", co0, co2, 0, 0, 0)
     frame_section_feedbacks.columnconfigure(0, weight=1)
     frame_section_feedbacks.rowconfigure(2, weight=1)
-    create_sprint_selectors(frame_section_feedbacks, sprints)
+    criar_retorno_feedbacks(frame_section_feedbacks, sprints)
 
 
-def create_sprint_selectors(frame_section_feedbacks, sprints):
+# Cria a seção com o retorno de feedbacks recebidos e botões de selecionar sprint
+def criar_retorno_feedbacks(frame_section_feedbacks, sprints):
     from Authentication import CURRENT_USER
 
     # cria um frame parent para o seletor de sprints e retorno de feedbacks
@@ -346,10 +338,23 @@ def create_sprint_selectors(frame_section_feedbacks, sprints):
     frame_feedback_list = add_scrollbar(frame_feedback_list, co0, 0)
 
     # cria cada feedback
-    for index, fb in enumerate(feedbacks):
+    for index, feedback in enumerate(feedbacks):
         frame_fb = criar_frame(frame_feedback_list, index, 0, "ns", co0, co2, 2, 4, 4)
         frame_fb.columnconfigure(0, weight=1)
-        criar_label(frame_fb, fb, 'Calibri, 10', co1, 0, 0, 'we', 'left').configure(wraplength=400, anchor='n')
+        from Models.id_criteria import criteria_full
+        criar_label(frame_fb, f'{criteria_full[feedback[0]]}: ', 'Calibri, 10 bold', co0, 0, 0, 'we', 'left')
+        criar_label(frame_fb, feedback[1], 'Calibri, 10', co1, 1, 0, 'we', 'left').configure(wraplength=400, anchor='n')
+
+
+# TODO: seção com as informações de instrutor
+def criar_section_instructor(frame_section):
+    pass # TODO
+
+
+# TODO: seção com informações sobre a avaliação 360
+def criar_section_info(frame_section):
+    frame_ratings_info = criar_frame(frame_section, 1, 0, "ew", co1, co1, 0, 2, 2)
+    criar_label(frame_ratings_info, 'informações sobre a avaliação 360', 'Calibri, 12', co1, 0, 0, 'nwes')
 
 
 # funções genéricas de widgets do tkinter

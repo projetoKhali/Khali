@@ -9,8 +9,9 @@ from _test import create_test_data
 # create_test_data()
 
 from Time import set_today
-set_today(29, 8)    # começo da sprint 1 
+# set_today(29, 8)    # começo da sprint 1 
 # set_today(19, 9)    # fim da sprint 1 | começo do periodo avaliativo da sprint 1 
+set_today(26, 9)    # fim do periodo avaliativo da sprint 1 
 
 
 # from tkinter import *
