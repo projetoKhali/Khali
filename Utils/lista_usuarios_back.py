@@ -92,8 +92,9 @@ def get_users(email):
 
 
 def get_feedbacks (user_id, sprint_id):
+    from random import randint
     return [
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse quis suscipit lectus. Cras convallis enim tempor tellus ornare, sit amet.' 
+        [randint(0, 4) ,'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse quis suscipit lectus. Cras convallis enim tempor tellus ornare, sit amet.']
         for _ in range(10)
     ]
 

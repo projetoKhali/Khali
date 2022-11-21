@@ -40,7 +40,7 @@ def add_scrollbar (target_frame, bg=co0, bd=3):
     module_frame.grid(row=0, column=0, sticky="nsew")
 
     # frame secundário que define uma altura minima para a tela
-    # impedindo o canvas de scrollar caso module_frame não seja grande o suficiente
+    # impede o canvas de scrollar caso module_frame não seja grande o suficiente para ocupar o espaço de uma tela
     frame_min_size_height=Frame(canvas, bg=None)
     frame_min_size_height.columnconfigure(0, minsize = 0, weight = 1)
     frame_min_size_height.rowconfigure(0, minsize = 0, weight = 1)
