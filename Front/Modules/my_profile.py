@@ -1,8 +1,4 @@
-
-co0 = "#fae8e8"  # rosa
-co1 = "#d9d9d9"  # cinzinha
-co2 = "#1a1d1a"  # preta
-co3 = "#26413C"  # verde
+from Front.Core import *
 
 col_rated = 'brown'
 col_to_rate = 'orange'
@@ -355,27 +351,6 @@ def criar_section_instructor(frame_section):
 def criar_section_info(frame_section):
     frame_ratings_info = criar_frame(frame_section, 1, 0, "ew", co1, co1, 0, 2, 2)
     criar_label(frame_ratings_info, 'informações sobre a avaliação 360', 'Calibri, 12', co1, 0, 0, 'nwes')
-
-
-# funções genéricas de widgets do tkinter
-def criar_frame(quadro, row, column, sticky, background, highlightbackground, highlightthickness, px = 5, py = 5):
-    from tkinter import Frame
-    frame = Frame(quadro, background=background, highlightbackground=highlightbackground, highlightthickness=highlightthickness)
-    frame.grid(row = row, column = column, sticky = sticky, padx = px, pady = py)
-    return frame
-
-def criar_label(quadro, text, font, background, r, c, sticky='n', justify='left'):
-    from tkinter import Label
-    widget = Label(quadro, text=text, font=font, background = background , justify=justify)
-    widget.grid(row=r, column=c, sticky= sticky)
-    return widget
-
-def criar_button(quadro, text, font, r, c, command, sticky='ne', width=12):
-    from tkinter import Button
-    widget = Button(quadro, text = text, font = font, background = co0, justify='right', fg=co2, command=command,
-        width=width, height=0, activebackground='#c5a8b0')
-    widget.grid(row=r, column=c, sticky= sticky)
-    return widget
 
 
 # função que cria e coloca o grafico pentagono em um canvas dentro do frame parametro

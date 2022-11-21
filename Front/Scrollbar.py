@@ -14,9 +14,10 @@ def add_scrollbar (target_frame, bg=co0, bd=3):
     canvas.columnconfigure(0, minsize=0, weight=1)
     canvas.rowconfigure(0, minsize=0, weight=1)
     canvas.grid(row=0, column=0, sticky='news')
+    # canvas.config(bg='red')
 
-    canvas.grid_columnconfigure(0, minsize=0, weight=1)
-    canvas.grid_rowconfigure(0, minsize=0, weight=1)
+    # canvas.grid_columnconfigure(0, minsize=0, weight=1)
+    # canvas.grid_rowconfigure(0, minsize=0, weight=1)
 
     # inicializa a scrollbar
     scrollbar_ver=Scrollbar(frm_main, orient=VERTICAL, command=canvas.yview)
@@ -29,6 +30,7 @@ def add_scrollbar (target_frame, bg=co0, bd=3):
     def canvas_configure(event):
         canvas = event.widget
         canvas.itemconfigure(1, width=canvas.winfo_width())
+        canvas.itemconfigure(2, height=canvas.winfo_height()-4)
     canvas.bind("<Configure>", canvas_configure)
 
     # cria outro Frame dentro do Canvas
@@ -37,10 +39,18 @@ def add_scrollbar (target_frame, bg=co0, bd=3):
     module_frame.rowconfigure(0, minsize = 0, weight = 1)
     module_frame.grid(row=0, column=0, sticky="nsew")
 
+    # frame secundário que define uma altura minima para a tela
+    # impedindo o canvas de scrollar caso module_frame não seja grande o suficiente
+    frame_min_size_height=Frame(canvas, bg=None)
+    frame_min_size_height.columnconfigure(0, minsize = 0, weight = 1)
+    frame_min_size_height.rowconfigure(0, minsize = 0, weight = 1)
+    frame_min_size_height.grid(row=0, column=0, sticky="nsew")
+
     module_frame.bind('<Configure>', lambda _: canvas.configure(scrollregion=canvas.bbox('all')))
 
     # adicionar a nova frame a uma janela no canvas
     canvas.create_window((0,0), window=module_frame, anchor='nw')
+    canvas.create_window((0,0), window=frame_min_size_height, anchor='nw')
 
     # adiciona um evento ao module_frame para permitir rolagem com scroll wheel enquanto o mouse estiver sobre ele
     module_frame.bind('<Enter>', lambda _: canvas.bind_all("<MouseWheel>", lambda e: canvas.yview_scroll(int(-1*(e.delta/120)), "units")))

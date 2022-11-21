@@ -18,9 +18,16 @@ def register(event, reaction):
         listeners.update({event:[reaction]})
 
 
+# Remove uma reação de evento
+def unregister(event, reaction):
+    if event not in listeners: return
+    if reaction in listeners[event]: listeners[event].remove(reaction)
+
 # Executa o evento, chamando as funções de reação cadastradas
 def trigger(event):
+    results = []
     if event in listeners:
-        for r in listeners[event]:
-            r()
-
+        for reaction in listeners[event]:
+            result = reaction()
+            if result is not None: results.append(result)
+    return results
