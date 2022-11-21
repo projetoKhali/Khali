@@ -2,9 +2,12 @@ from tkinter import *
 from Front.Core import *
 import Settings
 
-current_module_index = None
-current_module = None
 modules = []
+
+current_module = None
+
+current_module_index = None
+previous_module_index = None
 
 frame_coluna_A = None
 frame_coluna_B = None
@@ -35,11 +38,28 @@ def run():
     global modules
     modules = ModulesManager.get_modules()
 
+    from Events import register
+    register('sub_module_open', open_sub_module)
+    register('sub_module_close', close_sub_module)
+
     # create_modules()
 
     if len(modules) > 0: run_module(0)
 
     return janela
+
+
+def open_sub_module():
+    global current_module_index, previous_module_index
+    previous_module_index = current_module_index
+    current_module_index = None
+    create_modules()
+
+def close_sub_module():
+    global current_module_index, previous_module_index
+    current_module_index = previous_module_index
+    previous_module_index = None
+    create_modules()
 
 
 def create_modules():

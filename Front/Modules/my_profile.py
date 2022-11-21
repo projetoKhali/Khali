@@ -380,6 +380,10 @@ def avaliar (id):
     from Front.Modules import avaliacao
     target_frame = module_frame.master.master
     module_frame.master.destroy()
+
+    from Events import trigger
+    trigger('sub_module_open')
+
     avaliacao.run(target_frame, id)
 
 
