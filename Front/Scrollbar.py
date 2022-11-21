@@ -56,5 +56,9 @@ def add_scrollbar (target_frame, bg=co0, bd=3):
     module_frame.bind('<Enter>', lambda _: canvas.bind_all("<MouseWheel>", lambda e: canvas.yview_scroll(int(-1*(e.delta/120)), "units")))
     module_frame.bind('<Leave>', lambda _: canvas.unbind_all("<MouseWheel>"))
 
+    # registra uma reação para descadastrar o comando de mousewheel do canvas caso um sub modulo seja aberto
+    from Events import register
+    register('sub_module_open', lambda c=canvas: c.unbind_all('<MouseWheel>'))
+
     # retorna o novo frame onde estará o conteudo da tela
     return module_frame

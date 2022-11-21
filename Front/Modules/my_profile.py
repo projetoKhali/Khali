@@ -377,6 +377,10 @@ def graphic_pie(data=list):
 
 # função que muda para a tela de avaliação para o usuário de id parametro
 def avaliar (id):
+
+    from matplotlib import pyplot
+    pyplot.close()
+
     from Front.Modules import avaliacao
     target_frame = module_frame.master.master
     module_frame.master.destroy()
