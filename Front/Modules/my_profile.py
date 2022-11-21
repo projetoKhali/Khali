@@ -103,7 +103,7 @@ def criar_section_1():
     #       pendentes = indice 0
     #       avaliados = indice 1
     # ]
-    grades = lista_usuarios_back.get_users(CURRENT_USER.email)
+    grades = lista_usuarios_back.get_users(CURRENT_USER)
 
     # grades = [grades[0], grades[0]] # -----------------------------------------------------------------------------------------
 
@@ -166,14 +166,14 @@ def criar_section_1():
             frame_user_data.columnconfigure(0, weight=1)
 
             # cria as labels de nome e role
-            criar_label(frame_user_data, user['name'], 'Calibri, 12', 0, 0, lista_col, "w")
-            criar_label(frame_user_data, get_role_name(user['role_id']), 'Calibri, 10', 1, 0, lista_col, "w")
+            criar_label(frame_user_data, user.name, 'Calibri, 12', 0, 0, lista_col, "w")
+            criar_label(frame_user_data, get_role_name(user.role_id), 'Calibri, 10', 1, 0, lista_col, "w")
 
             # Cria um frame pro botão
             frame_user_button = criar_frame(frame_user, 0, 1, 'ew', co0, co0, 0, 0, 0)
 
             # insere o botão correspondente ao tipo da lista. Pendentes: avaliar; Avaliados: editar
-            if i == 0: criar_button(frame_user_button, 'Avaliar', 'Calibri, 12', 1, 1, lambda u=user: avaliar(u['id']), "e"),
+            if i == 0: criar_button(frame_user_button, 'Avaliar', 'Calibri, 12', 1, 1, lambda u=user: avaliar(u), "e"),
             # else: criar_button(frame_user_button, 'Editar Avaliação', 'Calibri, 12', 1, 1, lambda u=user: avaliar(u['id']), "w"),
 
 
@@ -370,8 +370,8 @@ def graphic_pie(data=list):
     fig.set_facecolor(co3)
     return fig
 
-# função que muda para a tela de avaliação para o usuário de id parametro
-def avaliar (id):
+# função que muda para a tela de avaliação para o usuário parametro
+def avaliar (user):
 
     from matplotlib import pyplot
     pyplot.close()
@@ -383,6 +383,6 @@ def avaliar (id):
     from Events import trigger
     trigger('sub_module_open')
 
-    avaliacao.run(target_frame, id)
+    avaliacao.run(target_frame, user)
 
 

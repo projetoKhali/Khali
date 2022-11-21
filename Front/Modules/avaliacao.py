@@ -1,7 +1,6 @@
 from tkinter import Frame, Label, Button, Text, Scale, IntVar, messagebox
 from Models.Role import get_role_name
 from Authentication import CURRENT_USER
-from CSV.CSVHandler import *
 from Front.Core import *
 
 # Informações do modulo
@@ -13,7 +12,7 @@ REQUIRED_PERMISSIONS_RATE = [
 REQUIRED_PERMISSIONS_VIEW = [None]
 
 # executa o modulo e retorna
-def run(frame_parent, to_user_id):
+def run(frame_parent, target_user):
     from Front.Scrollbar import add_scrollbar
 
     module_frame = Frame(frame_parent, bg=co0, bd=3)
@@ -26,7 +25,7 @@ def run(frame_parent, to_user_id):
     frame_header.columnconfigure(0, weight=1)
 
     # Textos gerais da tela
-    criar_label(frame_header, 'Autoavaliação' if to_user_id == CURRENT_USER.id else 'Avaliação', 'Calibri, 30', 0, 0, co3, 'w').config(fg=co0)
+    criar_label(frame_header, 'Autoavaliação' if target_user.id == CURRENT_USER.id else 'Avaliação', 'Calibri, 30', 0, 0, co3, 'w').config(fg=co0)
 
     #rating_send_success
     from Events import trigger, register, unregister_all
@@ -48,13 +47,16 @@ def run(frame_parent, to_user_id):
             font='Calibri, 14', height=0, activebackground='#c5a8b0', 
             text='Fechar' if state == 1 else 'Enviar Avaliação', 
             # state='disabled' if state == 2 else 'active',
-            command=(lambda m=module_frame: fechar_avaliação(m)) if state == 1 else (lambda: enviar_notas(to_user_id))
+            command=(lambda m=module_frame: fechar_avaliação(m)) if state == 1 else (lambda: enviar_notas(target_user.id))
         )
         confirm_btn.grid(row=0, column=0, sticky='e')
         if state == 1: criar_label(frame_button_wrapper, 'Avaliação enviada com sucesso!', 'Calibri, 10 bold', 1, 0).config(fg='green')
         elif state == 2: 
+            s = ''
             for error_message in trigger('get_error_messages'):
-                criar_label(frame_button_wrapper, error_message*(2-i), 'Calibri, 10 bold', i+1, 0).config(fg='red')
+                # criar_label(frame_button_wrapper, error_message*(2-i), 'Calibri, 10 bold', i+1, 0).config(fg='red')
+                s += f'{error_message}\n'
+            messagebox.showwarning('Khali Group: Erro de avaliação', s[:-1])
 
     update_send_btn(frame_send_btn, 0)
 
@@ -69,10 +71,6 @@ def run(frame_parent, to_user_id):
     frame_body.rowconfigure(0, weight=2)
     frame_body.rowconfigure(1, weight=2)
     
-    from CSV.CSVHandler import find_data_by_id_csv
-    from Settings import USERS_PATH
-    to_user_name = CURRENT_USER.name if to_user_id == CURRENT_USER.id else find_data_by_id_csv(USERS_PATH, str(to_user_id))['name']
-
     frame_summary = Frame(frame_body, bg=co1, padx=8, pady=8)
     frame_summary.grid(row= 0, column=0, sticky='ew')
     frame_summary.columnconfigure(0, weight=1)
@@ -80,7 +78,7 @@ def run(frame_parent, to_user_id):
     frame_user_data = Frame(frame_summary, bg=co1, padx=8, pady=8)
     frame_user_data.grid(row=0, column=0, sticky='ew')
 
-    criar_label(frame_user_data, f'{to_user_name}\t', 'Calibri, 20', 0, 0, co1, 'w')
+    criar_label(frame_user_data, f'{target_user.name}\t', 'Calibri, 20', 0, 0, co1, 'w')
     criar_label(frame_user_data, get_role_name(CURRENT_USER.role_id), 'Calibri, 12', 1, 0, co1, 'w')
     criar_label(frame_summary, 'Esta avaliação 360° utiliza a escala Likert para medir o desempenho dos usuários. Notas abaixo ou iguais a 3 necessitam obrigatoriamente de Feedback (resposta descritiva)',
         'Calibri, 11', 0, 1, co1, 'w').config(wraplength=600) 
@@ -94,7 +92,7 @@ def run(frame_parent, to_user_id):
         '3) Como você se avalia em autodidaxia e agregação de conhecimento ao grupo?',
         '4) Como você se avalia em entrega de resultados e participação efetiva no projeto?',
         '5) Como você se avalia em competência técnica?'
-    ] if to_user_id == CURRENT_USER.id else [
+    ] if target_user == CURRENT_USER.id else [
         '1) Como você avalia o integrante em trabalho em equipe, cooperação e descentralização de conhecimento?',
         '2) Como você avalia o integrante em iniciativa e proatividade?',
         '3) Como você avalia o integrante em autodidaxia e agregação de conhecimento ao grupo?',
@@ -173,7 +171,12 @@ def slider_change_position(frame_feedback, new_value, criterio):
     text_input = Text(master=frame_text_input, height=5, font = 'Calibri, 10', bd=4)
     text_input.grid(row=1, column=0, sticky = 'news')
 
-    register(f'get_feedback_criterio_{criterio}', lambda t=text_input: t.get('1.0', 'end')[:-2])
+    register(f'get_feedback_criterio_{criterio}', lambda t=text_input: get_feedback_text(t))
+
+
+def get_feedback_text(t):
+    value = str(t.get("1.0", "end")[:-1]).replace('\'', '').replace('\"', '')
+    return f'\'{value}\''
 
 
 def enviar_notas(_to_user_id):
@@ -183,25 +186,19 @@ def enviar_notas(_to_user_id):
     notas = [0 for _ in criteria_full]
     comentarios = [0 for _ in criteria_full]
 
-    print(notas)
-    print(comentarios)
-
     from Events import trigger, register, unregister_all
 
     for i, c in enumerate(criteria):
         notas[i] = trigger(f'get_value_criterio_{c}')
         comentarios[i] = trigger(f'get_feedback_criterio_{c}')
 
-    print(notas)
-    print(comentarios)
-
-    FEEDBACK_LEN_MINMAX = [0, 400]
+    FEEDBACK_LEN_MINMAX = [3, 400]
     
     error_messages = []
     error_message_templates = lambda i, c: [
         f'Insira um feedback obrigatório para o critério {c}',
         f'Feedback do critério {c} é muito curto! Escreva pelo menos {FEEDBACK_LEN_MINMAX[0]} caracteres',
-        f'Feedback do critério {c} é muito longo! Escreva no máximo {FEEDBACK_LEN_MINMAX[0]} caracteres'
+        f'Feedback do critério {c} é muito longo! Escreva no máximo {FEEDBACK_LEN_MINMAX[1]} caracteres'
     ][i]
 
     for i, criterio in enumerate(criteria_full):
@@ -212,9 +209,6 @@ def enviar_notas(_to_user_id):
 
 
     if len(error_messages) > 0: 
-        for i in error_messages:
-            print(i)
-
         unregister_all('get_error_messages')
         register('get_error_messages', lambda: error_messages)
         trigger('rating_send_error')
@@ -226,6 +220,17 @@ def enviar_notas(_to_user_id):
     return True
 
 def fechar_avaliação(m):
-    from Events import trigger
+    from Events import trigger, unregister_all
+    from Models.id_criteria import criteria
+
+    for c in criteria:
+        unregister_all(f'get_value_criterio_{c}')
+        unregister_all(f'get_feedback_criterio_{c}')
+
+    unregister_all('get_error_messages')
+
+    unregister_all('rating_send_success')
+    unregister_all('rating_send_error')
+
     m.destroy()
     trigger('sub_module_close')

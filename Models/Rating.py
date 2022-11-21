@@ -47,20 +47,24 @@ def get_ratings(from_user_id='IGNORE', to_user_id='IGNORE', sprint_id='IGNORE', 
     if comment != 'IGNORE': kvps.update({'comment':comment})
     return [to_rating(x) for x in find_data_list_by_fields_value_csv(RATINGS_PATH, kvps)]
 
-# Retorna todas as avaliações associadas ao usuário de id especificado
+# Retorna todas as avaliações feitas pelo usuário de id especificado
+def get_ratings_from_user (user_id):
+    return [to_rating(x) for x in find_data_list_by_field_value_csv(RATINGS_PATH, 'from_user_id', user_id)]
+
+# Retorna todas as avaliações feitas ao usuário de id especificado
 def get_ratings_to_user (user_id):
     return [to_rating(x) for x in find_data_list_by_field_value_csv(RATINGS_PATH, 'to_user_id', user_id)]
 
-# Retorna todas as avaliações associadas a qualquer usuário em que o id esteja presente nas lista especificada 
+# Retorna todas as avaliações feitas a qualquer usuário em que o id esteja presente nas lista especificada 
 def get_ratings_to_users (user_ids):
     return [to_rating(x) for x in find_data_list_by_field_values_csv(RATINGS_PATH, 'to_user_id', user_ids)]
 
-# Retorna todas as avaliações associadas aos usuários do time especificado
+# Retorna todas as avaliações feitas aos usuários do time especificado
 def get_ratings_to_team (team_id):
     from Models.User import get_users_of_team
     return get_ratings_to_users([x.id for x in get_users_of_team(team_id)])
 
-# Retorna as avaliações associadas aos usuários de todos os times especificados
+# Retorna as avaliações feitas aos usuários de todos os times especificados
 # def get_ratings_to_teams (team_ids):
 #     from Models.User import get_users_of_team
 #     return get_ratings_to_users([x.id for x in get_users_of_team(team_ids)])
