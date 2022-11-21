@@ -57,7 +57,7 @@ def open_sub_module():
 
 def close_sub_module():
     global current_module_index, previous_module_index
-    current_module_index = previous_module_index
+    run_module(previous_module_index)
     previous_module_index = None
     create_modules()
 

@@ -77,6 +77,14 @@ def next_rating_period (group_id):
             next_rating_period_sprint = sprint
     return next_rating_period_sprint
 
+
+# Retorna o indice da sprint dentro da lista com as sprints do grupo
+def sprint_index(group_id, sprint_id):
+    for i, s in enumerate(get_group_sprints(group_id)): 
+        if s.id == sprint_id: return i + 1
+    return None
+
+
 # Cria uma sprint e salva na database
 # parametros:
 # group_id - o id do grupo do qual a sprint é pertencente

@@ -1,13 +1,8 @@
-from tkinter import * 
-from tkinter import messagebox
-from tkinter import ttk
+from tkinter import Frame, Label, Button, Text, Scale, IntVar, messagebox
 from Models.Role import get_role_name
 from Authentication import CURRENT_USER
 from CSV.CSVHandler import *
-
-from Settings import co0
-from Settings import co1
-from Settings import co2
+from Front.Core import *
 
 # Informações do modulo
 NAME = 'Avaliar'
@@ -19,217 +14,218 @@ REQUIRED_PERMISSIONS_VIEW = [None]
 
 # executa o modulo e retorna
 def run(frame_parent, to_user_id):
-    #Criar um frame para comportar o canvas
-    frm_main=Frame(frame_parent, bg=co0)
-    frm_main.grid(row=0, column=1, sticky='nsew')
+    from Front.Scrollbar import add_scrollbar
 
-    # O canvas aceita o scrollbar, mas ela só faz o papel da responsividade
-    canvas=Canvas(frm_main, bg=co0)
-    canvas.pack(side=LEFT, fill=BOTH, expand=1)
+    module_frame = Frame(frame_parent, bg=co0, bd=3)
+    module_frame.rowconfigure(1, weight=1)
+    module_frame.columnconfigure(0, weight=1)
+    module_frame.grid(row=0, column=0, sticky='news')
 
-    # Configurações do scrollbar
-    scrollbar_ver = ttk.Scrollbar(frm_main, orient=VERTICAL, command=canvas.yview) # Comando xview para orientação HORIZONTAL
-    scrollbar_ver.pack(side=RIGHT, fill=Y)
-
-    # Configurações do canvas
-    canvas.configure(yscrollcommand=scrollbar_ver.set) # xscrollcomand para barra horizontal
-    module_frame=Frame(canvas, bg=co0, relief=FLAT, bd=3) # Não colocamos o frame com o .pack nesse caso
-    module_frame.bind('<Configure>', lambda e: canvas.configure(scrollregion=canvas.bbox('all'))) # Seleciona qual parte do canvas o scrollbar deve identificar
-
-    # Integração do frame geral a uma janela do canvas
-    canvas.create_window((0,0), window=module_frame, anchor='nw')
-
-    # Comporta todos os outros frames. Deu erro quando coloquei diretamente no frm_geral
-    frm_avaliacao=Frame(module_frame, bg=co0, relief=FLAT, bd=3)
-    frm_avaliacao.grid(row=0, rowspan=30, column=0, columnspan=3, sticky='w')
-
-    frm_criterias = []
-
-    # TENTEI COLOCAR A CRIAÇÃO DOS FRAMES COMO FUNÇÃO, MAS DEU CONFLITO (não permite colocar .grid em algo .pack). Criando um por um não dá erro
-    frame_header=Frame(frm_avaliacao, bg=co0, relief=FLAT, bd=3)
-    frame_header.grid(row= 0, column=0, columnspan=4, sticky='nsew')
+    frame_header = Frame(module_frame, bg=co3, bd=3)
+    frame_header.grid(row= 0, column=0, sticky='ew')
     frame_header.columnconfigure(0, weight=1)
-    frame_header.rowconfigure([0, 1, 2, 3, 4, 5, 6, 7], weight=1)
 
     # Textos gerais da tela
-    title        = 'Autoavaliação' if to_user_id == CURRENT_USER.id else 'Avaliação'
+    criar_label(frame_header, 'Autoavaliação' if to_user_id == CURRENT_USER.id else 'Avaliação', 'Calibri, 30', 0, 0, co3, 'w').config(fg=co0)
+
+    #rating_send_success
+    from Events import trigger, register, unregister_all
+
+    frame_send_btn = Frame(frame_header, bg=co3)
+    frame_send_btn.grid(row= 0, column=2, sticky='ew')
+    frame_send_btn.columnconfigure(0, weight=1)
+
+    def update_send_btn (fsb, state):
+        fsb_children = fsb.winfo_children()
+        if fsb_children and len(fsb_children) > 0 and fsb_children[0] is not None:
+            fsb_children[0].destroy()
+
+        frame_button_wrapper = Frame(fsb, bg=co3, bd=0)
+        frame_button_wrapper.grid(row= 0, column=0, sticky='ew')
+        frame_button_wrapper.columnconfigure(0, weight=1)
+
+        confirm_btn = Button(master=frame_button_wrapper, fg='#1a1d1a', bg='#d9d9d9', 
+            font='Calibri, 14', height=0, activebackground='#c5a8b0', 
+            text='Fechar' if state == 1 else 'Enviar Avaliação', 
+            # state='disabled' if state == 2 else 'active',
+            command=(lambda m=module_frame: fechar_avaliação(m)) if state == 1 else (lambda: enviar_notas(to_user_id))
+        )
+        confirm_btn.grid(row=0, column=0, sticky='e')
+        if state == 1: criar_label(frame_button_wrapper, 'Avaliação enviada com sucesso!', 'Calibri, 10 bold', 1, 0).config(fg='green')
+        elif state == 2: 
+            for error_message in trigger('get_error_messages'):
+                criar_label(frame_button_wrapper, error_message*(2-i), 'Calibri, 10 bold', i+1, 0).config(fg='red')
+
+    update_send_btn(frame_send_btn, 0)
+
+    register('rating_send_success', lambda fsb=frame_send_btn: update_send_btn(fsb, 1))
+    register('rating_send_error', lambda fsb=frame_send_btn: update_send_btn(fsb, 2))
+
+    frame_body = Frame(module_frame, bg=co0, bd=0)
+    frame_body.columnconfigure(0, weight=1)
+    frame_body.rowconfigure(0, weight=1)
+    frame_body.grid(row= 1, column=0, sticky='news')
+    frame_body = add_scrollbar(frame_body, bd=0)
+    frame_body.rowconfigure(0, weight=2)
+    frame_body.rowconfigure(1, weight=2)
+    
     from CSV.CSVHandler import find_data_by_id_csv
     from Settings import USERS_PATH
     to_user_name = CURRENT_USER.name if to_user_id == CURRENT_USER.id else find_data_by_id_csv(USERS_PATH, str(to_user_id))['name']
-    criar_label(frame_header, title, 30, 0, 0, 5, 5, 'w')
-    criar_label(frame_header, to_user_name, 20, 0, 1, 5, 5, 'w')
-    criar_label(frame_header, get_role_name(CURRENT_USER.role_id), 15, 0, 2, 5, 5, 'w')
-    criar_label(frame_header, 'Prazo para realizar a autoavaliação da {nº da Sprint}', 15, 0, 3, 5, 5, 'w')  # PUXAR DADO VINCULADO COM TELA DE RETORNO ???
-    criar_label(frame_header, 'Esta avaliação 360° utiliza a escala Likert para medir o desempenho dos usuários. Notas abaixo ou iguais a 3 necessitam obrigatoriamente de Feedback (resposta descritiva)', 11, 0, 4, 5, 5, 'w')  
 
-    if to_user_id == CURRENT_USER.id:
-        perguntas = [
-            '1) Como você se avalia em trabalho em equipe, cooperação e descentralização de conhecimento?',
-            '2) Como você se avalia em iniciativa e proatividade?',
-            '3) Como você se avalia em autodidaxia e agregação de conhecimento ao grupo?',
-            '4) Como você se avalia em entrega de resultados e participação efetiva no projeto?',
-            '5) Como você se avalia em competência técnica?'
-        ]
-    else:
-        perguntas = [
-            '1) Como você avalia o integrante em trabalho em equipe, cooperação e descentralização de conhecimento?',
-            '2) Como você avalia o integrante em iniciativa e proatividade?',
-            '3) Como você avalia o integrante em autodidaxia e agregação de conhecimento ao grupo?',
-            '4) Como você avalia o integrante em entrega de resultados e participação efetiva no projeto?',
-            '5) Como você avalia o integrante em competência técnica?'
-        ]
+    frame_summary = Frame(frame_body, bg=co1, padx=8, pady=8)
+    frame_summary.grid(row= 0, column=0, sticky='ew')
+    frame_summary.columnconfigure(0, weight=1)
 
-    escalas = []
-    feedbacks = [None, None, None, None, None]
+    frame_user_data = Frame(frame_summary, bg=co1, padx=8, pady=8)
+    frame_user_data.grid(row=0, column=0, sticky='ew')
 
-    for i in range(5):
+    criar_label(frame_user_data, f'{to_user_name}\t', 'Calibri, 20', 0, 0, co1, 'w')
+    criar_label(frame_user_data, get_role_name(CURRENT_USER.role_id), 'Calibri, 12', 1, 0, co1, 'w')
+    criar_label(frame_summary, 'Esta avaliação 360° utiliza a escala Likert para medir o desempenho dos usuários. Notas abaixo ou iguais a 3 necessitam obrigatoriamente de Feedback (resposta descritiva)',
+        'Calibri, 11', 0, 1, co1, 'w').config(wraplength=600) 
 
-        frm_criteria = Frame(frm_avaliacao, bg=co0, relief=GROOVE, bd=3)
-        frm_criteria.grid(row= i+1, column=0, columnspan=2, sticky='nsew')
-        frm_criteria.columnconfigure(0, weight=1)
-        frm_criteria.rowconfigure([0, 1, 2, 3, 4], weight=1)
+    # from Models.Sprint import sprint_index, current_rating_period
+    # criar_label(frame_user_data, f'Prazo para realizar a autoavaliação da Sprint {sprint_index(CURRENT_USER.group_id, current_rating_period(CURRENT_USER.group_id).id)}', 'Calibri, 15', 2, 0, None, 'w')  # PUXAR DADO VINCULADO COM TELA DE RETORNO ???
 
-        frm_criteria_data = Frame(frm_criteria, bg=co0)
-        frm_criteria_data.grid(row= 0, column=0, sticky='nsew')
-        frm_criteria_data.columnconfigure(0, weight=1)
-        frm_criteria_data.rowconfigure([0, 1, 2, 3, 4], weight=1)
+    perguntas = [
+        '1) Como você se avalia em trabalho em equipe, cooperação e descentralização de conhecimento?',
+        '2) Como você se avalia em iniciativa e proatividade?',
+        '3) Como você se avalia em autodidaxia e agregação de conhecimento ao grupo?',
+        '4) Como você se avalia em entrega de resultados e participação efetiva no projeto?',
+        '5) Como você se avalia em competência técnica?'
+    ] if to_user_id == CURRENT_USER.id else [
+        '1) Como você avalia o integrante em trabalho em equipe, cooperação e descentralização de conhecimento?',
+        '2) Como você avalia o integrante em iniciativa e proatividade?',
+        '3) Como você avalia o integrante em autodidaxia e agregação de conhecimento ao grupo?',
+        '4) Como você avalia o integrante em entrega de resultados e participação efetiva no projeto?',
+        '5) Como você avalia o integrante em competência técnica?'
+    ]
 
-        criar_label(frm_criteria_data, perguntas[i], 10, 0, 0, 5, 5, 'w')
-        criar_label(frm_criteria_data, 'Péssimo (1)           Ruim (2)              Regular (3)                Bom (4)               Ótimo (5)', 10, 0, 1, 5, 5, 'w')
-        escalas.append(criar_escala(frm_criteria_data, 2, lambda _, index=i: computar_resposta(int(index))))
-
-        frm_criterias.append(frm_criteria)
+    frame_criterias = Frame(frame_body, bg=co0, bd=3, padx=12, pady=4)
+    frame_criterias.columnconfigure(0, weight=1)
+    frame_criterias.rowconfigure([i for i in range(5)], weight=1)
+    frame_criterias.grid(row=1, column=0, sticky='ew')
     
-    # def retorno_feedback_pendente():
-    #     label=Label(master=module_frame, text='Feedbacks são obrigatórios\npara notas iguais ou menores que 3.',
-    #     bg=co0, fg='#1a1d1a', font=('Calibre', 8))
-    #     label.place(relx=0.82, rely=0.09, relheight=0.03, relwidth=0.17)
+    from Models.id_criteria import criteria
 
-    def retorno_feedback_pendente():
-        messagebox.showinfo("Khali Group", "Feedback pendente de preenchimento. Para notas iguais ou menores que três, o feedback é obrigatório.")  
-            
+    for i, c in enumerate(criteria):
 
-        # label=Label(master=module_frame, text='Feedbacks são obrigatórios\npara notas iguais ou menores que 3.',
-        # bg=co0, fg='#1a1d1a', font=('Calibre', 8))
-        # label.place(relx=0.82, rely=0.09, relheight=0.03, relwidth=0.17)
+        frame_criteria = Frame(frame_criterias, bg=co0, relief='groove', bd=3, pady=4)
+        frame_criteria.grid(row= i, column=0, columnspan=2, sticky='nsew')
+        frame_criteria.columnconfigure(0, weight=1)
 
-    def enviar_retorno():
-        label=Label(master=module_frame, text='Avaliação enviada com sucesso!',
-        bg=co0, fg='#1a1d1a', font=('Calibre', 10))
-        label.place(relx=0.55, rely=0.09, relheight=0.03, relwidth=0.17)
+        criar_label(frame_criteria, perguntas[i], 'Calibri, 10', 0, 0, co0, 'w')
 
-    # def criar_label(master, text, tamanho, column, row, padx, pady, sticky):
-    def computar_resposta(i):
+        frame_slider_wrapper = Frame(frame_criteria, bg=co0, padx=64, pady=16)
+        frame_slider_wrapper.grid(row=1, column=0, sticky='nsew')
+        frame_slider_wrapper.columnconfigure(0, weight=1)
 
-        # print("computar_respostas")
+        frame_criteria_data = Frame(frame_slider_wrapper, bg=co0)
+        frame_criteria_data.grid(row=0, column=0, sticky='nsew')
+        frame_criteria_data.columnconfigure([i for i in range(4)], weight=1)
 
-        frm_criteria = frm_criterias[i]
-
-        # print(f'[{i}]: {frm_criteria.winfo_children()}')
-
-        try:
-            frm_criteria_feedback = frm_criteria.winfo_children()[1]
-            frm_criteria_feedback.destroy()
-            feedbacks[i] = None
-        except:
-            pass
-
-        if escalas[i].get() <= 3:
-
-            frm_criteria_feedback = Frame(frm_criteria, bg=co0)
-            frm_criteria_feedback.grid(row= 0, column=1, sticky='nsew')
-            frm_criteria_feedback.columnconfigure(0, weight=1)
-            frm_criteria_feedback.rowconfigure([0, 1, 2, 3, 4], weight=1)
-
-            criar_label(frm_criteria_feedback, f'Deixe um feedback para o critério {i+1}: ', 10, 0, 1, 4, 4, 'w')
-            # feedbacks[i] = criar_entrada(frm_criteria_feedback, 3, 2, 0, 10, 'w')
-            feedbacks[i] = caixa_texto(frm_criteria_feedback, width=15, height=5, row=2, column=0)
-    
-    def caixa_texto(master, width, height, row, column):
-        my_text = Text(master=master, width=width, height=height, font = ('Calibre', 10))
-        my_text.grid(row = row, column = column, sticky = 'news')
-        return my_text
-
-
-    # Função para criação de caixas de entrada
-    def criar_entrada(master, row, column, padx, pady, sticky):
-        feedback=Entry(master=master, width=60, fg='#1a1d1a', font=('Calibre 10'))
-        feedback.grid(row=row, column=column, padx=padx, pady=pady, sticky=sticky)
-        return feedback
-
-    def enviar_notas(_to_user_id):
-
-        from Utils.back_avaliacao import dados_avaliacao
-
-        notas = []
-        comentarios = [None, None, None, None, None]
-
+        for g_index, grade in enumerate(['Péssimo (1)', 'Ruim (2)', 'Regular (3)', 'Bom (4)', 'Ótimo (5)']):
+            criar_label(frame_criteria_data, grade, 'Calibri, 10', 0, g_index, co0, 'w').config(width=0)
         
-        feedbacks_pendentes = []
+        frame_slider = Frame(frame_slider_wrapper, bg=co0)
+        frame_slider.grid(row=1, column=0, sticky='nsew')
+        frame_slider.columnconfigure(0, weight=1)
 
-        for i in range(5):
+        frame_feedback = Frame(frame_criteria, bg=co0)
+        frame_feedback.grid(row=3, column=0, sticky='nsew')
+        frame_feedback.columnconfigure(0, weight=1)
 
-            # print(f'escalas[i]: {escalas[i]} | escalas[i].get {escalas[i].get}')
-
-            nota = escalas[i].get()
-
-            # try:
-            #     comentario = feedbacks[i].get()
-            # except:
-            #     comentario = ''
-            # print(f'feedbacks[i] is None: {feedbacks[i] is None}')
-            
-
-            comentario = feedbacks[i].get(1.0, END) if feedbacks[i] is not None else ''
-            print(f'comentario: {comentario}')
-            # print(f'feedback é alphanumerico: {comentario.isalnum()}')
-            
-
-            notas.append(nota)
-            comentarios[i] = comentario
-
-            print(len(comentario))
-
-            if nota <= 3 and len(comentario) == 1:
-                print('feedback pendente')
-                feedbacks_pendentes.append(i)
+        var = IntVar(value=5)
         
-        if feedbacks_pendentes == []:
-            dados_avaliacao(_to_user_id, notas, comentarios)
+        unregister_all(f'get_value_criterio_{c}')
+        register(f'get_value_criterio_{c}', lambda v=var: v.get())
 
-            enviar_retorno()
-        else:
-            retorno_feedback_pendente()
-            
+        _escala = Scale(frame_slider, from_=1, to=5, tickinterval=0, orient='horizontal', showvalue=0,
+            bg=co0, font='Calibri, 10 bold', highlightcolor='#c5a8b0', troughcolor='#c5a8b0', variable=var,
+            command=lambda v, ff=frame_feedback, c=c: slider_change_position(ff, int(v), c)
+        )
+        _escala.grid(column=0, row=0, sticky='ews')
 
-
-    # Botão para registrar notas e conferir a necessidade de feedback
-    # button=Button(master=frm_main, text='Registrar Notas', fg='#1a1d1a', bg='#d9d9d9', 
-    # font=('Calibre', 10), width=13, height=1, activebackground='#c5a8b0', command=computar_respostas)
-    # button.place(relx=0.59, rely=0.09, relheight=0.04, relwidth=0.08)
-    # resposta(p1, 0), resposta(p2, 5), resposta(p3, 10), resposta(p4, 15), resposta(p5, 20)
-
-    # Botão para enviar notas para o banco de dados
-    button1=Button(master=module_frame.winfo_toplevel(), text='Enviar Avaliação', fg='#1a1d1a', bg='#d9d9d9', 
-        font=('Calibri', 12), height=0, activebackground='#c5a8b0', command= lambda : enviar_notas(to_user_id)
-    )
-    button1.place(relx=0.6, rely=0.09)
-
-    f = Frame(module_frame, pady=100, bg=co0)
+    f = Frame(frame_body, pady=100, bg=co0)
     Label(f, text='', bg=co0).grid(row=0, column=0, sticky="s")
     f.grid(row=100, column=0, sticky="s")
 
-# Função para criação de texto
-def criar_label(master, text, tamanho, column, row, padx, pady, sticky):
-    label=Label(master=master, text=text, fg='#1a1d1a'
-    , bg=co0, font=('Calibre', tamanho))
-    label.grid(column=column, row=row, padx=padx, pady=pady, sticky=sticky)
 
-def criar_escala(master, row, command):
-    _escala = Scale(master=master, from_=1, to=5, length=500, tickinterval=1, orient=HORIZONTAL, 
-        bg=co0, font=('Calibri', 10), highlightcolor='#c5a8b0', troughcolor='#c5a8b0', state='normal', variable=IntVar(),
-        command=command
-    )
-    _escala.grid(column=0, row=row, padx=5, pady=5, sticky='w')
-    _escala.set(5)
-    return _escala
+# def criar_label(master, text, tamanho, column, row, padx, pady,None,  sticky):
+def slider_change_position(frame_feedback, new_value, criterio):
+    ff_children = frame_feedback.winfo_children()
+    if ff_children and len(ff_children) > 0 and ff_children[0] is not None:
+        ff_children[0].destroy()
+
+    from Events import register, unregister_all
+    unregister_all(f'get_feedback_criterio_{criterio}')
+
+    if new_value > 3: return
+
+    frame_text_input = Frame(frame_feedback, bg=co0, padx=4)
+    frame_text_input.grid(row= 0, column=0, sticky='nsew')
+    frame_text_input.columnconfigure(0, weight=1)
+    frame_text_input.rowconfigure(0, weight=1)
+
+    criar_label(frame_text_input, f'Deixe um feedback para o critério {criterio}:* ', 'Calibri, 10', 0, 0, co0, 'we')
+    
+    text_input = Text(master=frame_text_input, height=5, font = 'Calibri, 10', bd=4)
+    text_input.grid(row=1, column=0, sticky = 'news')
+
+    register(f'get_feedback_criterio_{criterio}', lambda t=text_input: t.get('1.0', 'end')[:-2])
+
+
+def enviar_notas(_to_user_id):
+    from Utils.back_avaliacao import dados_avaliacao
+    from Models.id_criteria import criteria, criteria_full
+
+    notas = [0 for _ in criteria_full]
+    comentarios = [0 for _ in criteria_full]
+
+    print(notas)
+    print(comentarios)
+
+    from Events import trigger, register, unregister_all
+
+    for i, c in enumerate(criteria):
+        notas[i] = trigger(f'get_value_criterio_{c}')
+        comentarios[i] = trigger(f'get_feedback_criterio_{c}')
+
+    print(notas)
+    print(comentarios)
+
+    FEEDBACK_LEN_MINMAX = [0, 400]
+    
+    error_messages = []
+    error_message_templates = lambda i, c: [
+        f'Insira um feedback obrigatório para o critério {c}',
+        f'Feedback do critério {c} é muito curto! Escreva pelo menos {FEEDBACK_LEN_MINMAX[0]} caracteres',
+        f'Feedback do critério {c} é muito longo! Escreva no máximo {FEEDBACK_LEN_MINMAX[0]} caracteres'
+    ][i]
+
+    for i, criterio in enumerate(criteria_full):
+        if notas[i] <= 3:
+            if comentarios[i] is None or comentarios[i] == '': error_messages.append(error_message_templates(0, criterio))
+            elif len(comentarios[i]) < FEEDBACK_LEN_MINMAX[0]: error_messages.append(error_message_templates(1, criterio))
+            elif len(comentarios[i]) > FEEDBACK_LEN_MINMAX[1]: error_messages.append(error_message_templates(2, criterio))
+
+
+    if len(error_messages) > 0: 
+        for i in error_messages:
+            print(i)
+
+        unregister_all('get_error_messages')
+        register('get_error_messages', lambda: error_messages)
+        trigger('rating_send_error')
+        return error_messages
+
+    dados_avaliacao(_to_user_id, notas, comentarios)
+
+    trigger('rating_send_success')
+    return True
+
+def fechar_avaliação(m):
+    from Events import trigger
+    m.destroy()
+    trigger('sub_module_close')

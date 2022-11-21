@@ -67,23 +67,18 @@ def criar_section_1():
     frame_sprint_timeline = criar_frame(frame_section, 1, 0, "ew", co0, co1, 0, 2, 2)
 
     from Authentication import CURRENT_USER
-    from Models.Sprint import current_rating_period, next_rating_period, get_group_sprints
+    from Models.Sprint import current_rating_period, next_rating_period, sprint_index
     from Time import today
 
     sprint = current_rating_period(CURRENT_USER.group_id)
     sprint_timeline_str = ''
-
-    # Retorna o indice da sprint dentro da lista com as sprints do grupo
-    def sprint_n(s):
-        for i, s in enumerate(get_group_sprints(CURRENT_USER.group_id)): 
-            if s.id == sprint.id: return i + 1
 
     # Caso possuirmos uma sprint cujo periodo avaliativo encontra-se ativo
     if sprint is not None:
 
         # informa sprint atual + quantidade de dias até o fim do periodo avaliativo
         cur_ratings_end = sprint.rating_period_end() - today()
-        sprint_timeline_str = f'Sprint {sprint_n(sprint)} | periodo avaliativo acaba em {cur_ratings_end.days} dias'
+        sprint_timeline_str = f'Sprint {sprint_index(CURRENT_USER.group_id, sprint.id)} | periodo avaliativo acaba em {cur_ratings_end.days} dias'
 
     # Caso contrário, a sprint com o periodo avaliativo mais proximo será considerada
     else: 
@@ -92,7 +87,7 @@ def criar_section_1():
 
             # informa sprint atual + quantidade de dias até o começo do periodo avaliativo
             next_ratings_start = sprint.rating_period_start() - today()
-            sprint_timeline_str = f'Sprint {sprint_n(sprint)} | periodo avaliativo começa em {next_ratings_start.days} dias'
+            sprint_timeline_str = f'Sprint {sprint_index(CURRENT_USER.group_id, sprint.id)} | periodo avaliativo começa em {next_ratings_start.days} dias'
 
         # nenhuma informação relacionada a periodo avaliativo encontrada, mensagem genérica
         else:
@@ -382,8 +377,8 @@ def avaliar (id):
     pyplot.close()
 
     from Front.Modules import avaliacao
-    target_frame = module_frame.master.master
-    module_frame.master.destroy()
+    target_frame = module_frame.master
+    module_frame.destroy()
 
     from Events import trigger
     trigger('sub_module_open')
