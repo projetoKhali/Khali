@@ -45,10 +45,10 @@ WindowManager.initialize()
 # teste - login automatico
 from Authentication import login
 # login(email='a@d.m', senha='123')
-login(email='l@d.g', senha='123')
+# login(email='l@d.g', senha='123')
 # login(email='c@c.c', senha='123')
 # login(email='lt1@o.com', senha='123')
 # login(email='fulano-dev@dev.com', senha ='123')
-# login(email='d@e.v', senha='123')
+login(email='d@e.v', senha='123')
 
 WindowManager.update()
