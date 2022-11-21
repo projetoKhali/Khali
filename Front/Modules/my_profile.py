@@ -61,7 +61,7 @@ def criar_section_1():
 
     # Cria um frame para a label de título dentro do cabeçalho
     frame_header_title = criar_frame(frame_section_header, 0, 0, "we", co3, co3, 0, 0, 0)
-    criar_label(frame_header_title, 'Avaliações', 'Calibri, 20', co3, 0, 0, 'nes').configure(fg='white')
+    criar_label(frame_header_title, 'Avaliações', 'Calibri, 20', 0, 0, co3, 'nes').configure(fg='white')
 
     # Frame para a timeline / datas importantes da sprint / periodo avaliativo
     frame_sprint_timeline = criar_frame(frame_section, 1, 0, "ew", co0, co1, 0, 2, 2)
@@ -99,7 +99,7 @@ def criar_section_1():
             sprint_timeline_str = 'Nenhum período avaliativo previsto'
 
     # cria a label com as informações do periodo avaliativo
-    criar_label(frame_sprint_timeline, sprint_timeline_str, 'Calibri, 10', co0, 1, 0, 'ew')
+    criar_label(frame_sprint_timeline, sprint_timeline_str, 'Calibri, 10', 1, 0, co0, 'ew')
 
     from Models.Role import get_role_name
 
@@ -144,7 +144,7 @@ def criar_section_1():
         frame_lista.rowconfigure(1, weight=1)
 
         # Coloca o título da lista 
-        criar_label(frame_lista, lista_titles[i], 'Calibri, 14', lista_colors[i], 0, 0, "we")
+        criar_label(frame_lista, lista_titles[i], 'Calibri, 14', 0, 0, lista_colors[i], "we")
 
         # Cria um frame parent para os usuários dessa lista
         frame_parent_users = criar_frame(frame_lista, 1, 0, "news", lista_col, lista_col, 0, 0, 0)
@@ -171,8 +171,8 @@ def criar_section_1():
             frame_user_data.columnconfigure(0, weight=1)
 
             # cria as labels de nome e role
-            criar_label(frame_user_data, user['name'], 'Calibri, 12', lista_col, 0, 0, "w")
-            criar_label(frame_user_data, get_role_name(user['role_id']), 'Calibri, 10', lista_col, 1, 0, "w")
+            criar_label(frame_user_data, user['name'], 'Calibri, 12', 0, 0, lista_col, "w")
+            criar_label(frame_user_data, get_role_name(user['role_id']), 'Calibri, 10', 1, 0, lista_col, "w")
 
             # Cria um frame pro botão
             frame_user_button = criar_frame(frame_user, 0, 1, 'ew', co0, co0, 0, 0, 0)
@@ -223,7 +223,7 @@ def criar_section_profile(frame_section, sprints):
 
     # Cria um frame para a label de título dentro do cabeçalho
     frame_header_title = criar_frame(frame_section_header, 0, 0, "ns", co0, co3, 0, 0, 0)
-    criar_label(frame_header_title, 'Perfil', 'Calibri, 20', co3, 0, 0, 'nwes').configure(fg='white')
+    criar_label(frame_header_title, 'Perfil', 'Calibri, 20', 0, 0, co3, 'nwes').configure(fg='white')
 
     from Authentication import CURRENT_USER
     from Models.Role import get_role_name
@@ -234,10 +234,10 @@ def criar_section_profile(frame_section, sprints):
     frame_header_data = criar_frame(frame_section_header, 1, 0, "ew", co0, co2, 2, 0, 0)
     frame_header_data.columnconfigure([0, 1], weight = 1)
     frame_header_data.columnconfigure([0, 1], weight = 1)
-    criar_label(frame_header_data, f'Nome: {CURRENT_USER.name}', 'Calibri, 14', co0, 0, 0, 'w')
-    (lambda d=get_role_name(CURRENT_USER.role_id):   criar_label(frame_header_data, f'Função: {d}', 'Calibri, 12', co0, 1, 0, 'w') if d is not None else None)()
-    (lambda d=get_group_name(CURRENT_USER.group_id): criar_label(frame_header_data, f'Grupo: {d}', 'Calibri, 14', co0, 0, 1, 'e') if d is not None else None)()
-    (lambda d=get_team_name(CURRENT_USER.team_id):   criar_label(frame_header_data, f'Time: {d}', 'Calibri, 12', co0, 1, 1, 'e') if d is not None else None)()
+    criar_label(frame_header_data, f'Nome: {CURRENT_USER.name}', 'Calibri, 14', 0, 0, co0, 'w')
+    (lambda d=get_role_name(CURRENT_USER.role_id):   criar_label(frame_header_data, f'Função: {d}', 'Calibri, 12', 1, 0, co0, 'w') if d is not None else None)()
+    (lambda d=get_group_name(CURRENT_USER.group_id): criar_label(frame_header_data, f'Grupo: {d}', 'Calibri, 14', 0, 1, co0, 'e') if d is not None else None)()
+    (lambda d=get_team_name(CURRENT_USER.team_id):   criar_label(frame_header_data, f'Time: {d}', 'Calibri, 12', 1, 1, co0, 'e') if d is not None else None)()
 
     # Cria o frame para o grafico pentagono
     frame_user_pentagon = criar_frame(frame_section, 1, 0, "ew", co1, co1, 0, 2, 2)
@@ -273,15 +273,15 @@ def criar_section_profile(frame_section, sprints):
 
     # cria um título no frame legenda
     frame_legenda_title = criar_frame(frame_legenda, 0, 0, "ew", co0, co2, 0, 4, 4)
-    criar_label(frame_legenda_title, f'Medias durante a sprint {sel_sprint+1}', 'Calibri, 10 bold', co0, 0, 0, 'we', 'center')
+    criar_label(frame_legenda_title, f'Medias durante a sprint {sel_sprint+1}', 'Calibri, 10 bold', 0, 0, co0, 'we', 'center')
 
     # cria um frame pra cada critério contendo criteria, criteria_full e média do criterio
     for c_index, c in enumerate(criteria):
         frame_criterio = criar_frame(frame_legenda, c_index+1, 0, "nsew", co0, co2, 0, 4, 4)
         frame_criterio.columnconfigure(1, weight=1)
-        criar_label(frame_criterio, f'{c}: ', 'Calibri, 10 bold', co0, 0, 0, 'we', 'center')
-        criar_label(frame_criterio, f'{criteria_full[c_index]}: ', 'Calibri, 10', co0, 0, 1, 'we', 'center')
-        criar_label(frame_criterio, f'{u_medias[c_index]:.1f}', 'Calibri, 10 bold', co0, 0, 2, 'e', 'center').configure(fg=co3)
+        criar_label(frame_criterio, f'{c}: ', 'Calibri, 10 bold', 0, 0, co0, 'we', 'center')
+        criar_label(frame_criterio, f'{criteria_full[c_index]}: ', 'Calibri, 10', 0, 1, co0, 'we', 'center')
+        criar_label(frame_criterio, f'{u_medias[c_index]:.1f}', 'Calibri, 10 bold', 0, 2, co0, 'e', 'center').configure(fg=co3)
 
     # cria um frame para renderizar o retorno dos feedbacks do usuario
     frame_section_feedbacks = criar_frame(frame_section, 2, 0, "nsew", co0, co2, 0, 0, 0)
@@ -322,7 +322,7 @@ def criar_retorno_feedbacks(frame_section_feedbacks, sprints):
 
     # Cria um pseudo título para o retorno de feedbacks 
     frame_fb_title = criar_frame(frame_feedbacks, 1, 0, "ew", co2, co1, 4, 0, 0)
-    criar_label(frame_fb_title, f'Feedbacks recebidos durante a sprint {sel_sprint + 1}:', 'Calibri, 12 bold', co2, 0, 0, 'w', 'center').configure(fg='white')
+    criar_label(frame_fb_title, f'Feedbacks recebidos durante a sprint {sel_sprint + 1}:', 'Calibri, 12 bold', 0, 0, co2, 'w', 'center').configure(fg='white')
 
     # Cria um frame parent pros feedbacks
     frame_feedback_list = criar_frame(frame_feedbacks, 2, 0, "nsew", co1, co1, 2, 2, 2)
@@ -338,8 +338,8 @@ def criar_retorno_feedbacks(frame_section_feedbacks, sprints):
         frame_fb = criar_frame(frame_feedback_list, index, 0, "ns", co0, co2, 2, 4, 4)
         frame_fb.columnconfigure(0, weight=1)
         from Models.id_criteria import criteria_full
-        criar_label(frame_fb, f'{criteria_full[feedback[0]]}: ', 'Calibri, 10 bold', co0, 0, 0, 'we', 'left')
-        criar_label(frame_fb, feedback[1], 'Calibri, 10', co1, 1, 0, 'we', 'left').configure(wraplength=400, anchor='n')
+        criar_label(frame_fb, f'{criteria_full[feedback[0]]}: ', 'Calibri, 10 bold', 0, 0, co0, 'we', 'left')
+        criar_label(frame_fb, feedback[1], 'Calibri, 10', 1, 0, co1, 'we', 'left').configure(wraplength=400, anchor='n')
 
 
 # TODO: seção com as informações de instrutor
@@ -350,7 +350,7 @@ def criar_section_instructor(frame_section):
 # TODO: seção com informações sobre a avaliação 360
 def criar_section_info(frame_section):
     frame_ratings_info = criar_frame(frame_section, 1, 0, "ew", co1, co1, 0, 2, 2)
-    criar_label(frame_ratings_info, 'informações sobre a avaliação 360', 'Calibri, 12', co1, 0, 0, 'nwes')
+    criar_label(frame_ratings_info, 'informações sobre a avaliação 360', 'Calibri, 12', 0, 0, co1, 'nwes')
 
 
 # função que cria e coloca o grafico pentagono em um canvas dentro do frame parametro
