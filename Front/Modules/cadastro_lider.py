@@ -32,20 +32,21 @@ def run (frame_parent):
     module_frame.rowconfigure(1, weight=1) 
 
     frame_header = criar_frame(module_frame, 0, 0, 'new', co0)
-    frame_header.grid_columnconfigure(0, weight=1)
+    frame_header.columnconfigure(0, weight=4)
+    frame_header.columnconfigure(1, weight=1) 
 
     # janela_header
-    titulo=Label(frame_header, text='Cadastro de Times', bg='#fae8e8', font=('Calibre', 30))
-    titulo.grid(row=0, column=0, padx=30, pady=10, sticky='w')
+    titulo=Label(frame_header, text='Cadastro de Sprints e Times', bg='#fae8e8', font='Calibre, 24')
+    titulo.grid(row=0, column=0, padx=4, pady=10, sticky='w')
 
     # frame_body = criar_frame(janela, 1, 0)
     frame_body = criar_frame(module_frame, 1, 0, 'news', co0, None, 0, 0, 0)
-    frame_body.grid_rowconfigure(0, weight=1)
-    frame_body.grid_columnconfigure(0, weight=1)
+    frame_body.rowconfigure(0, weight=1)
+    frame_body.columnconfigure(0, weight=1)
     from Front.Scrollbar import add_scrollbar
     frame_body = add_scrollbar(frame_body, co0, 0)
-    # frame_body.grid_rowconfigure(0, weight=1)
-    # frame_body.grid_columnconfigure(0, weight=1)
+    # frame_body.rowconfigure(0, weight=1)
+    # frame_body.columnconfigure(0, weight=1)
 
     titles = ['Sprints', 'Times']
     commands = [entry_sprint, entry_times]
@@ -54,8 +55,10 @@ def run (frame_parent):
         create_register_container(frame_body, i, titles[i], commands[i])
 
     # Cria o botão responsável por efetuar os cadastros 
-    Button(frame_header, text="Confirmar Cadastros", font="Calibri, 12", command=confirmar_cadastros, 
-        activebackground='#c5a8b0', bg='#d9d9d9', fg='#1a1d1a', height=0).grid(row=0, column=1, sticky='e')
+    frame_confirm_btn = criar_frame(frame_header, 0, 1, 'ew', 'red', px=8)
+    frame_confirm_btn.grid_columnconfigure(0, weight=1)
+    Button(frame_confirm_btn, text="Confirmar Cadastros", font="Calibri, 12", command=confirmar_cadastros, 
+        activebackground='#c5a8b0', bg='#d9d9d9', fg='#1a1d1a', height=0).grid(row=0, column=0, sticky='news')
 
     # retorna o modulo
     return module_frame
@@ -116,33 +119,67 @@ def entry_sprint(en_numsprints:IntVar, frame_parent):
     if children is not None and len(children) > 0 and children[0] is not None:
         children[0].destroy()
 
+    from Events import register, trigger, unregister_all
+    trigger('reset_sprints')
+    unregister_all('reset_sprints')
+    unregister_all('get_sprints')
+
     try: valor = int(en_numsprints.get())
     except: return
     if valor < 1: return
 
+    frame_parent.config(bg='green')
+
     frame_list = criar_frame(frame_parent, 0, 0, 'new', co0, co0, 0, 0, 0)
     frame_list.columnconfigure(0, weight=1)
 
+    n_sprints = min(valor, 13)
+
+    register('reset_sprints', lambda n=n_sprints: [unregister_all(f'get_sprint_{i}') for i in range(n)])
+    register('get_sprints', lambda n=n_sprints: [trigger(f'get_sprint_{i}') for i in range(n)])
+
     # frame_sprint = criar_frame(janela, valor, 4, 3, 2)
-    for i in range(min(valor, 13)):
-        frame_sprint = criar_frame(frame_list, i, 0)
-        criar_label(frame_sprint, f"Sprint {i+1}", "Calibri, 10", 0, 0)
-        criar_label(frame_sprint, "Início:", "Calibri, 10", 0, 1)
-        criar_entry(frame_sprint, "Calibri, 10", 0, 2)
-        criar_label(frame_sprint, "Fim:", "Calibri, 10", 0, 3)
-        criar_entry(frame_sprint, "Calibri, 10", 0, 4)
+    for i in range(n_sprints):
+        frame_sprint = criar_frame(frame_list, i, 0, bg='blue')
+
+        criar_label(frame_sprint, f"Sprint {i+1}", "Calibri, 10 bold", 0, 0).config(padx=8)
+
+        calendars = []
+
+        for j, label_text in enumerate(['Início: ', 'Fim: ']):
+            criar_label(frame_sprint, label_text, "Calibri, 10", 0, j*2 + 1)
+            calendars.append(create_calendar(frame_sprint, 0, j*2 + 2))
+
         criar_label(frame_sprint, "Dias para avaliação:", "Calibri, 10", 0, 5)
-        criar_entry(frame_sprint, "Calibri, 10", 0, 6).insert(0, '5')
+        entry_rating_period = criar_entry(frame_sprint, "Calibri, 10", 0, 6)
+        entry_rating_period.insert(0, '5')
+        entry_rating_period.config(width=4)
+
+        register(f'get_sprint_{i}', lambda s=calendars[0], e=calendars[1], r=entry_rating_period: [s.get_date(), e.get_date(), r.get()])
+
     if valor > 12:    
         import tkinter.messagebox
         print("número muito grande de sprints!!, por favor, insira um valor menor")
         tkinter.messagebox.showinfo("Khali Group",  "número muito grande de sprints!!, por favor, insira um valor menor")
 
+def create_calendar(parent, r, c):
+    from tkcalendar import DateEntry
+    calendar = DateEntry(
+        parent, date_pattern='dd/mm/yyyy', firstweekday='sunday', showweeknumbers=False, locale='pt_BR',
+        background=co3, foreground='white', bordercolor=co1, headersbackground=co0
+    )
+    calendar.grid(row=r, column=c)
+    return calendar
 
 def entry_times(en_numtimes:IntVar, frame_parent):
     children = frame_parent.winfo_children()
     if children is not None and len(children) > 0 and children[0] is not None:
         children[0].destroy()
+
+    from Events import register, trigger, unregister_all
+    trigger('reset_times')
+    unregister_all('reset_times')
+    unregister_all('get_teams')
 
     try: valor = get_entry_int(en_numtimes)
     except: return
@@ -153,13 +190,9 @@ def entry_times(en_numtimes:IntVar, frame_parent):
 
     n_times = min(valor, 13)
 
-    from Events import register, trigger, unregister_all
-    trigger('reset_times')
-    unregister_all('reset_times')
-    register('reset_times', lambda nt=n_times: [unregister_all(f'get_team_{i}') for i in range(nt)])
-    register('reset_times', lambda nt=n_times: [unregister_all(f'get_team_members_{i}') for i in range(nt)])
-    unregister_all('get_teams')
-    register('get_teams', lambda nt=n_times: [trigger(f'get_team_{i}') for i in range(nt)])
+    register('reset_times', lambda n=n_times: [unregister_all(f'get_team_{i}') for i in range(n)])
+    register('reset_times', lambda n=n_times: [unregister_all(f'get_team_members_{i}') for i in range(n)])
+    register('get_teams', lambda n=n_times: [trigger(f'get_team_{i}') for i in range(n)])
 
     for i in range(n_times):
         frame_time = criar_frame(frame_list, i, 0, 'ew', co0, co1, 0, 0, 0)
@@ -248,8 +281,14 @@ def confirmar_cadastros():
 
     group_id = CURRENT_USER.group_id
 
+    sprints = trigger('get_sprints')
+    if sprints is not None:
+        for sprint in sprints:
+            create_sprint(group_id, sprint[0], sprint[1], sprint[2])
+
     teams = trigger('get_teams')
-    for team in teams:
-        team_id = create_team(team[0], group_id)
-        for user in team[1]:
-            register(user[0], user[1], group_id, team_id, user[2])
+    if teams is not None:
+        for team in teams:
+            team_id = create_team(team[0], group_id)
+            for user in team[1]:
+                register(user[0], user[1], group_id, team_id, user[2])
