@@ -132,7 +132,7 @@ def entry_sprint(en_numsprints:IntVar, frame_parent):
         criar_label(frame_sprint, "Fim:", "Calibri, 10", 0, 3)
         criar_entry(frame_sprint, "Calibri, 10", 0, 4)
         criar_label(frame_sprint, "Dias para avaliação:", "Calibri, 10", 0, 5)
-        criar_entry(frame_sprint, "Calibri, 10", 0, 6)
+        criar_entry(frame_sprint, "Calibri, 10", 0, 6).insert(0, '5')
     if valor > 12:    
         import tkinter.messagebox
         print("número muito grande de sprints!!, por favor, insira um valor menor")
@@ -151,28 +151,46 @@ def entry_times(en_numtimes:IntVar, frame_parent):
     frame_list = criar_frame(frame_parent, 0, 0, 'new', co0, co0, 0, 0, 0)
     frame_list.columnconfigure(0, weight=1)
 
-    for i in range(min(valor, 13)):
+    n_times = min(valor, 13)
+
+    from Events import register, trigger, unregister_all
+    trigger('reset_times')
+    unregister_all('reset_times')
+    register('reset_times', lambda nt=n_times: [unregister_all(f'get_team_{i}') for i in range(nt)])
+    register('reset_times', lambda nt=n_times: [unregister_all(f'get_team_members_{i}') for i in range(nt)])
+    unregister_all('get_teams')
+    register('get_teams', lambda nt=n_times: [trigger(f'get_team_{i}') for i in range(nt)])
+
+    for i in range(n_times):
         frame_time = criar_frame(frame_list, i, 0, 'ew', co0, co1, 0, 0, 0)
         frame_time.columnconfigure(0, weight=1)
+
         frame_time_data = criar_frame(frame_time, 0, 0)
-        criar_label(frame_time_data, f"Time {i+1}",          "Calibri, 10", 0, 0)
-        criar_entry(frame_time_data,                          "Calibri, 10", 0, 2)
+
+        criar_label(frame_time_data, f"Time {i+1}", "Calibri, 10", 0, 0)
+        entry_name = criar_entry(frame_time_data,                          "Calibri, 10", 0, 2)
         criar_label(frame_time_data, "Quantidade de alunos:", "Calibri, 10", 0, 3)
+
         frame_members_wrapper = criar_frame(frame_time, 1, 0, 'ew', co0, co0, 0, 2, 2)
         frame_members_wrapper.columnconfigure(0, weight=1)
+
         var = IntVar(value=3)
-        var.trace('w', lambda n, i, m, v=var, lw=frame_members_wrapper: update_member_forms(v, lw))
-        criar_entry(frame_time_data,                          "Calibri, 10", 0, 4).config(textvariable=var)
-        update_member_forms(var, frame_members_wrapper)
-        # criar_button(frame_time_data, "Cadastrar",           "Calibri, 10", 0, 5, command = update_member_forms)
+        var.trace('w', lambda n, i, m, v=var, lw=frame_members_wrapper, ti=i: update_member_forms(v, lw, ti))
+
+        criar_entry(frame_time_data, "Calibri, 10", 0, 4).config(textvariable=var)
+
+        update_member_forms(var, frame_members_wrapper, i)
+        
+        register(f'get_team_{i}', lambda n=entry_name, ti=i: [n.get(), trigger(f'get_team_members_{ti}')])
+
+
     if valor > 12:    
         import tkinter.messagebox
         tkinter.messagebox.showinfo("Khali Group",  "São muitos times! Insira um valor menor.")
 
 
 # Atualiza a tela para criar os formularios para cada membro de acordo com o numero de membros especificado em cada time
-def update_member_forms(en_num_members, frame_time):
-
+def update_member_forms(en_num_members, frame_time, team_index):
     children = frame_time.winfo_children()
     if children is not None and len(children) > 0 and children[0] is not None:
         children[0].destroy()
@@ -186,121 +204,52 @@ def update_member_forms(en_num_members, frame_time):
 
     # para cada aluno, cria um formulário de cadastro
     for i in range(min(max(valor, 3), 9)):
-        criar_formulario_aluno(frame_list, i)
+        criar_formulario_aluno(frame_list, i, team_index)
 
 
 # Cria os campos para o cadastro de UM aluno
-def criar_formulario_aluno (parent, row):
+def criar_formulario_aluno (parent, row, team_index):
     frame_member = criar_frame(parent, row, 0, 'ew', co1, None, 0, 4, 4)
     criar_label(frame_member, "Nome:",  "Calibri, 10", 0, 0, co1)
-    criar_entry(frame_member,           "Calibri, 10", 0, 1)
+    entry_name = criar_entry(frame_member, "Calibri, 10", 0, 1)
     criar_label(frame_member, "E-mail:","Calibri, 10", 0, 2, co1)
-    criar_entry(frame_member,           "Calibri, 10", 0, 3)
+    entry_email = criar_entry(frame_member, "Calibri, 10", 0, 3)
     criar_label(frame_member, "Função:","Calibri, 10", 0, 4, co1)
-    criar_entry(frame_member,           "Calibri, 10", 0, 5)
-    # TODO:
-    # from Roles.Role import *
-    # roles = ...
-    # criar_dropdown(parent, roles,"Calibri, 10", row, 5)
+
+    from Models.Role import get_role_name, get_role_id
+
+    entry_role = StringVar()
+    role_names = [get_role_name(i) for i in [3, 4, 5]]
+    entry_role.set(role_names[min(row, 2)])
+    OptionMenu(
+        frame_member,
+
+        # variavel que armazenará o valor da nova role quando selecionada no OptionMenu
+        entry_role,
+
+        # lista que contém os valores selecionaveis no OptionMenu
+        *role_names,
+
+        # comando que será executado ao selecionar uma opção
+        # command=(lambda _, md=member_data, rs = role_selected : update_role(_, md, get_role_id(rs.get())))
+    ).grid(row=0, column=5)
+
+    from Events import register
+    register(f'get_team_members_{team_index}', lambda n=entry_name, e=entry_email, r=entry_role: [n.get(), e.get(), get_role_id(r.get())])
 
 
 # coleta os valores dos campos preenchidos e conclui o cadastro de sprints, times e seus membros
-def confirmar_cadastros(frame_parent_sprints, frame_parent_times):
-
-    # importa cores do console para finalidade de debug
-    from Settings import COLS
-
-    # importa o método que cria sprints
+def confirmar_cadastros():
+    from Events import trigger
     from Models.Sprint import create_sprint
-
-    # importa as informações do atual usuário logado no sistema
-    from Authentication import CURRENT_USER
-
-    # define a função que converte o valor do tipo string 'value' em um valor do tipo date 
-    def to_date(value:str):
-
-        # importa a biblioteca que contém a classe date
-        from datetime import date
-
-        # divide o valor fornecido em uma lista contendo as seções separadas por /
-        l = value.split('/')
-
-        # retorna uma nova date utilizando os valores 1, 2 e 3 da lista
-        # l[0] = DD
-        # l[1] = MM
-        # l[2] = AAAA
-        # Obs.: a classe date utilizada o formato americano. Para a exibição, ela retornará "AAAA/MM/DD".
-        #       Para ser criada corretamente, os valores estão sendo passados na ordem 2,1,0 em vez de 0,1,2.
-        #       Caso contrário, o usuário teria que preencher 'AAAA/MM/DD' na entry da tela
-        return date(
-            int(l[2]),
-            int(l[1]),
-            int(l[0])
-        )
-
-    # acessa as children to frame_parent_sprints e executa o próximo loop
-    sprints = frame_parent_sprints.winfo_children()
-    for frame_sprint in sprints:
-
-        # acessa o frame que contém as informações do time
-        #           frame_parent_times
-        #           |  [x] frame_sprint.get_entries():         <--
-        #           |   |  [0] inicio
-        #           |   |  [1] fim
-        #           |   |  [2] periodo de avaliação
-        try:
-            s_entries = get_entries(frame_sprint)
-            inicio = to_date(s_entries[0].get())
-            fim =    to_date(s_entries[1].get())
-            periodo = get_entry_int(s_entries[2])
-            create_sprint(CURRENT_USER.group_id, inicio, fim, periodo)
-        except:
-            print(COLS[2] + f'Erro ao criar sprint: {frame_sprint}' + COLS[0])
-
-    # Importa as funções de criar time e cadastro de usuário
-    from Authentication import register
     from Models.Team import create_team
 
-    # acessa as children do frame_parent_times e executa o próximo loop
-    times = frame_parent_times.winfo_children()
-    for frame_time in times:
+    from Authentication import CURRENT_USER, register
 
-        # acessa o frame que contém as informações do time
-        #           frame_parent_times
-        #           |  [x] frame_time
-        #           |   |  [0] time_data        <--
-        #           |   |   |   nome
-        #           |   |   |   qtd alunos
-        time_data = frame_time.winfo_children()[0]
-        name = str(get_entries(time_data)[0].get())
-        team_id = create_team(name, CURRENT_USER.group_id)
+    group_id = CURRENT_USER.group_id
 
-        # acessa os frames de 'member' dentro do child 1 do frame_time
-        #           |   |  [x] frame_time
-        #           |   |   |  [1] members      <--
-        #           |   |   |   |  [0] member 0
-        #           |   |   |   |  [1] member 1
-        #           |   |   |   |  [2] member 2
-        for member in frame_time.winfo_children()[1].winfo_children():
-
-            # print(f'member {member}')
-            # m_entries = get_entries(member)
-            # print(f'm_entries {member.winfo_children()}')
-
-            # Acessa as entries dentro do frame 'member' para adquirir os valores necessarios pro cadastro
-            #       |   |   |   |  [x] member x
-            #       |   |   |   |   |  [0] label "nome:"
-            #       |   |   |   |   |  [1] entry {nome}
-            #       |   |   |   |   |  [2] label "email:"
-            #       |   |   |   |   |  [3] entry {email}
-            #       |   |   |   |   |  [4] label "role:"
-            #       |   |   |   |   |  [5] entry {role}
-            try:
-                m_name = member.winfo_children()[1].get()
-                m_email = member.winfo_children()[3].get()
-                m_role = get_entry_int(member.winfo_children()[5])
-                register(m_name, m_email, CURRENT_USER.group_id, team_id, m_role)
-            except:
-                print(COLS[2] + f'Erro ao criar membro: {member}' + COLS[0])
-                continue
-
+    teams = trigger('get_teams')
+    for team in teams:
+        team_id = create_team(team[0], group_id)
+        for user in team[1]:
+            register(user[0], user[1], group_id, team_id, user[2])
