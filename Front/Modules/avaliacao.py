@@ -175,7 +175,7 @@ def slider_change_position(frame_feedback, new_value, criterio):
 
 
 def get_feedback_text(t):
-    value = str(t.get("1.0", "end")[:-1]).replace('\'', '').replace('\"', '')
+    value = str(t.get("1.0", "end")).replace('\'', '').replace('\"', '').replace('\n', '')
     return f'\'{value}\''
 
 
@@ -203,9 +203,10 @@ def enviar_notas(_to_user_id):
 
     for i, criterio in enumerate(criteria_full):
         if notas[i] <= 3:
-            if comentarios[i] is None or comentarios[i] == '': error_messages.append(error_message_templates(0, criterio))
-            elif len(comentarios[i]) < FEEDBACK_LEN_MINMAX[0]: error_messages.append(error_message_templates(1, criterio))
-            elif len(comentarios[i]) > FEEDBACK_LEN_MINMAX[1]: error_messages.append(error_message_templates(2, criterio))
+            length = len(comentarios[i]) - 2
+            if comentarios[i] is None or length == 0: error_messages.append(error_message_templates(0, criterio))
+            elif length < FEEDBACK_LEN_MINMAX[0]: error_messages.append(error_message_templates(1, criterio))
+            elif length > FEEDBACK_LEN_MINMAX[1]: error_messages.append(error_message_templates(2, criterio))
 
 
     if len(error_messages) > 0: 

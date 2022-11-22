@@ -76,8 +76,8 @@ def create_test_data():
         sprint_dates = [
             [date(2022, 8,  29), date(2022, 9,  18)],
             [date(2022, 9,  19), date(2022, 10,  9)],
-            [date(2022, 10, 17), date(2022, 11,  6)],
-            [date(2022, 11,  7), date(2022, 11, 27)]
+            [date(2022, 10, 17), date(2022, 11,  21)],
+            [date(2022, 11,  22), date(2022, 11, 27)]
         ]
 
         # pra cada sprint
