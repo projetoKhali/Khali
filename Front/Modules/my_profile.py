@@ -1,7 +1,7 @@
 from Front.Core import *
 
-col_rated = 'brown'
-col_to_rate = 'orange'
+col_rated = co4
+col_to_rate = gr1
 
 # Informações do modulo
 NAME = 'Lista'
@@ -51,7 +51,7 @@ def criar_section_1():
     from Front.Scrollbar import add_scrollbar
 
     # Cria o frame principal da seção
-    frame_section = criar_frame(module_frame, 0, 0, "nwes", co0, co1, 2, 0, 0)
+    frame_section = criar_frame(module_frame, 0, 0, "nwes", co0, co2, 2, 0, 0)
     frame_section.columnconfigure(0, weight = 1)
     frame_section.rowconfigure(2, weight = 1)
 
@@ -61,10 +61,10 @@ def criar_section_1():
 
     # Cria um frame para a label de título dentro do cabeçalho
     frame_header_title = criar_frame(frame_section_header, 0, 0, "we", co3, co3, 0, 0, 0)
-    criar_label(frame_header_title, 'Avaliações', 'Calibri, 20', 0, 0, co3, 'nes').configure(fg='white')
+    criar_label(frame_header_title, 'Avaliações', 'Calibri, 24 bold', 0, 0, co3, 'nes').configure(fg=co0)
 
     # Frame para a timeline / datas importantes da sprint / periodo avaliativo
-    frame_sprint_timeline = criar_frame(frame_section, 1, 0, "ew", co0, co1, 0, 2, 2)
+    frame_sprint_timeline = criar_frame(frame_section, 1, 0, "ew", co0, co0, 0, 2, 2)
 
     from Authentication import CURRENT_USER
     from Models.Sprint import current_rating_period, next_rating_period, sprint_index
@@ -78,7 +78,7 @@ def criar_section_1():
 
         # informa sprint atual + quantidade de dias até o fim do periodo avaliativo
         cur_ratings_end = sprint.rating_period_end() - today()
-        sprint_timeline_str = f'Sprint {sprint_index(CURRENT_USER.group_id, sprint.id)} | periodo avaliativo acaba em {cur_ratings_end.days} dias'
+        sprint_timeline_str = f'Sprint {sprint_index(CURRENT_USER.group_id, sprint.id)} | Período avaliativo acaba em {cur_ratings_end.days} dias'
 
     # Caso contrário, a sprint com o periodo avaliativo mais proximo será considerada
     else: 
@@ -87,14 +87,14 @@ def criar_section_1():
 
             # informa sprint atual + quantidade de dias até o começo do periodo avaliativo
             next_ratings_start = sprint.rating_period_start() - today()
-            sprint_timeline_str = f'Sprint {sprint_index(CURRENT_USER.group_id, sprint.id)} | periodo avaliativo começa em {next_ratings_start.days} dias'
+            sprint_timeline_str = f'Sprint {sprint_index(CURRENT_USER.group_id, sprint.id)} | Período avaliativo começa em {next_ratings_start.days} dias'
 
         # nenhuma informação relacionada a periodo avaliativo encontrada, mensagem genérica
         else:
             sprint_timeline_str = 'Nenhum período avaliativo previsto'
 
     # cria a label com as informações do periodo avaliativo
-    criar_label(frame_sprint_timeline, sprint_timeline_str, 'Calibri, 10', 1, 0, co0, 'ew')
+    criar_label(frame_sprint_timeline, sprint_timeline_str, 'Calibri, 15', 1, 0, co0, 'ew')
 
     from Models.Role import get_role_name
 
@@ -114,14 +114,14 @@ def criar_section_1():
     criar_piechart(frame_section_header, [len(grades[0]), len(grades[1])])
 
     # Cria o Frame parent de ambas as listas
-    frame_listas_parent = criar_frame(frame_section, 2, 0, "nsew", co0 if g[1] == 0 else co1, co1, 0, 0, 0)
+    frame_listas_parent = criar_frame(frame_section, 2, 0, "nsew", co0 if g[1] == 0 else co0, co0, 0, 0, 0)
     frame_listas_parent.columnconfigure(0, weight = 1)
     if g[0] > 0: frame_listas_parent.rowconfigure(0, weight = 250 if g[1] == 0 else 10)
     if g[1] > 0: frame_listas_parent.rowconfigure(1, weight = 250 if g[0] == 0 else 10)
     frame_listas_parent.rowconfigure(2, weight = 1)
 
     # listas para facilitar o acesso a informações dentro do loop 'i'
-    lista_titles = ['Integrantes ainda não Avaliados', 'Integrantes já Avaliados']
+    lista_titles = ['Integrantes ainda não avaliados', 'Integrantes já Avaliados']
     lista_colors = [col_to_rate, col_rated]
 
     # para cada lista
@@ -131,7 +131,7 @@ def criar_section_1():
         # se a lista não possui usuários, ignore-a - não cria os frames da lista
         if len(grade) < 1: continue
 
-        lista_col = [co0, co1][i]
+        lista_col = [co0, co0][i]
 
         # Cria o frame da lista
         frame_lista = criar_frame(frame_listas_parent, i, 0, "news", lista_col, lista_col, 0, 0, 0)
@@ -158,7 +158,7 @@ def criar_section_1():
         for j, user in enumerate(grade):
 
             # Cria um frame para o usuário
-            frame_user = criar_frame(frame_parent_users, j, 0, 'nsew', lista_col, co1, 0, 0, 0)
+            frame_user = criar_frame(frame_parent_users, j, 0, 'nsew', lista_col, co0, 0, 0, 0)
             frame_user.columnconfigure(0, weight=1)
 
             # Cria um frame pro nome e role
@@ -188,7 +188,7 @@ def criar_section_2(sprints):
         mf_children[1].destroy()
 
     # Cria o frame principal da seção
-    frame_section = criar_frame(module_frame, 0, 1, "nwes", co0, co1, 2, 0, 0)
+    frame_section = criar_frame(module_frame, 0, 1, "nwes", gr0, gr0, 2, 0, 0)
     frame_section.columnconfigure(0, weight = 1)
     frame_section.rowconfigure(2, weight = 1)
 
@@ -235,7 +235,7 @@ def criar_section_profile(frame_section, sprints):
     (lambda d=get_team_name(CURRENT_USER.team_id):   criar_label(frame_header_data, f'Time: {d}', 'Calibri, 12', 1, 1, co0, 'e') if d is not None else None)()
 
     # Cria o frame para o grafico pentagono
-    frame_user_pentagon = criar_frame(frame_section, 1, 0, "ew", co1, co1, 0, 2, 2)
+    frame_user_pentagon = criar_frame(frame_section, 1, 0, "ew", co0, co0, 0, 2, 2)
     frame_user_pentagon.columnconfigure(1, weight = 1)
     # frame_user_pentagon.rowconfigure(1, weight = 1)
 
@@ -243,7 +243,7 @@ def criar_section_profile(frame_section, sprints):
     from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
     # Cria o grafico pentagono
-    figure = user_pentagon(CURRENT_USER.id, sprints[sel_sprint], co3, co1, 2.75, 2.25)
+    figure = user_pentagon(CURRENT_USER.id, sprints[sel_sprint], co3, co3, 2.75, 2.25)
 
     canvas = FigureCanvasTkAgg(figure, master=frame_user_pentagon)
     canvas_tkw = canvas.get_tk_widget()
@@ -268,7 +268,7 @@ def criar_section_profile(frame_section, sprints):
 
     # cria um título no frame legenda
     frame_legenda_title = criar_frame(frame_legenda, 0, 0, "ew", co0, co2, 0, 4, 4)
-    criar_label(frame_legenda_title, f'Medias durante a sprint {sel_sprint+1}', 'Calibri, 10 bold', 0, 0, co0, 'we', 'center')
+    criar_label(frame_legenda_title, f'Médias durante a Sprint {sel_sprint+1}', 'Calibri, 10 bold', 0, 0, co0, 'we', 'center')
 
     # cria um frame pra cada critério contendo criteria, criteria_full e média do criterio
     for c_index, c in enumerate(criteria):
@@ -279,7 +279,7 @@ def criar_section_profile(frame_section, sprints):
         criar_label(frame_criterio, f'{u_medias[c_index]:.1f}', 'Calibri, 10 bold', 0, 2, co0, 'e', 'center').configure(fg=co3)
 
     # cria um frame para renderizar o retorno dos feedbacks do usuario
-    frame_section_feedbacks = criar_frame(frame_section, 2, 0, "nsew", co0, co2, 0, 0, 0)
+    frame_section_feedbacks = criar_frame(frame_section, 2, 0, "nsew", co0, co0, 0, 0, 0)
     frame_section_feedbacks.columnconfigure(0, weight=1)
     frame_section_feedbacks.rowconfigure(2, weight=1)
     criar_retorno_feedbacks(frame_section_feedbacks, sprints)
@@ -290,7 +290,7 @@ def criar_retorno_feedbacks(frame_section_feedbacks, sprints):
     from Authentication import CURRENT_USER
 
     # cria um frame parent para o seletor de sprints e retorno de feedbacks
-    frame_feedbacks = criar_frame(frame_section_feedbacks, 2, 0, "nsew", co0, co2, 0, 0, 0)
+    frame_feedbacks = criar_frame(frame_section_feedbacks, 2, 0, "nsew", co0, co0, 0, 0, 0)
     frame_feedbacks.columnconfigure(0, weight=1)
     frame_feedbacks.rowconfigure(2, weight=1)
 
@@ -316,11 +316,11 @@ def criar_retorno_feedbacks(frame_section_feedbacks, sprints):
     feedbacks = get_feedbacks(CURRENT_USER.id, sprints[sel_sprint].id)
 
     # Cria um pseudo título para o retorno de feedbacks 
-    frame_fb_title = criar_frame(frame_feedbacks, 1, 0, "ew", co2, co1, 4, 0, 0)
-    criar_label(frame_fb_title, f'Feedbacks recebidos durante a sprint {sel_sprint + 1}:', 'Calibri, 12 bold', 0, 0, co2, 'w', 'center').configure(fg='white')
+    frame_fb_title = criar_frame(frame_feedbacks, 1, 0, "ew", co0, co0, 4, 0, 0)
+    criar_label(frame_fb_title, f'Feedbacks recebidos durante a Sprint {sel_sprint + 1}:', 'Calibri, 12 bold', 0, 0, co2, 'w', 'center').configure(fg='white')
 
     # Cria um frame parent pros feedbacks
-    frame_feedback_list = criar_frame(frame_feedbacks, 2, 0, "nsew", co1, co1, 2, 2, 2)
+    frame_feedback_list = criar_frame(frame_feedbacks, 2, 0, "nsew", co0, co0, 2, 2, 2)
     frame_feedback_list.columnconfigure(0, minsize=0, weight=1)
     frame_feedback_list.rowconfigure(0, minsize=0, weight=1)
     
@@ -330,11 +330,11 @@ def criar_retorno_feedbacks(frame_section_feedbacks, sprints):
 
     # cria cada feedback
     for index, feedback in enumerate(feedbacks):
-        frame_fb = criar_frame(frame_feedback_list, index, 0, "ns", co0, co2, 2, 4, 4)
+        frame_fb = criar_frame(frame_feedback_list, index, 0, "ns", co0, co0, 2, 4, 4)
         frame_fb.columnconfigure(0, weight=1)
         from Models.id_criteria import criteria_full
         criar_label(frame_fb, f'{criteria_full[feedback[0]]}: ', 'Calibri, 10 bold', 0, 0, co0, 'we', 'left')
-        criar_label(frame_fb, feedback[1], 'Calibri, 10', 1, 0, co1, 'we', 'left').configure(wraplength=400, anchor='n')
+        criar_label(frame_fb, feedback[1], 'Calibri, 10', 1, 0, co0, 'we', 'left').configure(wraplength=400, anchor='n')
 
 
 # TODO: seção com as informações de instrutor
@@ -344,8 +344,8 @@ def criar_section_instructor(frame_section):
 
 # TODO: seção com informações sobre a avaliação 360
 def criar_section_info(frame_section):
-    frame_ratings_info = criar_frame(frame_section, 1, 0, "ew", co1, co1, 0, 2, 2)
-    criar_label(frame_ratings_info, 'informações sobre a avaliação 360', 'Calibri, 12', 0, 0, co1, 'nwes')
+    frame_ratings_info = criar_frame(frame_section, 1, 0, "ew", gr0, gr0, 0, 2, 2)
+    criar_label(frame_ratings_info, 'Informações sobre a Avaliação 360°', 'Calibri, 15 bold', 0, 0, gr0, 'nwes')
 
 
 # função que cria e coloca o grafico pentagono em um canvas dentro do frame parametro
@@ -384,5 +384,3 @@ def avaliar (user):
     trigger('sub_module_open')
 
     avaliacao.run(target_frame, user)
-
-

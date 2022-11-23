@@ -1,5 +1,8 @@
 # from matplotlib.figure import Figure
 from .Integrador import *
+from Front.Core import *
+
+colors = ['#896978', '#260C1A', '#26413C', '#839791', '#F1D1D1', '#D9D9D9', '#26413C', '#03120E','#C5A8B0', '#C5BFBD']
 
 def multi_bar (title, names, y_label, matriz, x_label, x_ticks):
     from matplotlib import pyplot
@@ -7,7 +10,7 @@ def multi_bar (title, names, y_label, matriz, x_label, x_ticks):
     # ind = np.arange(len(x_ticks))  # the x locations for the groups
     fig, ax = pyplot.subplots(figsize = (5,5))
     ax.set_ylim([1, 5])
-    fig.set_facecolor("#fae8e8")
+    fig.set_facecolor(co0)
     bar_width = 1. / (len(matriz) + 1.75)
 
     for i, lst in enumerate(matriz):
@@ -25,7 +28,7 @@ def multi_bar (title, names, y_label, matriz, x_label, x_ticks):
         positions = [j + offset for j in range(len(x_ticks))]
 
         ax.bar_label(
-            ax.bar(positions, lst, width=bar_width, label=names[i]
+            ax.bar(positions, lst, color=colors[i], width=bar_width, label=names[i]
         ), fmt='%.1f', padding=3)
 
     # Add some text for labels, title and custom x-axis tick labels, etc.
