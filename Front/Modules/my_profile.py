@@ -359,7 +359,7 @@ def criar_piechart (module_frame, data):
 # função que cria o grafico pentagono com as informações parametro
 def graphic_pie(data=list):
     import matplotlib.pyplot as plt
-    fig, ax = plt.subplots(figsize = (.65,.65), subplot_kw=dict(aspect="equal"))
+    fig, ax = plt.subplots(figsize = (1, 1), subplot_kw=dict(aspect="equal"))
     ax.set_anchor('E')
     def func (pct, allvals):
         absolute = int(pct/100.*sum(allvals))
