@@ -229,11 +229,13 @@ def teams_media (group_id):
     teams = get_teams_of_group(group_id)
     
     # Inicializa uma lista para as avaliações que serão classificadas / filtradas
-    ratings = [[] for _ in teams]
+    ratings = []
 
     # Adiciona a lista de avaliações filtrada para a lista ratings 
-    for i, team in enumerate(teams):
-        ratings[i] = classify_criteria(criteria, get_ratings_to_team(team.id))
+    for team in enumerate(teams):
+        ratings_to_team = get_ratings_to_team(team.id)
+        if ratings_to_team is not None and len(ratings_to_team) > 0:
+            ratings.append(classify_criteria(criteria, ratings_to_team))
 
     # print(ratings)
 

@@ -76,20 +76,23 @@ def create_register_container(frame_parent, row, title, command):
 
     # inicializa uma IntVar para atualizar os items listados nesse container quando modificada
     var = IntVar()
-    var.trace('w', lambda n, i, m, v=var, lw=frame_list_wrapper: command(v, lw))
+    var.trace_add('write', lambda n, i, m, v=var, lw=frame_list_wrapper: command(v, lw))
     criar_entry(frame_title, "Calibri, 10", 0, 1, 'w', 8, 2).config(textvariable=var)
 
 
 # função que pegar o valor da caixa de entrada do "n° de sprints, ao apertar o button.
 # essa função também "abre um frame" para que as linhas referentes ao cadastro da sprint sejam encaixadas
 def entry_sprint(en_numsprints:IntVar, frame_parent):
+    from Events import register, trigger, unregister_all, has_event
+
+    # requisita dados de sprint que estejam preenchidos nos formulários atuais
+    previous_form_sprints = trigger('get_sprints_internal') if has_event('get_sprints_internal') else register('get_sprints_internal', trigger('get_sprints'))
+    # print(f'previous_form_sprints: {previous_form_sprints}')
 
     # deleta o frame_list caso já exista
     children = frame_parent.winfo_children()
     if children is not None and len(children) > 0 and children[0] is not None:
         children[0].destroy()
-
-    from Events import register, trigger, unregister_all
 
     # Chama o evento reset_sprints que deleta algumas reações de evento cadastradas
     # evita que reações inválidas sejam ativadas
@@ -105,6 +108,8 @@ def entry_sprint(en_numsprints:IntVar, frame_parent):
 
     # caso o valor seja 0, não cria o frame_list
     if valor < 1: return
+
+    unregister_all('get_sprints_internal')
 
     # Notifica o usuário caso o valor de entrada seja muito alto
     if valor > 12:    
@@ -125,6 +130,8 @@ def entry_sprint(en_numsprints:IntVar, frame_parent):
 
     # pra cada sprint
     for i in range(n_sprints):
+        previous_form_sprint = previous_form_sprints[i] if previous_form_sprints is not None and i < len(previous_form_sprints) else None
+        # print(f'previous_form_sprint: {previous_form_sprint}')
 
         # cria o frame da sprint
         frame_sprint = criar_frame(frame_list, i, 0, bg=co0)
@@ -139,11 +146,12 @@ def entry_sprint(en_numsprints:IntVar, frame_parent):
         for j, label_text in enumerate(['Início: ', 'Fim: ']):
             criar_label(frame_sprint, label_text, "Calibri, 10", 0, j*2 + 1)
             calendars.append(create_calendar(frame_sprint, 0, j*2 + 2))
+            if previous_form_sprint is not None: calendars[j].set_date(previous_form_sprint[j])
 
         # cria a Entry de periodo avaliativo
         criar_label(frame_sprint, "Dias para avaliação:", "Calibri, 10", 0, 5)
         entry_rating_period = criar_entry(frame_sprint, "Calibri, 10", 0, 6)
-        entry_rating_period.insert(0, '5')
+        entry_rating_period.insert(0, previous_form_sprint[2] if previous_form_sprint is not None else '5')
         entry_rating_period.config(width=4)
 
         # cadastra o evento que retorna os dados da sprint
@@ -152,14 +160,18 @@ def entry_sprint(en_numsprints:IntVar, frame_parent):
 
 # Cria a seção de cadastro de Times 
 def entry_times(en_numtimes:IntVar, frame_parent):
+    from Events import register, trigger, unregister_all, has_event
+    
+    # requisita dados de time que estejam preenchidos nos formulários atuais
+    previous_form_teams = trigger('get_teams_internal') if has_event('get_teams_internal') else register('get_teams_internal', trigger('get_teams'))
+
+    # print(f'previous_form_teams: {previous_form_teams}')
 
     # deleta o frame_list caso já exista
     children = frame_parent.winfo_children()
     if children is not None and len(children) > 0 and children[0] is not None:
         children[0].destroy()
 
-    from Events import register, trigger, unregister_all
-    
     # Chama o evento reset_teams que deleta algumas reações de evento cadastradas
     # evita que reações inválidas sejam ativadas
     trigger('reset_teams')
@@ -175,6 +187,8 @@ def entry_times(en_numtimes:IntVar, frame_parent):
     # caso o valor seja 0, não cria o frame_list
     if valor < 1: return
 
+    unregister_all('get_teams_internal')
+
     # Notifica o usuário caso o valor de entrada seja muito alto
     if valor > 12:    
         import tkinter.messagebox
@@ -185,26 +199,32 @@ def entry_times(en_numtimes:IntVar, frame_parent):
     frame_list.columnconfigure(0, weight=1)
 
     # define o numero de times utilizando o valor da entry, no máximo 12
-    n_times = min(valor, 12)
+    n_teams = min(valor, 12)
 
     # Cadastra as reações de evento que retornam os valores de cada time
-    register('reset_teams', lambda n=n_times: [unregister_all(f'get_team_{i}') for i in range(n)])
-    register('reset_teams', lambda n=n_times: [unregister_all(f'get_team_members_{i}') for i in range(n)])
-    register('get_teams', lambda n=n_times: [trigger(f'get_team_{i}') for i in range(n)])
+    register('reset_teams', lambda n=n_teams: [unregister_all(f'get_team_{i}') for i in range(n)])
+    register('reset_teams', lambda n=n_teams: [unregister_all(f'get_team_members_{i}') for i in range(n)])
+    register('get_teams', lambda n=n_teams: [trigger(f'get_team_{i}') for i in range(n)])
 
     # pra cada time
-    for i in range(n_times):
+    for i in range(n_teams):
+        previous_form_team = previous_form_teams[i] if previous_form_teams is not None and i < len(previous_form_teams) else None
+        # print(f'previous_form_team: {previous_form_team}')
 
         # cria o frame do time
-        frame_time = criar_frame(frame_list, i, 0, 'ew', co0, co1, 0, 0, 0)
+        frame_time = criar_frame(frame_list, i, 0, 'ew', co0, co1, 2, 0, 4)
         frame_time.columnconfigure(0, weight=1)
 
         # cria um frame para as informações do time (nome, n de membros)
         frame_time_data = criar_frame(frame_time, 0, 0)
 
         # indice, nome, n membros
-        criar_label(frame_time_data, f"Time {i+1}", "Calibri, 10", 0, 0)
-        entry_name = criar_entry(frame_time_data,                          "Calibri, 10", 0, 2)
+        criar_label(frame_time_data, f"Time {i+1}: ", "Calibri, 10 bold", 0, 0).config(width=8)
+        # criar_label(frame_time_data, f"Nome: ", "Calibri, 10", 0, 1)
+        entry_name = criar_entry(frame_time_data, "Calibri, 10", 0, 2)
+        if previous_form_team is not None: entry_name.insert(0, previous_form_team[0])
+        else: bind_entry_placeholder(entry_name, 'nome')
+        
         criar_label(frame_time_data, "Quantidade de membros:", "Calibri, 10", 0, 3)
 
         # cria o frame responsável por armazenar a lista de membros
@@ -213,20 +233,20 @@ def entry_times(en_numtimes:IntVar, frame_parent):
 
         # inicializa uma IntVar que armazena o valor da Entry de numero de membros e atualiza os formularios quando modificada
         var = IntVar(value=3)
-        var.trace('w', lambda n, i, m, v=var, lw=frame_members_wrapper, ti=i: update_member_forms(v, lw, ti))
+        var.trace_add('write', lambda n, i, m, v=var, lw=frame_members_wrapper, ti=i: update_member_forms(v, lw, ti))
 
         # cria a entry de numero de membros
         criar_entry(frame_time_data, "Calibri, 10", 0, 4).config(textvariable=var)
 
         # atualização inicial de formulários de membros
-        update_member_forms(var, frame_members_wrapper, i)
+        update_member_forms(var, frame_members_wrapper, i, previous_form_team[1] if previous_form_team is not None else None)
         
         # cadastra a reação de evento que retorna os dados desse time
         register(f'get_team_{i}', lambda n=entry_name, ti=i: [n.get(), trigger(f'get_team_members_{ti}')])
 
 
 # Atualiza a tela para criar os formularios para cada membro de acordo com o numero de membros especificado em cada time
-def update_member_forms(en_num_members, frame_time, team_index):
+def update_member_forms(en_num_members, frame_time, team_index, previous_form_data = None):
 
     # deleta o frame_list caso já exista
     children = frame_time.winfo_children()
@@ -246,11 +266,11 @@ def update_member_forms(en_num_members, frame_time, team_index):
 
     # para cada membro, cria um formulário de cadastro
     for i in range(min(max(valor, 3), 9)):
-        create_member_form(frame_list, i, team_index)
+        create_member_form(frame_list, i, team_index, previous_form_data[i] if previous_form_data is not None else None)
 
 
 # Cria os campos para o cadastro de UM membro
-def create_member_form (parent, row, team_index):
+def create_member_form (parent, row, team_index, previous_form_data = None):
 
     # Cria o frame do membro
     frame_member = criar_frame(parent, row, 0, 'ew', co1, None, 0, 4, 4)
@@ -258,10 +278,12 @@ def create_member_form (parent, row, team_index):
     # Nome - Label e Entry
     criar_label(frame_member, "Nome:",  "Calibri, 10", 0, 0, co1)
     entry_name = criar_entry(frame_member, "Calibri, 10", 0, 1)
+    if previous_form_data is not None: entry_name.insert(0, previous_form_data[0])
 
     # Email - Label e Entry
     criar_label(frame_member, "E-mail:","Calibri, 10", 0, 2, co1)
     entry_email = criar_entry(frame_member, "Calibri, 10", 0, 3)
+    if previous_form_data is not None: entry_email.insert(0, previous_form_data[1])
 
     from Models.Role import get_role_name, get_role_id
 
@@ -272,7 +294,7 @@ def create_member_form (parent, row, team_index):
     role_names = [get_role_name(i) for i in [3, 4, 5]]
 
     # inicializa a StringVar como LT para o primeiro membro do time, PO para o segundo e Dev para os demais
-    entry_role.set(role_names[min(row, 2)])
+    entry_role.set(role_names[previous_form_data[2] - 3] if previous_form_data is not None else role_names[min(row, 2)])
 
     # Role - Label e Dropdown
     criar_label(frame_member, "Função:","Calibri, 10", 0, 4, co1)
@@ -281,6 +303,7 @@ def create_member_form (parent, row, team_index):
     # Registra o retorno dos valores de entrada desse formulário de membro caso o time de indice team_index seja solicitado
     from Events import register
     register(f'get_team_members_{team_index}', lambda n=entry_name, e=entry_email, r=entry_role: [n.get(), e.get(), get_role_id(r.get())])
+
 
 
 # Retorna o valor na entry especificada considerando erros
