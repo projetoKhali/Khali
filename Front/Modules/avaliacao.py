@@ -155,6 +155,8 @@ def slider_change_position(frame_feedback, new_value, criterio):
     ff_children = frame_feedback.winfo_children()
     if ff_children and len(ff_children) > 0 and ff_children[0] is not None:
         ff_children[0].destroy()
+        # TODO: fix frame_feedback size after destroy
+        # TODO: remember text with Events to re write it if slider goes back to <= 3 (See 'get_teams_internal' on cadastro_lider.py)
 
     from Events import register, unregister_all
     unregister_all(f'get_feedback_criterio_{criterio}')
