@@ -31,7 +31,7 @@ def run (frame_parent):
     frame_body.rowconfigure(0, weight=1)
     frame_body = add_scrollbar(frame_body, bd=0)
     frame_body.columnconfigure(0, weight=1)
-    frame_body.rowconfigure(1, weight=1)
+    frame_body.rowconfigure(2, weight=1)
 
     frame_summary = criar_frame(frame_body, 0, 0, 'ew', co0, co0, 0, 0, 0)
     frame_summary.columnconfigure(0, weight=1)
@@ -48,105 +48,104 @@ def run (frame_parent):
     frame_group_form.columnconfigure(0, weight=1)
 
     frame_group_form_header = criar_frame(frame_group_form, 0, 0, 'ew', co0, co0, 0, 0, 0)
+    frame_group_form_header.columnconfigure(0, weight=1)
 
-    frame_group_form_title = criar_frame(frame_group_form_header, 1, 0, 'ew', co0, co0, 0, 0, 0)
-    criar_label(frame_group_form_title, 'Nome do Grupo: ', 'Calibri, 12', 0, 0, sticky='w').config(width=20)
-    criar_entry(frame_group_form_title, 'Calibri, 12', 0, 1, 'ew')
+    frame_group_form_title = criar_frame(frame_group_form_header, 0, 0, 'ew', co0, co0, 0, 0, 0)
+    frame_group_form_title.columnconfigure(2, weight=1)
+    criar_label(frame_group_form_title, 'Nome do Grupo: ', 'Calibri, 12', 0, 0, sticky='w').config(width=22)
+
+    from Events import trigger, register, unregister_all
+
+    unregister_all('get_group_name')
+    register('get_group_name', lambda e=criar_entry(frame_group_form_title, 'Calibri, 12', 0, 1, 'ew'): e.get())
+
+    frame_group_form_btn = criar_frame(frame_group_form_title, 0, 2, 'e', 'red', None, 0, 4, 0)
+    criar_button(frame_group_form_btn, 'Cadastrar', 'Calibri, 12 bold', 0, 0, cadastrar, 'e')
 
     frame_users_form = criar_frame(frame_group_form, 1, 0, 'ew', co1, co1, 0, 2, 2)
+    for role_index, role in enumerate(['Líder do Grupo', 'Fake Client']):
 
-    for i, role in enumerate(['Líder do Grupo', 'Fake Client']):
-        criar_label(frame_users_form, f'Nome do {role}: ', 'Calibri, 12', i, 0, co1, sticky='w').config(width=22)
-        entry_name = criar_entry(frame_users_form, 'Calibri, 12', i, 1)
-        criar_label(frame_users_form, f'Email do {role}: ', 'Calibri, 12', i, 2, co1, sticky='w').config(width=26)
-        entry_email = criar_entry(frame_users_form, 'Calibri, 12', i, 3)
+        criar_label(frame_users_form, f'Nome do {role}: ', 'Calibri, 12', role_index, 0, co1, sticky='w').config(width=22)
+        unregister_all(f'get_{["LdG", "FC"][role_index]}_name')
+        register(f'get_{["LdG", "FC"][role_index]}_name', lambda e=criar_entry(frame_users_form, 'Calibri, 12', role_index, 1): e.get())
 
-    return module_frame
+        criar_label(frame_users_form, f'Email do {role}: ', 'Calibri, 12', role_index, 2, co1, sticky='w').config(width=26)
+        unregister_all(f'get_{["LdG", "FC"][role_index]}_email')
+        register(f'get_{["LdG", "FC"][role_index]}_email', lambda e=criar_entry(frame_users_form, 'Calibri, 12', role_index, 3): e.get())
 
-    # Frame do cadastro de grupos
-    frm_grupo=Frame(master=module_frame, relief=GROOVE, bd=3, bg=co0)
-    frm_grupo.rowconfigure([0, 1], weight=1, minsize=30) 
-    frm_grupo.columnconfigure([0, 1, 2, 3, 4], weight=1, minsize=100)
-    frm_grupo.place(relx=0.02, rely=0.22, relwidth=0.96, relheight=0.2)
+    frame_table = criar_frame(frame_body, 2, 0, 'news', co3, co3, 1, 8, 8)
+    frame_table.columnconfigure(0, weight=1)
+    frame_table.rowconfigure(1, weight=1)
 
-    #   Frame da tabela de valores cadastrados
-    frm_tabela=Frame(master=module_frame, relief=GROOVE, bd=1, bg=co0)
-    frm_tabela.rowconfigure(0, weight=1, minsize=100) 
-    frm_tabela.columnconfigure(0, weight=1, minsize=100)
-    frm_tabela.place(relx=0.02, rely=0.45, relwidth=0.96, relheight=0.5)
+    frame_table_header = criar_frame(frame_table, 0, 0, 'ew', co3, None, 0, 0, 0)
+    criar_label(frame_table_header, 'Grupos', 'Calibri, 12', 0, 0, co3, 'w').config(fg=co1)
 
-    # Widgets de entrada
-    ent_lider=Entry(master=frm_grupo, width=30, fg=co2, font='Calibri 13')  # Nome Líder
-    ent_lider.grid(row=0, column=1, padx=5)
+    frame_table_list = criar_frame(frame_table, 2, 0, 'news', co1, co1, 0, 0, 0)
+    frame_table_list.columnconfigure(0, weight=1)
+    frame_table_list.rowconfigure(0, weight=1)
 
-    ent_lemail=Entry(master=frm_grupo, width=30, fg=co2, font='Calibri 13')  # E-mail Líder
-    ent_lemail.grid(row=0, column=3, padx=5)
-
-    ent_client=Entry(master=frm_grupo, width=30, fg=co2, font='Calibri 13')  # Nome Client
-    ent_client.grid(row=1, column=1, padx=5)
-
-    ent_cemail=Entry(master=frm_grupo, width=30, fg=co2, font='Calibri 13')  # E-mail Client
-    ent_cemail.grid(row=1, column=3, padx=5)
-
-    widgetlabel('lbl_lider', 0, 0, 'Nome do Líder do Grupo:')  # Widget de texto nome Líder do Grupo
-    widgetlabel('lbl_lemail', 0, 2, 'E-mail do Líder do Grupo:')  # Widget de texto e-mail Líder do Grupo
-    widgetlabel('lbl_client', 1, 0, 'Nome do Fake Client:') # Widget de texto nome Fake Client
-    widgetlabel('lbl_cemail', 1, 2, 'E-mail do Fake Client:')  # Widget de texto e-mail Fake Client
-
-    criarbotao('button_grupo', 'Cadastrar', criar_grupo, 0)
-    criarbotao('button_home', 'Home', 0, 1)
-
-    # Tabela gerada com dados cadastrados pelo Administrador
-    tree=ttk.Treeview(master=frm_tabela, selectmode='browse',
-        column=('codigogrupo', 'nomelider', 'emaillider', 'nomeclient', 'emailclient'),
-        show="headings")
-
-    scroll_tree = ttk.Scrollbar(frm_tabela, orient='vertical', command=tree.yview) # Comando xview para orientação HORIZONTAL
-    scroll_tree.pack(side='right', fill='y')
-    tree.configure(yscrollcommand=scroll_tree.set) # xscrollcomand para barra horizontal
-    tree.bind('<Configure>', lambda e: tree.configure(scrollregion=tree.bbox('all'))) # Seleciona qual parte do canvas o scrollbar deve identificar
-    
-    criartabela('codigogrupo', '#1', 'Código do grupo')
-    criartabela('nomelider', '#2', 'Nome do Líder do Grupo')
-    criartabela('emaillider', '#3', 'E-mail do Líder do Grupo')
-    criartabela('nomeclient', '#4', 'Nome do Fake Client')
-    criartabela('emailclient', '#5', 'E-mail do Fake Client')
+    register('update_table', lambda ftl=frame_table_list: update_table(ftl))
+    trigger('update_table')
 
     return module_frame
+
+
+# atualiza a tabela
+def update_table(frame_table):
+
+    ft_children = frame_table.winfo_children()
+    if ft_children is not None and len(ft_children) > 0 and ft_children[0] is not None:
+        ft_children[0].destroy()
+
+    from Models.Group import get_groups
+    groups = get_groups()
+
+    frame_groups_parent = criar_frame(frame_table, 0, 0, 'news', co1, None, 0, 2, 2)
+    for group_index, group in enumerate(groups):
+
+        frame_group = criar_frame(frame_groups_parent, group_index, 0, 'ew', co1, co2, 1, 2, 2)
+        frame_group.columnconfigure([i for i in range(3)], weight=1)
+        criar_label(frame_group, group.name, 'Calibri, 10', 0, 0, co1, 'w').config(width=40)
+
+        from Models.Team import get_teams_of_group
+        from Models.User import get_users_of_group
+
+        criar_label(frame_group, f'Nº de Times: {len(get_teams_of_group(group.id))}', 'Calibri, 10', 0, 1, co1, 'w', width=20)
+        criar_label(frame_group, f'Nº de Membros: {len(get_users_of_group(group.id))}', 'Calibri, 10', 0, 2, co1, 'w', width=20)
+
+        criar_button(frame_group, 'Excluir', 'Calibri, 10', 0, 3, lambda group_id=group.id: excluir(group_id))
 
 
 # Criação da função que recolhe informações cadastradas e gera código do grupo
-def criar_grupo():
+def cadastrar():
+    from tkinter import messagebox
+    from Events import trigger
 
-    # acessa as informações do lider
-    nome_lider = ent_lider.get()
-    email_lider = ent_lemail.get()
+    group_name = trigger('get_group_name')
+    instructor_data = [[trigger(f'get_{["LdG", "FC"][i]}_name'), trigger(f'get_{["LdG", "FC"][i]}_email')] for i in range(2)]
 
-    # acessa as informações do cliente
-    nome_client = ent_client.get()
-    email_client = ent_cemail.get()
+    for role in instructor_data:
+        for field in role:
+            if len(field) == 0:
+                messagebox.showinfo("Khali Group",  "Valores nulos. Por favor, preencher corretamente")
+                return
 
-    # criando uma condição que lê o input do usuário impedindo o programa de criar um registro vazio
-    if len(nome_lider) == 0 or len(email_lider) == 0 or len(nome_client) == 0 or len(email_client) == 0:
-        import tkinter
-        tkinter.messagebox.showinfo("Khali Group",  "Valores nulos. Por favor, preencher corretamente")
-        return
-        
-    # para a aplicação sempre que o email do lider e do cliente forem iguais
-    if email_lider == email_client:
-        tkinter.messagebox.showinfo("Khali Group", "Emails são iguais!! Por favor, insira emails diferentes")
+    if instructor_data[0][1] == instructor_data[1][1]:
+        messagebox.showinfo("Khali Group", "Emails são iguais!! Por favor, insira emails diferentes")
         return
     
     from Models.Group import create_group
 
-
-    group_id = create_group(
+    create_group(
         group_name,
-        register(nome_lider, email_lider, None, None, 1),
-        register(nome_client, email_client, None, None, 2)
+        register(instructor_data[0][0], instructor_data[0][1], None, None, 1),
+        register(instructor_data[1][0], instructor_data[1][1], None, None, 2)
     )
 
-    tree.insert('', 'end', values=[codigo_str, nome_lider, email_lider, nome_client, email_client])
-    tree.place(relx=0.02, rely=0.02, relwidth=0.96, relheight=0.96)
+    trigger('update_table')
 
+
+# exclui um grupo
+def excluir(group_index):
+    return
 

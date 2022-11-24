@@ -10,7 +10,7 @@ LOG = False
 # Deleta o arquivo .csv caso exista e inicializa um novo com os campos apropriados
 def initialize_csv (path:str):
     delete_csv(path)
-    fields = get_path_fields(path)
+    fields = PATH_FIELDS[path]
     save_file_csv(path, fields, [])
 
 # Executa initialize_csv caso o arquivo .csv no caminho especificado não exista
@@ -20,8 +20,8 @@ def check_path(path, debug = None):
             log(f"CSVHandler -- check_path (from {debug}): path doesn't exist")
         initialize_csv(path)
 
-# Retorna o conteudo da linha onde estiver localizada a informação fornecida
-def find_data_csv (path:str, key:str):
+# Retorna a primeira linha encontrada que contenha o valor fornecido
+def find_data_csv (path:str, value:str):
     # check_path(path, 'find_data_csv')
 
     # Tenta executar o próximo código
@@ -42,7 +42,7 @@ def find_data_csv (path:str, key:str):
     for line in lines:
 
         # Se a linha atual contem a chave fornecida
-        if key in line:
+        if value in line:
 
             # Retorna a linha formatada para dicionario
             return format_line_csv(lines[0].strip('\n').split(','), line)
@@ -50,8 +50,9 @@ def find_data_csv (path:str, key:str):
     # Loop finalizado sem encontrar nenhum resultado
     return None
 
-# Retorna o conteudo da linha onde estiver localizada a informação fornecida
-def find_data_by_id_csv (path:str, key:str):
+
+# Retorna a linha em que o id seja igual ao id especificado
+def find_data_by_id_csv (path:str, id:str):
     # check_path(path, 'find_data_by_id_csv')
 
     # Tenta executar o próximo código
@@ -79,7 +80,7 @@ def find_data_by_id_csv (path:str, key:str):
             continue
 
         # Se a linha atual contem a chave fornecida
-        if line_key == str(key):
+        if line_key == str(id):
 
             # Retorna a linha formatada para dicionario
             return format_line_csv(lines[0].strip('\n').split(','), line)
@@ -87,6 +88,8 @@ def find_data_by_id_csv (path:str, key:str):
     # Loop finalizado sem encontrar nenhum resultado
     return None
 
+
+# Retorna uma lista contendo todas as linhas em que o campo 'field' possua o valor 'value'
 def find_data_list_by_field_value_csv(path:str, field:str, value:str):
     # check_path(path, 'find_data_list_by_field_value_csv')
 
@@ -125,8 +128,8 @@ def find_data_list_by_field_value_csv(path:str, field:str, value:str):
     # Loop finalizado sem encontrar nenhum resultado
     return lista
 
-# Retorna uma lista contendo todos os valores em que o campo 'field' contenha qualquer um dos valores
-# especificados na lista 'values'
+
+# Retorna uma lista contendo todas as linhas em que o campo 'field' possua qualquer um dos valores 'values'
 def find_data_list_by_field_values_csv(path:str, field:str, values):
 
     # Tenta executar o próximo código
@@ -166,7 +169,7 @@ def find_data_list_by_field_values_csv(path:str, field:str, values):
     return lista
 
 
-# Retorna uma lista contendo todos os valores em que os campos especificados no dicionario possuem o valor associado
+# Retorna uma lista contendo todas as linhas em que o cada campo possua o valor especificado por chave no dicionario 'kvps' 
 def find_data_list_by_fields_value_csv(path:str, kvps:dict):
     
     # Tenta executar o próximo código
@@ -229,10 +232,24 @@ def format_line_csv (fields, line:str):
     # Retorna o dicionario gerado pelo loop
     return data
 
-def get_path_fields (path:str):
-    return PATH_FIELDS[path]
 
-    # return ("id","data")
+# Retorna todas as linhas do arquivo especificado
+def load_all_csv (path:str):
+    # Tenta executar o próximo código
+    try:
+    
+        # Abre o arquivo
+        with open(path + '.csv', 'r') as file:
+
+            # Lê as linhas do arquivo e salva na variavel 'lines'
+            lines = file.readlines()
+            return [format_line_csv(lines[0].strip('\n').split(','), line) for line in lines[1:]]
+
+    # Em caso de falha
+    except:log(COLS[2] + "CSVHandler.find_data_list_by_field_value_csv: Erro ao ler arquivo" + COLS[0])
+
+    return None
+
 
 # Salva um banco de dados CSV
 # Parametros:
@@ -259,6 +276,7 @@ def save_file_csv (path:str, fields:list, rows:list):
 
         log(COLS[3] + "CSVHandler.save_file_csv -- Arquivo .csv salvo com sucesso!" + COLS[0])
 
+
 # Escreve a linha espeificada no arquivo .csv especificado
 def add_line_csv (path:str, row:str):
     # check_path(path, 'add_line_csv')
@@ -276,6 +294,7 @@ def add_line_csv (path:str, row:str):
         writer.writerow(row)
 
         log(COLS[3] + "CSVHandler.add_line: Arquivo .csv acrescentado com sucesso!" + COLS[0])
+
 
 # Escreve uma linha de informação "Unica" com o chave 'id' e valor especificado 'row'
 def add_unique_csv (path:str, id:int, row):
@@ -300,6 +319,7 @@ def add_unique_csv (path:str, id:int, row):
         writer.writerow(row)
 
         log(COLS[3] + "CSVHandler.add_unique_csv: Arquivo .csv acrescentado com sucesso!" + COLS[0])
+
 
 # Escreve uma linha de informação "Unica" o valor especificado 'row'
 # A chave 'id' será definida como o proximo valor disponivel
@@ -357,6 +377,7 @@ def add_unique_csv_autoid (path:str, row):
     # Retorna o id escolhido como resultado dessa função
     return id
 
+
 # Carrega o arquivo especificado e retorna o conteudo da linha de numero 'line' 
 def read_line_csv (path:str, line:int):
 
@@ -371,6 +392,7 @@ def read_line_csv (path:str, line:int):
     # Em caso de erro (mais provavel: numero da linha maior ou igual o numero total de linhas do arquivo / OutOfBouds)
     except:
         log(COLS[2] + f"Erro ao ler a linha {line} no arquivo de caminho {path}" + COLS[0])
+
 
 # Retorna o numero de linhas do arquivo especificado
 def line_count_csv (path:str):
@@ -390,12 +412,15 @@ def line_count_csv (path:str):
 
     return 0
 
+
+# Deleta um arquivo .csv do caminho especificado
 def delete_csv (path:str):
     import os
     if os.path.isfile(path + '.csv'):
         os.remove(path + '.csv')
 
 
+# cutom console
 def log (message):
     if not LOG: return
     print(message)
