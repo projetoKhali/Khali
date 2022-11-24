@@ -2,11 +2,7 @@ from Utils import lista_usuarios_back
 from tkinter import *
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-
-# cores
-co0 = "#fae8e8"  # rosa
-co1 = "#d9d9d9"
-co2 = "#1a1d1a"  # preta
+from Front.Core import *
 
 # Informações do modulo
 NAME = 'Lista'
@@ -88,7 +84,7 @@ def run(frame_parent):
 
     # frame com todas a lista de usuários, que ocupará apenas o canto superior direito da tela
     # para deixar essa tela menor, coloco nw apenas
-    frame_usuarios = criar_frame(module_frame, 1, 0, "nes", co0, co1, 3)
+    frame_usuarios = criar_frame(module_frame, 1, 0, "nes", co0, co0, 3)
     frame_usuarios.columnconfigure(0, minsize = 0, weight = 1)
     frame_usuarios.rowconfigure(0, minsize = 0, weight = 1)
     # frame_usuarios = add_scrollbar(frame_usuarios)
@@ -120,7 +116,7 @@ def run(frame_parent):
             indice = indice + 1
 
     if len(grade_submitted)!=0:
-        criar_label(frame_avaliados, 'Integrantes já Avaliados', 'Calibri, 14', co0, indice, 0, "w")
+        criar_label(frame_avaliados, 'Integrantes já avaliados', 'Calibri, 14', co0, indice, 0, "w")
 
         indice = indice + 1
 

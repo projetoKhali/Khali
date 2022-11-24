@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import END
 from Authentication import register
+from Front.Core import *
 
 # Informações do modulo
 NAME = 'Cadastrar'
@@ -22,7 +23,7 @@ def run (frame_parent):
     window=Frame(frame_parent)  # Criar uma janela e instanciar a classe
     # window.configure(background="green")
     window.grid(row=0, column=0, sticky="nsew")
-    window.configure(bg='#fae8e8')  # Cor do plano de fundo da tela
+    window.configure(bg=co0)  # Cor do plano de fundo da tela
 
     # Criação da função que recolhe informações cadastradas e gera código do grupo
     def criar_grupo():
@@ -38,12 +39,12 @@ def run (frame_parent):
         # criando uma condição que lê o input do usuário impedindo o programa de criar um registro vazio
         if len(nome_lider) == 0  or len(email_lider) == 0  or len(nome_client) == 0  or len(email_client) == 0:
             import tkinter
-            tkinter.messagebox.showinfo("Khali Group",  "Valores nulos. Por favor preencher corretamente")
+            tkinter.messagebox.showinfo("Khali Group",  "Valores nulos. Por favor, preencher corretamente")
             return
             
         # para a aplicação sempre que o email do lider e do cliente forem iguais
         if email_lider == email_client:
-            tkinter.messagebox.showinfo("Khali Group", "Emails são iguais!!! Por favor, insira emails diferentes")
+            tkinter.messagebox.showinfo("Khali Group", "Emails são iguais!! Por favor, insira emails diferentes")
             return
         
         from Models.Group import create_group
@@ -64,16 +65,16 @@ def run (frame_parent):
         tree.insert('', END, values=[codigo_str, nome_lider, email_lider, nome_client, email_client])
         tree.place(relx=0.02, rely=0.02, relwidth=0.96, relheight=0.96)
 
-    # window.configure(bg='#fae8e8')  # Cor do plano de fundo da tela
+    # window.configure(bg=co0)  # Cor do plano de fundo da tela
     # window.geometry("1200x600")
     # window.title('Sistema de Cadastro - Administrador')  # Título da janela
 
-    def textojanela(tipo, texto, tamanho, x, y, largura, altura):
+    def textojanela(tipo, texto, tamanho, x, y, largura, altura, fg=co2, bg=co0):
         tipo=Label(master=window,
-        text=texto, fg='#1a1d1a', bg='#fae8e8', font=('Calibre', tamanho))
+        text=texto, fg=fg, bg=bg, font=('Calibre bold', tamanho))
         tipo.place(relx=x, rely=y, relwidth=largura, relheight=altura)
 
-    textojanela('lbl_titulo', 'Cadastro de Grupos', 30, 0.02, 0.01, 0.96, 0.09)
+    textojanela('lbl_titulo', 'Cadastro de Grupos', 24, 0.02, 0.01, 0.96, 0.09, co0, co3)
     textojanela('lbl_desc', 
         'Após inserir os dados do Líder do Grupo e Fake Client, clique no botão "Cadastrar" para salvar as informações e criar outro grupo.', 
         13, 0.02, 0.1, 0.96, 0.06)  
@@ -82,34 +83,34 @@ def run (frame_parent):
         13, 0.02, 0.17, 0.96, 0.04)
 
     # Frame do cadastro de grupos
-    frm_grupo=Frame(master=window, relief=GROOVE, bd=3, bg='#fae8e8')
+    frm_grupo=Frame(master=window, relief=GROOVE, bd=3, bg=co0)
     frm_grupo.rowconfigure([0, 1], weight=1, minsize=30) 
     frm_grupo.columnconfigure([0, 1, 2, 3, 4], weight=1, minsize=100)
     frm_grupo.place(relx=0.02, rely=0.22, relwidth=0.96, relheight=0.2)
 
     #   Frame da tabela de valores cadastrados
-    frm_tabela=Frame(master=window, relief=GROOVE, bd=1, bg='#fae8e8')
+    frm_tabela=Frame(master=window, relief=GROOVE, bd=1, bg=co0)
     frm_tabela.rowconfigure(0, weight=1, minsize=100) 
     frm_tabela.columnconfigure(0, weight=1, minsize=100)
     frm_tabela.place(relx=0.02, rely=0.45, relwidth=0.96, relheight=0.5)
 
     # Widgets de entrada
-    ent_lider=Entry(master=frm_grupo, width=30, fg='#1a1d1a', font=('Calibre 13'))  # Nome Líder
+    ent_lider=Entry(master=frm_grupo, width=30, fg=co2, font=('Calibre 13'))  # Nome Líder
     ent_lider.grid(row=0, column=1, padx=5)
 
-    ent_lemail=Entry(master=frm_grupo, width=30, fg='#1a1d1a', font=('Calibre 13'))  # E-mail Líder
+    ent_lemail=Entry(master=frm_grupo, width=30, fg=co2, font=('Calibre 13'))  # E-mail Líder
     ent_lemail.grid(row=0, column=3, padx=5)
 
-    ent_client=Entry(master=frm_grupo, width=30, fg='#1a1d1a', font=('Calibre 13'))  # Nome Client
+    ent_client=Entry(master=frm_grupo, width=30, fg=co2, font=('Calibre 13'))  # Nome Client
     ent_client.grid(row=1, column=1, padx=5)
 
-    ent_cemail=Entry(master=frm_grupo, width=30, fg='#1a1d1a', font=('Calibre 13'))  # E-mail Client
+    ent_cemail=Entry(master=frm_grupo, width=30, fg=co2, font=('Calibre 13'))  # E-mail Client
     ent_cemail.grid(row=1, column=3, padx=5)
 
     # Função para widget de texto
     def widgetlabel(usuario, linha, coluna, texto):
         usuario=Label(master=frm_grupo, text=texto,
-            fg='#1a1d1a', bg='#fae8e8', font=('Calibre', 13))
+            fg=co2, bg=co0, font=('Calibre', 13))
         usuario.grid(row=linha, column=coluna, sticky='e')
 
     widgetlabel('lbl_lider', 0, 0, 'Nome do Líder do Grupo:')  # Widget de texto nome Líder do Grupo
@@ -119,7 +120,7 @@ def run (frame_parent):
 
     def criarbotao(nome, texto, comando, linha):
         nome=Button(master=frm_grupo, text=texto, 
-        fg='#1a1d1a', bg='#d9d9d9', font=('Calibre', 13),
+        fg=co2, bg='#d9d9d9', font=('Calibre', 13),
         width=10, height=1, activebackground='#c5a8b0',
         command=comando)
         nome.grid(row=linha, column=4, padx=20)

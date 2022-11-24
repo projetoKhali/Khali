@@ -12,17 +12,17 @@ REQUIRED_PERMISSIONS_VIEW = [None]
 def run (frame_parent):
 
     # Cria o frame principal do modulo
-    module_frame=criar_frame(frame_parent, 0, 0, 'news', '#fae8e8', None, 0, 0, 0)
+    module_frame=criar_frame(frame_parent, 0, 0, 'news', co0, None, 0, 0, 0)
     module_frame.columnconfigure(0, weight=1) 
     module_frame.rowconfigure(1, weight=1) 
 
     # Cria um frame de cabeçalho
-    frame_header = criar_frame(module_frame, 0, 0, 'new', co0)
+    frame_header = criar_frame(module_frame, 0, 0, 'new', co3)
     frame_header.columnconfigure(0, weight=4)
     frame_header.columnconfigure(1, weight=1) 
 
     # insere o titulo da tela no cabeçalho
-    titulo=Label(frame_header, text='Cadastro de Sprints e Times', bg='#fae8e8', font='Calibre, 24')
+    titulo=Label(frame_header, text='Cadastro de Sprints e Times', bg=co3, font='Calibre, 24 bold', fg=co0)
     titulo.grid(row=0, column=0, padx=4, pady=10, sticky='w')
 
     # cria o frame body que contém o conteúdo da tela
@@ -60,15 +60,15 @@ def create_register_container(frame_parent, row, title, command):
     frame_container.columnconfigure(0, weight=1)
 
     # cria um frame cabeçalho do container
-    frame_header = criar_frame(frame_container, 0, 0, 'new', co3)
+    frame_header = criar_frame(frame_container, 0, 0, 'new', co0)
     frame_header.columnconfigure(0, weight=1)
 
     # cria um frame para conter o título
-    frame_title = criar_frame(frame_header, 0, 0, 'w', co3)
+    frame_title = criar_frame(frame_header, 0, 0, 'w', co0)
     frame_title.columnconfigure(0, weight=1)
 
     # título, input
-    criar_label(frame_title, f"Número de {title}:", "Calibri 12 bold", 0, 0, None, 'w').configure(width=20)
+    criar_label(frame_title, f"Número de {title}:", "Calibri 12 bold", 0, 0, co0, 'w').configure(width=20)
 
     # cria o frame que contém os items da lista desse container
     frame_list_wrapper = criar_frame(frame_container, 1, 0, 'news', co0, co0, 0, 4, 4)
@@ -212,29 +212,29 @@ def entry_times(en_numtimes:IntVar, frame_parent):
         # print(f'previous_form_team: {previous_form_team}')
 
         # cria o frame do time
-        frame_time = criar_frame(frame_list, i, 0, 'ew', co0, co1, 2, 0, 4)
+        frame_time = criar_frame(frame_list, i, 0, 'ew', co4, co4, 2, 0, 4)
         frame_time.columnconfigure(0, weight=1)
 
         # cria um frame para as informações do time (nome, n de membros)
-        frame_time_header = criar_frame(frame_time, 0, 0)
+        frame_time_header = criar_frame(frame_time, 0, 0, bg=co4)
         frame_time_header.columnconfigure(1, weight=1)
 
         frame_time_data = criar_frame(frame_time_header, 0, 0, px=0, py=0)
         frame_time_data.rowconfigure(0, weight=1)
 
         # indice, nome, n membros
-        criar_label(frame_time_data, f"Time {i+1}: ", "Calibri, 10 bold", 0, 0, sticky='news').config(width=8)
+        criar_label(frame_time_data, f"Time {i+1}: ", "Calibri, 10 bold", 0, 0, co4, sticky='news').config(width=8)
         # criar_label(frame_time_data, f"Nome: ", "Calibri, 10", 0, 1)
         entry_name = criar_entry(frame_time_data, "Calibri, 10", 0, 2)
         if previous_form_team is not None and previous_form_team[0] != '\n\n\nnome': entry_name.insert(0, previous_form_team[0])
         else: bind_entry_placeholder(entry_name, '\n\n\nnome')
 
-        criar_label(frame_time_data, "Quantidade de membros:", "Calibri, 10", 0, 3, sticky='news')
+        criar_label(frame_time_data, "Quantidade de membros:", "Calibri, 10", 0, 3, co4, sticky='news')
         frame_clear_btn = criar_frame(frame_time_header, 0, 1, 'e', px=2, py=0)
         frame_clear_btn.columnconfigure(0, weight=1)
 
         # cria o frame responsável por armazenar a lista de membros
-        frame_members_wrapper = criar_frame(frame_time, 1, 0, 'ew', co0, co0, 0, 2, 2)
+        frame_members_wrapper = criar_frame(frame_time, 1, 0, 'ew', co4, co4, 0, 2, 2)
         frame_members_wrapper.columnconfigure(0, weight=1)
 
         # inicializa uma IntVar que armazena o valor da Entry de numero de membros e atualiza os formularios quando modificada
@@ -242,7 +242,7 @@ def entry_times(en_numtimes:IntVar, frame_parent):
         var.trace_add('write', lambda n, _, m, v=var, lw=frame_members_wrapper, ti=i: update_member_forms(v, lw, ti))
 
         # cria a entry de numero de membros
-        criar_entry(frame_time_data, "Calibri, 10", 0, 4).config(textvariable=var)
+        criar_entry(frame_time_data, "Calibri, 10 bold", 0, 4).config(textvariable=var)
 
         # atualização inicial de formulários de membros
         update_member_forms(var, frame_members_wrapper, i, previous_form_team[1] if previous_form_team is not None else None)
@@ -282,7 +282,7 @@ def update_member_forms(en_num_members, frame_time, team_index, previous_form_da
     if valor < 1: return
 
     # Cria o frame responsável por conter todos os formulários de membro desse time
-    frame_list = criar_frame(frame_time, 0, 0, 'new', co1, co1, 0, 0, 0)
+    frame_list = criar_frame(frame_time, 0, 0, 'new', gr0, co4, 0, 0, 0)
     frame_list.columnconfigure(0, weight=1)
 
     # para cada membro, cria um formulário de cadastro
@@ -294,15 +294,15 @@ def update_member_forms(en_num_members, frame_time, team_index, previous_form_da
 def create_member_form (parent, row, team_index, previous_form_data = None):
 
     # Cria o frame do membro
-    frame_member = criar_frame(parent, row, 0, 'ew', co1, None, 0, 4, 4)
+    frame_member = criar_frame(parent, row, 0, 'ew', gr0, None, 0, 4, 4)
 
     # Nome - Label e Entry
-    criar_label(frame_member, "Nome:",  "Calibri, 10", 0, 0, co1)
+    criar_label(frame_member, "Nome:",  "Calibri, 10", 0, 0, gr0)
     entry_name = criar_entry(frame_member, "Calibri, 10", 0, 1)
     if previous_form_data is not None: entry_name.insert(0, previous_form_data[0])
 
     # Email - Label e Entry
-    criar_label(frame_member, "E-mail:","Calibri, 10", 0, 2, co1)
+    criar_label(frame_member, "E-mail:","Calibri, 10", 0, 2, gr0)
     entry_email = criar_entry(frame_member, "Calibri, 10", 0, 3)
     if previous_form_data is not None: entry_email.insert(0, previous_form_data[1])
 
@@ -319,7 +319,7 @@ def create_member_form (parent, row, team_index, previous_form_data = None):
     entry_role_init_val = entry_role.get()
 
     # Role - Label e Dropdown
-    criar_label(frame_member, "Função:","Calibri, 10", 0, 4, co1)
+    criar_label(frame_member, "Função:","Calibri, 10", 0, 4, gr0)
     OptionMenu(frame_member, entry_role, *role_names).grid(row=0, column=5)
 
     # Registra o retorno dos valores de entrada desse formulário de membro caso o time de indice team_index seja solicitado

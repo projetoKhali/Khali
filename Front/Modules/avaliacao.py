@@ -33,7 +33,7 @@ def run(frame_parent, target_user):
     frame_visual_feedback.columnconfigure(0, weight=1)
 
     # Textos gerais da tela
-    criar_label(frame_title, 'Autoavaliação' if target_user.id == CURRENT_USER.id else 'Avaliação', 'Calibri, 30', 0, 0, co3, 'w').config(fg=co0)
+    criar_label(frame_title, 'Autoavaliação' if target_user.id == CURRENT_USER.id else 'Avaliação', 'Calibri, 24 bold', 0, 0, co3, 'w').config(fg=co0)
 
     #ratings_send_success
     from Events import trigger, register, unregister_all
@@ -51,7 +51,7 @@ def run(frame_parent, target_user):
         frame_button_wrapper.grid(row= 0, column=0, sticky='ew')
         frame_button_wrapper.columnconfigure(0, weight=1)
 
-        confirm_btn = Button(master=frame_button_wrapper, fg='#1a1d1a', bg='#d9d9d9', 
+        confirm_btn = Button(master=frame_button_wrapper, fg=co2, bg=co1, 
             font='Calibri, 14', height=0, activebackground='#c5a8b0', 
             text='Fechar' if state == 1 else 'Enviar Avaliação', 
             # state='disabled' if state == 2 else 'active',
@@ -79,17 +79,17 @@ def run(frame_parent, target_user):
     frame_body.rowconfigure(0, weight=2)
     frame_body.rowconfigure(1, weight=2)
     
-    frame_summary = Frame(frame_body, bg=co1, padx=8, pady=8)
+    frame_summary = Frame(frame_body, bg=gr0, padx=8, pady=8)
     frame_summary.grid(row= 0, column=0, sticky='ew')
     frame_summary.columnconfigure(0, weight=1)
 
-    frame_user_data = Frame(frame_summary, bg=co1, padx=8, pady=8)
+    frame_user_data = Frame(frame_summary, bg=gr0, padx=8, pady=8)
     frame_user_data.grid(row=0, column=0, sticky='ew')
 
-    criar_label(frame_user_data, f'{target_user.name}\t', 'Calibri, 20', 0, 0, co1, 'w')
-    criar_label(frame_user_data, get_role_name(CURRENT_USER.role_id), 'Calibri, 12', 1, 0, co1, 'w')
-    criar_label(frame_summary, 'Esta avaliação 360° utiliza a escala Likert para medir o desempenho dos usuários. Notas abaixo ou iguais a 3 necessitam obrigatoriamente de Feedback (resposta descritiva)',
-        'Calibri, 11', 0, 1, co1, 'w').config(wraplength=600) 
+    criar_label(frame_user_data, f'{target_user.name}\t', 'Calibri, 20', 0, 0, gr0, 'w')
+    criar_label(frame_user_data, get_role_name(CURRENT_USER.role_id), 'Calibri, 12', 1, 0, gr0, 'w')
+    criar_label(frame_summary, 'Esta avaliação 360° utiliza a escala Likert para medir o desempenho dos usuários.\nNotas abaixo ou iguais a 3 necessitam obrigatoriamente de Feedback (resposta descritiva)',
+        'Calibri, 11', 0, 1, gr0, 'w').config(wraplength=600) 
 
     # from Models.Sprint import sprint_index, current_rating_period
     # criar_label(frame_user_data, f'Prazo para realizar a autoavaliação da Sprint {sprint_index(CURRENT_USER.group_id, current_rating_period(CURRENT_USER.group_id).id)}', 'Calibri, 15', 2, 0, None, 'w')  # PUXAR DADO VINCULADO COM TELA DE RETORNO ???
@@ -113,9 +113,9 @@ def run(frame_parent, target_user):
     frame_criterias.rowconfigure([i for i in range(5)], weight=1)
     frame_criterias.grid(row=1, column=0, sticky='ew')
     
-    from Models.id_criteria import criteria
+    from Models.id_criteria import criteria_full
 
-    for i, c in enumerate(criteria):
+    for i, c in enumerate(criteria_full):
 
         frame_criteria = Frame(frame_criterias, bg=co0, relief='groove', bd=3, pady=4)
         frame_criteria.grid(row= i, column=0, columnspan=2, sticky='nsew')
@@ -192,7 +192,7 @@ def slider_change_position(frame_feedback, new_value, criterio):
 
 
 def get_feedback_text(t):
-    value = str(t.get("1.0", "end")).replace('\'', '').replace('\"', '').replace('\n', '')
+    value = str(t.get("1.0", "end")[:-1]).replace('\'', '').replace('\"', '')
     return f'\'{value}\''
 
 
@@ -220,10 +220,9 @@ def enviar_notas(_to_user_id):
 
     for i, criterio in enumerate(criteria_full):
         if notas[i] <= 3:
-            length = len(comentarios[i]) - 2
-            if comentarios[i] is None or length == 0: error_messages.append(error_message_templates(0, criterio))
-            elif length < FEEDBACK_LEN_MINMAX[0]: error_messages.append(error_message_templates(1, criterio))
-            elif length > FEEDBACK_LEN_MINMAX[1]: error_messages.append(error_message_templates(2, criterio))
+            if comentarios[i] is None or comentarios[i] == '': error_messages.append(error_message_templates(0, criterio))
+            elif len(comentarios[i]) < FEEDBACK_LEN_MINMAX[0]: error_messages.append(error_message_templates(1, criterio))
+            elif len(comentarios[i]) > FEEDBACK_LEN_MINMAX[1]: error_messages.append(error_message_templates(2, criterio))
 
 
     if len(error_messages) > 0: 
