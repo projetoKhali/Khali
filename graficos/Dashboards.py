@@ -2,7 +2,7 @@
 from .Integrador import *
 from Front.Core import *
 
-colors = ['#896978', '#260C1A', '#26413C', '#839791', '#F1D1D1', '#D9D9D9', '#26413C', '#03120E','#C5A8B0', '#C5BFBD']
+colors = ['#C5A8B0', '#4E615D', '#896978', '#DBBDC1', '#76807D', '#F1D1D1', '#D9D9D9', '#26413C', '#FAE8E8', '#26413C', '#260C1A', '#03120E', '#C5BFBD']
 
 def multi_bar (title, names, y_label, matriz, x_label, x_ticks):
     from matplotlib import pyplot

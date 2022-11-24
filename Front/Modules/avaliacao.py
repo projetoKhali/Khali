@@ -25,7 +25,7 @@ def run(frame_parent, target_user):
     frame_header.columnconfigure(0, weight=1)
 
     # Textos gerais da tela
-    criar_label(frame_header, 'Autoavaliação' if target_user.id == CURRENT_USER.id else 'Avaliação', 'Calibri, 24 bold', 0, 0, co0, 'w').config(fg=co0)
+    criar_label(frame_header, 'Autoavaliação' if target_user.id == CURRENT_USER.id else 'Avaliação', 'Calibri, 24 bold', 0, 0, co3, 'w').config(fg=co0)
 
     #rating_send_success
     from Events import trigger, register, unregister_all
@@ -71,17 +71,17 @@ def run(frame_parent, target_user):
     frame_body.rowconfigure(0, weight=2)
     frame_body.rowconfigure(1, weight=2)
     
-    frame_summary = Frame(frame_body, bg=co4, padx=8, pady=8)
+    frame_summary = Frame(frame_body, bg=gr0, padx=8, pady=8)
     frame_summary.grid(row= 0, column=0, sticky='ew')
     frame_summary.columnconfigure(0, weight=1)
 
-    frame_user_data = Frame(frame_summary, bg=co4, padx=8, pady=8)
+    frame_user_data = Frame(frame_summary, bg=gr0, padx=8, pady=8)
     frame_user_data.grid(row=0, column=0, sticky='ew')
 
-    criar_label(frame_user_data, f'{target_user.name}\t', 'Calibri, 20', 0, 0, co4, 'w')
-    criar_label(frame_user_data, get_role_name(CURRENT_USER.role_id), 'Calibri, 12', 1, 0, co4, 'w')
-    criar_label(frame_summary, 'Esta avaliação 360° utiliza a escala Likert para medir o desempenho dos usuários. Notas abaixo ou iguais a 3 necessitam obrigatoriamente de Feedback (resposta descritiva)',
-        'Calibri, 11', 0, 1, co4, 'w').config(wraplength=600) 
+    criar_label(frame_user_data, f'{target_user.name}\t', 'Calibri, 20', 0, 0, gr0, 'w')
+    criar_label(frame_user_data, get_role_name(CURRENT_USER.role_id), 'Calibri, 12', 1, 0, gr0, 'w')
+    criar_label(frame_summary, 'Esta avaliação 360° utiliza a escala Likert para medir o desempenho dos usuários.\nNotas abaixo ou iguais a 3 necessitam obrigatoriamente de Feedback (resposta descritiva)',
+        'Calibri, 11', 0, 1, gr0, 'w').config(wraplength=600) 
 
     # from Models.Sprint import sprint_index, current_rating_period
     # criar_label(frame_user_data, f'Prazo para realizar a autoavaliação da Sprint {sprint_index(CURRENT_USER.group_id, current_rating_period(CURRENT_USER.group_id).id)}', 'Calibri, 15', 2, 0, None, 'w')  # PUXAR DADO VINCULADO COM TELA DE RETORNO ???
@@ -105,9 +105,9 @@ def run(frame_parent, target_user):
     frame_criterias.rowconfigure([i for i in range(5)], weight=1)
     frame_criterias.grid(row=1, column=0, sticky='ew')
     
-    from Models.id_criteria import criteria
+    from Models.id_criteria import criteria_full
 
-    for i, c in enumerate(criteria):
+    for i, c in enumerate(criteria_full):
 
         frame_criteria = Frame(frame_criterias, bg=co0, relief='groove', bd=3, pady=4)
         frame_criteria.grid(row= i, column=0, columnspan=2, sticky='nsew')
