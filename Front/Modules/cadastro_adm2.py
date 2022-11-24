@@ -22,7 +22,7 @@ def run (frame_parent):
     frame_header.columnconfigure(0, weight=1)
 
     # titulo
-    criar_label(frame_header, 'Cadastro de Grupos', 'Calibri, 24', 0, 0, co3, 'ew', 'center').config(fg=co0)
+    criar_label(frame_header, 'Gerenciamento de Grupos', 'Calibri, 24', 0, 0, co3, 'ew', 'center').config(fg=co0)
 
     from Front.Scrollbar import add_scrollbar
 
@@ -44,25 +44,27 @@ def run (frame_parent):
     for i, text in enumerate(texts):
         criar_label(frame_summary, text, 'Calibri, 12', i, 0, co1, 'ew', 'center').config(wraplength=750, padx=16, pady=2)
 
-    frame_group_form = criar_frame(frame_body, 1, 0, 'news', co0, co0, 0, 0, 0)
+    frame_group_form = criar_frame(frame_body, 1, 0, 'news', co3, co3, 1, 8, 8)
     frame_group_form.columnconfigure(0, weight=1)
 
-    frame_group_form_header = criar_frame(frame_group_form, 0, 0, 'ew', co0, co0, 0, 0, 0)
+    frame_group_form_header = criar_frame(frame_group_form, 0, 0, 'ew', co3, co3, 0, 0, 0)
     frame_group_form_header.columnconfigure(0, weight=1)
 
-    frame_group_form_title = criar_frame(frame_group_form_header, 0, 0, 'ew', co0, co0, 0, 0, 0)
-    frame_group_form_title.columnconfigure(2, weight=1)
-    criar_label(frame_group_form_title, 'Nome do Grupo: ', 'Calibri, 12', 0, 0, sticky='w').config(width=22)
+    frame_group_form_title = criar_frame(frame_group_form_header, 0, 0, 'ew', co3, co3, 0, 4, 0)
+    frame_group_form_title.columnconfigure(0, weight=1)
+    criar_label(frame_group_form_title, 'Novo Grupo', 'Calibri, 12 bold', 0, 0, co3, 'w').config(fg=co0)
+    criar_button(frame_group_form_title, 'Cadastrar', 'Calibri, 12 bold', 0, 1, cadastrar, 'e').config(takefocus = 0)
+
+    frame_group_form_name = criar_frame(frame_group_form_header, 1, 0, 'ew', co0, co0, 0, 0, 0)
+    frame_group_form_name.columnconfigure(2, weight=1)
+    criar_label(frame_group_form_name, 'Nome do Grupo: ', 'Calibri, 12', 0, 0, sticky='w').config(width=22)
 
     from Events import trigger, register, unregister_all
 
     unregister_all('get_group_name')
-    register('get_group_name', lambda e=criar_entry(frame_group_form_title, 'Calibri, 12', 0, 1, 'ew'): e.get())
+    register('get_group_name', lambda e=criar_entry(frame_group_form_name, 'Calibri, 12', 0, 1, 'ew'): e.get())
 
-    frame_group_form_btn = criar_frame(frame_group_form_title, 0, 2, 'e', 'red', None, 0, 4, 0)
-    criar_button(frame_group_form_btn, 'Cadastrar', 'Calibri, 12 bold', 0, 0, cadastrar, 'e')
-
-    frame_users_form = criar_frame(frame_group_form, 1, 0, 'ew', co1, co1, 0, 2, 2)
+    frame_users_form = criar_frame(frame_group_form, 1, 0, 'ew', co1, co1, 0, 0, 0)
     for role_index, role in enumerate(['Líder do Grupo', 'Fake Client']):
 
         criar_label(frame_users_form, f'Nome do {role}: ', 'Calibri, 12', role_index, 0, co1, sticky='w').config(width=22)
@@ -77,8 +79,8 @@ def run (frame_parent):
     frame_table.columnconfigure(0, weight=1)
     frame_table.rowconfigure(1, weight=1)
 
-    frame_table_header = criar_frame(frame_table, 0, 0, 'ew', co3, None, 0, 0, 0)
-    criar_label(frame_table_header, 'Grupos', 'Calibri, 12', 0, 0, co3, 'w').config(fg=co1)
+    frame_table_header = criar_frame(frame_table, 0, 0, 'ew', co3, None, 0, 4, 0)
+    criar_label(frame_table_header, 'Grupos', 'Calibri, 12 bold', 0, 0, co3, 'w').config(fg=co1)
 
     frame_table_list = criar_frame(frame_table, 2, 0, 'news', co1, co1, 0, 0, 0)
     frame_table_list.columnconfigure(0, weight=1)
@@ -113,7 +115,7 @@ def update_table(frame_table):
         criar_label(frame_group, f'Nº de Times: {len(get_teams_of_group(group.id))}', 'Calibri, 10', 0, 1, co1, 'w', width=20)
         criar_label(frame_group, f'Nº de Membros: {len(get_users_of_group(group.id))}', 'Calibri, 10', 0, 2, co1, 'w', width=20)
 
-        criar_button(frame_group, 'Excluir', 'Calibri, 10', 0, 3, lambda group_id=group.id: excluir(group_id))
+        criar_button(frame_group, 'Excluir', 'Calibri, 10', 0, 3, lambda group_id=group.id: excluir(group_id)).config(takefocus = 0)
 
 
 # Criação da função que recolhe informações cadastradas e gera código do grupo
