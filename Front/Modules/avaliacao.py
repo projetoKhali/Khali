@@ -20,17 +20,25 @@ def run(frame_parent, target_user):
     module_frame.columnconfigure(0, weight=1)
     module_frame.grid(row=0, column=0, sticky='news')
 
-    frame_header = Frame(module_frame, bg=co3, bd=3)
+    frame_header = Frame(module_frame, bg=co3, bd=1)
     frame_header.grid(row= 0, column=0, sticky='ew')
     frame_header.columnconfigure(0, weight=1)
 
-    # Textos gerais da tela
-    criar_label(frame_header, 'Autoavaliação' if target_user.id == CURRENT_USER.id else 'Avaliação', 'Calibri, 30', 0, 0, co3, 'w').config(fg=co0)
+    frame_title = Frame(frame_header, bg=co3, bd=2)
+    frame_title.grid(row= 0, column=0, sticky='ew')
+    frame_title.columnconfigure(0, weight=1)
 
-    #rating_send_success
+    frame_visual_feedback = Frame(frame_header, bg=co3)
+    frame_visual_feedback.grid(row= 1, column=0, sticky='ew')
+    frame_visual_feedback.columnconfigure(0, weight=1)
+
+    # Textos gerais da tela
+    criar_label(frame_title, 'Autoavaliação' if target_user.id == CURRENT_USER.id else 'Avaliação', 'Calibri, 30', 0, 0, co3, 'w').config(fg=co0)
+
+    #ratings_send_success
     from Events import trigger, register, unregister_all
 
-    frame_send_btn = Frame(frame_header, bg=co3)
+    frame_send_btn = Frame(frame_title, bg=co3)
     frame_send_btn.grid(row= 0, column=2, sticky='ew')
     frame_send_btn.columnconfigure(0, weight=1)
 
@@ -50,18 +58,18 @@ def run(frame_parent, target_user):
             command=(lambda m=module_frame: fechar_avaliação(m)) if state == 1 else (lambda: enviar_notas(target_user.id))
         )
         confirm_btn.grid(row=0, column=0, sticky='e')
-        if state == 1: criar_label(frame_button_wrapper, 'Avaliação enviada com sucesso!', 'Calibri, 10 bold', 1, 0).config(fg='green')
+        if state == 1: criar_label(frame_visual_feedback, 'Avaliação enviada com sucesso!', 'Calibri, 10 bold', 1, 0, 'white', 'we', 'center').config(fg='green')
         elif state == 2: 
             s = ''
             for error_message in trigger('get_error_messages'):
                 # criar_label(frame_button_wrapper, error_message*(2-i), 'Calibri, 10 bold', i+1, 0).config(fg='red')
                 s += f'{error_message}\n'
-            messagebox.showwarning('Khali Group: Erro de avaliação', s[:-1])
+            messagebox.showwarning('Khali Group: Erro ao enviar avaliação', s[:-1])
 
     update_send_btn(frame_send_btn, 0)
 
-    register('rating_send_success', lambda fsb=frame_send_btn: update_send_btn(fsb, 1))
-    register('rating_send_error', lambda fsb=frame_send_btn: update_send_btn(fsb, 2))
+    register('ratings_send_success', lambda fsb=frame_send_btn: update_send_btn(fsb, 1))
+    register('ratings_send_error', lambda fsb=frame_send_btn: update_send_btn(fsb, 2))
 
     frame_body = Frame(module_frame, bg=co0, bd=0)
     frame_body.columnconfigure(0, weight=1)
@@ -139,11 +147,13 @@ def run(frame_parent, target_user):
         unregister_all(f'get_value_criterio_{c}')
         register(f'get_value_criterio_{c}', lambda v=var: v.get())
 
-        _escala = Scale(frame_slider, from_=1, to=5, tickinterval=0, orient='horizontal', showvalue=0,
+        slider = Scale(frame_slider, from_=1, to=5, tickinterval=0, orient='horizontal', showvalue=0,
             bg=co0, font='Calibri, 10 bold', highlightcolor='#c5a8b0', troughcolor='#c5a8b0', variable=var,
             command=lambda v, ff=frame_feedback, c=c: slider_change_position(ff, int(v), c)
         )
-        _escala.grid(column=0, row=0, sticky='ews')
+        slider.grid(column=0, row=0, sticky='ews')
+
+        register('ratings_send_success', lambda s=slider: s.config(state='disabled', highlightcolor='gray', troughcolor='gray'))
 
     f = Frame(frame_body, pady=100, bg=co0)
     Label(f, text='', bg=co0).grid(row=0, column=0, sticky="s")
@@ -152,13 +162,15 @@ def run(frame_parent, target_user):
 
 # def criar_label(master, text, tamanho, column, row, padx, pady,None,  sticky):
 def slider_change_position(frame_feedback, new_value, criterio):
+    from Events import trigger, register, unregister, unregister_all
+
     ff_children = frame_feedback.winfo_children()
     if ff_children and len(ff_children) > 0 and ff_children[0] is not None:
         ff_children[0].destroy()
+        trigger(f'unregister_entry_{criterio}')
         # TODO: fix frame_feedback size after destroy
         # TODO: remember text with Events to re write it if slider goes back to <= 3 (See 'get_teams_internal' on cadastro_lider.py)
 
-    from Events import register, unregister_all
     unregister_all(f'get_feedback_criterio_{criterio}')
 
     if new_value > 3: return
@@ -174,6 +186,9 @@ def slider_change_position(frame_feedback, new_value, criterio):
     text_input.grid(row=1, column=0, sticky = 'news')
 
     register(f'get_feedback_criterio_{criterio}', lambda t=text_input: get_feedback_text(t))
+    lambda_disable = lambda t=text_input: t.config(state='disabled', fg='gray', bg=co1)
+    register('ratings_send_success', lambda_disable)
+    register(f'unregister_entry_{criterio}', lambda: [unregister('ratings_send_success', lambda_disable), unregister_all(f'unregister_entry_{criterio}')])
 
 
 def get_feedback_text(t):
@@ -214,12 +229,12 @@ def enviar_notas(_to_user_id):
     if len(error_messages) > 0: 
         unregister_all('get_error_messages')
         register('get_error_messages', lambda: error_messages)
-        trigger('rating_send_error')
+        trigger('ratings_send_error')
         return error_messages
 
     dados_avaliacao(_to_user_id, notas, comentarios)
 
-    trigger('rating_send_success')
+    trigger('ratings_send_success')
     return True
 
 def fechar_avaliação(m):
@@ -232,8 +247,8 @@ def fechar_avaliação(m):
 
     unregister_all('get_error_messages')
 
-    unregister_all('rating_send_success')
-    unregister_all('rating_send_error')
+    unregister_all('ratings_send_success')
+    unregister_all('ratings_send_error')
 
     m.destroy()
     trigger('sub_module_close')
