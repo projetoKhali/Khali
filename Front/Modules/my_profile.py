@@ -1,7 +1,7 @@
 from Front.Core import *
 
-col_rated = co4
-col_to_rate = gr1
+col_rated = '#76807D'
+col_to_rate = '#DBBDC1'
 
 # Informações do modulo
 NAME = 'Lista'
