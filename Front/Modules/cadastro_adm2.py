@@ -102,34 +102,16 @@ def update_table(frame_table):
     from Models.Group import get_groups
     groups = get_groups()
 
-    from Events import trigger, register, unregister_all
-    from tkinter import StringVar
+    # from Events import trigger, register, unregister_all
 
     frame_groups_parent = criar_frame(frame_table, 0, 0, 'news', co1, None, 0, 2, 2)
     for group_index, group in enumerate(groups):
 
         frame_group = criar_frame(frame_groups_parent, group_index, 0, 'ew', co1, co2, 1, 2, 2)
         frame_group.columnconfigure([i for i in range(3)], weight=1)
-        var = StringVar()
-        var.set(group.name)
+
         label_group_name = criar_label(frame_group, group.name, 'Calibri, 10', 0, 0, co1, 'w', width=40)
-        label_group_name.bind("<Button-1>", 
-            lambda _, lbl=label_group_name, fg=frame_group: 
-            (lambda e: [
-                e.config(highlightthickness=0, bd=0, background=co1, textvariable=var),
-                e.bind(i, lambda: save(lbl, e), e.destroy()) for i in ['<Return>', '<FocusOut>', '<Escape>']
-            ])(criar_entry(fg, 'Calibri, 10', 0, 0, 'ew', 4, 2, 'center'))
-        )
-        def save (label, entry):
-            label.config(text=entry.get())
-
-        """
-        label - click -> create_entry
-        entry - return, focusout, escape - save, update_label, delete_entry
-        """
-
-        # unregister_all(f'edit_group_{group.id}')
-        # label_group_name.bind("<Button-1>", lambda _, group_id=group.id: trigger(f'edit_group_{group_id}'))
+        label_group_name.bind("<Button-1>", lambda _, lbl=label_group_name, g=group, fg=frame_group: open_group_name_entry(fg, lbl, g, lambda l, e, g=g: save_group_name(l, e, g)))
 
         from Models.Team import get_teams_of_group
         from Models.User import get_users_of_group
@@ -137,7 +119,7 @@ def update_table(frame_table):
         criar_label(frame_group, f'Nº de Times: {len(get_teams_of_group(group.id))}', 'Calibri, 10', 0, 1, co1, 'w', width=20)
         criar_label(frame_group, f'Nº de Membros: {len(get_users_of_group(group.id))}', 'Calibri, 10', 0, 2, co1, 'w', width=20)
 
-        criar_button(frame_group, 'Excluir', 'Calibri, 10', 0, 3, lambda group_id=group.id: excluir(group_id)).config(takefocus = 0)
+        criar_button(frame_group, 'Excluir', 'Calibri, 10', 0, 3, lambda g=group: delete_group(g)).config(takefocus = 0)
 
 
 # Criação da função que recolhe informações cadastradas e gera código do grupo
@@ -170,6 +152,41 @@ def cadastrar():
 
 
 # exclui um grupo
-def excluir(group_index):
-    return
+def delete_group(group):
+    from tkinter import messagebox
+    if messagebox.askquestion('Deletar grupo', f"Deseja deletar o grupo {group.name}?", icon='question') == 'yes':
+        from Models.Group import delete_group
+        from Events import trigger
+        delete_group(group.id)
+        trigger('update_table')
 
+
+def open_group_name_entry (frame_group, label_name, group, entry_callback):
+
+    entry_name = criar_entry(frame_group, 'Calibri, 10', 0, 0, 'ew', 4, 2, 'center')
+    entry_name.config(highlightthickness=0, bd=0)
+    entry_name.insert('0', group.name)
+    entry_name.focus()
+
+    from tkinter import EventType
+    lambda_close = lambda event, save, lbl=label_name, e=entry_name: [entry_callback(lbl, e) if save else None, e.destroy()]
+
+    def validate_event (event, label):
+        if event.type is not EventType.ButtonPress: return True
+        print(label.winfo_containing(event.x, event.y))
+        return label.winfo_containing(event.x, event.y)
+
+
+    [entry_name.bind(i, lambda _: lambda_close(_, True)) for i in ['<Return>', '<FocusOut>', '<Tab>']]
+    entry_name.bind('<Escape>', lambda _: lambda_close(_, False))
+
+    label_name.winfo_toplevel().bind('<Button-1>', lambda _, lbl=label_name, l=lambda_close: [l(_, True), lbl.winfo_toplevel().unbind('<Button-1>')])
+
+
+def save_group_name (label, entry, group):
+    try: new_name = entry.get()
+    except: return
+    from Models.Group import edit_group
+    edit_group(group.id, name=new_name)
+    group.name=new_name
+    label.config(text=new_name)

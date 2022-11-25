@@ -243,7 +243,8 @@ def load_all_csv (path:str):
 
             # Lê as linhas do arquivo e salva na variavel 'lines'
             lines = file.readlines()
-            return [format_line_csv(lines[0].strip('\n').split(','), line) for line in lines[1:]]
+            
+            return [format_line_csv(lines[0].strip('\n').split(','), line) for line in lines[1:] if len(line) > 0 and line != '\n']
 
     # Em caso de falha
     except:log(COLS[2] + "CSVHandler.find_data_list_by_field_value_csv: Erro ao ler arquivo" + COLS[0])
@@ -411,6 +412,37 @@ def line_count_csv (path:str):
         log(COLS[2] + "CSVHandler.line_len: arquivo não encontrado" + COLS[0])
 
     return 0
+
+
+# Remove a linha do id especificado
+def delete_line_csv (path:str, id:int):
+
+    # abre e lê arquivo csv
+    with open(path + '.csv', 'r') as file: lines = file.readlines()
+
+    new_lines = []
+
+    for line in lines[1:]:
+        line_data = format_line_csv(PATH_FIELDS[path], line)
+        if line_data['id'] == str(id): continue
+        new_lines.append([field[1] for field in line_data.items()])
+    save_file_csv(path, PATH_FIELDS[path], new_lines)
+
+
+# Edita a linha de id especificado 
+def edit_line_csv (path:str, id:int, kvps:dict):
+
+    # abre e lê arquivo csv
+    with open(path + '.csv', 'r') as file: lines = file.readlines()
+
+    for line_index, line in enumerate(lines[1:]):
+        line_data = format_line_csv(PATH_FIELDS[path], line)
+        if line_data['id'] == str(id):
+            for field in kvps:
+                line_data[field] = kvps[field]
+        line_list = [field[1] for field in line_data.items()]
+        lines[line_index + 1] = line_list
+    save_file_csv(path, PATH_FIELDS[path], lines[1:])
 
 
 # Deleta um arquivo .csv do caminho especificado

@@ -55,3 +55,4 @@ def bind_entry_placeholder (entry, text):
 
     # configura o evento para colocar novamente o placeholder caso o usuário deselecione a entry sem inserir nenhum texto
     entry.bind('<FocusOut>', lambda _, e=entry, f=focus_in_lambda: [no_value_lambda(_, e), e.bind('<FocusIn>', f)] if len(e.get()) == 0 else None)
+
