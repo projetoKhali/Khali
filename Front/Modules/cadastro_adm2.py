@@ -102,12 +102,34 @@ def update_table(frame_table):
     from Models.Group import get_groups
     groups = get_groups()
 
+    from Events import trigger, register, unregister_all
+    from tkinter import StringVar
+
     frame_groups_parent = criar_frame(frame_table, 0, 0, 'news', co1, None, 0, 2, 2)
     for group_index, group in enumerate(groups):
 
         frame_group = criar_frame(frame_groups_parent, group_index, 0, 'ew', co1, co2, 1, 2, 2)
         frame_group.columnconfigure([i for i in range(3)], weight=1)
-        criar_label(frame_group, group.name, 'Calibri, 10', 0, 0, co1, 'w').config(width=40)
+        var = StringVar()
+        var.set(group.name)
+        label_group_name = criar_label(frame_group, group.name, 'Calibri, 10', 0, 0, co1, 'w', width=40)
+        label_group_name.bind("<Button-1>", 
+            lambda _, lbl=label_group_name, fg=frame_group: 
+            (lambda e: [
+                e.config(highlightthickness=0, bd=0, background=co1, textvariable=var),
+                e.bind(i, lambda: save(lbl, e), e.destroy()) for i in ['<Return>', '<FocusOut>', '<Escape>']
+            ])(criar_entry(fg, 'Calibri, 10', 0, 0, 'ew', 4, 2, 'center'))
+        )
+        def save (label, entry):
+            label.config(text=entry.get())
+
+        """
+        label - click -> create_entry
+        entry - return, focusout, escape - save, update_label, delete_entry
+        """
+
+        # unregister_all(f'edit_group_{group.id}')
+        # label_group_name.bind("<Button-1>", lambda _, group_id=group.id: trigger(f'edit_group_{group_id}'))
 
         from Models.Team import get_teams_of_group
         from Models.User import get_users_of_group
