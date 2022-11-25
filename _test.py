@@ -74,10 +74,10 @@ def create_test_data():
         j = 0
 
         sprint_dates = [
-            [date(2022, 8,  29), date(2022, 9,  18)],
-            [date(2022, 9,  19), date(2022, 10,  9)],
-            [date(2022, 10, 17), date(2022, 11,  21)],
-            [date(2022, 11,  22), date(2022, 11, 27)]
+            [date(2022, 8,  29), date(2022, 11,  15)],
+            [date(2022, 11,  16), date(2022, 12,  25)],
+            [date(2022, 12, 26), date(2023, 1,  25)],
+            [date(2023, 1,  26), date(2023, 2, 26)]
         ]
 
         # pra cada sprint
@@ -96,16 +96,21 @@ def create_test_data():
                     for c in range(len(criteria)):
 
                         # cria uma nota aleatória entre 1 (inclusivo) e 6 (exclusivo)
-                        n = randint(1, 6)
+                        n = randint(1, 5)
 
                         p = (j/(u+1))
                         j += 1
+
+                        if n <= 3:
+                            fd = 'feedback'
+                        else:
+                            fd = None
 
                         # printa a avaliação que será criada
                         print(f'grupo {i}: {int(p*100)}% |Criando avaliação teste: id({f}) avalia id({t}) na sprint {s} e critério {c} com a nota {n}')
 
                         # cria a avaliação
-                        create_rating(f, t, s, c, n, 'feedback')
+                        create_rating(f, t, s, c, n, fd)
 
 
     # print do sucesso

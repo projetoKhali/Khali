@@ -6,10 +6,14 @@ def get_users(user):
     from Models.Role import get_role
     from Models.User import get_users_of_team, get_users_of_group
     from Models.Rating import get_ratings_from_user, get_ratings
-    from Models.Sprint import current_rating_period
+    from Models.Sprint import current_rating_period, previous_sprint, current_sprint
     from Time import today
 
-    sprint = current_rating_period(user.group_id)
+    sprint = previous_sprint(user.group_id)
+    if sprint == None:
+       sprint = current_sprint(user.group_id)
+
+    
 
     #pego o nome e funções da pessoa que logou
     role = get_role(user.role_id)
@@ -54,13 +58,27 @@ def get_users(user):
             grade_to_submit.append(group_member)
     return [grade_to_submit, grade_submitted]
 
+def get_feedbacks(user_id, sprint_id):
+    feedbacks = []
+    from Models.Rating import get_ratings
+    ratings = get_ratings(to_user_id=user_id, sprint_id=sprint_id)
+    for rating in ratings:
+        feedback = []
+        if rating.value <= 3:
+            feedback.append(rating.criteria_id)
+            feedback.append(rating.comment)
+            feedbacks.append(feedback)
+    return feedbacks
 
-def get_feedbacks (user_id, sprint_id):
-    from random import randint
-    return [
-        [randint(0, 4) ,'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse quis suscipit lectus. Cras convallis enim tempor tellus ornare, sit amet.']
-        for _ in range(10)
-    ]
+
+
+
+# def get_feedbacks (user_id, sprint_id):
+#     from random import randint
+#     return [
+#         [randint(0, 4) ,'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse quis suscipit lectus. Cras convallis enim tempor tellus ornare, sit amet.']
+#         for _ in range(10)
+#     ]
 
 
 

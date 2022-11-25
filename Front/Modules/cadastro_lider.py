@@ -34,8 +34,8 @@ def run (frame_parent):
     from Models.Group import get_group_name
 
     # droplist com nomes de todos os grupos associados ao usuário
-    group_names = [get_group_name(i) for i in [função que retorna lista de grupos que o usuário é lider]]
-    OptionMenu(frame_header, StringVar(), *group_names).grid(row=0, column=1, padx=5, pady=10, sticky='w', ipadx= 30, ipady=6)
+    # group_names = [get_group_name(i) for i in [função que retorna lista de grupos que o usuário é lider]]
+    # OptionMenu(frame_header, StringVar(), *group_names).grid(row=0, column=1, padx=5, pady=10, sticky='w', ipadx= 30, ipady=6)
     ############
 
     # adiciona scrollbar no frame_bogy
