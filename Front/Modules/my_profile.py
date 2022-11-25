@@ -35,7 +35,7 @@ def run(frame_parent):
     from Models.Sprint import get_group_sprints
     from Time import today
 
-    sprints = [s for s in get_group_sprints(CURRENT_USER.group_id) if today() > s.rating_period_end()]
+    sprints = [s for s in get_group_sprints(CURRENT_USER.group_id) if today() >= s.rating_period_end()]
 
     global sel_sprint
     sel_sprint = len(sprints) - 1
@@ -71,6 +71,8 @@ def criar_section_1():
     from Time import today
 
     sprint = current_rating_period(CURRENT_USER.group_id)
+
+    print(sprint)
     sprint_timeline_str = ''
 
     # Caso possuirmos uma sprint cujo periodo avaliativo encontra-se ativo
@@ -111,7 +113,7 @@ def criar_section_1():
     g = [len(grades[0]), len(grades[1])]
 
     # Cria o pie chart utilizando a informação de usuários
-    criar_piechart(frame_section_header, [len(grades[0]), len(grades[1])])
+    criar_piechart(frame_section_header, g)
 
     # Cria o Frame parent de ambas as listas
     frame_listas_parent = criar_frame(frame_section, 2, 0, "nsew", co0 if g[1] == 0 else co1, co1, 0, 0, 0)
