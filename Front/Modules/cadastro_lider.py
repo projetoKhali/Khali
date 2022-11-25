@@ -31,9 +31,9 @@ def run (frame_parent):
     frame_body.columnconfigure(0, weight=1)
 
     ############
-    from Models.Role import get_role_name
+    from Models.Group import get_group_name
 
-    group_names = [get_role_name(i) for i in [1]]
+    group_names = [get_group_name(i) for i in [função que retorna lista de grupos que o usuário é lider]]
     OptionMenu(frame_header, StringVar(), *group_names).grid(row=0, column=1, padx=5, pady=10, sticky='w', ipadx= 30, ipady=6)
     ############
 
