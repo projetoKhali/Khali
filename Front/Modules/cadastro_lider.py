@@ -33,6 +33,7 @@ def run (frame_parent):
     ############
     from Models.Group import get_group_name
 
+    # droplist com nomes de todos os grupos associados ao usuário
     group_names = [get_group_name(i) for i in [função que retorna lista de grupos que o usuário é lider]]
     OptionMenu(frame_header, StringVar(), *group_names).grid(row=0, column=1, padx=5, pady=10, sticky='w', ipadx= 30, ipady=6)
     ############
@@ -50,10 +51,10 @@ def run (frame_parent):
         create_register_container(frame_body, i, titles[i], commands[i])
 
     
+    # Cria o botão responsável por confirmar os cadastros 
     Button(frame_header, text="Confirmar Cadastros", font="Calibri, 12", command=confirmar_cadastros, 
         activebackground='#c5a8b0', bg='#d9d9d9', fg='#1a1d1a', height=0).grid(row=0, column=2, sticky='news',padx= 30, pady= 10, ipadx= 50, ipady= 6)
 
-    # Cria o botão responsável por confirmar os cadastros 
     # frame_confirm_btn = criar_frame(frame_header, 0, 2, 'ew', co0, px=8)
     # frame_confirm_btn.grid_columnconfigure(0, weight=1)
     # Button(frame_confirm_btn, text="Confirmar Cadastros", font="Calibri, 12", command=confirmar_cadastros, 
