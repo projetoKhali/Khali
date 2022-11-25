@@ -19,7 +19,7 @@ def to_group(group_dict):
         group_dict['name'],
         int(group_dict['leader_id']),
         int(group_dict['client_id']),
-    )
+    ) # if group_dict is not None else None
 
 # Cria e armazena um novo Grupo com o nome fornecido
 def create_group (name:str, leader_id, client_id):
@@ -38,3 +38,11 @@ def get_group_name (id:int):
 # retorna o Grupo que corresponde ao id especificado 
 def get_group (id:int):
     return None if id == '' or id is None else to_group(find_data_by_id_csv(GROUPS_PATH, int(id)))
+
+# Retorna todos os Grupo
+def get_groups ():
+    return None if id == '' or id is None else [to_group(x) for x in load_all_csv(GROUPS_PATH)]
+
+# Retorna todos o Grupos em que o usuário de id especificado posssui a função de Lider
+def get_groups_of_leader (id:int):
+    return None if id == '' or id is None else [to_group(x) for x in find_data_list_by_field_value_csv(GROUPS_PATH, 'leader_id', int(id))]

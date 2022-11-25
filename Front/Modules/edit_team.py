@@ -4,12 +4,7 @@ from tkinter import *
 from Models.Team import Team, get_team, get_teams_of_group
 from Models.Role import get_role_name, get_role_id
 from Models.User import User, get_users_of_team, get_users_of_group
-
-# cores
-co0 = "#FAE8E8"  # rosa
-co1 = "#D9D9D9"  # cinza
-co2 = "#1A1D1A"  # preta
-co3 = "#26413C"  # verde
+from Front.Core import *
 
 # Informações do modulo
 NAME = 'Editar'
@@ -36,7 +31,7 @@ def run(frame_parent):
     frame_header = Frame(module_frame, padx=2, pady=2, bg=co3)
     frame_header.grid(row=0, column=0, sticky='we')
 
-    Label(frame_header, text="Editar Times", font='Calibri, 20', bg=co3, fg='white').grid(row=0, column=0)
+    Label(frame_header, text="Editar Times", font='Calibri, 24 bold', bg=co3, fg=co0).grid(row=0, column=0)
 
     # section 1
     frame_body = Frame(module_frame, padx=2, pady=2, bg=co0)
@@ -45,7 +40,7 @@ def run(frame_parent):
     frame_body.columnconfigure(0, weight = 1)
     frame_body.grid(row=1, column=0, sticky="news")
 
-    frame_whitespace = Frame(frame_body, padx=0, pady=0, bg=co1)
+    frame_whitespace = Frame(frame_body, padx=0, pady=0, bg=co0)
     frame_whitespace.grid(row=1, column=0, sticky='news')
 
     from Front.Scrollbar import add_scrollbar
@@ -67,7 +62,7 @@ def run(frame_parent):
         # para cada membro
         for member_id, member_data in enumerate(members_list):
             frame_member_actions = create_member(frame_members_parent, member_data, member_id)
-            create_member_role(frame_member_actions, member_data, co0 if member_id % 2 == 1 else 'white')
+            create_member_role(frame_member_actions, member_data, co0 if member_id % 2 == 1 else gr0)
             create_member_remove(frame_member_actions, member_data)
 
 
@@ -93,13 +88,14 @@ def run(frame_parent):
 def create_team(frame_teams_parent, team_data, team_id):
 
     # cria o frame do time
-    frame_team = Frame(frame_teams_parent, bg=co1)
+    frame_team = Frame(frame_teams_parent, bg=co4
+    )
     frame_team.columnconfigure(0, weight = 1)
     frame_team.grid(row=team_id, column=0, sticky="ew")
 
     # coloca o nome do time
     team_name = 'Usuários sem time' if team_data is None else team_data.name
-    Label(frame_team, text=team_name, font='Calibri, 16', bg=co1).grid(row=0, column=0)
+    Label(frame_team, text=team_name, font='Calibri, 16', bg=co4).grid(row=0, column=0)
 
     frame_members_parent = Frame(frame_team)
     frame_members_parent.columnconfigure(0, weight = 1)
@@ -109,7 +105,7 @@ def create_team(frame_teams_parent, team_data, team_id):
 
 def create_member(frame_members_parent, member_data:User, row):
 
-    color = co0 if row % 2 == 1 else 'white'
+    color = co0 if row % 2 == 1 else gr0
 
     # cria um frame para o membro dentro do frame_time
     frame_member = Frame(frame_members_parent, padx=2, pady=2, bg=color)
@@ -231,5 +227,3 @@ def unsubscribe_user(member_data):
     # print(member_data)
     edit_team_back.unsubscribe_user(member_data.email)
     redraw()
-
-

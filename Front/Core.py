@@ -1,9 +1,14 @@
-
-co0 = "#fae8e8"  # rosa
-co1 = "#d9d9d9"  # cinzinha
-co2 = "#1a1d1a"  # preta
-co3 = "#26413C"  # verde
-
+co0 = '#FAE8E8'  # rosa / fundo de telas
+co1 = '#D9D9D9'  # cinzinha / botões
+co2 = '#1A1D1A'  # preta
+co3 = '#26413C'  # verde / botões / frame títulos
+co4 = '#C5A8B0' # rosa velho / botões ativos
+gr0 = '#F1D1D1' # rosa claro para gráfico
+gr1 = '#896978' # lavanda
+gr2 = '#260C1A' # uva
+gr3 = '#4E615D' # verde claro
+gr4 = '#26413C' # verde escuro
+gr5 = '#03120E' # preto esverdeado
 
 
 # funções genéricas de widgets do tkinter
