@@ -30,6 +30,13 @@ def run (frame_parent):
     frame_body.rowconfigure(0, weight=1)
     frame_body.columnconfigure(0, weight=1)
 
+    ############
+    from Models.Role import get_role_name
+
+    group_names = [get_role_name(i) for i in [1]]
+    OptionMenu(frame_header, StringVar(), *group_names).grid(row=0, column=1, padx=5, pady=10, sticky='w', ipadx= 30, ipady=6)
+    ############
+
     # adiciona scrollbar no frame_bogy
     from Front.Scrollbar import add_scrollbar
     frame_body = add_scrollbar(frame_body, co0, 0)
@@ -42,11 +49,15 @@ def run (frame_parent):
     for i in range(2):
         create_register_container(frame_body, i, titles[i], commands[i])
 
+    
+    Button(frame_header, text="Confirmar Cadastros", font="Calibri, 12", command=confirmar_cadastros, 
+        activebackground='#c5a8b0', bg='#d9d9d9', fg='#1a1d1a', height=0).grid(row=0, column=2, sticky='news',padx= 30, pady= 10, ipadx= 50, ipady= 6)
+
     # Cria o botão responsável por confirmar os cadastros 
-    frame_confirm_btn = criar_frame(frame_header, 0, 1, 'ew', co0, px=8)
-    frame_confirm_btn.grid_columnconfigure(0, weight=1)
-    Button(frame_confirm_btn, text="Confirmar Cadastros", font="Calibri, 12", command=confirmar_cadastros, 
-        activebackground='#c5a8b0', bg='#d9d9d9', fg='#1a1d1a', height=0).grid(row=0, column=0, sticky='news')
+    # frame_confirm_btn = criar_frame(frame_header, 0, 2, 'ew', co0, px=8)
+    # frame_confirm_btn.grid_columnconfigure(0, weight=1)
+    # Button(frame_confirm_btn, text="Confirmar Cadastros", font="Calibri, 12", command=confirmar_cadastros, 
+    #     activebackground='#c5a8b0', bg='#d9d9d9', fg='#1a1d1a', height=0).grid(row=0, column=0, sticky='news')
 
     # retorna o modulo
     return module_frame
@@ -251,7 +262,6 @@ def entry_times(en_numtimes:IntVar, frame_parent):
 
         # cadastra a reação de evento que retorna os dados desse time
         register(f'get_team_{i}', lambda n=entry_name, ti=i: [n.get(), trigger(f'get_team_members_{ti}')])
-
 
 # Atualiza a tela para criar os formularios para cada membro de acordo com o numero de membros especificado em cada time
 def update_member_forms(en_num_members, frame_time, team_index, previous_form_data = None):

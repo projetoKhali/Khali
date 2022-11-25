@@ -38,3 +38,6 @@ def get_group_name (id:int):
 # retorna o Grupo que corresponde ao id especificado 
 def get_group (id:int):
     return None if id == '' or id is None else to_group(find_data_by_id_csv(GROUPS_PATH, int(id)))
+
+def get_group_name_especifc(leader_id):
+        return None if leader_id == '' or leader_id is None else to_group(find_data_by_id_csv(GROUPS_PATH, int(leader_id)))
