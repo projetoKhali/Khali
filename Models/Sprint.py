@@ -51,7 +51,7 @@ def current_rating_period(group_id):
 
     # faz um loop através das sprints do grupo
     for sprint in get_group_sprints(group_id):
-        if today() >= sprint.finish and today() <= sprint.finish + timedelta(days=sprint.rating_period):
+        if today() >= sprint.rating_period_start() and today() < sprint.rating_period_end():
             return sprint
 
 def previous_sprint (group_id):
