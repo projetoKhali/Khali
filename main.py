@@ -6,6 +6,7 @@ Events.initialize()
 # Cria dados de teste para popular os bancos de dados com usuários, grupos, times e avaliações
 from _test import create_test_data
 
+
 # create_test_data()
 
 from Time import set_today
@@ -62,5 +63,7 @@ login(email='a@d.m', senha='123')
 # login(email='lt1@o.com', senha='123')
 # login(email='fulano-dev@dev.com', senha ='123')
 # login(email='d@e.v', senha='123')
+# login(email='p02@o.com', senha='123')
+login(email = 'lt2@o.com', senha='123')
 
 WindowManager.update()
