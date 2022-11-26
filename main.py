@@ -7,7 +7,7 @@ Events.initialize()
 from _test import create_test_data
 
 
-# create_test_data()
+create_test_data()
 
 from Time import set_today
 # set_today(29, 8)    # começo da sprint 1 
