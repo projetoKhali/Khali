@@ -33,21 +33,9 @@ def run(frame_parent):
     frame_body.rowconfigure(0, weight=1)
     frame_body.columnconfigure(0, weight=1)
 
-    ############  dropdown  ############
-    from Models.Group import get_groups_of_leader
-    from Authentication import CURRENT_USER
-    var = StringVar()
-    # var.trace_add('write', None)
-
-    # lista de todos os grupos associados ao usuário corrente
-    group_names = [i.name for i in get_groups_of_leader(CURRENT_USER.id)]
-    var.set(group_names)
-    grupo_escolhido = var.get()
-
-    # droplist com nomes de todos os grupos associados ao usuário corrente
-    OptionMenu(frame_header, var, *group_names).grid(row=0, column=1, padx=5, pady=10, sticky='w', ipadx=30, ipady=6)
-    ############  /dropdown  ############
-
+    # dropdown com nome dos grupos
+    create_dropdown(frame_header,0,1)
+    
     # adiciona scrollbar no frame_bogy
     from Front.Scrollbar import add_scrollbar
     frame_body = add_scrollbar(frame_body, co0, 0)
@@ -370,9 +358,6 @@ def create_member_form(parent, row, team_index, previous_form_data=None):
     if previous_form_data is not None:
         entry_email.insert(0, previous_form_data[1])
 
-            
-    
-
     from Models.Role import get_role_name, get_role_id
 
     # inicializa uma StringVar para armazenar o valor do dropdown de Role
@@ -427,7 +412,6 @@ def create_calendar(parent, r, c):
 
 # coleta os valores dos campos preenchidos e conclui o cadastro de sprints, times e seus membros
 def confirmar_cadastros():
-    from Authentication import validate_user_email
     from Events import trigger
     from Models.Sprint import create_sprint
     from Models.Team import create_team
