@@ -111,7 +111,7 @@ def update_table(frame_table):
         frame_group.columnconfigure([i for i in range(3)], weight=1)
 
         label_group_name = criar_label(frame_group, group.name, 'Calibri, 10', 0, 0, gr0, 'w', width=40)
-        label_group_name.bind("<Button-1>", lambda _, lbl=label_group_name, g=group, fg=frame_group: open_group_name_entry(fg, lbl, g, lambda l, e, g=g: save_group_name(l, e, g)))
+        label_group_name.bind("<Button-1>", lambda _, lbl=label_group_name, g=group, fg=frame_group: bind_edit_label(fg, lbl, g.name, 'Calibri, 10', 4, 2, lambda l, e, g=g: save_group_name(l, e, g)))
 
         from Models.Team import get_teams_of_group
         from Models.User import get_users_of_group
@@ -151,6 +151,15 @@ def cadastrar():
     trigger('update_table')
 
 
+def save_group_name (label, entry, group):
+    try: new_name = entry.get()
+    except: return
+    from Models.Group import edit_group
+    edit_group(group.id, name=new_name)
+    group.name=new_name
+    label.config(text=new_name)
+
+
 # exclui um grupo
 def delete_group(group):
     from tkinter import messagebox
@@ -159,34 +168,3 @@ def delete_group(group):
         from Events import trigger
         delete_group(group.id)
         trigger('update_table')
-
-
-def open_group_name_entry (frame_group, label_name, group, entry_callback):
-
-    entry_name = criar_entry(frame_group, 'Calibri, 10', 0, 0, 'ew', 4, 2, 'center')
-    entry_name.config(highlightthickness=0, bd=0)
-    entry_name.insert('0', group.name)
-    entry_name.focus()
-
-    from tkinter import EventType
-    lambda_close = lambda event, save, lbl=label_name, e=entry_name: [entry_callback(lbl, e) if save else None, e.destroy()]
-
-    def validate_event (event, label):
-        if event.type is not EventType.ButtonPress: return True
-        print(label.winfo_containing(event.x, event.y))
-        return label.winfo_containing(event.x, event.y)
-
-
-    [entry_name.bind(i, lambda _: lambda_close(_, True)) for i in ['<Return>', '<FocusOut>', '<Tab>']]
-    entry_name.bind('<Escape>', lambda _: lambda_close(_, False))
-
-    label_name.winfo_toplevel().bind('<Button-1>', lambda _, lbl=label_name, l=lambda_close: [l(_, True), lbl.winfo_toplevel().unbind('<Button-1>')])
-
-
-def save_group_name (label, entry, group):
-    try: new_name = entry.get()
-    except: return
-    from Models.Group import edit_group
-    edit_group(group.id, name=new_name)
-    group.name=new_name
-    label.config(text=new_name)

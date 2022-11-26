@@ -49,12 +49,12 @@ def run(frame_parent):
     frame_body.columnconfigure(0, weight = 1)
 
     # seleciona os times pertencentes ao grupo do usuario logado
-    teams_list = get_teams_of_group(CURRENT_USER.group_id)
+    teams_list = get_teams_of_group(CURRENT_USER.group_id) # TODO: selecionar time atraves do valor do dropdown
     # print(f'times:{teams_list}')
 
     # pra cada time
-    for team_id, time_data in enumerate(teams_list):
-        frame_members_parent = create_team(frame_body, time_data, team_id)
+    for team_id, team in enumerate(teams_list):
+        frame_members_parent = create_team(frame_body, team, team_id)
 
         # seleciona os membros do time
         members_list = get_users_of_team(team_id)
@@ -85,23 +85,46 @@ def run(frame_parent):
     frame_bandaid.grid(row=100, column=0, sticky="s")
 
 
-def create_team(frame_teams_parent, team_data, team_id):
+def create_team(frame_teams_parent, team, team_id):
 
     # cria o frame do time
-    frame_team = Frame(frame_teams_parent, bg=co4
-    )
+    frame_team = Frame(frame_teams_parent, bg=co4)
     frame_team.columnconfigure(0, weight = 1)
     frame_team.grid(row=team_id, column=0, sticky="ew")
 
+    frame_team_header = criar_frame(frame_team, 1, 0, 'ew', co4, co4, 0, 0, 0)
+    frame_team_header.columnconfigure(0, weight = 1)
+
     # coloca o nome do time
-    team_name = 'Usuários sem time' if team_data is None else team_data.name
-    Label(frame_team, text=team_name, font='Calibri, 16', bg=co4).grid(row=0, column=0)
+    label_team_name = Label(frame_team_header, text='Usuários sem time' if team is None else team.name, font='Calibri, 16', bg=co4)
+    label_team_name.grid(row=0, column=0)
+    if team is not None: label_team_name.bind("<Button-1>", lambda _, lbl=label_team_name, t=team, fg=frame_team_header: bind_edit_label(fg, lbl, t.name, 'Calibri, 16', 0, 0, lambda l, e, t=t: save_team_name(l, e, t)))
+
+    criar_button(frame_team_header, 'Excluir', 'Calibri, 12', 0, 1, lambda t=team: delete_team(t), 'ew').config(takefocus = 0)
+
 
     frame_members_parent = Frame(frame_team)
     frame_members_parent.columnconfigure(0, weight = 1)
     frame_members_parent.grid(row=team_id+1, column=0, sticky="ew")
 
     return frame_members_parent
+
+
+def save_team_name (label, entry, team):
+    try: new_name = entry.get()
+    except: return
+    from Models.Team import edit_team
+    edit_team(team.id, name=new_name)
+    team.name=new_name
+    label.config(text=new_name)
+
+def delete_team(team):
+    from tkinter import messagebox
+    if messagebox.askquestion('Deletar time', f"Deseja deletar o time {team.name}?", icon='question') == 'yes':
+        from Models.Team import delete_team
+        delete_team(team.id)
+        redraw()
+
 
 def create_member(frame_members_parent, member_data:User, row):
 

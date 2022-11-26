@@ -56,3 +56,28 @@ def bind_entry_placeholder (entry, text):
     # configura o evento para colocar novamente o placeholder caso o usuário deselecione a entry sem inserir nenhum texto
     entry.bind('<FocusOut>', lambda _, e=entry, f=focus_in_lambda: [no_value_lambda(_, e), e.bind('<FocusIn>', f)] if len(e.get()) == 0 else None)
 
+
+# Adiciona a funcionalidade de editar uma label. Ao clicar, uma entry é criada por cima da label, 
+# inicializada com o valor especificado e configurada para chamar o callback especificado ao apertar Enter, Tab ou clicar fora da entry 
+def bind_edit_label (frame_group, label, initial_value, font, r, c, entry_callback):
+
+    entry = criar_entry(frame_group, font, 0, 0, 'ew', r, c, 'center')
+    entry.config(highlightthickness=0, bd=0)
+    entry.insert('0', initial_value)
+    entry.focus()
+
+    from tkinter import EventType
+    lambda_close = lambda event, save, lbl=label, e=entry: [entry_callback(lbl, e) if save else None, e.destroy()]
+
+    def validate_event (event, label):
+        if event.type is not EventType.ButtonPress: return True
+        print(label.winfo_containing(event.x, event.y))
+        return label.winfo_containing(event.x, event.y)
+
+
+    [entry.bind(i, lambda _: lambda_close(_, True)) for i in ['<Return>', '<FocusOut>', '<Tab>']]
+    entry.bind('<Escape>', lambda _: lambda_close(_, False))
+
+    label.winfo_toplevel().bind('<Button-1>', lambda _, lbl=label, l=lambda_close: [l(_, True), lbl.winfo_toplevel().unbind('<Button-1>')])
+
+    return entry
