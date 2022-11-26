@@ -6,7 +6,8 @@ Events.initialize()
 # Cria dados de teste para popular os bancos de dados com usuários, grupos, times e avaliações
 from _test import create_test_data
 
-# create_test_data()
+
+create_test_data()
 
 from Time import set_today
 # set_today(29, 8)    # começo da sprint 1 
