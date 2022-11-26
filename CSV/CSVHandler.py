@@ -201,7 +201,7 @@ def find_data_list_by_fields_value_csv(path:str, kvps:dict):
             if line_values[key] != str(kvps[key]):
                 # sai do loop kvps
                 break
-
+            
         else:
             # adiciona a linha formatada para a lista de retorno
             lista.append(format_line_csv(lines[0].strip('\n').split(','), line))
