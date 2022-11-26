@@ -13,6 +13,8 @@ def login (email, senha):
 
     from CSV.CSVHandler import find_data_csv
     from Settings import USERS_PATH
+    import tkinter
+    from tkinter import messagebox
 
     # Acessa o usuário que corresponde ao email fornecido na database
     try:
@@ -22,6 +24,7 @@ def login (email, senha):
     # em caso de erro, retorna o erro 0 - dado não encontrado
     except:
         print("Authentication.login -- Usuário não encontrado")
+        tkinter.messagebox.showinfo("Khali Group",  "E-mail inválido. Por favor, verifique o endereço de E-mail")
         return 0
 
     # importa a biblioteca de criptografia
@@ -33,6 +36,7 @@ def login (email, senha):
         # caso a comparação retorne False, significa que as senhas não são iguais
         # retorna o código de erro 1 - dado invalido
         print("Authentication.login -- Senha inválida")
+        tkinter.messagebox.showinfo("Khali Group",  "Senha inválida. Por favor, verifique a senha novamente")
         return 1
 
     # comparação de senhas retorna True, login retornará o Usuário
@@ -56,15 +60,18 @@ def sair():
 # Efetua o Cadastro de um novo Usuário e, se efetuado com sucesso, o armazena na database .csv
 def register (name, email, group_id, team_id, role_id, custom_password = None, log = True):
     from Settings import COLS
+    import tkinter
 
     # Verifica se o Nome do Usuário fornecido é válido. Cancela o processo caso não seja.
     if not validate_user_name (name):
         print(COLS[2] + 'Authentication.Register -- Erro ao cadastrar usuario: Nome fornecido não é válido' + COLS[0])
+        tkinter.messagebox.showinfo("Khali Group",  "Nome inválido")
         return
 
     # Verifica se o Email fornecido é válido. Cancela o processo caso não seja.
     if not validate_user_email (email):
         print(COLS[2] + 'Authentication.Register -- Erro ao cadastrar usuario: Email fornecido não é válido' + COLS[0])
+        tkinter.messagebox.showinfo("Khali Group",  "E-mail inválido. Por favor, verifique o endereço de E-mail")
         return
 
     # Verifica se o Grupo fornceido é válido. Cancela o processo caso não seja.
