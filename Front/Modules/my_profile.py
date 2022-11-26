@@ -316,7 +316,6 @@ def criar_retorno_feedbacks(frame_section_feedbacks, sprints):
     # oi Tânia
     from Utils.lista_usuarios_back import get_feedbacks
     feedbacks = get_feedbacks(CURRENT_USER.id, sprints[sel_sprint].id)
-
     # Cria um pseudo título para o retorno de feedbacks 
     frame_fb_title = criar_frame(frame_feedbacks, 1, 0, "ew", co0, co0, 4, 0, 0)
     criar_label(frame_fb_title, f'Feedbacks recebidos durante a Sprint {sel_sprint + 1}:', 'Calibri, 12 bold', 0, 0, co2, 'w', 'center').configure(fg='white')
@@ -330,13 +329,28 @@ def criar_retorno_feedbacks(frame_section_feedbacks, sprints):
     from Front.Scrollbar import add_scrollbar
     frame_feedback_list = add_scrollbar(frame_feedback_list, co0, 0)
 
-    # cria cada feedback
-    for index, feedback in enumerate(feedbacks):
-        frame_fb = criar_frame(frame_feedback_list, index, 0, "ns", co0, co0, 2, 4, 4)
-        frame_fb.columnconfigure(0, weight=1)
-        from Models.id_criteria import criteria_full
-        criar_label(frame_fb, f'{criteria_full[feedback[0]]}: ', 'Calibri, 10 bold', 0, 0, co0, 'we', 'left')
-        criar_label(frame_fb, feedback[1], 'Calibri, 10', 1, 0, co0, 'we', 'left').configure(wraplength=400, anchor='n')
+    from Models.id_criteria import criteria_full
+    for index, criteria in enumerate(criteria_full):
+        frame_criteria = criar_frame(frame_feedback_list, index, 0, "news", co0, co2, 2, 5, 5)
+        frame_criteria.columnconfigure(0, weight=1)
+        criar_label(frame_criteria, criteria, 'Calibri, 12 bold', 0, 0, co0, 'we', 'left')
+        linha = 1
+        for feedback in feedbacks:
+            if feedback[0] == index:
+                frame_fb = criar_frame(frame_criteria, linha, 0, "ns", co0, co0, 2, 4, 4)
+                criar_label(frame_fb, f"\"{feedback[1]}\"", 'Calibri, 10', 0, 0, co0, 'we', 'left' )
+                linha += 1
+
+
+
+
+    # # cria cada feedback
+    # for index, feedback in enumerate(feedbacks):
+    #     frame_fb = criar_frame(frame_feedback_list, index, 0, "ns", co0, co0, 2, 4, 4)
+    #     frame_fb.columnconfigure(0, weight=1)
+    #     from Models.id_criteria import criteria_full
+    #     criar_label(frame_fb, f'{criteria_full[feedback[0]]}: ', 'Calibri, 10 bold', 0, 0, co0, 'we', 'left')
+    #     criar_label(frame_fb, feedback[1], 'Calibri, 10', 1, 0, co0, 'we', 'left').configure(wraplength=400, anchor='n')
 
 
 # TODO: seção com as informações de instrutor

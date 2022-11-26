@@ -54,12 +54,18 @@ def get_users(user):
     return [grade_to_submit, grade_submitted]
 
 
-def get_feedbacks (user_id, sprint_id):
-    from random import randint
-    return [
-        [randint(0, 4) ,'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse quis suscipit lectus. Cras convallis enim tempor tellus ornare, sit amet.']
-        for _ in range(10)
-    ]
+def get_feedbacks(user_id, sprint_id):
+    feedbacks = []
+    from Models.Rating import get_ratings
+    ratings = get_ratings(to_user_id=user_id, sprint_id=sprint_id)
+    for rating in ratings:
+        feedback = []
+        if rating.value <= 3:
+            feedback.append(rating.criteria_id)
+            feedback.append(rating.comment)
+            feedbacks.append(feedback)
+    return feedbacks
+
 
 
 
