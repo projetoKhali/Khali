@@ -184,7 +184,9 @@ def open_group_name_entry (frame_group, label_name, group, entry_callback):
 
 
 def save_group_name (label, entry, group):
-    try: new_name = entry.get()
+    try: 
+        new_name = entry.get()
+        if new_name == '': return
     except: return
     from Models.Group import edit_group
     edit_group(group.id, name=new_name)
