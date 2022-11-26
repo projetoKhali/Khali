@@ -1,4 +1,4 @@
-from . import cadastro_adm, cadastro_lider, lista_usuarios, edit_team, dashboards, my_profile
+from . import cadastro_adm, cadastro_adm2, cadastro_lider, lista_usuarios, edit_team, dashboards, my_profile
 from Settings import COLS
 
 # Define se o acompanhamento de processo via console será habilitado durante a execução
@@ -7,6 +7,7 @@ DEBUG = False
 # Define os módulos disponíveis
 MODULES = [
     # lista_usuarios,
+    cadastro_adm2,
     my_profile,
     cadastro_adm,
     cadastro_lider,

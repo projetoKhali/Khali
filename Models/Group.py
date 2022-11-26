@@ -39,10 +39,22 @@ def get_group_name (id:int):
 def get_group (id:int):
     return None if id == '' or id is None else to_group(find_data_by_id_csv(GROUPS_PATH, int(id)))
 
-# Retorna todos os Grupo
+# Retorna todos os Gruposs
 def get_groups ():
-    return None if id == '' or id is None else [to_group(x) for x in load_all_csv(GROUPS_PATH)]
+    return [to_group(x) for x in load_all_csv(GROUPS_PATH)]
 
 # Retorna todos o Grupos em que o usuário de id especificado posssui a função de Lider
 def get_groups_of_leader (id:int):
     return None if id == '' or id is None else [to_group(x) for x in find_data_list_by_field_value_csv(GROUPS_PATH, 'leader_id', int(id))]
+
+
+def edit_group(id, name = 'IGNORE', leader_id = 'IGNORE', client_id = 'IGNORE'):
+    kvps = {}
+    if name != 'IGNORE': kvps.update({'name': name})
+    if leader_id != 'IGNORE': kvps.update({'leader_id': leader_id})
+    if client_id != 'IGNORE': kvps.update({'client_id': client_id})
+    return edit_line_csv(GROUPS_PATH, id, kvps)
+
+
+def delete_group(id):
+    delete_line_csv(GROUPS_PATH, id)

@@ -39,4 +39,12 @@ def get_team_name (id:int):
 def get_teams_of_group (group_id):
     return None if group_id is None or group_id == '' else [to_team(team) for team in find_data_list_by_field_value_csv(TEAMS_PATH, 'group_id', group_id)]
 
+def edit_team(id, name = 'IGNORE', group_id = 'IGNORE'):
+    kvps = {}
+    if name != 'IGNORE': kvps.update({'name': name})
+    if group_id != 'IGNORE': kvps.update({'group_id': group_id})
+    return edit_line_csv(TEAMS_PATH, id, kvps)
+
+def delete_team(id):
+    delete_line_csv(TEAMS_PATH, id)
 

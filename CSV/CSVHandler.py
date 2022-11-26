@@ -413,6 +413,37 @@ def line_count_csv (path:str):
     return 0
 
 
+# Remove a linha do id especificado
+def delete_line_csv (path:str, id:int):
+
+    # abre e lê arquivo csv
+    with open(path + '.csv', 'r') as file: lines = file.readlines()
+
+    new_lines = []
+
+    for line in lines[1:]:
+        line_data = format_line_csv(PATH_FIELDS[path], line)
+        if line_data['id'] == str(id): continue
+        new_lines.append([field[1] for field in line_data.items()])
+    save_file_csv(path, PATH_FIELDS[path], new_lines)
+
+
+# Edita a linha de id especificado 
+def edit_line_csv (path:str, id:int, kvps:dict):
+
+    # abre e lê arquivo csv
+    with open(path + '.csv', 'r') as file: lines = file.readlines()
+
+    for line_index, line in enumerate(lines[1:]):
+        line_data = format_line_csv(PATH_FIELDS[path], line)
+        if line_data['id'] == str(id):
+            for field in kvps:
+                line_data[field] = kvps[field]
+        line_list = [field[1] for field in line_data.items()]
+        lines[line_index + 1] = line_list
+    save_file_csv(path, PATH_FIELDS[path], lines[1:])
+
+
 # Deleta um arquivo .csv do caminho especificado
 def delete_csv (path:str):
     import os
