@@ -33,7 +33,7 @@ def run(frame_parent):
     frame_body.rowconfigure(0, weight=1)
     frame_body.columnconfigure(0, weight=1)
 
-    ############
+    ############  dropdown  ############
     from Models.Group import get_groups_of_leader
     from Authentication import CURRENT_USER
     var = StringVar()
@@ -42,11 +42,11 @@ def run(frame_parent):
     # lista de todos os grupos associados ao usuário corrente
     group_names = [i.name for i in get_groups_of_leader(CURRENT_USER.id)]
     var.set(group_names)
+    grupo_escolhido = var.get()
 
     # droplist com nomes de todos os grupos associados ao usuário corrente
-    OptionMenu(frame_header, var, *group_names).grid(row=0,
-                                                     column=1, padx=5, pady=10, sticky='w', ipadx=30, ipady=6)
-    ############
+    OptionMenu(frame_header, var, *group_names).grid(row=0, column=1, padx=5, pady=10, sticky='w', ipadx=30, ipady=6)
+    ############  /dropdown  ############
 
     # adiciona scrollbar no frame_bogy
     from Front.Scrollbar import add_scrollbar
@@ -62,7 +62,7 @@ def run(frame_parent):
 
     # Cria o botão responsável por confirmar os cadastros
     Button(frame_header, text="Confirmar Cadastros", font="Calibri, 12", command=confirmar_cadastros,
-           activebackground='#c5a8b0', bg='#d9d9d9', fg='#1a1d1a', height=0).grid(row=0, column=2, sticky='news', padx=30, pady=10, ipadx=50, ipady=6)
+           activebackground='#c5a8b0', bg='#d9d9d9', fg='#1a1d1a', height=0,).grid(row=0, column=2, sticky='news', padx=30, pady=10, ipadx=50, ipady=6)
 
     # frame_confirm_btn = criar_frame(frame_header, 0, 2, 'ew', co0, px=8)
     # frame_confirm_btn.grid_columnconfigure(0, weight=1)
@@ -364,10 +364,14 @@ def create_member_form(parent, row, team_index, previous_form_data=None):
         entry_name.insert(0, previous_form_data[0])
 
     # Email - Label e Entry
+    from Authentication import validate_user_email
     criar_label(frame_member, "E-mail:", "Calibri, 10", 0, 2, gr0)
     entry_email = criar_entry(frame_member, "Calibri, 10", 0, 3)
     if previous_form_data is not None:
         entry_email.insert(0, previous_form_data[1])
+
+            
+    
 
     from Models.Role import get_role_name, get_role_id
 
@@ -387,16 +391,16 @@ def create_member_form(parent, row, team_index, previous_form_data=None):
     OptionMenu(frame_member, entry_role, *role_names).grid(row=0, column=5)
 
     # Registra o retorno dos valores de entrada desse formulário de membro caso o time de indice team_index seja solicitado
+
     from Events import trigger, register, unregister_all
     register(f'get_team_members_{team_index}', lambda n=entry_name, e=entry_email, r=entry_role: [
-             n.get(), e.get(), get_role_id(r.get())])
+            n.get(), e.get(), get_role_id(r.get())])
     unregister_all(f'clear_team_members_{team_index}_{row}')
     register(f'clear_team_members_{team_index}_{row}', lambda n=entry_name, e=entry_email,
-             r=entry_role, riv=entry_role_init_val: [n.delete('0', 'end'), e.delete('0', 'end'), r.set(riv)])
+            r=entry_role, riv=entry_role_init_val: [n.delete('0', 'end'), e.delete('0', 'end'), r.set(riv)])
     register(f'clear_team_{team_index}', lambda ti=team_index,
-             mi=row: trigger(f'clear_team_members_{ti}_{mi}'))
-
-
+            mi=row: trigger(f'clear_team_members_{ti}_{mi}'))
+        
 # Retorna o valor na entry especificada considerando erros
 def get_entry_int(entry):
 
@@ -423,6 +427,7 @@ def create_calendar(parent, r, c):
 
 # coleta os valores dos campos preenchidos e conclui o cadastro de sprints, times e seus membros
 def confirmar_cadastros():
+    from Authentication import validate_user_email
     from Events import trigger
     from Models.Sprint import create_sprint
     from Models.Team import create_team
