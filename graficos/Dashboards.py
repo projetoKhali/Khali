@@ -89,10 +89,22 @@ def pie_chart ():
 # | media de cada time      |    sprints    |      time      |     criterio     |     LG FK     |     teams_media      |!
 # | media membros da função |    sprints    |      time      |     criterio     |     LG FK     |      role_media      |!
 # |--------------------------------------------------------------------------------------------------------------------|
-# | media do time           |    sprint     |     sprint     |     criterio     |     PO LT     |  team_media_sprints  |
+# | media do time           |    sprint     |     sprint     |     criterio     |     PO LT     |  team_media_sprints  | 
 # |--------------------------------------------------------------------------------------------------------------------|
 # | media membros time      |    sprint     |     membro     |     criterio     |     PO LT     |   users_media_team   |!
 # | media do grupo          |    sprints    |     sprint     |     criterio     |     PO LT     | group_media_sprints  |!
+# |--------------------------------------------------------------------------------------------------------------------|
+
+
+# |--------------------------------------------------------------------------------------------------------------------|
+# |                                   Gráficos a serem desenvolvidos na Sprint 4                                       |
+# |--------------------------------------------------------------------------------------------------------------------|
+# |                         |    calculo    |     barras     |      label       |    acesso     |       função         |
+# |--------------------------------------------------------------------------------------------------------------------|
+# | media time / times      |    sprints    |  time / times  |     criterio     |     PO LT     |                      |
+# | media grupo / grupos    |    sprints    | group / groups |     criterio     |     LG FC     |                      |
+# | media time.users        |    sprints    |  time / times  |     criterio     |     LG FC     |                      | LINE
+# | media dos times         |    sprint     |      time      |      sprint      |     LG FC     |                      | LINE
 # |--------------------------------------------------------------------------------------------------------------------|
 
 
