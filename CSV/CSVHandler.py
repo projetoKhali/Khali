@@ -87,6 +87,37 @@ def find_data_by_id_csv (path:str, id:str):
 
     # Loop finalizado sem encontrar nenhum resultado
     return None
+# check_path(path, 'find_data_list_by_field_value_csv')
+def find_data_by_field_value_csv(path:str, field:str, value:str):
+    # Tenta executar o próximo código
+    try:
+    
+        # Abre o arquivo
+        with open(path + '.csv', 'r') as file:
+
+            # Lê as linhas do arquivo e salva na variavel 'lines'
+            lines = file.readlines()
+
+    # Em caso de falha
+    except:
+        log(COLS[2] + "CSVHandler.find_data_by_field_value_csv: Erro ao ler arquivo" + COLS[0])
+        return None
+
+    # Pra cada linha carregada na variavel 'lines'
+    for line in lines[1:]:
+
+        line_values = format_line_csv(lines[0].strip('\n').split(','), line)
+
+        try:
+            line_key = line_values[field]
+        except:
+            continue
+
+        # Se a linha atual contem a chave fornecida
+        if line_key == str(value):
+
+            # Retorna a linha formatada para dicionario
+            return format_line_csv(lines[0].strip('\n').split(','), line)
 
 
 # Retorna uma lista contendo todas as linhas em que o campo 'field' possua o valor 'value'

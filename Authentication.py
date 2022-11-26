@@ -11,21 +11,21 @@ def login (email, senha):
         print(f'Authentication.login -- Tentativa de login enquanto um usuário já está logado. Um novo login não pode ser efetuado')
         return CURRENT_USER
 
-    from CSV.CSVHandler import find_data_csv
+    from CSV.CSVHandler import find_data_by_field_value_csv
     from Settings import USERS_PATH
     import tkinter
     from tkinter import messagebox
 
     # Acessa o usuário que corresponde ao email fornecido na database
     try:
-        user_data = find_data_csv(USERS_PATH, email)
+        user_data = find_data_by_field_value_csv(USERS_PATH, "email", email)
         hashed_pw = user_data["password"]
+        print(user_data)
 
     # em caso de erro, retorna o erro 0 - dado não encontrado
     except:
         print("Authentication.login -- Usuário não encontrado")
-        tkinter.messagebox.showinfo("Khali Group",  "E-mail inválido. Por favor, verifique o endereço de E-mail")
-        return 0
+        return 1
 
     # importa a biblioteca de criptografia
     import bcrypt
@@ -36,8 +36,7 @@ def login (email, senha):
         # caso a comparação retorne False, significa que as senhas não são iguais
         # retorna o código de erro 1 - dado invalido
         print("Authentication.login -- Senha inválida")
-        tkinter.messagebox.showinfo("Khali Group",  "Senha inválida. Por favor, verifique a senha novamente")
-        return 1
+        return 2
 
     # comparação de senhas retorna True, login retornará o Usuário
     print("Authentication.login -- login sucesso")
@@ -48,7 +47,7 @@ def login (email, senha):
     from Events import trigger
     trigger('login')
 
-    return CURRENT_USER
+    return 0
 
 # Define que não não tem usuário logado e envia para a tela de login
 def sair():
