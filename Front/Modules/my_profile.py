@@ -338,8 +338,8 @@ def criar_retorno_feedbacks(frame_section_feedbacks, sprints):
         linha = 1
         for feedback in feedbacks:
             if feedback[0] == index:
-                frame_fb = criar_frame(frame_criteria, linha, 0, "ns", co0, co0, 2, 0, 0)
-                criar_label(frame_fb, feedback[1], 'Calibri, 10', 0, 0, co0, 'we', 'left' )
+                frame_fb = criar_frame(frame_criteria, linha, 0, "ns", co0, co0, 2, 4, 4 )
+                criar_label(frame_fb, f"\"{feedback[1]}\"", 'Calibri, 10', 0, 0, co0, 'we', 'left' )
                 linha += 1
 
 
