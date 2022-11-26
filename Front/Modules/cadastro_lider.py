@@ -34,7 +34,9 @@ def run(frame_parent):
     frame_body.columnconfigure(0, weight=1)
 
     # dropdown com nome dos grupos
-    create_dropdown(frame_header,0,1)
+    from Models.Group import get_groups_of_leader
+    from Authentication import CURRENT_USER
+    create_dropdown(frame_header,0,1, [i.name for i in get_groups_of_leader(CURRENT_USER.id)])
     
     # adiciona scrollbar no frame_bogy
     from Front.Scrollbar import add_scrollbar

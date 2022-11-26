@@ -47,6 +47,9 @@ def get_groups ():
 def get_groups_of_leader (id:int):
     return None if id == '' or id is None else [to_group(x) for x in find_data_list_by_field_value_csv(GROUPS_PATH, 'leader_id', int(id))]
 
+def get_groups_of_client (id:int):
+    return None if id == '' or id is None else [to_group(x) for x in find_data_list_by_field_value_csv(GROUPS_PATH, 'client_id', int(id))]
+
 
 def edit_group(id, name = 'IGNORE', leader_id = 'IGNORE', client_id = 'IGNORE'):
     kvps = {}
@@ -55,6 +58,6 @@ def edit_group(id, name = 'IGNORE', leader_id = 'IGNORE', client_id = 'IGNORE'):
     if client_id != 'IGNORE': kvps.update({'client_id': client_id})
     return edit_line_csv(GROUPS_PATH, id, kvps)
 
-
 def delete_group(id):
     delete_line_csv(GROUPS_PATH, id)
+    

@@ -65,13 +65,11 @@ def register (name, email, group_id, team_id, role_id, custom_password = None, l
     # Verifica se o Nome do Usuário fornecido é válido. Cancela o processo caso não seja.
     if not validate_user_name (name):
         print(COLS[2] + 'Authentication.Register -- Erro ao cadastrar usuario: Nome fornecido não é válido' + COLS[0])
-        tkinter.messagebox.showinfo("Khali Group",  "Nome inválido")
         return
 
     # Verifica se o Email fornecido é válido. Cancela o processo caso não seja.
     if not validate_user_email (email):
         print(COLS[2] + 'Authentication.Register -- Erro ao cadastrar usuario: Email fornecido não é válido' + COLS[0])
-        tkinter.messagebox.showinfo("Khali Group",  "E-mail inválido. Por favor, verifique o endereço de E-mail")
         return
 
     # Verifica se o Grupo fornceido é válido. Cancela o processo caso não seja.

@@ -56,21 +56,17 @@ def bind_entry_placeholder (entry, text):
     # configura o evento para colocar novamente o placeholder caso o usuário deselecione a entry sem inserir nenhum texto
     entry.bind('<FocusOut>', lambda _, e=entry, f=focus_in_lambda: [no_value_lambda(_, e), e.bind('<FocusIn>', f)] if len(e.get()) == 0 else None)
 
-def create_dropdown(frame_parent, r, c):
-    from Models.Group import get_groups_of_leader
-    from Authentication import CURRENT_USER
+def create_dropdown(frame_parent, r, c, options):
     from tkinter import StringVar, OptionMenu
     
     var = StringVar()
     # var.trace_add('write', None)
-    
 
     # lista de todos os grupos associados ao usuário corrente
-    group_names = [i.name for i in get_groups_of_leader(CURRENT_USER.id)]
-    var.set(group_names)
-    grupo_escolhido = var.get()
+    var.set(options[0])
+    # grupo_escolhido = var.get()
 
-    dropdown = OptionMenu(frame_parent, var, *group_names)
+    dropdown = OptionMenu(frame_parent, var, *options, command= lambda:None)
     dropdown.grid(row=r, column=c, padx=5, pady=10, sticky='w', ipadx=30, ipady=6)
     # droplist com nomes de todos os grupos associados ao usuário corrente
     return dropdown
