@@ -37,11 +37,13 @@ def run(frame_parent):
     from Models.Group import get_groups_of_leader
     from Authentication import CURRENT_USER
     var = StringVar()
-    var.trace_add('write', None)
-    # droplist com nomes de todos os grupos associados ao usuário
+    # var.trace_add('write', None)
+
+    # lista de todos os grupos associados ao usuário corrente
     group_names = [i.name for i in get_groups_of_leader(CURRENT_USER.id)]
     var.set(group_names)
 
+    # droplist com nomes de todos os grupos associados ao usuário corrente
     OptionMenu(frame_header, var, *group_names).grid(row=0,
                                                      column=1, padx=5, pady=10, sticky='w', ipadx=30, ipady=6)
     ############
