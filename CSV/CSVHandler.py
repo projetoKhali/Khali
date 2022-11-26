@@ -198,14 +198,13 @@ def find_data_list_by_fields_value_csv(path:str, kvps:dict):
         for key in kvps:
 
             # Se o valor da chave key na linha corresponde ao valor da mesma chave no dicionario kvps
-            if line_values[key] == str(kvps[key]):
-
-                # adiciona a linha formatada para a lista de retorno
-                lista.append(format_line_csv(lines[0].strip('\n').split(','), line))
-
+            if line_values[key] != str(kvps[key]):
                 # sai do loop kvps
                 break
 
+        else:
+            # adiciona a linha formatada para a lista de retorno
+            lista.append(format_line_csv(lines[0].strip('\n').split(','), line))
 
     # Loop finalizado sem encontrar nenhum resultado
     return lista

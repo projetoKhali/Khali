@@ -1,17 +1,19 @@
 # inicializa o sistema de eventos
+from Authentication import login
+from Front import WindowManager
+from Time import set_today
+from _test import create_test_data
 import Events
 
 Events.initialize()
 
 # Cria dados de teste para popular os bancos de dados com usuários, grupos, times e avaliações
-from _test import create_test_data
 
 # create_test_data()
 
-from Time import set_today
-# set_today(29, 8)    # começo da sprint 1 
-# set_today(19, 9)    # fim da sprint 1 | começo do periodo avaliativo da sprint 1 
-# set_today(26, 9)    # fim do periodo avaliativo da sprint 1 
+# set_today(29, 8)    # começo da sprint 1
+# set_today(19, 9)    # fim da sprint 1 | começo do periodo avaliativo da sprint 1
+# set_today(26, 9)    # fim do periodo avaliativo da sprint 1
 
 # # teste retorno de valores do sistema de eventos
 # def teste():
@@ -48,9 +50,6 @@ from Time import set_today
 # for i in range(10):
 #     register("fulano",  "f@u.lano", 0, 0, 5, custom_password='123')
 
-
-
-from Front import WindowManager
 
 WindowManager.initialize()
 
