@@ -5,16 +5,15 @@ def get_users(user):
 
     from Models.Role import get_role
     from Models.User import get_users_of_team, get_users_of_group
-    from Models.Rating import get_ratings_from_user, get_ratings
+    from Models.Rating import get_ratings
     from Models.Sprint import current_rating_period
-    from Time import today
 
     sprint = current_rating_period(user.group_id)
+    if sprint == None: return [[], []]
 
     #pego o nome e funções da pessoa que logou
     role = get_role(user.role_id)
     
-
     #lista com as linhas da tabela ratings que correspondem a avaliações do usuário logado
     ratings = get_ratings(from_user_id=user.id, sprint_id=sprint.id)
     # ratings = get_ratings_from_user(user.id)

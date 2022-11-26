@@ -113,7 +113,7 @@ def criar_section_1():
     g = [len(grades[0]), len(grades[1])]
 
     # Cria o pie chart utilizando a informação de usuários
-    criar_piechart(frame_section_header, g)
+    if (sum(g) > 0): criar_piechart(frame_section_header, g)
 
     # Cria o Frame parent de ambas as listas
     frame_listas_parent = criar_frame(frame_section, 2, 0, "nsew", co0 if g[1] == 0 else co0, co0, 0, 0, 0)
