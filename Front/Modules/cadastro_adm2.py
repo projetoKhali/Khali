@@ -42,7 +42,7 @@ def run (frame_parent):
     ]
 
     for i, text in enumerate(texts):
-        criar_label(frame_summary, text, 'Calibri, 12', i, 0, co1, 'ew', 'center').config(wraplength=750, padx=16, pady=2)
+        criar_label(frame_summary, text, 'Calibri, 12', i, 0, co0, 'ew', 'center').config(wraplength=750, padx=16, pady=2)
 
     frame_group_form = criar_frame(frame_body, 1, 0, 'news', co3, co3, 1, 8, 8)
     frame_group_form.columnconfigure(0, weight=1)
@@ -55,7 +55,7 @@ def run (frame_parent):
     criar_label(frame_group_form_title, 'Novo Grupo', 'Calibri, 12 bold', 0, 0, co3, 'w').config(fg=co0)
     criar_button(frame_group_form_title, 'Cadastrar', 'Calibri, 12 bold', 0, 1, cadastrar, 'e').config(takefocus = 0)
 
-    frame_group_form_name = criar_frame(frame_group_form_header, 1, 0, 'ew', co0, co0, 0, 0, 0)
+    frame_group_form_name = criar_frame(frame_group_form_header, 1, 0, 'ew', gr0, gr0, 0, 0, 0)
     frame_group_form_name.columnconfigure(2, weight=1)
     criar_label(frame_group_form_name, 'Nome do Grupo: ', 'Calibri, 12', 0, 0, sticky='w').config(width=22)
 
@@ -64,14 +64,14 @@ def run (frame_parent):
     unregister_all('get_group_name')
     register('get_group_name', lambda e=criar_entry(frame_group_form_name, 'Calibri, 12', 0, 1, 'ew'): e.get())
 
-    frame_users_form = criar_frame(frame_group_form, 1, 0, 'ew', co1, co1, 0, 0, 0)
+    frame_users_form = criar_frame(frame_group_form, 1, 0, 'ew', gr0, gr0, 0, 0, 0)
     for role_index, role in enumerate(['Líder do Grupo', 'Fake Client']):
 
-        criar_label(frame_users_form, f'Nome do {role}: ', 'Calibri, 12', role_index, 0, co1, sticky='w').config(width=22)
+        criar_label(frame_users_form, f'Nome do {role}: ', 'Calibri, 12', role_index, 0, gr0, sticky='w').config(width=22)
         unregister_all(f'get_{["LdG", "FC"][role_index]}_name')
         register(f'get_{["LdG", "FC"][role_index]}_name', lambda e=criar_entry(frame_users_form, 'Calibri, 12', role_index, 1): e.get())
 
-        criar_label(frame_users_form, f'Email do {role}: ', 'Calibri, 12', role_index, 2, co1, sticky='w').config(width=26)
+        criar_label(frame_users_form, f'Email do {role}: ', 'Calibri, 12', role_index, 2, gr0, sticky='w').config(width=26)
         unregister_all(f'get_{["LdG", "FC"][role_index]}_email')
         register(f'get_{["LdG", "FC"][role_index]}_email', lambda e=criar_entry(frame_users_form, 'Calibri, 12', role_index, 3): e.get())
 
@@ -80,9 +80,9 @@ def run (frame_parent):
     frame_table.rowconfigure(1, weight=1)
 
     frame_table_header = criar_frame(frame_table, 0, 0, 'ew', co3, None, 0, 4, 0)
-    criar_label(frame_table_header, 'Grupos', 'Calibri, 12 bold', 0, 0, co3, 'w').config(fg=co1)
+    criar_label(frame_table_header, 'Grupos', 'Calibri, 12 bold', 0, 0, co3, 'w').config(fg=gr0)
 
-    frame_table_list = criar_frame(frame_table, 2, 0, 'news', co1, co1, 0, 0, 0)
+    frame_table_list = criar_frame(frame_table, 2, 0, 'news', gr0, gr0, 0, 0, 0)
     frame_table_list.columnconfigure(0, weight=1)
     frame_table_list.rowconfigure(0, weight=1)
 
@@ -104,20 +104,20 @@ def update_table(frame_table):
 
     # from Events import trigger, register, unregister_all
 
-    frame_groups_parent = criar_frame(frame_table, 0, 0, 'news', co1, None, 0, 2, 2)
+    frame_groups_parent = criar_frame(frame_table, 0, 0, 'news', gr0, None, 0, 2, 2)
     for group_index, group in enumerate(groups):
 
-        frame_group = criar_frame(frame_groups_parent, group_index, 0, 'ew', co1, co2, 1, 2, 2)
+        frame_group = criar_frame(frame_groups_parent, group_index, 0, 'ew', gr0, co2, 1, 2, 2)
         frame_group.columnconfigure([i for i in range(3)], weight=1)
 
-        label_group_name = criar_label(frame_group, group.name, 'Calibri, 10', 0, 0, co1, 'w', width=40)
+        label_group_name = criar_label(frame_group, group.name, 'Calibri, 10', 0, 0, gr0, 'w', width=40)
         label_group_name.bind("<Button-1>", lambda _, lbl=label_group_name, g=group, fg=frame_group: open_group_name_entry(fg, lbl, g, lambda l, e, g=g: save_group_name(l, e, g)))
 
         from Models.Team import get_teams_of_group
         from Models.User import get_users_of_group
 
-        criar_label(frame_group, f'Nº de Times: {len(get_teams_of_group(group.id))}', 'Calibri, 10', 0, 1, co1, 'w', width=20)
-        criar_label(frame_group, f'Nº de Membros: {len(get_users_of_group(group.id))}', 'Calibri, 10', 0, 2, co1, 'w', width=20)
+        criar_label(frame_group, f'Nº de Times: {len(get_teams_of_group(group.id))}', 'Calibri, 10', 0, 1, gr0, 'w', width=20)
+        criar_label(frame_group, f'Nº de Membros: {len(get_users_of_group(group.id))}', 'Calibri, 10', 0, 2, gr0, 'w', width=20)
 
         criar_button(frame_group, 'Excluir', 'Calibri, 10', 0, 3, lambda g=group: delete_group(g)).config(takefocus = 0)
 
