@@ -34,8 +34,9 @@ def run(frame_parent):
     from Authentication import CURRENT_USER
     from Models.Sprint import get_group_sprints
     from Time import today
+    from Events import trigger
 
-    sprints = [s for s in get_group_sprints(CURRENT_USER.group_id) if today() >= s.rating_period_end()]
+    sprints = [s for s in get_group_sprints(trigger("get_group_name")) if today() >= s.rating_period_end()]
 
     global sel_sprint
     sel_sprint = len(sprints) - 1
@@ -63,14 +64,23 @@ def criar_section_1():
     frame_header_title = criar_frame(frame_section_header, 0, 0, "we", co3, co3, 0, 0, 0)
     criar_label(frame_header_title, 'Avaliações', 'Calibri, 24 bold', 0, 0, co3, 'nes').configure(fg=co0)
 
+    # dropdown com nome dos grupos
+    from Models.Group import get_groups_of_leader, get_groups_of_client
+    from Authentication import CURRENT_USER
+    create_dropdown(criar_frame(frame_section, 1, 0, "ew", "magenta", px=0, py=0),0,0, [i.name for i in get_groups_of_leader(CURRENT_USER.id)] + [i.name for i in get_groups_of_client(CURRENT_USER.id)], "get_group_name")
+
     # Frame para a timeline / datas importantes da sprint / periodo avaliativo
-    frame_sprint_timeline = criar_frame(frame_section, 1, 0, "ew", co0, co0, 0, 2, 2)
+    frame_sprint_timeline = criar_frame(frame_section, 2, 0, "ew", co0, co0, 0, 2, 2)
 
     from Authentication import CURRENT_USER
     from Models.Sprint import current_rating_period, next_rating_period, sprint_index
     from Time import today
+    from Events import trigger
 
-    sprint = current_rating_period(CURRENT_USER.group_id)
+    
+    
+
+    sprint = current_rating_period(trigger("get_group_name"))
 
     print(sprint)
     sprint_timeline_str = ''
@@ -80,16 +90,16 @@ def criar_section_1():
 
         # informa sprint atual + quantidade de dias até o fim do periodo avaliativo
         cur_ratings_end = sprint.rating_period_end() - today()
-        sprint_timeline_str = f'Sprint {sprint_index(CURRENT_USER.group_id, sprint.id)} | Período avaliativo acaba em {cur_ratings_end.days} dias'
+        sprint_timeline_str = f'Sprint {sprint_index(trigger("get_group_name"), sprint.id)} | Período avaliativo acaba em {cur_ratings_end.days} dias'
 
     # Caso contrário, a sprint com o periodo avaliativo mais proximo será considerada
     else: 
-        sprint = next_rating_period(CURRENT_USER.group_id)
+        sprint = next_rating_period(trigger("get_group_name"))
         if sprint is not None:
 
             # informa sprint atual + quantidade de dias até o começo do periodo avaliativo
             next_ratings_start = sprint.rating_period_start() - today()
-            sprint_timeline_str = f'Sprint {sprint_index(CURRENT_USER.group_id, sprint.id)} | Período avaliativo começa em {next_ratings_start.days} dias'
+            sprint_timeline_str = f'Sprint {sprint_index(trigger("get_group_name"), sprint.id)} | Período avaliativo começa em {next_ratings_start.days} dias'
 
         # nenhuma informação relacionada a periodo avaliativo encontrada, mensagem genérica
         else:
@@ -116,7 +126,7 @@ def criar_section_1():
     if (sum(g) > 0): criar_piechart(frame_section_header, g)
 
     # Cria o Frame parent de ambas as listas
-    frame_listas_parent = criar_frame(frame_section, 2, 0, "nsew", co0 if g[1] == 0 else co0, co0, 0, 0, 0)
+    frame_listas_parent = criar_frame(frame_section, 3, 0, "nsew", co0 if g[1] == 0 else co0, co0, 0, 0, 0)
     frame_listas_parent.columnconfigure(0, weight = 1)
     if g[0] > 0: frame_listas_parent.rowconfigure(0, weight = 250 if g[1] == 0 else 10)
     if g[1] > 0: frame_listas_parent.rowconfigure(1, weight = 250 if g[0] == 0 else 10)
@@ -367,7 +377,7 @@ def criar_section_info(frame_section):
 # função que cria e coloca o grafico pentagono em um canvas dentro do frame parametro
 def criar_piechart (module_frame, data):
     from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-    frame_dashboards = criar_frame(module_frame, 0, 1, "ne", co3, co3, 0, 0, 0)
+    frame_dashboards = criar_frame(module_frame,0, 1, "ne", co3, co3, 0, 0, 0)
     figure = graphic_pie(data)
     canvas = FigureCanvasTkAgg(figure, master = frame_dashboards)
     canvas.get_tk_widget().grid(row=0, column=0, sticky='e')

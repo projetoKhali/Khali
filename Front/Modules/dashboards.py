@@ -24,16 +24,17 @@ def run(frame_parent):
     # master_frame = add_scrollbar(frame_parent)
     frame_parent.configure(background = co0)
     master_frame = Frame(frame_parent, background = co0)
-    master_frame.grid(sticky = 'nw')
+    master_frame.grid(sticky = 'nwe')
     master_frame.columnconfigure(0, minsize = 0, weight = 1)
     master_frame.rowconfigure(0, minsize = 0, weight = 1)
      # função de criar frame
-    def criar_frame(quadro, row, column, background = co0):
-        frame = Frame(quadro, background = background, relief=FLAT, bd=1)
-        frame.rowconfigure(row, minsize = 10)  # Quantas linhas o frame terá
-        frame.columnconfigure(column, minsize = 100)  # Quantas colunas o frame terá
-        frame.grid(row=row, column=column, padx=10, pady=10, sticky='nw') # Local onde o frame será colocado
-        return frame
+    # def criar_frame(quadro, row, column, background = co0):
+    #     frame = Frame(quadro, background = background, relief=FLAT, bd=1)
+    #     frame.rowconfigure(row, minsize = 10)  # Quantas linhas o frame terá
+    #     frame.columnconfigure(column, minsize = 100)  # Quantas colunas o frame terá
+    #     frame.grid(row=row, column=column, padx=10, pady=10, sticky='nw') # Local onde o frame será colocado
+    #     return frame
+    
 
     # criar widgets ###quadro é se seá colocado na janela ou em frame
     def criar_label(quadro, text, font, r, c, name=None, background=co0, fg=co2):
@@ -41,8 +42,14 @@ def run(frame_parent):
         label.grid(row=r, column=c, padx=5, pady=3, sticky = "w")
         return label
 
-    frame_title = criar_frame(master_frame, 0, 0, co3)
+    frame_title = criar_frame(master_frame, 0, 0, "ew",co3, px= 0, py=0)
+    frame_title.columnconfigure(0,weight=1)
     criar_label(frame_title, "Dashboards", "Calibri, 24 bold", 0, 0, None, co3, co0)
+    
+    from Models.Group import get_groups_of_leader, get_groups_of_client
+    from Authentication import CURRENT_USER
+    create_dropdown(criar_frame(frame_title, 0, 1, "ew", co3, px=12, py=0),0,0, [i.name for i in get_groups_of_leader(CURRENT_USER.id)] + [i.name for i in get_groups_of_client(CURRENT_USER.id)])
+
 
     
     from Authentication import CURRENT_USER

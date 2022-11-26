@@ -34,7 +34,9 @@ def run(frame_parent):
     frame_body.columnconfigure(0, weight=1)
 
     # dropdown com nome dos grupos
-    create_dropdown(frame_header,0,1)
+    from Models.Group import get_groups_of_leader
+    from Authentication import CURRENT_USER
+    create_dropdown(frame_header,0,1, [i.name for i in get_groups_of_leader(CURRENT_USER.id)], "get_group_name")
     
     # adiciona scrollbar no frame_bogy
     from Front.Scrollbar import add_scrollbar
@@ -132,8 +134,7 @@ def entry_sprint(en_numsprints: IntVar, frame_parent):
     if valor > 12:
         import tkinter.messagebox
         print("número muito grande de sprints!!, por favor, insira um valor menor")
-        tkinter.messagebox.showinfo(
-            "Khali Group",  "número muito grande de sprints!!, por favor, insira um valor menor")
+        tkinter.messagebox.showinfo("Khali Group",  "número muito grande de sprints!!, por favor, insira um valor menor")
 
     # Cria o frame responsável por conter os formulários de Time
     frame_list = criar_frame(frame_parent, 0, 0, 'new', co0, co0, 0, 0, 0)
@@ -150,8 +151,7 @@ def entry_sprint(en_numsprints: IntVar, frame_parent):
 
     # pra cada sprint
     for i in range(n_sprints):
-        previous_form_sprint = previous_form_sprints[i] if previous_form_sprints is not None and i < len(
-            previous_form_sprints) else None
+        previous_form_sprint = previous_form_sprints[i] if previous_form_sprints is not None and i < len(previous_form_sprints) else None
         # print(f'previous_form_sprint: {previous_form_sprint}')
 
         # cria o frame da sprint
@@ -184,15 +184,13 @@ def entry_times(en_numtimes: IntVar, frame_parent):
     from Events import register, trigger, unregister_all, has_event
 
     # requisita dados de time que estejam preenchidos nos formulários atuais
-    previous_form_teams = trigger('get_teams_internal') if has_event(
-        'get_teams_internal') else register('get_teams_internal', trigger('get_teams'))
+    previous_form_teams = trigger('get_teams_internal') if has_event('get_teams_internal') else register('get_teams_internal', trigger('get_teams'))
 
     # print(f'previous_form_teams: {previous_form_teams}')
 
     # deleta o frame_list caso já exista
     children = frame_parent.winfo_children()
-    if children is not None and len(children) > 0 and children[0] is not None:
-        children[0].destroy()
+    if children is not None and len(children) > 0 and children[0] is not None: children[0].destroy()
 
     # Chama o evento reset_teams que deleta algumas reações de evento cadastradas
     # evita que reações inválidas sejam ativadas
@@ -217,8 +215,7 @@ def entry_times(en_numtimes: IntVar, frame_parent):
     # Notifica o usuário caso o valor de entrada seja muito alto
     if valor > 12:
         import tkinter.messagebox
-        tkinter.messagebox.showinfo(
-            "Khali Group",  "São muitos times! Insira um valor menor.")
+        tkinter.messagebox.showinfo("Khali Group",  "São muitos times! Insira um valor menor.")
 
     # Cria o frame responsável por conter os formulários de Time
     frame_list = criar_frame(frame_parent, 0, 0, 'new', co0, co0, 0, 0, 0)
@@ -234,8 +231,7 @@ def entry_times(en_numtimes: IntVar, frame_parent):
 
     # pra cada time
     for i in range(n_teams):
-        previous_form_team = previous_form_teams[i] if previous_form_teams is not None and i < len(
-            previous_form_teams) else None
+        previous_form_team = previous_form_teams[i] if previous_form_teams is not None and i < len(previous_form_teams) else None
         # print(f'previous_form_team: {previous_form_team}')
 
         # cria o frame do time
@@ -253,12 +249,11 @@ def entry_times(en_numtimes: IntVar, frame_parent):
         criar_label(frame_time_data, f"Time {i+1}: ", "Calibri, 10 bold", 0, 0, co4, sticky='news').config(width=8)
         # criar_label(frame_time_data, f"Nome: ", "Calibri, 10", 0, 1)
         entry_name = criar_entry(frame_time_data, "Calibri, 10", 0, 2)
-        if previous_form_team is not None and previous_form_team[0] != '\n\n\nnome':
-            entry_name.insert(0, previous_form_team[0])
+        if previous_form_team is not None and previous_form_team[0] != '\n\n\nnome': entry_name.insert(0, previous_form_team[0])
         else:
             bind_entry_placeholder(entry_name, '\n\n\nnome')
 
-        criar_label(frame_time_data, "Quantidade de membros:", "Calibri, 10", 0, 3, co4, sticky='news')
+        criar_label(frame_time_data, "Quantidade de membros:","Calibri, 10", 0, 3, co4, sticky='news')
         frame_clear_btn = criar_frame(frame_time_header, 0, 1, 'e', px=2, py=0)
         frame_clear_btn.columnconfigure(0, weight=1)
 
@@ -276,7 +271,7 @@ def entry_times(en_numtimes: IntVar, frame_parent):
         # atualização inicial de formulários de membros
         update_member_forms(var, frame_members_wrapper, i, previous_form_team[1] if previous_form_team is not None else None)
 
-        criar_button(frame_clear_btn, 'Limpar', 'Calibri, 10', 0, 0, lambda ti=i, en=entry_name: [ en.delete('0', 'end'), trigger(f'clear_team_{ti}')], 'e').config(takefocus=0)
+        criar_button(frame_clear_btn, 'Limpar', 'Calibri, 10', 0, 0, lambda ti=i, en=entry_name: [en.delete('0', 'end'), trigger(f'clear_team_{ti}')], 'e').config(takefocus=0)
 
         # cadastra a reação de evento que retorna os dados desse time
         register(f'get_team_{i}', lambda n=entry_name, ti=i: [ lambda name=n.get(): name if name != "\n\n\nnome" else None, trigger(f'get_team_members_{ti}')])
@@ -300,8 +295,7 @@ def update_member_forms(en_num_members, frame_time, team_index, previous_form_da
 
     # deleta o frame_list caso já exista
     children = frame_time.winfo_children()
-    if children is not None and len(children) > 0 and children[0] is not None:
-        children[0].destroy()
+    if children is not None and len(children) > 0 and children[0] is not None:children[0].destroy()
 
     # tenta pegar o valor da entry correspondente ao numero de membros
     try:
@@ -319,8 +313,7 @@ def update_member_forms(en_num_members, frame_time, team_index, previous_form_da
 
     # para cada membro, cria um formulário de cadastro
     for i in range(min(max(valor, 3), 9)):
-        create_member_form(frame_list, i, team_index,
-                           previous_form_data[i] if previous_form_data is not None else None)
+        create_member_form(frame_list, i, team_index, previous_form_data[i] if previous_form_data is not None else None)
 
 
 # Cria os campos para o cadastro de UM membro
@@ -400,10 +393,10 @@ def confirmar_cadastros():
     from Models.Sprint import create_sprint
     from Models.Team import create_team
 
-    from Authentication import CURRENT_USER, register
-
+    from Authentication import register
+    
     # TODO: Integração com dropdown de selecionar grupo
-    group_id = CURRENT_USER.group_id
+    group_id = trigger("get_group_name")
 
     # Chama o evento para obter o retorno dos dados
     sprints = trigger('get_sprints')

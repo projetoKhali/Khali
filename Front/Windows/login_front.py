@@ -1,5 +1,6 @@
 from tkinter import *
 from Settings import RESOURCES_PATH, co0
+from tkinter import messagebox
 
 def run():
 
@@ -11,9 +12,17 @@ def run():
     def send_login():
         email = en_email.get()
         senha = en_senha.get()
-        if email is None or email == '' or senha is None or senha == '': return
+        # if email is None or email == '' or senha is None or senha == '': return
         from Authentication import login
-        login(email=email, senha=senha)
+        verify = login(email=email, senha=senha)
+        
+        if verify != 0:
+            if verify == 1:
+                messagebox.showinfo("Khali Group",  "E-mail inválido!")
+            else:
+                messagebox.showinfo("Khali Group",  "Senha inválida!")
+            return
+            
 
     # criar imagem e distribuir pro intereior do label essa imagem
     # path = "\Logo_big.gif"

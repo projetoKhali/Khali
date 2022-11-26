@@ -56,21 +56,24 @@ def bind_entry_placeholder (entry, text):
     # configura o evento para colocar novamente o placeholder caso o usuário deselecione a entry sem inserir nenhum texto
     entry.bind('<FocusOut>', lambda _, e=entry, f=focus_in_lambda: [no_value_lambda(_, e), e.bind('<FocusIn>', f)] if len(e.get()) == 0 else None)
 
-def create_dropdown(frame_parent, r, c):
-    from Models.Group import get_groups_of_leader
-    from Authentication import CURRENT_USER
+def create_dropdown(frame_parent, r, c, options, event):
     from tkinter import StringVar, OptionMenu
+    from Events import unregister_all,register, trigger
+    from CSV.CSVHandler import find_data_by_field_value_csv
+    from Settings import GROUPS_PATH
+
     
     var = StringVar()
-    # var.trace_add('write', None)
-    
+    # var.trace_add('write',lambda v = var:[unregister_all(event), register(event, v.get())])
 
     # lista de todos os grupos associados ao usuário corrente
-    group_names = [i.name for i in get_groups_of_leader(CURRENT_USER.id)]
-    var.set(group_names)
-    grupo_escolhido = var.get()
+    var.set(options[0])
+    # grupo_escolhido = var.get()
+    unregister_all(event)
+    register(event, lambda v = var: int(find_data_by_field_value_csv(GROUPS_PATH,"name",v.get())["id"]))
 
-    dropdown = OptionMenu(frame_parent, var, *group_names)
+
+    dropdown = OptionMenu(frame_parent, var, *options, lambda: None)
     dropdown.grid(row=r, column=c, padx=5, pady=10, sticky='w', ipadx=30, ipady=6)
     # droplist com nomes de todos os grupos associados ao usuário corrente
     return dropdown
