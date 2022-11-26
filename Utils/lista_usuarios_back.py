@@ -10,13 +10,16 @@ def get_users(user):
     from Time import today
 
     sprint = current_rating_period(user.group_id)
-    # if sprint is None: return [[], []]
+    if sprint is None: return [[], []]
 
     #pego o nome e funções da pessoa que logou
     role = get_role(user.role_id)    
 
     #lista com as linhas da tabela ratings que correspondem a avaliações do usuário logado
-    ratings = get_ratings(from_user_id=user.id, sprint_id=sprint.id)
+    ratings = get_ratings(
+        from_user_id=user.id, 
+        sprint_id=sprint.id
+    )
 
     for rating in ratings:
         print(rating)
