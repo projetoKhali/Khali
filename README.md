@@ -127,7 +127,7 @@
   | Como Líder do Grupo, avaliarei os Líderes Técnicos do meu grupo conforme requisito funcional | Essencial |
   | Como Fake Client, avaliarei os POs do meu grupo conforme requisito funcional | Essencial |
   | Como PO, avaliarei o Líder Técnico, estudantes do meu time e a mim mesmo como requisito funcional | Essencial|
-  | Como estudante avaliarei todos os outros itegrantes do meu time,e a mim mesmo como requisito funcional | Essencial |
+  | Como estudante, avaliarei todos os outros itegrantes do meu time e a mim mesmo como requisito funcional | Essencial |
 
  </details>
 
@@ -137,15 +137,31 @@
  
   | USER STORY | PRIORIDADE |
   |------------|------------|
-  | Como estudante quero ter acesso a um dashboard que apresente os meus resultados individuais nas avaliações para que eu possa acompanhar e analisar o meu desempenho frente às avaliações realizadas por mim e pelos demais integrantes do meu Time | Importante|
-| Como líder do grupo quero ter acesso a um dashboard com os  resultados dos meus times  nas avaliações para que eu possa acompanhá-los e analisá-los | Importante |
- | Como líder do grupo quero ter acesso a um dashboard com os resultados dos PO´s e Líderes técnicos do meu grupo.  | Importante |
- | Como Fake client quero ter acesso a um dashboard com os resultados dos meus times  nas avaliações para que eu possa acompanhá-los e analisá-los| Importante |
- | Como fake client quero ter acesso a um dashboard com os resultados dos PO´s e Líderes técnicos do meu grupo | Importante |
+  | Como estudante, quero ter acesso a um dashboard que apresente os meus resultados individuais nas avaliações, para que eu possa acompanhar e analisar o meu desempenho frente às avaliações realizadas por mim e pelos demais integrantes do meu Time | Importante |
+| Como Líder do Grupo, quero ter acesso a um dashboard com os resultados dos meus times nas avaliações, para que eu possa acompanhá-los e analisá-los | Importante |
+ | Como Líder do Grupo, quero ter acesso a um dashboard com os resultados dos Product Owners e Líderes Técnicos do meu grupo. | Importante |
+ | Como Fake Client, quero ter acesso a um dashboard com os resultados dos meus times nas avaliações para que eu possa acompanhá-los e analisá-los| Importante |
+ | Como Fake Client, quero ter acesso a um dashboard com os resultados dos Product Owners e Líderes Técnicos do meu grupo | Importante |
 
  </details>
 
+<details>
+<summary> SPRINT 4 - Criação do Sistema de Dashboard </summary>
 
+ 
+  | USER STORY | PRIORIDADE |
+  |------------|------------|
+  | Como PO, quero ter acesso a um dashboard que apresente o resultado individual dos integrantes do meu time nas avaliações, para que eu possa acompanhá-los e analisar o desempenho de cada um individualmente | Importante|
+| Como Líder Técnico, quero ter acesso a um dashboard que apresente o resultado individual dos integrantes do meu time nas avaliações, para que eu possa acompanhá-los e analisar o desempenho de cada um individualmente | Importante |
+ | Como PO, quero ter acesso a um dashboard com os resultados do meu time nas avaliações e as médias dos demais times do meu grupo, para que eu possa acompanhá-los e analisá-los de forma comparativa | Importante |
+ | Como Líder Técnico, quero ter acesso a um dashboard com os resultados do meu time nas avaliações e a médias dos demais times do meu grupo para que eu possa acompanhá-los e analisá-los de forma comparativa | Importante |
+ | Como Fake Client, quero ter acesso a um dashboard que apresente os resultados dos times do meu grupo nas avaliações por sprint para que eu possa acompanhá-los e analisar o desempenho de cada time | Importante |
+| Como Líder do Grupo, quero ter acesso a um dashboard que apresente os resultados dos times do meu grupo nas avaliações por sprint para que eu possa acompanhá-los e analisar o desempenho de cada time | Importante |
+| Como Fake Client, quero ter acesso a um dashboard com os resultados do meu grupo nas avaliações e a médias dos demais grupos para que eu possa acompanhá-los e analisá-los de forma comparativa | Importante |
+| Como Líder do Grupo, quero ter acesso a um dashboard com os resultados do meu grupo nas avaliações e a médias dos demais grupos para que eu possa acompanhá-los e analisá-los de forma comparativa | Importante |
+| Como estudante, quero ter acesso aos feedbacks das minhas avaliações realizados na ultima sprint para que eu possa compreender os pontos que devo melhorar e assim me sair melhor  nas próximas avaliações | Importante |
+| Como usuário quero ter em minha tela as informações da sprint ativa e a data com o atual ou próximo período avaliativo, para que eu possa me programar e estar preparado para realizar as avaliações | Importante |
+ </details>
 
 ## Backlog das Sprints
 
@@ -180,6 +196,36 @@
 * Criação dos dashboards individuis dos estudantes
 * Criação dos dashboard de acompanhamento do grupo
 * Retorno da funcionalidade de dashboard na tela home
+ </details>
+ 
+  <details>
+<summary> SPRINT 4 - Dashboards de desempenho e melhorias </summary>
+
+
+ CRIAÇÃO DOS DASHBOARDS INDIVIDUAIS DOS TIMES
+
+- Definir qual modelagem de gráficos será utilizada
+- Definir quais dados serão relacionados para montar os dashboard dos times
+- Criação dos dashboards dentro do sistema
+- Integração dos dashboards aos perfis dos Product Owners  e Líderes Técnicos
+
+AMPLIAÇÃO DOS DASHBOARDS DE ACOMPANHAMENTO DO GRUPO
+
+- Definir quais novas modelagens de gráficos serão utilizadas
+- Definir quais dados serão relacionados para montar os dashboard dos grupos
+- Criação dos dashboards dentro do sistema
+- Integração dos dashboards aos perfis dos Fake Clients e Líderes dos Grupos
+
+RETORNO DOS FEEDBACKS NA TELA DO USUÁRIO
+
+- Criação da funcionalidade de feedback na tela do usuário
+- Integração do back-end ao front-end
+
+RETORNO DO PERÍODO AVALIATIVO E SPRINT ATIVA NA TELA DO USUÁRIO
+
+- Criação da funcionalidade de sprint ativa na tela do usuário
+- Criação da funcionalidade de período avaliativo ativo na tela do usuário
+- Integração do back-end ao front-end
  </details>
 
 
