@@ -88,8 +88,6 @@ def line (title, names, y_label, matriz, x_label, x_ticks):
 
     return fig
 
-def pie_chart ():
-    pass
 
 # |--------------------------------------------------------------------------------------------------------------------|
 # |                                         Gráficos a serem desenvolvidos                                             |
@@ -103,7 +101,6 @@ def pie_chart ():
 # |--------------------------------------------------------------------------------------------------------------------|
 # | media do time           |    sprint     |     sprint     |     criterio     |     PO LT     |  team_media_sprints  | 
 # |--------------------------------------------------------------------------------------------------------------------|
-# | media membros time      |    sprint     |     membro     |     criterio     |     PO LT     |   users_media_team   |!
 # | media do grupo          |    sprints    |     sprint     |     criterio     |     PO LT     | group_media_sprints  |!
 # |--------------------------------------------------------------------------------------------------------------------|
 
@@ -115,7 +112,7 @@ def pie_chart ():
 # |--------------------------------------------------------------------------------------------------------------------|
 # | media time / times      |    sprints    |  time / times  |     criterio     |     PO LT     |  team_media_x_group  |
 # | media grupo / grupos    |    sprints    | group / groups |     criterio     |     LG FC     | group_media_x_groups |
-# | media time.users        |    sprints    |  time / times  |     criterio     |     LG FC     | media_team_users_line| LINE
+# | media time.users        |    sprints    |  time / times  |     criterio     |     LG FC     |   users_media_team   | LINE
 # | media dos times         |    sprint     |      time      |      sprint      |     LG FC     |   media_teams_line   | LINE
 # |--------------------------------------------------------------------------------------------------------------------|
 
@@ -388,6 +385,9 @@ def users_media_team (team_id):
     )
 
 
+def media_teams_line (group_id):
+    pass
+
 # Renderiza um Dashboard com a media de um determinado time em cada criterio de cada sprint
 def group_media_sprints (group_id):
 
@@ -453,35 +453,3 @@ def group_media_x_groups (group_id):
         criteria,
     )
 
-
-
-# def media_team_users_line (team_id):
-
-#     # importa as funções de acesso ao banco de dados de cada modelo
-#     from Models.Team import get_team
-#     from Models.User import get_users_of_team
-#     from Models.Rating import get_ratings_to_user
-
-#     # carrega o time com o id especificado e seus membros
-#     team = get_team(team_id)
-#     users = get_users_of_team(team_id)
-    
-#     # Lista todas as avaliações em que o id do usuário avaliado corresponda a qualquer id da lista 'user_ids' 
-#     ratings = [classify_criteria(criteria, get_ratings_to_user(user.id)) for user in users]
-
-#     # Renderiza o grafico representando as médias calculadas 
-#     line(
-#         f'Média do time {team.name}',
-#         [x.name for x in users],
-#         'Médias',
-#         medias(criteria, ratings),
-#         'Critério avaliativo',
-#         criteria
-#     )
-
-
-    
-def media_teams_line ():
-    pass
-
-    
