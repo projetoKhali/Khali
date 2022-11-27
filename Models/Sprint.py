@@ -38,6 +38,10 @@ def to_date(value:str):
     fields = [int(s) for s in value.split('-')]
     return date(fields[0], fields[1], fields[2])
 
+# retorna a Sprint que corresponde ao id especificado 
+def get_sprint (id:int):
+    return None if id is None or id == '' else to_sprint(find_data_by_id_csv(SPRINTS_PATH, int(id)))
+
 # Retorna a sprint atual conforme a data de hoje 
 def current_sprint(group_id):
     # print('current_sprint')
@@ -86,8 +90,25 @@ def next_rating_period (group_id):
 
 # Retorna o indice da sprint dentro da lista com as sprints do grupo
 def sprint_index(group_id, sprint_id):
-    for i, s in enumerate(get_group_sprints(group_id)): 
+    sprints = get_group_sprints(group_id)
+    sprints_sorted = [None for _ in sprints]
+
+    for i in range(len(sprints)):
+        min_sprint_start = None
+        next_sorted_sprint = None
+
+        for s in sprints:
+            sprint_start = s.start - (today() if i == 0 else sprints_sorted[i-1].start)
+            if min_sprint_start is None or sprint_start < min_sprint_start: 
+                min_sprint_start = sprint_start
+                next_sorted_sprint = s
+                sprints.remove(s)
+                
+        sprints_sorted[i] = next_sorted_sprint
+
+    for i, s in enumerate(sprints_sorted): 
         if s.id == sprint_id: return i + 1
+
     return None
 
 

@@ -63,8 +63,10 @@ def medias_por_sprint (criteria:list[str], sprints:list[Sprint], ratings:list[Ra
         # Adiciona o valor da rating dentro da lista do critério de sua sprint
         classified[sprint_indexes[rating.sprint_id]][rating.criteria_id].append(rating.value)
 
+    # print(f'classified: {classified}')
+
     # retorna o valor de médias para a lista classificada
-    return medias(criteria, classified)
+    return medias(criteria, [clas_crit for clas_crit in classified if sum([sum(c) for c in clas_crit]) > 0])
 
 
 # Classifica as ratings em critério
