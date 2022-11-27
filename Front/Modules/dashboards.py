@@ -60,8 +60,7 @@ def run(frame_parent):
         
         from Models.Group import get_groups_of_instructor, get_group_of_name
         from Authentication import CURRENT_USER
-        dropdown = create_dropdown(criar_frame(frame_title, 0, 1, "ew", co3, px=12, py=0), 0, 0, [i.name for i in get_groups_of_instructor(CURRENT_USER.id)], 'get_group_id', lambda v: get_group_of_name(v).id)
-        dropdown.get()
+        create_dropdown(criar_frame(frame_title, 0, 1, "ew", co3, px=12, py=0), 0, 0, [i.name for i in get_groups_of_instructor(CURRENT_USER.id)], 'get_group_id', lambda v: get_group_of_name(v).id)
 
         from Models.Group import get_group
         from Events import trigger
