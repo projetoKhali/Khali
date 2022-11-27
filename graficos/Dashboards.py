@@ -1,13 +1,25 @@
-# from matplotlib.figure import Figure
 from .Integrador import *
 from Front.Core import *
 
-colors = ['#C5A8B0', '#4E615D', '#896978', '#DBBDC1', '#76807D', '#F1D1D1', '#D9D9D9', '#26413C', '#FAE8E8', '#26413C', '#260C1A', '#03120E', '#C5BFBD']
+colors = [
+    '#C5A8B0', 
+    '#4E615D', 
+    '#896978', 
+    '#DBBDC1', 
+    '#76807D', 
+    '#F1D1D1', 
+    '#D9D9D9', 
+    '#26413C', 
+    '#FAE8E8', 
+    '#26413C', 
+    '#260C1A', 
+    '#03120E', 
+    '#C5BFBD'
+]
 
 def multi_bar (title, names, y_label, matriz, x_label, x_ticks):
     from matplotlib import pyplot
 
-    # ind = np.arange(len(x_ticks))  # the x locations for the groups
     fig, ax = pyplot.subplots(figsize = (5,5))
     ax.set_xlim([1, 6])
     fig.set_facecolor(co0)
@@ -75,7 +87,7 @@ def multi_bar_vertical (title, names, y_label, matriz, x_label, x_ticks):
 
        
         ax.bar_label(
-            ax.bar(positions, lst, color=colors[i], width=bar_width, label=names[i]
+            ax.bar(positions, lst, color=colors[i % len(colors)], width=bar_width, label=names[i]
         ), fmt='%.1f', padding=3)
 
     # Add some text for labels, title and custom x-axis tick labels, etc.
@@ -94,34 +106,34 @@ def multi_bar_vertical (title, names, y_label, matriz, x_label, x_ticks):
     return fig
 
 # Gera um grafico de linha
-def line (title, names, y_label, values, x_label, x_ticks, colors):
+def line (title, names, y_label, matriz, x_label, x_ticks):
     from matplotlib import pyplot
 
-    pyplot.rcParams['toolbar'] = 'None'
+    fig, ax = pyplot.subplots(figsize = (5,5))
+    ax.set_ylim([1, 5])
+    fig.set_facecolor(co0)
 
-    # Define a ampliação do grafico
-    # pyplot.figure(figsize = (10, 5))
     barWidth = .2 
 
-    for i, value in enumerate(values):
+    for i, value in enumerate(matriz):
 
         # Aqui eu construo a barra
         positions = [j + barWidth for j in range(len(x_ticks))]
-        pyplot.plot(positions, value, color=colors[i % len(colors)], label=names[i])
+        ax.plot(positions, value, color=colors[i % len(colors)], label=names[i])
 
-    pyplot.ylim([0, 5])
+    ax.set_ylim([0, 5])
 
-    pyplot.title(title)
+    ax.set_title(title)
 
-    pyplot.xlabel(x_label)
-    pyplot.xticks([r + barWidth for r in range(len(x_ticks))], x_ticks)
+    ax.set_xlabel(x_label)
+    ax.set_xticks([r + barWidth for r in range(len(x_ticks))], x_ticks)
+    ax.set_xticklabels(x_ticks)
 
-    pyplot.ylabel(y_label)
+    ax.set_ylabel(y_label)
 
-    pyplot.legend()
+    ax.legend()
 
-    pyplot.show()
-
+    return fig
 
 def pie_chart ():
     pass
@@ -136,10 +148,22 @@ def pie_chart ():
 # | media de cada time      |    sprints    |      time      |     criterio     |     LG FK     |     teams_media      |!
 # | media membros da função |    sprints    |      time      |     criterio     |     LG FK     |      role_media      |!
 # |--------------------------------------------------------------------------------------------------------------------|
-# | media do time           |    sprint     |     sprint     |     criterio     |     PO LT     |  team_media_sprints  |
+# | media do time           |    sprint     |     sprint     |     criterio     |     PO LT     |  team_media_sprints  | 
 # |--------------------------------------------------------------------------------------------------------------------|
 # | media membros time      |    sprint     |     membro     |     criterio     |     PO LT     |   users_media_team   |!
 # | media do grupo          |    sprints    |     sprint     |     criterio     |     PO LT     | group_media_sprints  |!
+# |--------------------------------------------------------------------------------------------------------------------|
+
+
+# |--------------------------------------------------------------------------------------------------------------------|
+# |                                   Gráficos a serem desenvolvidos na Sprint 4                                       |
+# |--------------------------------------------------------------------------------------------------------------------|
+# |                         |    calculo    |     barras     |      label       |    acesso     |       função         |
+# |--------------------------------------------------------------------------------------------------------------------|
+# | media time / times      |    sprints    |  time / times  |     criterio     |     PO LT     |  team_media_x_group  |
+# | media grupo / grupos    |    sprints    | group / groups |     criterio     |     LG FC     | group_media_x_groups |
+# | media time.users        |    sprints    |  time / times  |     criterio     |     LG FC     | media_team_users_line| LINE
+# | media dos times         |    sprint     |      time      |      sprint      |     LG FC     |   media_teams_line   | LINE
 # |--------------------------------------------------------------------------------------------------------------------|
 
 
@@ -300,6 +324,45 @@ def teams_media (group_id):
         )
 
 
+# Renderiza um Dashboard comparando a media de um time com a média dos outros times de seu grupo em cada criterio
+def team_media_x_group (team_id):
+
+    # importa as funções de acesso ao banco de dados de cada modelo
+    from Models.Team import get_team, get_teams_of_group
+    from Models.Rating import get_ratings_to_team
+    from Models.Group import get_group_name
+
+    team = get_team(team_id)
+    teams = get_teams_of_group(team.group_id)
+
+    # carrega todas as avaliações do time
+    team_ratings = get_ratings_to_team(team_id)
+
+    # cria a lista com as avaliações dos outros times
+    group_ratings = []
+    for other_team in teams:
+        if other_team.id != team.id: group_ratings += get_ratings_to_team(other_team.id)
+
+    # cria uma lista de avaliações em que o primeiro indice corresponde às avaliações do time
+    # e o segundo índice corresponde às avaliações dos outros times
+    ratings = [
+        classify_criteria(criteria, team_ratings), 
+        classify_criteria(criteria, group_ratings)
+    ]
+
+    group_name = get_group_name(team.group_id)
+
+    # Renderiza o grafico representando as médias calculadas 
+    return multi_bar(
+        f'Médias do time {team.name} em comparativo aos outros times do grupo {group_name}',
+        [team.name, 'outros times'],
+        'Médias',
+        medias(criteria, ratings),
+        'Critério avaliativo',
+        criteria,
+    )
+
+
 # Renderiza um Dashboard com a media de uma determinada função de cada time
 def role_media (role_id, group_id):
 
@@ -397,3 +460,75 @@ def group_media_sprints (group_id):
         'Critério avaliativo',
         criteria
     )
+
+
+# Renderiza um Dashboard comparando a media de um grupo com a média dos outros grupos em cada criterio
+def group_media_x_groups (group_id):
+
+    # importa as funções de acesso ao banco de dados de cada modelo
+    from Models.Rating import get_ratings_to_group
+    from Models.Group import get_groups
+
+    groups = get_groups()
+    group = None
+
+    # carrega todas as avaliações do time
+    group_ratings = []
+    groups_ratings = []
+
+    for g in groups:
+        if g.id == group_id:
+            group = g
+            group_ratings = get_ratings_to_group(g.id)
+            continue
+        groups_ratings += get_ratings_to_group(g.id)
+
+    # cria uma lista de avaliações em que o primeiro indice corresponde às avaliações do time
+    # e o segundo índice corresponde às avaliações dos outros times
+    ratings = [
+        classify_criteria(criteria, group_ratings), 
+        classify_criteria(criteria, groups_ratings)
+    ]
+
+    # Renderiza o grafico representando as médias calculadas 
+    return multi_bar(
+        f'Médias do time {group.name} em comparativo aos outros grupos',
+        [group.name, 'outros grupos'],
+        'Médias',
+        medias(criteria, ratings),
+        'Critério avaliativo',
+        criteria,
+    )
+
+
+
+# def media_team_users_line (team_id):
+
+#     # importa as funções de acesso ao banco de dados de cada modelo
+#     from Models.Team import get_team
+#     from Models.User import get_users_of_team
+#     from Models.Rating import get_ratings_to_user
+
+#     # carrega o time com o id especificado e seus membros
+#     team = get_team(team_id)
+#     users = get_users_of_team(team_id)
+    
+#     # Lista todas as avaliações em que o id do usuário avaliado corresponda a qualquer id da lista 'user_ids' 
+#     ratings = [classify_criteria(criteria, get_ratings_to_user(user.id)) for user in users]
+
+#     # Renderiza o grafico representando as médias calculadas 
+#     line(
+#         f'Média do time {team.name}',
+#         [x.name for x in users],
+#         'Médias',
+#         medias(criteria, ratings),
+#         'Critério avaliativo',
+#         criteria
+#     )
+
+
+    
+def media_teams_line ():
+    pass
+
+    

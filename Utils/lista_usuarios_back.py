@@ -19,6 +19,10 @@ def get_users(user):
     
     #lista com as linhas da tabela ratings que correspondem a avaliações do usuário logado
     ratings = get_ratings(from_user_id=user.id, sprint_id=sprint.id)
+
+    # for rating in ratings:
+    #     print(rating)
+
     # ratings = get_ratings_from_user(user.id)
     grade_submitted = []
     grade_to_submit = []
@@ -28,7 +32,7 @@ def get_users(user):
         rate_users = get_users_of_team(user.team_id)
         
         for member in rate_users:
-            if ratings is None:
+            if ratings is None or len(ratings) < 1:
                 grade_to_submit.append(member)
                 continue
             for rating in ratings:
@@ -41,13 +45,10 @@ def get_users(user):
 
     rate_users = get_users_of_group(user.group_id)
     for group_member in rate_users:
-
         if group_member.role_id not in role.permissions_rate or group_member.team_id == '': continue
-
-        if ratings is None: 
+        if ratings is None or len(ratings) < 1:
             grade_to_submit.append(group_member)
             continue
-
         for rating in ratings:
             if group_member.id == rating.to_user_id and rating.value != '':
                 grade_submitted.append(group_member)
