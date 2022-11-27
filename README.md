@@ -143,7 +143,11 @@
  | Como Fake Client, quero ter acesso a um dashboard com os resultados dos meus times nas avaliações para que eu possa acompanhá-los e analisá-los| Importante |
  | Como Fake Client, quero ter acesso a um dashboard com os resultados dos Product Owners e Líderes Técnicos do meu grupo | Importante |
 
+ ### Dashboard do Estudante dos Critérios Avaliativos por Sprint, de média dos Critérios Avaliativos e média comparativa com o time do usuário
+ ![T_dashboardEstudante](https://user-images.githubusercontent.com/111442399/204117591-8d788f16-60f9-4e8d-b574-dde3551b9bfd.gif)
+
  </details>
+
 
 <details>
 <summary> SPRINT 4 - Criação do Sistema de Dashboard </summary>
@@ -161,6 +165,17 @@
 | Como Líder do Grupo, quero ter acesso a um dashboard com os resultados do meu grupo nas avaliações e a médias dos demais grupos para que eu possa acompanhá-los e analisá-los de forma comparativa | Importante |
 | Como estudante, quero ter acesso aos feedbacks das minhas avaliações realizados na ultima sprint para que eu possa compreender os pontos que devo melhorar e assim me sair melhor  nas próximas avaliações | Importante |
 | Como usuário quero ter em minha tela as informações da sprint ativa e a data com o atual ou próximo período avaliativo, para que eu possa me programar e estar preparado para realizar as avaliações | Importante |
+	
+### Novo Cadastro pelo Administrador
+![T_gerenciarGrupo](https://user-images.githubusercontent.com/111442399/204117680-e5fa4b0c-285b-4bec-9173-df9975fac3e1.gif)
+	
+### Novo Cadastro pelo Líder do Grupo e aviso de excesso de Sprints. O número máximo é 12
+![Tela_cadastrosprints](https://user-images.githubusercontent.com/111442399/204117691-ff4bcf5f-2cd6-464e-b041-cd4aca5f0d92.gif)
+
+# Novo sistema de Edição de Times	
+![T_editarTimes](https://user-images.githubusercontent.com/111442399/204117669-06c76c43-5aa5-41ad-8f54-abe9e58d98ac.gif)
+
+	
  </details>
 
 ## Backlog das Sprints
@@ -193,7 +208,7 @@
 <summary> SPRINT 3 - Dashboards de desempenho </summary>
 
 
-* Criação dos dashboards individuis dos estudantes
+* Criação dos dashboards individuais dos estudantes
 * Criação dos dashboard de acompanhamento do grupo
 * Retorno da funcionalidade de dashboard na tela home
  </details>
