@@ -33,11 +33,11 @@ def multi_bar (title, names, y_label, matriz, x_label, x_ticks):
 
     from matplotlib import pyplot
 
-    fig, ax = pyplot.subplots(figsize = (12,4))
-    ax.set_ylim([-.5, len(names) + .5])
+    fig, ax = pyplot.subplots(figsize = (12,5))
+    ax.set_ylim([-.75, len(names)])
     ax.set_xlim([1, 5])
     fig.set_facecolor(co0)
-    bar_width = 1. / (len(matriz) + .75)
+    bar_width = 1. / ((len(matriz) ) + .75)
 
     for i, lst in enumerate(matriz):
 
