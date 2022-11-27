@@ -103,7 +103,7 @@ def create_team(frame_teams_parent, team, team_id):
     label_team_name.grid(row=0, column=0)
     if team is not None: label_team_name.bind("<Button-1>", lambda _, lbl=label_team_name, t=team, fg=frame_team_header: bind_edit_label(fg, lbl, t.name, 'Calibri, 16', 0, 0, lambda l, e, t=t: save_team_name(l, e, t)))
 
-    criar_button(frame_team_header, 'Excluir', 'Calibri, 12', 0, 1, lambda t=team: delete_team(t), 'ew').config(takefocus = 0)
+    criar_button(frame_team_header, 'Excluir Time', 'Calibri, 11', 0, 1, lambda t=team: delete_team(t), 'ew').config(takefocus = 0)
 
 
     frame_members_parent = Frame(frame_team)
@@ -159,7 +159,7 @@ def create_member_role(frame_member_actions, member_data:User, color):
     role_selected = StringVar()
 
     role_selected.set(get_role_name(member_data.role_id))
-    OptionMenu(
+    menu = OptionMenu(
         frame_dropdown,
 
         # variavel que armazenará o valor da nova role quando selecionada no OptionMenu
@@ -170,7 +170,11 @@ def create_member_role(frame_member_actions, member_data:User, color):
 
         # comando que será executado ao selecionar uma opção
         command=(lambda _, md=member_data, rs = role_selected : update_role(_, md, get_role_id(rs.get())))
-    ).grid(row=0, column=0)
+    )
+    menu.grid(row=0, column=0, padx = 1)
+    menu.config(width=16, height = 1, font = 'Calibri, 10')
+    
+
 
 def create_member_add(frame_member_actions, member_data:User, teams_list:list[Team]):
 
@@ -178,7 +182,7 @@ def create_member_add(frame_member_actions, member_data:User, teams_list:list[Te
     frame_adicionar.grid(row=0, column=1)
     team_selected = StringVar()
     team_selected.set('Adicionar ao Time')
-    OptionMenu(
+    menu_adicionar = OptionMenu(
         frame_adicionar,
 
         # variavel que armazenará o valor da nova role quando selecionada no OptionMenu
@@ -189,7 +193,9 @@ def create_member_add(frame_member_actions, member_data:User, teams_list:list[Te
 
         # comando que será executado ao selecionar uma opção
         command=(lambda _, md=member_data, ts = team_selected : add_member(md, get_team(ts.get()).id))
-    ).grid(row=0, column=0)
+    )
+    menu_adicionar.grid(row=0, column=0, padx=1)
+    menu_adicionar.config(width=16, height = 1, font = 'Calibri, 10')
 
 def create_member_remove(frame_member_actions, member_data):
 
@@ -198,9 +204,9 @@ def create_member_remove(frame_member_actions, member_data):
     frame_remover.grid(row=0, column=1)
     Button(
         frame_remover,
-        text='remover',
-        font='Calibri, 12',
-        padx=8, pady=2,
+        text='Remover',
+        font='Calibri, 10',
+        padx=1, width = 7, height=1,
 
         # comando que será executado ao clicar: 
         # chama a função remove_member com o member_data atual do loop como parametro
@@ -214,9 +220,9 @@ def create_member_unsubscribe(frame_member_actions, member_data):
     frame_remover.grid(row=0, column=2)
     Button(
         frame_remover,
-        text='deletar',
-        font='Calibri, 12',
-        padx=8, pady=2,
+        text='Deletar',
+        font='Calibri, 10',
+        padx=1, width = 7, height=1,
 
         # comando que será executado ao clicar: 
         # chama a função remove_member com o member_data atual do loop como parametro
