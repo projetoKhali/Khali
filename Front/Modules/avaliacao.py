@@ -1,6 +1,3 @@
-from tkinter import Frame, Label, Button, Text, Scale, IntVar, messagebox
-from Models.Role import get_role_name
-from Authentication import CURRENT_USER
 from Front.Core import *
 
 # Informações do modulo
@@ -13,6 +10,9 @@ REQUIRED_PERMISSIONS_VIEW = [None]
 
 # executa o modulo e retorna
 def run(frame_parent, target_user):
+    from tkinter import Frame, Label, Button, Text, Scale, IntVar, messagebox
+    from Models.Role import get_role_name
+    from Authentication import CURRENT_USER
     from Front.Scrollbar import add_scrollbar
 
     module_frame = Frame(frame_parent, bg=co0, bd=3)
@@ -87,7 +87,7 @@ def run(frame_parent, target_user):
     frame_user_data.grid(row=0, column=0, sticky='ew')
 
     criar_label(frame_user_data, f'{target_user.name}\t', 'Calibri, 20', 0, 0, gr0, 'w')
-    criar_label(frame_user_data, get_role_name(CURRENT_USER.role_id), 'Calibri, 12', 1, 0, gr0, 'w')
+    criar_label(frame_user_data, get_role_name(target_user.role_id), 'Calibri, 12', 1, 0, gr0, 'w')
     criar_label(frame_summary, 'Esta avaliação 360° utiliza a escala Likert para medir o desempenho dos usuários.\nNotas abaixo ou iguais a 3 necessitam obrigatoriamente de Feedback (resposta descritiva)',
         'Calibri, 11', 0, 1, gr0, 'w').config(wraplength=600) 
 
