@@ -17,7 +17,7 @@ colors = [
     '#C5BFBD'
 ]
 
-def multi_bar (title, names, y_label, matriz, x_label, x_ticks):
+def multi_bar_horizontal (title, names, y_label, matriz, x_label, x_ticks):
     from matplotlib import pyplot
 
     fig, ax = pyplot.subplots(figsize = (5,5))
@@ -62,12 +62,12 @@ def multi_bar (title, names, y_label, matriz, x_label, x_ticks):
 
 
 
-def multi_bar_vertical (title, names, y_label, matriz, x_label, x_ticks):
+def multi_bar(title, names, y_label, matriz, x_label, x_ticks):
     from matplotlib import pyplot
 
     # ind = np.arange(len(x_ticks))  # the x locations for the groups
     fig, ax = pyplot.subplots(figsize = (5,5))
-    ax.set_ylim([1, 5])
+    ax.set_ylim([1, 5.5])
     fig.set_facecolor(co0)
     bar_width = 1. / (len(matriz) + 1.75)
 
@@ -87,8 +87,9 @@ def multi_bar_vertical (title, names, y_label, matriz, x_label, x_ticks):
 
        
         ax.bar_label(
-            ax.bar(positions, lst, color=colors[i % len(colors)], width=bar_width, label=names[i]
+            ax.bar(positions, lst, color=colors[i % len(colors)], width=bar_width, label=names[i],
         ), fmt='%.1f', padding=3)
+
 
     # Add some text for labels, title and custom x-axis tick labels, etc.
     ax.set_ylabel(y_label)
@@ -98,6 +99,7 @@ def multi_bar_vertical (title, names, y_label, matriz, x_label, x_ticks):
 
     ax.set_xticks([i for i in range(len(x_ticks))])
     ax.set_xticklabels(x_ticks)
+    
 
     ax.legend()
 
@@ -150,7 +152,7 @@ def pie_chart ():
 # |--------------------------------------------------------------------------------------------------------------------|
 # | media do time           |    sprint     |     sprint     |     criterio     |     PO LT     |  team_media_sprints  | 
 # |--------------------------------------------------------------------------------------------------------------------|
-# | media membros time      |    sprint     |     membro     |     criterio     |     PO LT     |   users_media_team   |!
+# | media membros time      |    sprint     |     membro     |     criterio     |     PO LT     |                      |!
 # | media do grupo          |    sprints    |     sprint     |     criterio     |     PO LT     | group_media_sprints  |!
 # |--------------------------------------------------------------------------------------------------------------------|
 
@@ -162,8 +164,8 @@ def pie_chart ():
 # |--------------------------------------------------------------------------------------------------------------------|
 # | media time / times      |    sprints    |  time / times  |     criterio     |     PO LT     |  team_media_x_group  |
 # | media grupo / grupos    |    sprints    | group / groups |     criterio     |     LG FC     | group_media_x_groups |
-# | media time.users        |    sprints    |  time / times  |     criterio     |     LG FC     | media_team_users_line| LINE
-# | media dos times         |    sprint     |      time      |      sprint      |     LG FC     |   media_teams_line   | LINE
+# | media time.users        |    sprints    |  time / times  |     criterio     |     LG FC     |  users_media_team    | LINE
+# | media dos times         |    sprint     |      time      |      sprint      |     PO LT     |   media_teams_line   | LINE
 # |--------------------------------------------------------------------------------------------------------------------|
 
 
@@ -220,7 +222,7 @@ def user_media_sprints (user_id):
 
     # Renderiza o grafico representando as médias calculadas 
     return multi_bar(
-        f'Média de {user.name} ao longo das sprints',
+        f'Sua média ao longo das sprints',
         [f'Sprint {i}' for i in range(len(sprints))],
         'Médias',
         medias_por_sprint(criteria, sprints, ratings),
@@ -255,7 +257,7 @@ def user_media_x_team (user_id):
 
     # Renderiza o grafico representando as médias calculadas 
     return multi_bar(
-        f'Médias de {user.name} em comparativo ao time {team_name}',
+        f'Sua média x média de seu time\n(acumulada)',
         [user.name, team_name],
         'Médias',
         medias(criteria, ratings),
@@ -354,7 +356,7 @@ def team_media_x_group (team_id):
 
     # Renderiza o grafico representando as médias calculadas 
     return multi_bar(
-        f'Médias do time {team.name} em comparativo aos outros times do grupo {group_name}',
+        f'Média do seu time x média acumulada\ndos outros times do grupo',
         [team.name, 'outros times'],
         'Médias',
         medias(criteria, ratings),
