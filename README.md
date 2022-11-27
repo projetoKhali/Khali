@@ -115,7 +115,7 @@
   ![Tela_cadastroadm](https://user-images.githubusercontent.com/111442399/202913947-627354e7-440b-42db-8c73-49b53f03e58b.gif)
   ### Sistema de Login e Cadastro pelo Líder do Grupo
   ![Tela_cadastrolider](https://user-images.githubusercontent.com/111442399/202914009-cd01e180-6b9c-4738-8138-ddbb188a1d67.gif)
- 
+
 </details>
 
 <details>
@@ -128,6 +128,19 @@
   | Como Fake Client, avaliarei os POs do meu grupo conforme requisito funcional | Essencial |
   | Como PO, avaliarei o Líder Técnico, estudantes do meu time e a mim mesmo como requisito funcional | Essencial|
   | Como estudante, avaliarei todos os outros itegrantes do meu time e a mim mesmo como requisito funcional | Essencial |
+  
+  ### Dashboard com integrantes que serão avaliados pelo usuário na Sprint vigente, antes do período avaliativo
+  * No exemplo, o Instrutor Fake Client avalia apenas os Estudantes Product Owner
+  ![avaliacao fc](https://user-images.githubusercontent.com/111442399/204164568-c7e5e47b-5026-40c1-a321-c5e8c18c6072.gif)
+  
+  ### Dashboard com integrantes que precisam ser avaliados pelo usuário na Sprint vigente, durante o período avaliativo e Sistema de Avaliação
+  * No exemplo, o Estudante Developer precisa avaliar todos os ingegrantes do seu time e ele mesmo (autoavaliação)
+  * Notas iguais ou menores que 3 precisam de uma resposta dissertativa (feedback). A avaliação não pode ser enviada sem o preenchimento desse campo
+  ![avaliacao](https://user-images.githubusercontent.com/111442399/204164564-b9db5ef5-4801-42b0-81ea-bd0e974314dd.gif)
+  
+  ### Dashboard com integrantes que já foram e precisam ser avaliados pelo usuário na Sprint vigente, durante o período avaliativo
+  * No exemplo, o Estudante Líder Técnico precisa avaliar todos os ingegrantes do seu time e ele mesmo (autoavaliação). Já havia preenchido algumas avaliações e os respectivos integrantes ocupam listas diferentes, de avaliados e não avaliados. Um gráfico mostra o andamento do preenchimento.
+  ![avaliacao lt](https://user-images.githubusercontent.com/111442399/204164957-a60a871e-64d4-4f28-aed8-53934e2045ea.gif)
 
  </details>
 
@@ -145,12 +158,12 @@
 
  ### Dashboard do Estudante dos Critérios Avaliativos por Sprint, de média dos Critérios Avaliativos e média comparativa com o time do usuário
  ![T_dashboardEstudante](https://user-images.githubusercontent.com/111442399/204117591-8d788f16-60f9-4e8d-b574-dde3551b9bfd.gif)
-
+ 
  </details>
 
 
 <details>
-<summary> SPRINT 4 - Criação do Sistema de Dashboard </summary>
+<summary> SPRINT 4 - Melhorias no Sistema de Dashboard e outros requisitos</summary>
 
  
   | USER STORY | PRIORIDADE |
@@ -165,6 +178,9 @@
 | Como Líder do Grupo, quero ter acesso a um dashboard com os resultados do meu grupo nas avaliações e a médias dos demais grupos para que eu possa acompanhá-los e analisá-los de forma comparativa | Importante |
 | Como estudante, quero ter acesso aos feedbacks das minhas avaliações realizados na ultima sprint para que eu possa compreender os pontos que devo melhorar e assim me sair melhor  nas próximas avaliações | Importante |
 | Como usuário quero ter em minha tela as informações da sprint ativa e a data com o atual ou próximo período avaliativo, para que eu possa me programar e estar preparado para realizar as avaliações | Importante |
+
+### Aviso de senha e e-mail inválidos no Login
+![T_senhaEmailInvalidos](https://user-images.githubusercontent.com/111442399/204162204-3e6d77c3-655e-4586-996f-598e22ffd8e6.gif)
 	
 ### Novo Cadastro pelo Administrador
 ![T_gerenciarGrupo](https://user-images.githubusercontent.com/111442399/204117680-e5fa4b0c-285b-4bec-9173-df9975fac3e1.gif)
@@ -172,10 +188,17 @@
 ### Novo Cadastro pelo Líder do Grupo e aviso de excesso de Sprints. O número máximo é 12
 ![Tela_cadastrosprints](https://user-images.githubusercontent.com/111442399/204117691-ff4bcf5f-2cd6-464e-b041-cd4aca5f0d92.gif)
 
-# Novo sistema de Edição de Times	
+### Novo sistema de Edição de Times	
 ![T_editarTimes](https://user-images.githubusercontent.com/111442399/204117669-06c76c43-5aa5-41ad-8f54-abe9e58d98ac.gif)
 
-	
+### Tela Home com visualização dos dados da Avaliação (integrantes a serem avaliados e prazo da Sprint) e informações adicionais
+
+* No início da Sprint 1, uma área informativa fica ativa para o usuário
+![T_incícioSprint](https://user-images.githubusercontent.com/111442399/204162200-65f0fd65-ec5a-4978-9228-a76f2c166adb.gif)
+
+* Após o término da Sprint 1, os dados são compilados e um Dashboard com as médias dos critérios e os feedbacks recebidos fica disponível no perfil
+![T_finalSprint](https://user-images.githubusercontent.com/111442399/204162187-c487956b-f0fb-4541-a2c3-9706fa6a0854.gif)
+
  </details>
 
 ## Backlog das Sprints
