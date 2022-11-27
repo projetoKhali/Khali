@@ -9,7 +9,7 @@ MODULES = [
     # lista_usuarios,
     cadastro_adm2,
     my_profile,
-    cadastro_adm,
+    # cadastro_adm,
     cadastro_lider,
     edit_team,
     dashboards

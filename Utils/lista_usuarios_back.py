@@ -5,21 +5,23 @@ def get_users(user):
 
     from Models.Role import get_role
     from Models.User import get_users_of_team, get_users_of_group
-    from Models.Rating import get_ratings_from_user, get_ratings
-    from Models.Sprint import current_rating_period
-    from Time import today
+    from Models.Rating import get_ratings
+    from Models.Sprint import current_rating_period, next_rating_period
 
     sprint = current_rating_period(user.group_id)
-    # if sprint is None: return [[], []]
+    if sprint == None: 
+        sprint = next_rating_period(user.group_id)
+    if sprint == None: return [[], []]
+    
 
     #pego o nome e funções da pessoa que logou
-    role = get_role(user.role_id)    
-
+    role = get_role(user.role_id)
+    
     #lista com as linhas da tabela ratings que correspondem a avaliações do usuário logado
     ratings = get_ratings(from_user_id=user.id, sprint_id=sprint.id)
 
-    for rating in ratings:
-        print(rating)
+    # for rating in ratings:
+    #     print(rating)
 
     # ratings = get_ratings_from_user(user.id)
     grade_submitted = []
@@ -56,12 +58,21 @@ def get_users(user):
     return [grade_to_submit, grade_submitted]
 
 
-def get_feedbacks (user_id, sprint_id):
-    from random import randint
-    return [
-        [randint(0, 4) ,'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse quis suscipit lectus. Cras convallis enim tempor tellus ornare, sit amet.']
-        for _ in range(10)
-    ]
+
+def get_feedbacks(user_id, sprint_id):
+    feedbacks = []
+    from Models.Rating import get_ratings
+    ratings = get_ratings(to_user_id=user_id, sprint_id=sprint_id)
+    for rating in ratings:
+        feedback = []
+        if rating.value <= 3:
+            feedback.append(rating.criteria_id)
+            feedback.append(rating.comment)
+            feedbacks.append(feedback)
+    return feedbacks
+
+
+
 
 
 

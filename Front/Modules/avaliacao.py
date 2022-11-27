@@ -205,8 +205,9 @@ def enviar_notas(_to_user_id):
 
     from Events import trigger, register, unregister_all
 
-    for i, c in enumerate(criteria):
+    for i, c in enumerate(criteria_full):
         notas[i] = trigger(f'get_value_criterio_{c}')
+        print(f'notas {notas[i]}')
         comentarios[i] = trigger(f'get_feedback_criterio_{c}')
 
     FEEDBACK_LEN_MINMAX = [3, 400]
@@ -219,6 +220,7 @@ def enviar_notas(_to_user_id):
     ][i]
 
     for i, criterio in enumerate(criteria_full):
+        print(notas[i])
         if notas[i] <= 3:
             if comentarios[i] is None or comentarios[i] == '': error_messages.append(error_message_templates(0, criterio))
             elif len(comentarios[i]) < FEEDBACK_LEN_MINMAX[0]: error_messages.append(error_message_templates(1, criterio))

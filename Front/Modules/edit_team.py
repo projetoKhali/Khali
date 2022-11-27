@@ -33,6 +33,9 @@ def run(frame_parent):
 
     Label(frame_header, text="Editar Times", font='Calibri, 24 bold', bg=co3, fg=co0).grid(row=0, column=0)
 
+    from Models.Group import get_groups_of_leader, get_group_of_name
+    create_dropdown(criar_frame(frame_header, 0, 1, "ew", co3, px=12, py=0),0,0, [i.name for i in get_groups_of_leader(CURRENT_USER.id)], 'get_group_id', lambda v: get_group_of_name(v).id)
+
     # section 1
     frame_body = Frame(module_frame, padx=2, pady=2, bg=co0)
     frame_body.rowconfigure(0, weight = 12)
@@ -49,12 +52,12 @@ def run(frame_parent):
     frame_body.columnconfigure(0, weight = 1)
 
     # seleciona os times pertencentes ao grupo do usuario logado
-    teams_list = get_teams_of_group(CURRENT_USER.group_id)
+    teams_list = get_teams_of_group(CURRENT_USER.group_id) # TODO: selecionar time atraves do valor do dropdown
     # print(f'times:{teams_list}')
 
     # pra cada time
-    for team_id, time_data in enumerate(teams_list):
-        frame_members_parent = create_team(frame_body, time_data, team_id)
+    for team_id, team in enumerate(teams_list):
+        frame_members_parent = create_team(frame_body, team, team_id)
 
         # seleciona os membros do time
         members_list = get_users_of_team(team_id)
@@ -85,23 +88,46 @@ def run(frame_parent):
     frame_bandaid.grid(row=100, column=0, sticky="s")
 
 
-def create_team(frame_teams_parent, team_data, team_id):
+def create_team(frame_teams_parent, team, team_id):
 
     # cria o frame do time
-    frame_team = Frame(frame_teams_parent, bg=co4
-    )
+    frame_team = Frame(frame_teams_parent, bg=co4)
     frame_team.columnconfigure(0, weight = 1)
     frame_team.grid(row=team_id, column=0, sticky="ew")
 
+    frame_team_header = criar_frame(frame_team, 1, 0, 'ew', co4, co4, 0, 0, 0)
+    frame_team_header.columnconfigure(0, weight = 1)
+
     # coloca o nome do time
-    team_name = 'Usuários sem time' if team_data is None else team_data.name
-    Label(frame_team, text=team_name, font='Calibri, 16', bg=co4).grid(row=0, column=0)
+    label_team_name = Label(frame_team_header, text='Usuários sem time' if team is None else team.name, font='Calibri, 16', bg=co4)
+    label_team_name.grid(row=0, column=0)
+    if team is not None: label_team_name.bind("<Button-1>", lambda _, lbl=label_team_name, t=team, fg=frame_team_header: bind_edit_label(fg, lbl, t.name, 'Calibri, 16', 0, 0, lambda l, e, t=t: save_team_name(l, e, t)))
+
+    criar_button(frame_team_header, 'Excluir Time', 'Calibri, 11', 0, 1, lambda t=team: delete_team(t), 'ew').config(takefocus = 0)
+
 
     frame_members_parent = Frame(frame_team)
     frame_members_parent.columnconfigure(0, weight = 1)
     frame_members_parent.grid(row=team_id+1, column=0, sticky="ew")
 
     return frame_members_parent
+
+
+def save_team_name (label, entry, team):
+    try: new_name = entry.get()
+    except: return
+    from Models.Team import edit_team
+    edit_team(team.id, name=new_name)
+    team.name=new_name
+    label.config(text=new_name)
+
+def delete_team(team):
+    from tkinter import messagebox
+    if messagebox.askquestion('Deletar time', f"Deseja deletar o time {team.name}?", icon='question') == 'yes':
+        from Models.Team import delete_team
+        delete_team(team.id)
+        redraw()
+
 
 def create_member(frame_members_parent, member_data:User, row):
 
@@ -133,7 +159,7 @@ def create_member_role(frame_member_actions, member_data:User, color):
     role_selected = StringVar()
 
     role_selected.set(get_role_name(member_data.role_id))
-    OptionMenu(
+    menu = OptionMenu(
         frame_dropdown,
 
         # variavel que armazenará o valor da nova role quando selecionada no OptionMenu
@@ -144,7 +170,11 @@ def create_member_role(frame_member_actions, member_data:User, color):
 
         # comando que será executado ao selecionar uma opção
         command=(lambda _, md=member_data, rs = role_selected : update_role(_, md, get_role_id(rs.get())))
-    ).grid(row=0, column=0)
+    )
+    menu.grid(row=0, column=0, padx = 1)
+    menu.config(width=16, height = 1, font = 'Calibri, 10')
+    
+
 
 def create_member_add(frame_member_actions, member_data:User, teams_list:list[Team]):
 
@@ -152,7 +182,7 @@ def create_member_add(frame_member_actions, member_data:User, teams_list:list[Te
     frame_adicionar.grid(row=0, column=1)
     team_selected = StringVar()
     team_selected.set('Adicionar ao Time')
-    OptionMenu(
+    menu_adicionar = OptionMenu(
         frame_adicionar,
 
         # variavel que armazenará o valor da nova role quando selecionada no OptionMenu
@@ -163,7 +193,9 @@ def create_member_add(frame_member_actions, member_data:User, teams_list:list[Te
 
         # comando que será executado ao selecionar uma opção
         command=(lambda _, md=member_data, ts = team_selected : add_member(md, get_team(ts.get()).id))
-    ).grid(row=0, column=0)
+    )
+    menu_adicionar.grid(row=0, column=0, padx=1)
+    menu_adicionar.config(width=16, height = 1, font = 'Calibri, 10')
 
 def create_member_remove(frame_member_actions, member_data):
 
@@ -172,9 +204,9 @@ def create_member_remove(frame_member_actions, member_data):
     frame_remover.grid(row=0, column=1)
     Button(
         frame_remover,
-        text='remover',
-        font='Calibri, 12',
-        padx=8, pady=2,
+        text='Remover',
+        font='Calibri, 10',
+        padx=1, width = 7, height=1,
 
         # comando que será executado ao clicar: 
         # chama a função remove_member com o member_data atual do loop como parametro
@@ -188,9 +220,9 @@ def create_member_unsubscribe(frame_member_actions, member_data):
     frame_remover.grid(row=0, column=2)
     Button(
         frame_remover,
-        text='deletar',
-        font='Calibri, 12',
-        padx=8, pady=2,
+        text='Deletar',
+        font='Calibri, 10',
+        padx=1, width = 7, height=1,
 
         # comando que será executado ao clicar: 
         # chama a função remove_member com o member_data atual do loop como parametro

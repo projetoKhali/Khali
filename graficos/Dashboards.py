@@ -101,8 +101,8 @@ def pie_chart ():
 # |--------------------------------------------------------------------------------------------------------------------|
 # |                         |    calculo    |     barras     |      label       |    acesso     |       função         |
 # |--------------------------------------------------------------------------------------------------------------------|
-# | media time / times      |    sprints    |  time / times  |     criterio     |     PO LT     |                      |
-# | media grupo / grupos    |    sprints    | group / groups |     criterio     |     LG FC     |                      |
+# | media time / times      |    sprints    |  time / times  |     criterio     |     PO LT     |  team_media_x_group  |
+# | media grupo / grupos    |    sprints    | group / groups |     criterio     |     LG FC     | group_media_x_groups |
 # | media time.users        |    sprints    |  time / times  |     criterio     |     LG FC     |                      | LINE
 # | media dos times         |    sprint     |      time      |      sprint      |     LG FC     |                      | LINE
 # |--------------------------------------------------------------------------------------------------------------------|
@@ -265,6 +265,45 @@ def teams_media (group_id):
         )
 
 
+# Renderiza um Dashboard comparando a media de um time com a média dos outros times de seu grupo em cada criterio
+def team_media_x_group (team_id):
+
+    # importa as funções de acesso ao banco de dados de cada modelo
+    from Models.Team import get_team, get_teams_of_group
+    from Models.Rating import get_ratings_to_team
+    from Models.Group import get_group_name
+
+    team = get_team(team_id)
+    teams = get_teams_of_group(team.group_id)
+
+    # carrega todas as avaliações do time
+    team_ratings = get_ratings_to_team(team_id)
+
+    # cria a lista com as avaliações dos outros times
+    group_ratings = []
+    for other_team in teams:
+        if other_team.id != team.id: group_ratings += get_ratings_to_team(other_team.id)
+
+    # cria uma lista de avaliações em que o primeiro indice corresponde às avaliações do time
+    # e o segundo índice corresponde às avaliações dos outros times
+    ratings = [
+        classify_criteria(criteria, team_ratings), 
+        classify_criteria(criteria, group_ratings)
+    ]
+
+    group_name = get_group_name(team.group_id)
+
+    # Renderiza o grafico representando as médias calculadas 
+    return multi_bar(
+        f'Médias do time {team.name} em comparativo aos outros times do grupo {group_name}',
+        [team.name, 'outros times'],
+        'Médias',
+        medias(criteria, ratings),
+        'Critério avaliativo',
+        criteria,
+    )
+
+
 # Renderiza um Dashboard com a media de uma determinada função de cada time
 def role_media (role_id, group_id):
 
@@ -362,3 +401,43 @@ def group_media_sprints (group_id):
         'Critério avaliativo',
         criteria
     )
+
+
+# Renderiza um Dashboard comparando a media de um grupo com a média dos outros grupos em cada criterio
+def group_media_x_groups (group_id):
+
+    # importa as funções de acesso ao banco de dados de cada modelo
+    from Models.Rating import get_ratings_to_group
+    from Models.Group import get_groups
+
+    groups = get_groups()
+    group = None
+
+    # carrega todas as avaliações do time
+    group_ratings = []
+    groups_ratings = []
+
+    for g in groups:
+        if g.id == group_id:
+            group = g
+            group_ratings = get_ratings_to_group(g.id)
+            continue
+        groups_ratings += get_ratings_to_group(g.id)
+
+    # cria uma lista de avaliações em que o primeiro indice corresponde às avaliações do time
+    # e o segundo índice corresponde às avaliações dos outros times
+    ratings = [
+        classify_criteria(criteria, group_ratings), 
+        classify_criteria(criteria, groups_ratings)
+    ]
+
+    # Renderiza o grafico representando as médias calculadas 
+    return multi_bar(
+        f'Médias do time {group.name} em comparativo aos outros grupos',
+        [group.name, 'outros grupos'],
+        'Médias',
+        medias(criteria, ratings),
+        'Critério avaliativo',
+        criteria,
+    )
+

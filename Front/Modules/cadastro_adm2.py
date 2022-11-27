@@ -111,7 +111,7 @@ def update_table(frame_table):
         frame_group.columnconfigure([i for i in range(3)], weight=1)
 
         label_group_name = criar_label(frame_group, group.name, 'Calibri, 10', 0, 0, gr0, 'w', width=40)
-        label_group_name.bind("<Button-1>", lambda _, lbl=label_group_name, g=group, fg=frame_group: open_group_name_entry(fg, lbl, g, lambda l, e, g=g: save_group_name(l, e, g)))
+        label_group_name.bind("<Button-1>", lambda _, lbl=label_group_name, g=group, fg=frame_group: bind_edit_label(fg, lbl, g.name, 'Calibri, 10', 4, 2, lambda l, e, g=g: save_group_name(l, e, g)))
 
         from Models.Team import get_teams_of_group
         from Models.User import get_users_of_group
@@ -149,6 +149,15 @@ def cadastrar():
     )
 
     trigger('update_table')
+
+
+def save_group_name (label, entry, group):
+    try: new_name = entry.get()
+    except: return
+    from Models.Group import edit_group
+    edit_group(group.id, name=new_name)
+    group.name=new_name
+    label.config(text=new_name)
 
 
 # exclui um grupo

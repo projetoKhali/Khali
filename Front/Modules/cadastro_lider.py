@@ -33,21 +33,11 @@ def run(frame_parent):
     frame_body.rowconfigure(0, weight=1)
     frame_body.columnconfigure(0, weight=1)
 
-    ############
-    from Models.Group import get_groups_of_leader
+    # dropdown com nome dos grupos
+    from Models.Group import get_groups_of_leader, get_group_of_name
     from Authentication import CURRENT_USER
-    var = StringVar()
-    # var.trace_add('write', None)
-
-    # lista de todos os grupos associados ao usuário corrente
-    group_names = [i.name for i in get_groups_of_leader(CURRENT_USER.id)]
-    var.set(group_names)
-
-    # droplist com nomes de todos os grupos associados ao usuário corrente
-    OptionMenu(frame_header, var, *group_names).grid(row=0,
-                                                     column=1, padx=5, pady=10, sticky='w', ipadx=30, ipady=6)
-    ############
-
+    create_dropdown(frame_header,0,1, [i.name for i in get_groups_of_leader(CURRENT_USER.id)], "get_group_id", lambda v: get_group_of_name(v).id)
+    
     # adiciona scrollbar no frame_bogy
     from Front.Scrollbar import add_scrollbar
     frame_body = add_scrollbar(frame_body, co0, 0)
@@ -62,7 +52,7 @@ def run(frame_parent):
 
     # Cria o botão responsável por confirmar os cadastros
     Button(frame_header, text="Confirmar Cadastros", font="Calibri, 12", command=confirmar_cadastros,
-           activebackground='#c5a8b0', bg='#d9d9d9', fg='#1a1d1a', height=0).grid(row=0, column=2, sticky='news', padx=30, pady=10, ipadx=50, ipady=6)
+           activebackground='#c5a8b0', bg='#d9d9d9', fg='#1a1d1a', height=0,).grid(row=0, column=2, sticky='news', padx=30, pady=10, ipadx=50, ipady=6)
 
     # frame_confirm_btn = criar_frame(frame_header, 0, 2, 'ew', co0, px=8)
     # frame_confirm_btn.grid_columnconfigure(0, weight=1)
@@ -89,20 +79,16 @@ def create_register_container(frame_parent, row, title, command):
     frame_title.columnconfigure(0, weight=1)
 
     # título, input
-    criar_label(frame_title, f"Número de {title}:",
-                "Calibri 12 bold", 0, 0, co0, 'w').configure(width=20)
+    criar_label(frame_title, f"Número de {title}:", "Calibri 12 bold", 0, 0, co0, 'w').configure(width=20)
 
     # cria o frame que contém os items da lista desse container
-    frame_list_wrapper = criar_frame(
-        frame_container, 1, 0, 'news', co0, co0, 0, 4, 4)
+    frame_list_wrapper = criar_frame(frame_container, 1, 0, 'news', co0, co0, 0, 4, 4)
     frame_list_wrapper.columnconfigure(0, weight=1)
 
     # inicializa uma IntVar para atualizar os items listados nesse container quando modificada
     var = IntVar()
-    var.trace_add('write', lambda n, i, m, v=var,
-                  lw=frame_list_wrapper: command(v, lw))
-    criar_entry(frame_title, "Calibri, 10", 0, 1,
-                'w', 8, 2).config(textvariable=var)
+    var.trace_add('write', lambda n, i, m, v=var, lw=frame_list_wrapper: command(v, lw))
+    criar_entry(frame_title, "Calibri, 10", 0, 1, 'w', 8, 2).config(textvariable=var)
 
 
 # função que pegar o valor da caixa de entrada do "n° de sprints, ao apertar o button.
@@ -144,8 +130,7 @@ def entry_sprint(en_numsprints: IntVar, frame_parent):
     if valor > 12:
         import tkinter.messagebox
         print("número muito grande de sprints!!, por favor, insira um valor menor")
-        tkinter.messagebox.showinfo(
-            "Khali Group",  "número muito grande de sprints!!, por favor, insira um valor menor")
+        tkinter.messagebox.showinfo("Khali Group",  "número muito grande de sprints!!, por favor, insira um valor menor")
 
     # Cria o frame responsável por conter os formulários de Time
     frame_list = criar_frame(frame_parent, 0, 0, 'new', co0, co0, 0, 0, 0)
@@ -162,16 +147,14 @@ def entry_sprint(en_numsprints: IntVar, frame_parent):
 
     # pra cada sprint
     for i in range(n_sprints):
-        previous_form_sprint = previous_form_sprints[i] if previous_form_sprints is not None and i < len(
-            previous_form_sprints) else None
+        previous_form_sprint = previous_form_sprints[i] if previous_form_sprints is not None and i < len(previous_form_sprints) else None
         # print(f'previous_form_sprint: {previous_form_sprint}')
 
         # cria o frame da sprint
         frame_sprint = criar_frame(frame_list, i, 0, bg=co0)
 
         # cria a label com o nome da sprint
-        criar_label(frame_sprint, f"Sprint {i+1}",
-                    "Calibri, 10 bold", 0, 0).config(padx=8)
+        criar_label(frame_sprint, f"Sprint {i+1}","Calibri, 10 bold", 0, 0).config(padx=8)
 
         # inicializa uma lista de DateEntry
         calendars = []
@@ -180,19 +163,16 @@ def entry_sprint(en_numsprints: IntVar, frame_parent):
         for j, label_text in enumerate(['Início: ', 'Fim: ']):
             criar_label(frame_sprint, label_text, "Calibri, 10", 0, j*2 + 1)
             calendars.append(create_calendar(frame_sprint, 0, j*2 + 2))
-            if previous_form_sprint is not None:
-                calendars[j].set_date(previous_form_sprint[j])
+            if previous_form_sprint is not None:calendars[j].set_date(previous_form_sprint[j])
 
         # cria a Entry de periodo avaliativo
         criar_label(frame_sprint, "Dias para avaliação:", "Calibri, 10", 0, 5)
         entry_rating_period = criar_entry(frame_sprint, "Calibri, 10", 0, 6)
-        entry_rating_period.insert(
-            0, previous_form_sprint[2] if previous_form_sprint is not None else '5')
+        entry_rating_period.insert(0, previous_form_sprint[2] if previous_form_sprint is not None else '5')
         entry_rating_period.config(width=4)
 
         # cadastra o evento que retorna os dados da sprint
-        register(f'get_sprint_{i}', lambda s=calendars[0], e=calendars[1], r=entry_rating_period: [
-                 s.get_date(), e.get_date(), r.get()])
+        register(f'get_sprint_{i}', lambda s=calendars[0], e=calendars[1], r=entry_rating_period: [s.get_date(), e.get_date(), r.get()])
 
 
 # Cria a seção de cadastro de Times
@@ -200,15 +180,13 @@ def entry_times(en_numtimes: IntVar, frame_parent):
     from Events import register, trigger, unregister_all, has_event
 
     # requisita dados de time que estejam preenchidos nos formulários atuais
-    previous_form_teams = trigger('get_teams_internal') if has_event(
-        'get_teams_internal') else register('get_teams_internal', trigger('get_teams'))
+    previous_form_teams = trigger('get_teams_internal') if has_event('get_teams_internal') else register('get_teams_internal', trigger('get_teams'))
 
     # print(f'previous_form_teams: {previous_form_teams}')
 
     # deleta o frame_list caso já exista
     children = frame_parent.winfo_children()
-    if children is not None and len(children) > 0 and children[0] is not None:
-        children[0].destroy()
+    if children is not None and len(children) > 0 and children[0] is not None: children[0].destroy()
 
     # Chama o evento reset_teams que deleta algumas reações de evento cadastradas
     # evita que reações inválidas sejam ativadas
@@ -233,8 +211,7 @@ def entry_times(en_numtimes: IntVar, frame_parent):
     # Notifica o usuário caso o valor de entrada seja muito alto
     if valor > 12:
         import tkinter.messagebox
-        tkinter.messagebox.showinfo(
-            "Khali Group",  "São muitos times! Insira um valor menor.")
+        tkinter.messagebox.showinfo("Khali Group",  "São muitos times! Insira um valor menor.")
 
     # Cria o frame responsável por conter os formulários de Time
     frame_list = criar_frame(frame_parent, 0, 0, 'new', co0, co0, 0, 0, 0)
@@ -244,17 +221,13 @@ def entry_times(en_numtimes: IntVar, frame_parent):
     n_teams = min(valor, 12)
 
     # Cadastra as reações de evento que retornam os valores de cada time
-    register('reset_teams', lambda n=n_teams: [
-             unregister_all(f'get_team_{i}') for i in range(n)])
-    register('reset_teams', lambda n=n_teams: [
-             unregister_all(f'get_team_members_{i}') for i in range(n)])
-    register('get_teams', lambda n=n_teams: [
-             trigger(f'get_team_{i}') for i in range(n)])
+    register('reset_teams', lambda n=n_teams: [unregister_all(f'get_team_{i}') for i in range(n)])
+    register('reset_teams', lambda n=n_teams: [unregister_all(f'get_team_members_{i}') for i in range(n)])
+    register('get_teams', lambda n=n_teams: [trigger(f'get_team_{i}') for i in range(n)])
 
     # pra cada time
     for i in range(n_teams):
-        previous_form_team = previous_form_teams[i] if previous_form_teams is not None and i < len(
-            previous_form_teams) else None
+        previous_form_team = previous_form_teams[i] if previous_form_teams is not None and i < len(previous_form_teams) else None
         # print(f'previous_form_team: {previous_form_team}')
 
         # cria o frame do time
@@ -269,48 +242,38 @@ def entry_times(en_numtimes: IntVar, frame_parent):
         frame_time_data.rowconfigure(0, weight=1)
 
         # indice, nome, n membros
-        criar_label(
-            frame_time_data, f"Time {i+1}: ", "Calibri, 10 bold", 0, 0, co4, sticky='news').config(width=8)
+        criar_label(frame_time_data, f"Time {i+1}: ", "Calibri, 10 bold", 0, 0, co4, sticky='news').config(width=8)
         # criar_label(frame_time_data, f"Nome: ", "Calibri, 10", 0, 1)
         entry_name = criar_entry(frame_time_data, "Calibri, 10", 0, 2)
-        if previous_form_team is not None and previous_form_team[0] != '\n\n\nnome':
-            entry_name.insert(0, previous_form_team[0])
+        if previous_form_team is not None and previous_form_team[0] != '\n\n\nnome': entry_name.insert(0, previous_form_team[0])
         else:
             bind_entry_placeholder(entry_name, '\n\n\nnome')
 
-        criar_label(frame_time_data, "Quantidade de membros:",
-                    "Calibri, 10", 0, 3, co4, sticky='news')
+        criar_label(frame_time_data, "Quantidade de membros:","Calibri, 10", 0, 3, co4, sticky='news')
         frame_clear_btn = criar_frame(frame_time_header, 0, 1, 'e', px=2, py=0)
         frame_clear_btn.columnconfigure(0, weight=1)
 
         # cria o frame responsável por armazenar a lista de membros
-        frame_members_wrapper = criar_frame(
-            frame_time, 1, 0, 'ew', co4, co4, 0, 2, 2)
+        frame_members_wrapper = criar_frame(frame_time, 1, 0, 'ew', co4, co4, 0, 2, 2)
         frame_members_wrapper.columnconfigure(0, weight=1)
 
         # inicializa uma IntVar que armazena o valor da Entry de numero de membros e atualiza os formularios quando modificada
         var = IntVar(value=3)
-        var.trace_add('write', lambda n, _, m, v=var,
-                      lw=frame_members_wrapper, ti=i: update_member_forms(v, lw, ti))
+        var.trace_add('write', lambda n, _, m, v=var, lw=frame_members_wrapper, ti=i: update_member_forms(v, lw, ti))
 
         # cria a entry de numero de membros
-        criar_entry(frame_time_data, "Calibri, 10 bold",
-                    0, 4).config(textvariable=var)
+        criar_entry(frame_time_data, "Calibri, 10 bold", 0, 4).config(textvariable=var)
 
         # atualização inicial de formulários de membros
-        update_member_forms(var, frame_members_wrapper, i,
-                            previous_form_team[1] if previous_form_team is not None else None)
+        update_member_forms(var, frame_members_wrapper, i, previous_form_team[1] if previous_form_team is not None else None)
 
-        criar_button(frame_clear_btn, 'Limpar', 'Calibri, 10', 0, 0, lambda ti=i, en=entry_name: [
-                     en.delete('0', 'end'), trigger(f'clear_team_{ti}')], 'e').config(takefocus=0)
+        criar_button(frame_clear_btn, 'Limpar', 'Calibri, 10', 0, 0, lambda ti=i, en=entry_name: [en.delete('0', 'end'), trigger(f'clear_team_{ti}')], 'e').config(takefocus=0)
 
         # cadastra a reação de evento que retorna os dados desse time
-        register(f'get_team_{i}', lambda n=entry_name, ti=i: [
-                 n.get(), trigger(f'get_team_members_{ti}')])
+        register(f'get_team_{i}', lambda n=entry_name, ti=i: [n.get() , trigger(f'get_team_members_{ti}')])
+
 
 # Atualiza a tela para criar os formularios para cada membro de acordo com o numero de membros especificado em cada time
-
-
 def update_member_forms(en_num_members, frame_time, team_index, previous_form_data=None):
 
     # from tkinter import messagebox
@@ -328,8 +291,7 @@ def update_member_forms(en_num_members, frame_time, team_index, previous_form_da
 
     # deleta o frame_list caso já exista
     children = frame_time.winfo_children()
-    if children is not None and len(children) > 0 and children[0] is not None:
-        children[0].destroy()
+    if children is not None and len(children) > 0 and children[0] is not None:children[0].destroy()
 
     # tenta pegar o valor da entry correspondente ao numero de membros
     try:
@@ -347,8 +309,7 @@ def update_member_forms(en_num_members, frame_time, team_index, previous_form_da
 
     # para cada membro, cria um formulário de cadastro
     for i in range(min(max(valor, 3), 9)):
-        create_member_form(frame_list, i, team_index,
-                           previous_form_data[i] if previous_form_data is not None else None)
+        create_member_form(frame_list, i, team_index, previous_form_data[i] if previous_form_data is not None else None)
 
 
 # Cria os campos para o cadastro de UM membro
@@ -364,6 +325,7 @@ def create_member_form(parent, row, team_index, previous_form_data=None):
         entry_name.insert(0, previous_form_data[0])
 
     # Email - Label e Entry
+    from Authentication import validate_user_email
     criar_label(frame_member, "E-mail:", "Calibri, 10", 0, 2, gr0)
     entry_email = criar_entry(frame_member, "Calibri, 10", 0, 3)
     if previous_form_data is not None:
@@ -387,16 +349,16 @@ def create_member_form(parent, row, team_index, previous_form_data=None):
     OptionMenu(frame_member, entry_role, *role_names).grid(row=0, column=5)
 
     # Registra o retorno dos valores de entrada desse formulário de membro caso o time de indice team_index seja solicitado
+
     from Events import trigger, register, unregister_all
     register(f'get_team_members_{team_index}', lambda n=entry_name, e=entry_email, r=entry_role: [
-             n.get(), e.get(), get_role_id(r.get())])
+            n.get(), e.get(), get_role_id(r.get())])
     unregister_all(f'clear_team_members_{team_index}_{row}')
     register(f'clear_team_members_{team_index}_{row}', lambda n=entry_name, e=entry_email,
-             r=entry_role, riv=entry_role_init_val: [n.delete('0', 'end'), e.delete('0', 'end'), r.set(riv)])
+            r=entry_role, riv=entry_role_init_val: [n.delete('0', 'end'), e.delete('0', 'end'), r.set(riv)])
     register(f'clear_team_{team_index}', lambda ti=team_index,
-             mi=row: trigger(f'clear_team_members_{ti}_{mi}'))
-
-
+            mi=row: trigger(f'clear_team_members_{ti}_{mi}'))
+        
 # Retorna o valor na entry especificada considerando erros
 def get_entry_int(entry):
 
@@ -427,10 +389,10 @@ def confirmar_cadastros():
     from Models.Sprint import create_sprint
     from Models.Team import create_team
 
-    from Authentication import CURRENT_USER, register
-
+    from Authentication import register
+    
     # TODO: Integração com dropdown de selecionar grupo
-    group_id = CURRENT_USER.group_id
+    group_id = trigger("get_group_id")
 
     # Chama o evento para obter o retorno dos dados
     sprints = trigger('get_sprints')
@@ -446,6 +408,7 @@ def confirmar_cadastros():
 
         # cada item na lista representa um team
         for team in teams:
+            if team[0] == '\n\n\nnome': continue
 
             # indice 0 = nome do time; indice 1 = membros
             team_id = create_team(team[0], group_id)

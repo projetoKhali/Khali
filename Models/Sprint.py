@@ -40,17 +40,17 @@ def to_date(value:str):
 
 # Retorna a sprint atual conforme a data de hoje 
 def current_sprint(group_id):
-
-    # faz um loop através das sprints do grupo
+    # print('current_sprint')
     for sprint in get_group_sprints(group_id):
+        # print(f'{today()} >= {sprint.start} and {today()} <= {sprint.finish + timedelta(days=sprint.rating_period)} ? {today() >= sprint.start and today() <= sprint.finish + timedelta(days=sprint.rating_period)}')
         if today() >= sprint.start and today() <= sprint.finish + timedelta(days=sprint.rating_period):
             return sprint
 
 # Retorna a sprint do período de avaliação atual conforme a data de hoje 
 def current_rating_period(group_id):
-
-    # faz um loop através das sprints do grupo
+    # print('current_rating_period')
     for sprint in get_group_sprints(group_id):
+        # print(f'{today()} >= {sprint.rating_period_start()} and {today()} < {sprint.rating_period_end()} ? {today() >= sprint.rating_period_start() and today() < sprint.rating_period_end()}')
         if today() >= sprint.rating_period_start() and today() < sprint.rating_period_end():
             return sprint
 
@@ -64,17 +64,23 @@ def previous_sprint (group_id):
     return prev_sprint
 
 def next_rating_period (group_id):
-
+    # print('\nnext_rating_period')
     next_rating_period_sprint = None
     min_time_until_start = None
 
     # faz um loop através das sprints do grupo
-    for sprint in get_group_sprints(group_id):
-        if today() > sprint.finish: continue
-        time_until_start = sprint.finish + timedelta(days=sprint.rating_period) - today()
+    # print(f'group_id: {group_id}')
+    sprints = get_group_sprints(group_id)
+    for sprint in sprints:
+        # if today() < sprint.finish: continue
+        time_until_start = sprint.finish + timedelta(days=1) - today()
+        if time_until_start.total_seconds() < 0: continue
+        # print(f'start: {sprint.start} | finish: {sprint.finish} | rps: {sprint.rating_period_start()} | rpe: {sprint.rating_period_end()} | tus: {time_until_start}')
         if min_time_until_start is None or time_until_start < min_time_until_start: 
+            # print(f'NEW MIN --- start: {sprint.start} | finish: {sprint.finish} | rps: {sprint.rating_period_start()} | rpe: {sprint.rating_period_end()} | tus: {time_until_start}')
             min_time_until_start = time_until_start
             next_rating_period_sprint = sprint
+    # print(f'next_rating_period_sprint: {next_rating_period_sprint} | time: {min_time_until_start}\n')
     return next_rating_period_sprint
 
 
