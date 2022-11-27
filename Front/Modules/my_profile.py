@@ -49,9 +49,14 @@ def run(frame_parent):
 def criar_section_1():
     from Utils import lista_usuarios_back
     from Front.Scrollbar import add_scrollbar
+    from Models.Sprint import current_rating_period, next_rating_period, sprint_index
+    from Authentication import CURRENT_USER
+    from Time import today
 
     # Cria o frame principal da seção
     frame_section = criar_frame(module_frame, 0, 0, "nwes", co0, co2, 2, 0, 0)
+    if current_rating_period(CURRENT_USER.group_id) == None and next_rating_period(CURRENT_USER.group_id) == None:
+            frame_section = criar_frame(module_frame, 0, 0, "nwes", co0, co0, 0, 0, 0)
     frame_section.columnconfigure(0, weight = 1)
     frame_section.rowconfigure(2, weight = 1)
 
@@ -66,13 +71,10 @@ def criar_section_1():
     # Frame para a timeline / datas importantes da sprint / periodo avaliativo
     frame_sprint_timeline = criar_frame(frame_section, 1, 0, "ew", co0, co0, 0, 2, 2)
 
-    from Authentication import CURRENT_USER
-    from Models.Sprint import current_rating_period, next_rating_period, sprint_index
-    from Time import today
 
     sprint = current_rating_period(CURRENT_USER.group_id)
 
-    print(sprint)
+    
     sprint_timeline_str = ''
 
     # Caso possuirmos uma sprint cujo periodo avaliativo encontra-se ativo
@@ -94,7 +96,7 @@ def criar_section_1():
         # nenhuma informação relacionada a periodo avaliativo encontrada, mensagem genérica
         else:
             sprint_timeline_str = 'Nenhum período avaliativo previsto'
-
+            
     # cria a label com as informações do periodo avaliativo
     criar_label(frame_sprint_timeline, sprint_timeline_str, 'Calibri, 15', 1, 0, co0, 'ew')
 
@@ -113,7 +115,8 @@ def criar_section_1():
     g = [len(grades[0]), len(grades[1])]
 
     # Cria o pie chart utilizando a informação de usuários
-    if (sum(g) > 0): criar_piechart(frame_section_header, g)
+    if (sum(g) > 0) and current_rating_period(CURRENT_USER.group_id) != None: criar_piechart(frame_section_header, g)
+    
 
     # Cria o Frame parent de ambas as listas
     frame_listas_parent = criar_frame(frame_section, 2, 0, "nsew", co0 if g[1] == 0 else co0, co0, 0, 0, 0)
@@ -123,7 +126,12 @@ def criar_section_1():
     frame_listas_parent.rowconfigure(2, weight = 1)
 
     # listas para facilitar o acesso a informações dentro do loop 'i'
-    lista_titles = ['Integrantes ainda não avaliados', 'Integrantes já Avaliados']
+    lista_titles = ['Integrantes ainda não Avaliados', 'Integrantes já Avaliados']
+    if current_rating_period(CURRENT_USER.group_id) == None:
+        lista_titles = ['Integrantes a serem Avaliados', 'Integrantes a serem Avaliados']
+        if next_rating_period(CURRENT_USER.group_id) == None:
+            lista_titles = ['Integrantes Avaliados', 'Integrantes Avaliados']
+    
     lista_colors = [col_to_rate, col_rated]
 
     # para cada lista
@@ -172,10 +180,12 @@ def criar_section_1():
             criar_label(frame_user_data, get_role_name(user.role_id), 'Calibri, 10', 1, 0, lista_col, "w")
 
             # Cria um frame pro botão
-            frame_user_button = criar_frame(frame_user, 0, 1, 'ew', co0, co0, 0, 0, 0)
+            if current_rating_period(CURRENT_USER.group_id) != None:
+                frame_user_button = criar_frame(frame_user, 0, 1, 'ew', co0, co0, 0, 0, 0)
 
             # insere o botão correspondente ao tipo da lista. Pendentes: avaliar; Avaliados: editar
-            if i == 0: criar_button(frame_user_button, 'Avaliar', 'Calibri, 12', 1, 1, lambda u=user: avaliar(u), "e"),
+            if i == 0 and current_rating_period(CURRENT_USER.group_id) != None:
+                criar_button(frame_user_button, 'Avaliar', 'Calibri, 12', 1, 1, lambda u=user: avaliar(u), "e"),
             # else: criar_button(frame_user_button, 'Editar Avaliação', 'Calibri, 12', 1, 1, lambda u=user: avaliar(u['id']), "w"),
 
 
@@ -190,19 +200,21 @@ def criar_section_2(sprints):
         mf_children[1].destroy()
 
     # Cria o frame principal da seção
-    frame_section = criar_frame(module_frame, 0, 1, "nwes", gr0, gr0, 2, 0, 0)
+    frame_section = criar_frame(module_frame, 0, 1, "nwes", co0, co0, 2, 0, 0)
     frame_section.columnconfigure(0, weight = 1)
     frame_section.rowconfigure(2, weight = 1)
 
-    from Models.Sprint import previous_sprint
+    from Models.Sprint import previous_sprint, next_rating_period, current_rating_period
     from Authentication import CURRENT_USER
 
     # pega a sprint anterior do grupo do usuário logado
     target_sprint = previous_sprint(CURRENT_USER.group_id)
+    if current_rating_period(CURRENT_USER.group_id) == None and next_rating_period(CURRENT_USER.group_id) == None:
+        target_sprint = 'not none'
 
     # sem target_sprint: renderiza informações sobre a avaliação 360
     if target_sprint is None: criar_section_info(frame_section) # TODO: seção com informações da avaliação 360
-
+    
     # caso o usuário logado seja instrutor
     elif CURRENT_USER.role_id not in [3, 4, 5]: criar_section_instructor(frame_section) # TODO: seção de instrutor
 
@@ -358,10 +370,14 @@ def criar_section_instructor(frame_section):
     pass # TODO
 
 
+
+
 # TODO: seção com informações sobre a avaliação 360
 def criar_section_info(frame_section):
-    frame_ratings_info = criar_frame(frame_section, 1, 0, "ew", gr0, gr0, 0, 2, 2)
-    criar_label(frame_ratings_info, 'Informações sobre a Avaliação 360°', 'Calibri, 15 bold', 0, 0, gr0, 'nwes')
+    
+    frame_ratings_info = criar_frame(frame_section, 1, 0, "ew", co0, co0, 0, 2, 2)
+    criar_label(frame_ratings_info, 'Informações sobre a Avaliação 360°', 'Calibri, 15 bold', 0, 0, co0, 'nwes')
+    
 
 
 # função que cria e coloca o grafico pentagono em um canvas dentro do frame parametro

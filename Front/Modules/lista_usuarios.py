@@ -102,8 +102,15 @@ def run(frame_parent):
     frame_avaliados = criar_frame(frame_usuarios, 1, 0, "nsew", co0, co0, 1)
     frame_avaliados.columnconfigure(0, minsize = 0, weight = 1)
     if len(grade_to_submit)!=0:
+
         # frame com os usuários que devem ser analisados por quem está logado
-        criar_label(frame_avaliados, 'Integrantes ainda não Avaliados', 'Calibri, 14', co0, 0, 0, "w")
+        from Models.Sprint import current_rating_period, next_rating_period
+        if current_rating_period(CURRENT_USER.group_id) != None:
+            criar_label(frame_avaliados, 'Integrantes ainda não Avaliados', 'Calibri, 14', co0, 0, 0, "w")
+        else:
+            if next_rating_period(CURRENT_USER.group_id) != None:
+                criar_label(frame_avaliados, 'Integrantes a serem Avaliados', 'Calibri, 14', co0, 0, 0, "w")
+
 
 
         for user_to_submit in grade_to_submit:
@@ -112,11 +119,18 @@ def run(frame_parent):
             frame_to_rate.columnconfigure(0, minsize = 0, weight = 1)
             criar_label(frame_to_rate, get_role_name(user_to_submit['role_id']), 'Calibri, 12', co0, 0, 0, "w")  # linha para teste
             criar_label(frame_to_rate, user_to_submit['name'], 'Calibri, 12', co0, 1, 0, "w")  # linha para teste
-            criar_button(frame_to_rate, 'Avaliar', 'Calibri, 12', 1, 1, lambda u=user_to_submit: avaliar(u['id']), "e")  # linha para teste
+            if current_rating_period(CURRENT_USER.group_id) != None:
+                criar_button(frame_to_rate, 'Avaliar', 'Calibri, 12', 1, 1, lambda u=user_to_submit: avaliar(u['id']), "e")  # linha para teste
             indice = indice + 1
 
     if len(grade_submitted)!=0:
-        criar_label(frame_avaliados, 'Integrantes já avaliados', 'Calibri, 14', co0, indice, 0, "w")
+        if current_rating_period(CURRENT_USER.group_id) != None:
+            criar_label(frame_avaliados, 'Integrantes já avaliados_teste', 'Calibri, 14', co0, indice, 0, "w")
+        else:
+            if next_rating_period(CURRENT_USER.group_id) != None:
+                criar_label(frame_avaliados, 'Integrantes a serem Avaliados', 'Calibri, 14', co0, 0, 0, "w")
+
+
 
         indice = indice + 1
 

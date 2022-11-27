@@ -6,10 +6,13 @@ def get_users(user):
     from Models.Role import get_role
     from Models.User import get_users_of_team, get_users_of_group
     from Models.Rating import get_ratings
-    from Models.Sprint import current_rating_period
+    from Models.Sprint import current_rating_period, next_rating_period
 
     sprint = current_rating_period(user.group_id)
+    if sprint == None: 
+        sprint = next_rating_period(user.group_id)
     if sprint == None: return [[], []]
+    
 
     #pego o nome e funções da pessoa que logou
     role = get_role(user.role_id)
@@ -54,6 +57,7 @@ def get_users(user):
     return [grade_to_submit, grade_submitted]
 
 
+
 def get_feedbacks(user_id, sprint_id):
     feedbacks = []
     from Models.Rating import get_ratings
@@ -65,6 +69,8 @@ def get_feedbacks(user_id, sprint_id):
             feedback.append(rating.comment)
             feedbacks.append(feedback)
     return feedbacks
+
+
 
 
 
