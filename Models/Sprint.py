@@ -71,7 +71,7 @@ def next_rating_period (group_id):
     # faz um loop através das sprints do grupo
     for sprint in get_group_sprints(group_id):
         if today() > sprint.finish: continue
-        time_until_start = sprint.finish + timedelta(days=sprint.rating_period) - today()
+        time_until_start = sprint.finish + timedelta(days=1) - today()
         if min_time_until_start is None or time_until_start < min_time_until_start: 
             min_time_until_start = time_until_start
             next_rating_period_sprint = sprint
