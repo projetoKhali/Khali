@@ -50,12 +50,14 @@ def run(frame_parent):
     criar_label(frame_title, "Dashboards", "Calibri, 24 bold", 0, 0, None, co3, co0)
 
     frame_legenda = criar_frame(frame_parent, 1, 0, 'nw', hlbg=co3, hlt=1, px=0, py=0)
+    from Models.id_criteria import criteria, criteria_full
+    
+   
     criar_label(frame_legenda, 'Critérios Avaliativos', 'Calibri, 12 bold', 0,0)
-    criar_label(frame_legenda, 'T.E. - Trabalho em Equipe', 'Calibri, 10 ', 1,0)
-    criar_label(frame_legenda, 'I.P. - Iniciativa e Proatividade', 'Calibri, 10 ', 2,0)
-    criar_label(frame_legenda, 'A.A. - Autodaxia e Agregação de Conhecimento', 'Calibri, 10 ', 3,0)
-    criar_label(frame_legenda, 'E.R. - Entrega de Resultados', 'Calibri, 10 ', 4,0)
-    criar_label(frame_legenda, 'C.T. - Competência Técnica', 'Calibri, 10 ', 5,0)
+    for i in range(len(criteria)):
+        criar_label(frame_legenda, f'{criteria[i]} - {criteria_full[i]}', 'Calibri 10', i%2 + 1, i//2)
+
+      
 
 
 
@@ -92,12 +94,18 @@ def run(frame_parent):
             figure2 = Dashboards.role_media(3, group.id)
             canvas = FigureCanvasTkAgg(figure2, master = frame_dashboards)
             # canvas.show()
-            canvas.get_tk_widget().grid(row=0, column=1, sticky='wens')
+            canvas.get_tk_widget().grid(row=1, column=0, sticky='wens')
         if group.client_id == CURRENT_USER.id:
             figure2 = Dashboards.role_media(4, group.id)
             canvas = FigureCanvasTkAgg(figure2, master = frame_dashboards)
             # canvas.show()
-            canvas.get_tk_widget().grid(row=0, column=1, sticky='wens')
+            canvas.get_tk_widget().grid(row=1, column=0, sticky='wens')
+        figure3 = Dashboards.group_media_x_groups(group.id)
+        canvas = FigureCanvasTkAgg(figure3, master = frame_dashboards)
+        canvas.get_tk_widget().grid(row=2, column=0, sticky='wens')
+        figure4 = Dashboards.media_teams_line(group.id)
+        canvas = FigureCanvasTkAgg(figure4, master = frame_dashboards)
+        canvas.get_tk_widget().grid(row=3, column=0, sticky='wens')
     
     if CURRENT_USER.role_id in [3, 4, 5]:
         frame_dashboards = criar_frame(frame_parent, 2, 0)
@@ -109,13 +117,18 @@ def run(frame_parent):
         figure2 = Dashboards.user_media_x_team(CURRENT_USER.id)
         canvas = FigureCanvasTkAgg(figure2, master = frame_dashboards)
         # canvas.show()
-        canvas.get_tk_widget().grid(row=0, column=1, sticky='wens')
+        canvas.get_tk_widget().grid(row=1, column=0, sticky='wens')
         
         if CURRENT_USER.role_id in [3, 4]:
             figure3 = Dashboards.team_media_x_group(CURRENT_USER.team_id)
             canvas = FigureCanvasTkAgg(figure3, master = frame_dashboards)
             # canvas.show()
-            canvas.get_tk_widget().grid(row=1, column=0, sticky='wens')
+            canvas.get_tk_widget().grid(row=2, column=0, sticky='wens')
+
+            figure4 = Dashboards.users_media_team(CURRENT_USER.team_id)
+            canvas = FigureCanvasTkAgg(figure4, master = frame_dashboards)
+            # canvas.show()
+            canvas.get_tk_widget().grid(row=3, column=0, sticky='wens')
 
     frame_bandaid = criar_frame(frame_parent, 3, 0)
     frame_bandaid.grid(sticky='news')
