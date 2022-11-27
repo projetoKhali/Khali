@@ -33,6 +33,9 @@ def run(frame_parent):
 
     Label(frame_header, text="Editar Times", font='Calibri, 24 bold', bg=co3, fg=co0).grid(row=0, column=0)
 
+    from Models.Group import get_groups_of_leader, get_group_of_name
+    create_dropdown(criar_frame(frame_header, 0, 1, "ew", co3, px=12, py=0),0,0, [i.name for i in get_groups_of_leader(CURRENT_USER.id)], 'get_group_id', lambda v: get_group_of_name(v).id)
+
     # section 1
     frame_body = Frame(module_frame, padx=2, pady=2, bg=co0)
     frame_body.rowconfigure(0, weight = 12)

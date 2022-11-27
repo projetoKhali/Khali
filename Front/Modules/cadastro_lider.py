@@ -34,9 +34,9 @@ def run(frame_parent):
     frame_body.columnconfigure(0, weight=1)
 
     # dropdown com nome dos grupos
-    from Models.Group import get_groups_of_leader
+    from Models.Group import get_groups_of_leader, get_group_of_name
     from Authentication import CURRENT_USER
-    create_dropdown(frame_header,0,1, [i.name for i in get_groups_of_leader(CURRENT_USER.id)], "get_group_name")
+    create_dropdown(frame_header,0,1, [i.name for i in get_groups_of_leader(CURRENT_USER.id)], "get_group_id", lambda v: get_group_of_name(v).id)
     
     # adiciona scrollbar no frame_bogy
     from Front.Scrollbar import add_scrollbar
@@ -79,20 +79,16 @@ def create_register_container(frame_parent, row, title, command):
     frame_title.columnconfigure(0, weight=1)
 
     # título, input
-    criar_label(frame_title, f"Número de {title}:",
-                "Calibri 12 bold", 0, 0, co0, 'w').configure(width=20)
+    criar_label(frame_title, f"Número de {title}:", "Calibri 12 bold", 0, 0, co0, 'w').configure(width=20)
 
     # cria o frame que contém os items da lista desse container
-    frame_list_wrapper = criar_frame(
-        frame_container, 1, 0, 'news', co0, co0, 0, 4, 4)
+    frame_list_wrapper = criar_frame(frame_container, 1, 0, 'news', co0, co0, 0, 4, 4)
     frame_list_wrapper.columnconfigure(0, weight=1)
 
     # inicializa uma IntVar para atualizar os items listados nesse container quando modificada
     var = IntVar()
-    var.trace_add('write', lambda n, i, m, v=var,
-                  lw=frame_list_wrapper: command(v, lw))
-    criar_entry(frame_title, "Calibri, 10", 0, 1,
-                'w', 8, 2).config(textvariable=var)
+    var.trace_add('write', lambda n, i, m, v=var, lw=frame_list_wrapper: command(v, lw))
+    criar_entry(frame_title, "Calibri, 10", 0, 1, 'w', 8, 2).config(textvariable=var)
 
 
 # função que pegar o valor da caixa de entrada do "n° de sprints, ao apertar o button.
@@ -274,7 +270,7 @@ def entry_times(en_numtimes: IntVar, frame_parent):
         criar_button(frame_clear_btn, 'Limpar', 'Calibri, 10', 0, 0, lambda ti=i, en=entry_name: [en.delete('0', 'end'), trigger(f'clear_team_{ti}')], 'e').config(takefocus=0)
 
         # cadastra a reação de evento que retorna os dados desse time
-        register(f'get_team_{i}', lambda n=entry_name, ti=i: [ lambda name=n.get(): name if name != "\n\n\nnome" else None, trigger(f'get_team_members_{ti}')])
+        register(f'get_team_{i}', lambda n=entry_name, ti=i: [n.get() , trigger(f'get_team_members_{ti}')])
 
 
 # Atualiza a tela para criar os formularios para cada membro de acordo com o numero de membros especificado em cada time
@@ -396,7 +392,7 @@ def confirmar_cadastros():
     from Authentication import register
     
     # TODO: Integração com dropdown de selecionar grupo
-    group_id = trigger("get_group_name")
+    group_id = trigger("get_group_id")
 
     # Chama o evento para obter o retorno dos dados
     sprints = trigger('get_sprints')
@@ -412,7 +408,7 @@ def confirmar_cadastros():
 
         # cada item na lista representa um team
         for team in teams:
-            if team[0] == None: continue
+            if team[0] == '\n\n\nnome': continue
 
             # indice 0 = nome do time; indice 1 = membros
             team_id = create_team(team[0], group_id)

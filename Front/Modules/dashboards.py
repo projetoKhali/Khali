@@ -1,11 +1,6 @@
 from tkinter import *
 from graficos import Dashboards
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from matplotlib.figure import Figure
-from Authentication import CURRENT_USER
-from Models import Role 
-from CSV import CSVHandler as handler
-import Settings
 from Front.Core import *
 
 # Informações do modulo
@@ -45,31 +40,28 @@ def run(frame_parent):
     frame_title = criar_frame(master_frame, 0, 0, "ew",co3, px= 0, py=0)
     frame_title.columnconfigure(0,weight=1)
     criar_label(frame_title, "Dashboards", "Calibri, 24 bold", 0, 0, None, co3, co0)
-    
-    from Models.Group import get_groups_of_leader, get_groups_of_client
-    from Authentication import CURRENT_USER
-    create_dropdown(criar_frame(frame_title, 0, 1, "ew", co3, px=12, py=0),0,0, [i.name for i in get_groups_of_leader(CURRENT_USER.id)] + [i.name for i in get_groups_of_client(CURRENT_USER.id)])
 
-
-    
     from Authentication import CURRENT_USER
-    if CURRENT_USER.role_id in [3, 4, 5]:
-        frame_dashboards = criar_frame(master_frame, 1, 0)
-        # figure = Dashboards.teste()
-        figure1 = Dashboards.user_media_sprints(CURRENT_USER.id)
-        canvas = FigureCanvasTkAgg(figure1, master = frame_dashboards)
-        # canvas.show()
-        canvas.get_tk_widget().grid(row=0, column=0, sticky='wens')
-        figure2 = Dashboards.user_media_x_team(CURRENT_USER.id)
-        canvas = FigureCanvasTkAgg(figure2, master = frame_dashboards)
-        # canvas.show()
-        canvas.get_tk_widget().grid(row=0, column=1, sticky='wens')
 
     if CURRENT_USER.role_id in [1, 2]:
+        
+        from Models.Group import get_groups_of_instructor, get_group_of_name
+        from Authentication import CURRENT_USER
+        dropdown = create_dropdown(criar_frame(frame_title, 0, 1, "ew", co3, px=12, py=0), 0, 0, [i.name for i in get_groups_of_instructor(CURRENT_USER.id)], 'get_group_id', lambda v: get_group_of_name(v).id)
+        dropdown.get()
+
         from Models.Group import get_group
-        group = get_group(CURRENT_USER.group_id)
+        from Events import trigger
+
+        id = trigger('get_group_id')
+        # print(f'trigger(\'get_group_name\'): {id}')
+
+        group = get_group(id)
         frame_dashboards = criar_frame(master_frame, 1, 0)
         # figure = Dashboards.teste()
+
+        print(f'get_group(id): {group}')
+
         figure1 = Dashboards.teams_media(group.id)
         canvas = FigureCanvasTkAgg(figure1, master = frame_dashboards)
         # canvas.show()
@@ -85,3 +77,14 @@ def run(frame_parent):
             # canvas.show()
             canvas.get_tk_widget().grid(row=0, column=1, sticky='wens')
     
+    if CURRENT_USER.role_id in [3, 4, 5]:
+        frame_dashboards = criar_frame(master_frame, 1, 0)
+        # figure = Dashboards.teste()
+        figure1 = Dashboards.user_media_sprints(CURRENT_USER.id)
+        canvas = FigureCanvasTkAgg(figure1, master = frame_dashboards)
+        # canvas.show()
+        canvas.get_tk_widget().grid(row=0, column=0, sticky='wens')
+        figure2 = Dashboards.user_media_x_team(CURRENT_USER.id)
+        canvas = FigureCanvasTkAgg(figure2, master = frame_dashboards)
+        # canvas.show()
+        canvas.get_tk_widget().grid(row=0, column=1, sticky='wens')

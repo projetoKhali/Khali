@@ -39,12 +39,11 @@ def unregister_all(event):
 def trigger(event):
     results = []
     if event in listeners:
-        print(event)
+        # print(event)
         for reaction in listeners[event]:
             result = reaction() if hasattr(reaction, '__call__') else reaction
-            print(result)
-            # print(f'Events.trigger -- event: {event} | rection: {reaction}')
-            # print(f'result: {result}')
+            print(f'Events.trigger -- event: {event} | rection: {reaction}')
+            print(f'result: {result}')
             if result is not None: results.append(result)
     return results if len(results) > 1 else results[0] if len(results) == 1 else None
 

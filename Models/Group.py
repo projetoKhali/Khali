@@ -43,12 +43,23 @@ def get_group (id:int):
 def get_groups ():
     return [to_group(x) for x in load_all_csv(GROUPS_PATH)]
 
+
+# Retorna todos o Grupos em que o usuário de id especificado posssui a função de Lider
+def get_group_of_name (name:str):
+    return None if name == '' or name is None else to_group(find_data_by_field_value_csv(GROUPS_PATH, 'name', name))
+
+
 # Retorna todos o Grupos em que o usuário de id especificado posssui a função de Lider
 def get_groups_of_leader (id:int):
     return None if id == '' or id is None else [to_group(x) for x in find_data_list_by_field_value_csv(GROUPS_PATH, 'leader_id', int(id))]
 
+
 def get_groups_of_client (id:int):
     return None if id == '' or id is None else [to_group(x) for x in find_data_list_by_field_value_csv(GROUPS_PATH, 'client_id', int(id))]
+
+
+def get_groups_of_instructor (id:int):
+    return get_groups_of_leader(id) + get_groups_of_client(id)
 
 
 def edit_group(id, name = 'IGNORE', leader_id = 'IGNORE', client_id = 'IGNORE'):
