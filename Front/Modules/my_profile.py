@@ -1,7 +1,12 @@
 from Front.Core import *
 
-col_rated = '#76807D'
+# cores utilizadas nos frames de usuário das listas pendentes / avaliados
 col_to_rate = '#DBBDC1'
+col_rated = '#76807D'
+
+global module_frame
+global sel_sprint
+global user_is_instructor
 
 # Informações do modulo
 NAME = 'Lista'
@@ -10,9 +15,6 @@ REQUIRED_PERMISSIONS_RATE = [
     [3, 4, 5]  # pelo menos uma das 3
 ]
 REQUIRED_PERMISSIONS_VIEW = [None]
-
-global module_frame
-global sel_sprint
 
 def run(frame_parent):
     global module_frame
@@ -31,18 +33,8 @@ def run(frame_parent):
     # cria a seção da esquerda onde estará a lista de usuários avaliados e pendentes
     criar_section_1()    
 
-    from Authentication import CURRENT_USER
-    from Models.Sprint import get_group_sprints
-    from Time import today
-    from Events import trigger
-
-    sprints = [s for s in get_group_sprints(trigger("get_group_name")) if today() >= s.rating_period_end()]
-
-    global sel_sprint
-    sel_sprint = len(sprints) - 1
-
     # cria a seção da direita onde estarão as informações do usuário logado
-    criar_section_2(sprints)    
+    criar_section_2()    
 
     return module_frame
 
@@ -52,14 +44,21 @@ def criar_section_1():
     from Front.Scrollbar import add_scrollbar
     from Models.Sprint import current_rating_period, next_rating_period, sprint_index
     from Authentication import CURRENT_USER
-    from Time import today
+    from Events import trigger
+
+    # Define se o usuário logado é instrutor
+    global user_is_instructor
+    user_is_instructor = CURRENT_USER.role_id in [1, 2]
+
+    # o ID do grupo que será referenciado é o valor de retorno do dropdown seletor de grupos caso o usuário seja instrutor
+    # ou o group_id do usuário caso aluno
+    group_id = trigger("get_group_id") if user_is_instructor else CURRENT_USER.group_id
 
     # Cria o frame principal da seção
     frame_section = criar_frame(module_frame, 0, 0, "nwes", co0, co2, 2, 0, 0)
-    if current_rating_period(CURRENT_USER.group_id) == None and next_rating_period(CURRENT_USER.group_id) == None:
-            frame_section = criar_frame(module_frame, 0, 0, "nwes", co0, co0, 0, 0, 0)
+    if current_rating_period(group_id) == None and next_rating_period(group_id) == None: frame_section = criar_frame(module_frame, 0, 0, "nwes", co0, co0, 0, 0, 0)
     frame_section.columnconfigure(0, weight = 1)
-    frame_section.rowconfigure(2, weight = 1)
+    frame_section.rowconfigure(3, weight = 1)
 
     # Cria o frame de cabeçalho
     frame_section_header = criar_frame(frame_section, 0, 0, "we", co3, co3, 0, 0, 0)
@@ -71,21 +70,15 @@ def criar_section_1():
 
     # dropdown com nome dos grupos
     from Models.Group import get_groups_of_instructor, get_group_of_name
-    from Authentication import CURRENT_USER
-    create_dropdown(criar_frame(frame_section, 1, 0, "ew", "magenta", px=0, py=0),0,0, [i.name for i in get_groups_of_instructor(CURRENT_USER.id)], "get_group_id", lambda v: get_group_of_name(v).id)
+    if user_is_instructor: create_dropdown(criar_frame(frame_section, 1, 0, "ew", "magenta", px=0, py=0),0,0, [i.name for i in get_groups_of_instructor(CURRENT_USER.id)], "get_group_id", lambda v: get_group_of_name(v).id)
 
     # Frame para a timeline / datas importantes da sprint / periodo avaliativo
     frame_sprint_timeline = criar_frame(frame_section, 2, 0, "ew", co0, co0, 0, 2, 2)
 
-    from Authentication import CURRENT_USER
-    from Models.Sprint import current_rating_period, next_rating_period, sprint_index
     from Time import today
-    from Events import trigger
 
-    group_id = trigger("get_group_id")
+    # pega o periodo avaliativo atual e inicializa uma string que irá conter o valor na label sprint_timeline
     sprint = current_rating_period(group_id)
-
-    print(sprint)
     sprint_timeline_str = ''
 
     # Caso possuirmos uma sprint cujo periodo avaliativo encontra-se ativo
@@ -120,15 +113,12 @@ def criar_section_1():
     # ]
     grades = lista_usuarios_back.get_users(CURRENT_USER)
 
-    # grades = [grades[0], grades[0]] # -----------------------------------------------------------------------------------------
-
     # variavel com o tamanho das listas
     g = [len(grades[0]), len(grades[1])]
 
     # Cria o pie chart utilizando a informação de usuários
-    if (sum(g) > 0) and current_rating_period(CURRENT_USER.group_id) != None: criar_piechart(frame_section_header, g)
+    if (sum(g) > 0) and current_rating_period(group_id) != None: criar_piechart(frame_section_header, g)
     
-
     # Cria o Frame parent de ambas as listas
     frame_listas_parent = criar_frame(frame_section, 3, 0, "nsew", co0 if g[1] == 0 else co0, co0, 0, 0, 0)
     frame_listas_parent.columnconfigure(0, weight = 1)
@@ -138,13 +128,11 @@ def criar_section_1():
 
     # listas para facilitar o acesso a informações dentro do loop 'i'
     lista_titles = ['Integrantes ainda não Avaliados', 'Integrantes já Avaliados']
-    if current_rating_period(CURRENT_USER.group_id) == None:
+    if current_rating_period(group_id) == None:
         lista_titles = ['Integrantes a serem Avaliados', 'Integrantes a serem Avaliados']
-        if next_rating_period(CURRENT_USER.group_id) == None:
+        if next_rating_period(group_id) == None:
             lista_titles = ['Integrantes Avaliados', 'Integrantes Avaliados']
     
-    lista_colors = [col_to_rate, col_rated]
-
     # para cada lista
     for i, grade in enumerate(grades):
         glen=len(grade)
@@ -160,7 +148,7 @@ def criar_section_1():
         frame_lista.rowconfigure(1, weight=1)
 
         # Coloca o título da lista 
-        criar_label(frame_lista, lista_titles[i], 'Calibri, 14', 0, 0, lista_colors[i], "we")
+        criar_label(frame_lista, lista_titles[i], 'Calibri, 14', 0, 0, [col_to_rate, col_rated][i], "we")
 
         # Cria um frame parent para os usuários dessa lista
         frame_parent_users = criar_frame(frame_lista, 1, 0, "news", lista_col, lista_col, 0, 0, 0)
@@ -191,17 +179,17 @@ def criar_section_1():
             criar_label(frame_user_data, get_role_name(user.role_id), 'Calibri, 10', 1, 0, lista_col, "w")
 
             # Cria um frame pro botão
-            if current_rating_period(CURRENT_USER.group_id) != None:
+            if current_rating_period(group_id) != None:
                 frame_user_button = criar_frame(frame_user, 0, 1, 'ew', co0, co0, 0, 0, 0)
 
             # insere o botão correspondente ao tipo da lista. Pendentes: avaliar; Avaliados: editar
-            if i == 0 and current_rating_period(CURRENT_USER.group_id) != None:
+            if i == 0 and current_rating_period(group_id) != None:
                 criar_button(frame_user_button, 'Avaliar', 'Calibri, 12', 1, 1, lambda u=user: avaliar(u), "e"),
             # else: criar_button(frame_user_button, 'Editar Avaliação', 'Calibri, 12', 1, 1, lambda u=user: avaliar(u['id']), "w"),
 
 
 # Cria a parte direita da tela, chamando a função apropriada dependendo do usuário logado e da sprint atual
-def criar_section_2(sprints):
+def criar_section_2():
     
     # destroy o frame_section_2 anterior caso já exista 
     mf_children = module_frame.winfo_children()
@@ -215,9 +203,16 @@ def criar_section_2(sprints):
     frame_section.columnconfigure(0, weight = 1)
     frame_section.rowconfigure(2, weight = 1)
 
+    # caso o usuário logado seja instrutor
+    if user_is_instructor: 
+        criar_section_instructor(frame_section) # TODO: seção de instrutor
+        return
+
     from Models.Sprint import previous_sprint, next_rating_period, current_rating_period
     from Authentication import CURRENT_USER
 
+    # !!!!!!!!!! Nesse caso não utilizamos trigget('get_group_id') já que o usuário não é instrutor !!!!!!!!!!
+    
     # pega a sprint anterior do grupo do usuário logado
     target_sprint = previous_sprint(CURRENT_USER.group_id)
     if current_rating_period(CURRENT_USER.group_id) == None and next_rating_period(CURRENT_USER.group_id) == None:
@@ -226,16 +221,12 @@ def criar_section_2(sprints):
     # sem target_sprint: renderiza informações sobre a avaliação 360
     if target_sprint is None: criar_section_info(frame_section) # TODO: seção com informações da avaliação 360
     
-    # caso o usuário logado seja instrutor
-    elif CURRENT_USER.role_id not in [3, 4, 5]: criar_section_instructor(frame_section) # TODO: seção de instrutor
-
     # caso contrario, cria a seção com informações sobre o usuário logado
-    else: criar_section_profile(frame_section, sprints)
+    else: criar_section_profile(frame_section)
 
 
 # Cria informações adicionais na seção 2 caso o usuário seja aluno
-def criar_section_profile(frame_section, sprints):
-    from Authentication import CURRENT_USER
+def criar_section_profile(frame_section):
 
     # Cria o frame de cabeçalho
     frame_section_header = criar_frame(frame_section, 0, 0, "we", co3, co3, 0, 0, 0)
@@ -268,14 +259,26 @@ def criar_section_profile(frame_section, sprints):
     from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
     # Cria o grafico pentagono
+    from Models.Sprint import get_group_sprints
+    from Time import today
+
+    # sprints = [s for s in get_group_sprints(trigger("get_group_id")) if today() >= s.rating_period_end()]
+    sprints = [s for s in get_group_sprints(CURRENT_USER.group_id) if today() >= s.rating_period_end()]
+
+    # após adquirir as sprints que serão utilizadas na tela, define a sprint selecionada como a ultima sprint da lista
+    global sel_sprint
+    sel_sprint = len(sprints) - 1
+
+    # Cria o gráfico pentagono
     figure = user_pentagon(CURRENT_USER.id, sprints[sel_sprint], co3, co3, 2.75, 2.25)
 
+    # configura o canvas e adiciona a Figure do grafico
     canvas = FigureCanvasTkAgg(figure, master=frame_user_pentagon)
     canvas_tkw = canvas.get_tk_widget()
     canvas_tkw.columnconfigure(1, weight = 1)
     canvas_tkw.grid(row=0, column=0, sticky='wens')
 
-    from Models.id_criteria import criteria
+    from Models.id_criteria import criteria, criteria_full
 
     # Cria um frame para a legenda do grafico pentagono
     frame_legenda = criar_frame(frame_user_pentagon, 0, 1, "nsew", co0, co2, 2, 8, 32)
@@ -283,7 +286,6 @@ def criar_section_profile(frame_section, sprints):
     frame_legenda.rowconfigure([i for i in range(len(criteria))], weight = 1)
 
     from Models.Rating import get_ratings
-    from Models.id_criteria import criteria, criteria_full
     from graficos.Integrador import classify_criteria, medias
 
     # adquire as notas usuário 
