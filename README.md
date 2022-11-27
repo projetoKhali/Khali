@@ -13,8 +13,6 @@
     * [Tecnologias Utilizadas](#tecnologias-utilizadas)
     * [Wireframe do Produto](#wireframe-do-produto)
     * [Fluxograma do produto](#fluxograma-do-produto)
-    * [Wireframe do Produto](#wireframe-do-produto)
-    * [Fluxograma do produto](#fluxograma-do-produto)
     * [Vídeos com funcionalidades](#vídeos-com-funcionalidades)
     * [Requisitos Funcionais](#requisitos-funcionais)
     * [Requisitos Não Funcionais](#requisitos-não-funcionais)
