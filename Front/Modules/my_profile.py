@@ -33,8 +33,19 @@ def run(frame_parent):
     # cria a seção da esquerda onde estará a lista de usuários avaliados e pendentes
     criar_section_1()    
 
+    from Authentication import CURRENT_USER
+    from Models.Sprint import get_group_sprints
+    from Time import today
+
+    # sprints = [s for s in get_group_sprints(trigger("get_group_id")) if today() >= s.rating_period_end()]
+    sprints = [s for s in get_group_sprints(CURRENT_USER.group_id) if today() >= s.rating_period_end()]
+
+    # após adquirir as sprints que serão utilizadas na tela, define a sprint selecionada como a ultima sprint da lista
+    global sel_sprint
+    sel_sprint = len(sprints) - 1
+
     # cria a seção da direita onde estarão as informações do usuário logado
-    criar_section_2()    
+    criar_section_2(sprints)    
 
     return module_frame
 
@@ -189,7 +200,7 @@ def criar_section_1():
 
 
 # Cria a parte direita da tela, chamando a função apropriada dependendo do usuário logado e da sprint atual
-def criar_section_2():
+def criar_section_2(sprints):
     
     # destroy o frame_section_2 anterior caso já exista 
     mf_children = module_frame.winfo_children()
@@ -215,18 +226,18 @@ def criar_section_2():
     
     # pega a sprint anterior do grupo do usuário logado
     target_sprint = previous_sprint(CURRENT_USER.group_id)
-    if current_rating_period(CURRENT_USER.group_id) == None and next_rating_period(CURRENT_USER.group_id) == None:
-        target_sprint = 'not none'
+    # if current_rating_period(CURRENT_USER.group_id) == None and next_rating_period(CURRENT_USER.group_id) == None:
+    #     target_sprint = 'not none'
 
     # sem target_sprint: renderiza informações sobre a avaliação 360
     if target_sprint is None: criar_section_info(frame_section) # TODO: seção com informações da avaliação 360
     
     # caso contrario, cria a seção com informações sobre o usuário logado
-    else: criar_section_profile(frame_section)
+    else: criar_section_profile(frame_section, sprints)
 
 
 # Cria informações adicionais na seção 2 caso o usuário seja aluno
-def criar_section_profile(frame_section):
+def criar_section_profile(frame_section, sprints):
 
     # Cria o frame de cabeçalho
     frame_section_header = criar_frame(frame_section, 0, 0, "we", co3, co3, 0, 0, 0)
@@ -257,17 +268,6 @@ def criar_section_profile(frame_section):
 
     from graficos.Dashboards import user_pentagon
     from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-
-    # Cria o grafico pentagono
-    from Models.Sprint import get_group_sprints
-    from Time import today
-
-    # sprints = [s for s in get_group_sprints(trigger("get_group_id")) if today() >= s.rating_period_end()]
-    sprints = [s for s in get_group_sprints(CURRENT_USER.group_id) if today() >= s.rating_period_end()]
-
-    # após adquirir as sprints que serão utilizadas na tela, define a sprint selecionada como a ultima sprint da lista
-    global sel_sprint
-    sel_sprint = len(sprints) - 1
 
     # Cria o gráfico pentagono
     figure = user_pentagon(CURRENT_USER.id, sprints[sel_sprint], co3, co3, 2.75, 2.25)
@@ -333,8 +333,8 @@ def criar_retorno_feedbacks(frame_section_feedbacks, sprints):
 
     # Cria os botões que selecionam a sprint
     for index, _ in enumerate(sprints):
-        sprint_btn = criar_button(frame_sprint_selector, f'Sprint {index+1}', 'Calibri, 12 bold', 0, index, 
-            lambda e=None, s=sprints, i=index: select_sprint(e, s, i), 'ew', 0)
+        sprint_btn = criar_button(frame_sprint_selector, f'Sprint {index+1}', 'Calibri, 12 bold', 0, index, lambda e=None, s=sprints, i=index: select_sprint(e, s, i), 'ew', 0)
+        print(f'index: {index} | sel_sprint: {sel_sprint}')
         sprint_btn.configure(fg=co3 if index == sel_sprint else co1, bg=co1 if index == sel_sprint else co3)
 
 
