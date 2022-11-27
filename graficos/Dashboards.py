@@ -34,8 +34,8 @@ def multi_bar (title, names, y_label, matriz, x_label, x_ticks):
     from matplotlib import pyplot
 
     fig, ax = pyplot.subplots(figsize = (5,5))
+    ax.set_ylim([1, 6])
     fig.set_facecolor(co0)
-    ax.set_ylim([1, 5])
     bar_width = 1. / (len(matriz) + 1.75)
 
     for i, lst in enumerate(matriz):
@@ -52,6 +52,57 @@ def multi_bar (title, names, y_label, matriz, x_label, x_ticks):
         # define a posição de cada barra da lista de indice 'i'
         positions = [j + offset for j in range(len(x_ticks))]
 
+        # ax.barh(positions, lst, bar_width, color=colors[i], label=names[i])
+
+        ax.bar_label(
+            ax.barh(positions, lst, bar_width, color=colors[i], label=names[i]
+        ), fmt='%.2f', padding=3)
+
+    # Add some text for labels, title and custom x-axis tick labels, etc.
+    ax.set_xlabel(y_label)
+    ax.set_ylabel(x_label)
+
+    ax.set_title(title)
+
+    ax.set_yticks([i for i in range(len(x_ticks))])
+    ax.set_yticklabels(x_ticks)
+
+    if not check_empty_recursive(matriz): ax.legend()
+
+    # fig.tight_layout()
+
+    return fig
+
+
+
+def multi_bar_vertical (title, names, y_label, matriz, x_label, x_ticks):
+    if check_empty_recursive(matriz):
+        print(f'Khali | Dashboards.multi_bar -- Matriz vazia!')
+        return
+
+    from matplotlib import pyplot
+
+    # ind = np.arange(len(x_ticks))  # the x locations for the groups
+    fig, ax = pyplot.subplots(figsize = (5,5))
+    ax.set_ylim([1, 6])
+    fig.set_facecolor(co0)
+    bar_width = 1. / (len(matriz) + 1.75)
+
+    for i, lst in enumerate(matriz):
+
+        # Define a posição da barra. Indice da barra * espaçamento definido pela quantidade de barras por x_tick
+        offset = (i * bar_width) 
+
+        # move todas as barras para esquerda em (tamanho total da soma das barras / 2)
+        offset -= bar_width * int(len(matriz) / 2)
+
+        # caso o numero de barras seja par, move o metade do tamanho de UMA barra para a direita
+        if len(matriz) % 2 == 0: offset += bar_width / 2
+
+        # define a posição de cada barra da lista de indice 'i'
+        positions = [j + offset for j in range(len(x_ticks))]
+
+       
         ax.bar_label(
             ax.bar(positions, lst, color=colors[i % len(colors)], width=bar_width, label=names[i]
         ), fmt='%.1f', padding=3)

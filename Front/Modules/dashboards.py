@@ -15,13 +15,16 @@ master_frame = None
 def run(frame_parent):
     
     global master_frame
-    # from Front.Scrollbar import add_scrollbar
-    # master_frame = add_scrollbar(frame_parent)
+    from Front.Scrollbar import add_scrollbar
+    frame_parent = add_scrollbar(frame_parent)
     frame_parent.configure(background = co0)
-    master_frame = Frame(frame_parent, background = co0)
-    master_frame.grid(sticky = 'nwe')
-    master_frame.columnconfigure(0, minsize = 0, weight = 1)
-    master_frame.rowconfigure(0, minsize = 0, weight = 1)
+    frame_parent.grid(sticky = 'nwe')
+    frame_parent.columnconfigure(0, minsize = 0, weight = 1)
+    frame_parent.rowconfigure(0, minsize = 0, weight = 1)
+    # frame_parent = Frame(frame_parent, background = co0)
+    # frame_parent.grid(sticky = 'nwe')
+    # frame_parent.columnconfigure(0, minsize = 0, weight = 1)
+    # frame_parent.rowconfigure(0, minsize = 0, weight = 1)
      # função de criar frame
     # def criar_frame(quadro, row, column, background = co0):
     #     frame = Frame(quadro, background = background, relief=FLAT, bd=1)
@@ -37,9 +40,19 @@ def run(frame_parent):
         label.grid(row=r, column=c, padx=5, pady=3, sticky = "w")
         return label
 
-    frame_title = criar_frame(master_frame, 0, 0, "ew",co3, px= 0, py=0)
+    frame_title = criar_frame(frame_parent, 0, 0, "ew",co3, px= 0, py=0)
     frame_title.columnconfigure(0,weight=1)
     criar_label(frame_title, "Dashboards", "Calibri, 24 bold", 0, 0, None, co3, co0)
+
+    frame_legenda = criar_frame(frame_parent, 1, 0, 'nw', hlbg=co3, hlt=1, px=0, py=0)
+    criar_label(frame_legenda, 'Critérios Avaliativos', 'Calibri, 12 bold', 0,0)
+    criar_label(frame_legenda, 'T.E. - Trabalho em Equipe', 'Calibri, 10 ', 1,0)
+    criar_label(frame_legenda, 'I.P. - Iniciativa e Proatividade', 'Calibri, 10 ', 2,0)
+    criar_label(frame_legenda, 'A.A. - Autodaxia e Agregação de Conhecimento', 'Calibri, 10 ', 3,0)
+    criar_label(frame_legenda, 'E.R. - Entrega de Resultados', 'Calibri, 10 ', 4,0)
+    criar_label(frame_legenda, 'C.T. - Competência Técnica', 'Calibri, 10 ', 5,0)
+
+
 
     from Authentication import CURRENT_USER
 
@@ -57,7 +70,7 @@ def run(frame_parent):
         # print(f'trigger(\'get_group_name\'): {id}')
 
         group = get_group(id)
-        frame_dashboards = criar_frame(master_frame, 1, 0)
+        frame_dashboards = criar_frame(frame_parent, 2, 0)
         # figure = Dashboards.teste()
 
         print(f'get_group(id): {group}')
@@ -78,7 +91,7 @@ def run(frame_parent):
             canvas.get_tk_widget().grid(row=0, column=1, sticky='wens')
     
     if CURRENT_USER.role_id in [3, 4, 5]:
-        frame_dashboards = criar_frame(master_frame, 1, 0)
+        frame_dashboards = criar_frame(frame_parent, 2, 0)
         # figure = Dashboards.teste()
         figure1 = Dashboards.user_media_sprints(CURRENT_USER.id)
         canvas = FigureCanvasTkAgg(figure1, master = frame_dashboards)
