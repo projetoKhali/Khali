@@ -17,12 +17,25 @@ colors = [
     '#C5BFBD'
 ]
 
+# verifica se a matriz está vazia
+def check_empty_recursive (matriz):
+    if type(matriz) is not list: return False
+    for sub in matriz:
+        if not check_empty_recursive(sub): 
+            return False
+    return True
+
+
 def multi_bar (title, names, y_label, matriz, x_label, x_ticks):
+    if check_empty_recursive(matriz):
+        print(f'Khali | Dashboards.multi_bar -- Matriz vazia!')
+        return
+
     from matplotlib import pyplot
 
     fig, ax = pyplot.subplots(figsize = (5,5))
-    ax.set_ylim([1, 5])
     fig.set_facecolor(co0)
+    ax.set_ylim([1, 5])
     bar_width = 1. / (len(matriz) + 1.75)
 
     for i, lst in enumerate(matriz):
@@ -43,6 +56,7 @@ def multi_bar (title, names, y_label, matriz, x_label, x_ticks):
             ax.bar(positions, lst, color=colors[i % len(colors)], width=bar_width, label=names[i]
         ), fmt='%.1f', padding=3)
 
+
     # Add some text for labels, title and custom x-axis tick labels, etc.
     ax.set_ylabel(y_label)
     ax.set_xlabel(x_label)
@@ -52,7 +66,7 @@ def multi_bar (title, names, y_label, matriz, x_label, x_ticks):
     ax.set_xticks([i for i in range(len(x_ticks))])
     ax.set_xticklabels(x_ticks)
 
-    ax.legend()
+    if not check_empty_recursive(matriz): ax.legend()
 
     # fig.tight_layout()
 
@@ -60,7 +74,12 @@ def multi_bar (title, names, y_label, matriz, x_label, x_ticks):
 
 # Gera um grafico de linha
 def line (title, names, y_label, matriz, x_label, x_ticks):
+    if check_empty_recursive(matriz):
+        print(f'Khali | Dashboards.line -- Matriz vazia!')
+        return
+
     from matplotlib import pyplot
+    from math import floor, ceil
 
     fig, ax = pyplot.subplots(figsize = (5,5))
     ax.set_ylim([1, 5])
@@ -68,13 +87,25 @@ def line (title, names, y_label, matriz, x_label, x_ticks):
 
     barWidth = .2 
 
+    ylim_min, ylim_max = 1, 5
+    ylim_min, ylim_max = 3, 4
+    ylim_min, ylim_max = 100000, -100000
+    range_adjust, precision = .5, 5.
+
     for i, value in enumerate(matriz):
+
+        print(f'value: {value}')
 
         # Aqui eu construo a barra
         positions = [j + barWidth for j in range(len(x_ticks))]
-        ax.plot(positions, value, color=colors[i % len(colors)], label=names[i])
+        ax.plot(positions, value, linewidth=2, color=colors[i % len(colors)], label=names[i])
 
-    ax.set_ylim([0, 5])
+        for v in value:
+            print(f'v: {v}')
+            ylim_max = (lambda v=(ceil((v + range_adjust) * precision) / precision), max=ylim_max: v if v > max else max)() 
+            ylim_min = (lambda v=(floor((v - range_adjust) * precision) / precision), min=ylim_min: v if v < min else min)() 
+
+    ax.set_ylim([ylim_min, ylim_max])
 
     ax.set_title(title)
 
@@ -84,7 +115,7 @@ def line (title, names, y_label, matriz, x_label, x_ticks):
 
     ax.set_ylabel(y_label)
 
-    ax.legend()
+    if not check_empty_recursive(matriz): ax.legend()
 
     return fig
 
@@ -164,9 +195,11 @@ def user_media_sprints (user_id):
 
     # Lista as sprints (em objeto da classe Sprint)
     sprints = get_group_sprints(user.group_id)
+    for s in sprints: print(s)
 
     # Lista todas as avaliações em que o usuário está sendo avaliado 
     ratings = get_ratings_to_user(user.id)
+    # for r in ratings: print(r)
 
     # Renderiza o grafico representando as médias calculadas 
     return multi_bar(
@@ -256,7 +289,7 @@ def teams_media (group_id):
     ratings = []
 
     # Adiciona a lista de avaliações filtrada para a lista ratings 
-    for team in enumerate(teams):
+    for team in teams:
         ratings_to_team = get_ratings_to_team(team.id)
         if ratings_to_team is not None and len(ratings_to_team) > 0:
             ratings.append(classify_criteria(criteria, ratings_to_team))
@@ -296,7 +329,7 @@ def team_media_x_group (team_id):
     # cria uma lista de avaliações em que o primeiro indice corresponde às avaliações do time
     # e o segundo índice corresponde às avaliações dos outros times
     ratings = [
-        classify_criteria(criteria, team_ratings), 
+        classify_criteria(criteria, team_ratings) if len(team_ratings) else [[1] for _ in range(5)], 
         classify_criteria(criteria, group_ratings)
     ]
 
@@ -370,12 +403,19 @@ def users_media_team (team_id):
     # carrega o time com o id especificado e seus membros
     team = get_team(team_id)
     users = get_users_of_team(team_id)
+
+    for u in users: print(f'u: {u}')
     
+    # print(f'team: {team}')
+    # print(f'users: {users}')
+
     # Lista todas as avaliações em que o id do usuário avaliado corresponda a qualquer id da lista 'user_ids' 
     ratings = [classify_criteria(criteria, get_ratings_to_user(user.id)) for user in users]
 
+    # print(f'ratings: {ratings}')
+
     # Renderiza o grafico representando as médias calculadas 
-    line(
+    return line(
         f'Média do time {team.name}',
         [x.name for x in users],
         'Médias',
@@ -386,7 +426,32 @@ def users_media_team (team_id):
 
 
 def media_teams_line (group_id):
-    pass
+
+    # importa as funções de acesso ao banco de dados de cada modelo
+    from Models.Team import get_teams_of_group
+    from Models.Rating import get_ratings_to_team
+    from Models.Group import get_group_name
+
+    # carrega o time com o id especificado e seus membros
+    teams = get_teams_of_group(group_id)
+
+    # cria uma lista de listas. Cada item-lista corresponde as avaliações do time
+    ratings = [get_ratings_to_team(team.id) for team in teams]
+
+    # para cada item-lista na lista, reorganiza o item-lista por critério caso a soma dos valores seja maior que 0
+    ratings = [classify_criteria(criteria, separator) for separator in ratings if sum([r.value for r in separator]) > 0]
+
+    # Renderiza o grafico representando as médias calculadas 
+    return line(
+        f'Média dos times do grupo {get_group_name(group_id)}',
+        [team.name for team in teams],
+        'Médias',
+        medias(criteria, ratings),
+
+        'Critério avaliativo',
+        criteria
+    )
+
 
 # Renderiza um Dashboard com a media de um determinado time em cada criterio de cada sprint
 def group_media_sprints (group_id):
@@ -439,7 +504,7 @@ def group_media_x_groups (group_id):
     # cria uma lista de avaliações em que o primeiro indice corresponde às avaliações do time
     # e o segundo índice corresponde às avaliações dos outros times
     ratings = [
-        classify_criteria(criteria, group_ratings), 
+        classify_criteria(criteria, group_ratings) if len(group_ratings) else [[1] for _ in range(5)], 
         classify_criteria(criteria, groups_ratings)
     ]
 
