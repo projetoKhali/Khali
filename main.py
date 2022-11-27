@@ -40,7 +40,7 @@ framer.rowconfigure(0, minsize = 0, weight = 1)
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from graficos.Dashboards import *
 
-# fig = user_media_sprints(22)    # v
+fig = user_media_sprints(22)    # v
 # fig = user_media_x_team(12)     # v
 # fig = teams_media(1)            # v 
 # fig = role_media(1, 1)          # v
@@ -52,7 +52,7 @@ from graficos.Dashboards import *
 # fig = team_media_x_group(7)     # v
 # fig = group_media_x_groups(2)   # v
 # fig = users_media_team(6)       # v
-fig = media_teams_line(2)       # v
+# fig = media_teams_line(2)       # v
 
 
 canvas = FigureCanvasTkAgg(fig, master = framer)

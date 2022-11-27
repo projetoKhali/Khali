@@ -84,7 +84,7 @@ def multi_bar_vertical (title, names, y_label, matriz, x_label, x_ticks):
 
     # ind = np.arange(len(x_ticks))  # the x locations for the groups
     fig, ax = pyplot.subplots(figsize = (5,5))
-    ax.set_ylim([1, 6])
+    ax.set_xlim([1, 6])
     fig.set_facecolor(co0)
     bar_width = 1. / (len(matriz) + 1.75)
 
@@ -145,14 +145,14 @@ def line (title, names, y_label, matriz, x_label, x_ticks):
 
     for i, value in enumerate(matriz):
 
-        print(f'value: {value}')
+        # print(f'value: {value}')
 
         # Aqui eu construo a barra
         positions = [j + barWidth for j in range(len(x_ticks))]
         ax.plot(positions, value, linewidth=2, color=colors[i % len(colors)], label=names[i])
 
         for v in value:
-            print(f'v: {v}')
+            # print(f'v: {v}')
             ylim_max = (lambda v=(ceil((v + range_adjust) * precision) / precision), max=ylim_max: v if v > max else max)() 
             ylim_min = (lambda v=(floor((v - range_adjust) * precision) / precision), min=ylim_min: v if v < min else min)() 
 
@@ -240,13 +240,14 @@ def user_media_sprints (user_id):
     # importa as funções de acesso ao banco de dados de cada modelo
     from Models.User import get_user
     from Models.Rating import get_ratings_to_user
+    from Models.Sprint import sprint_index
 
     # carrega as informações do usuário
     user = get_user(user_id)
 
     # Lista as sprints (em objeto da classe Sprint)
     sprints = get_group_sprints(user.group_id)
-    for s in sprints: print(s)
+    # for s in sprints: print(s)
 
     # Lista todas as avaliações em que o usuário está sendo avaliado 
     ratings = get_ratings_to_user(user.id)
@@ -255,7 +256,7 @@ def user_media_sprints (user_id):
     # Renderiza o grafico representando as médias calculadas 
     return multi_bar(
         f'Média de {user.name} ao longo das sprints',
-        [f'Sprint {i}' for i in range(len(sprints))],
+        [f'Sprint {sprint_index(user.group_id, s.id)}' for s in sprints],
         'Médias',
         medias_por_sprint(criteria, sprints, ratings),
         'Critério avaliativo',
