@@ -81,7 +81,7 @@ def criar_section_1():
 
     # dropdown com nome dos grupos
     from Models.Group import get_groups_of_instructor, get_group_of_name
-    if user_is_instructor: create_dropdown(criar_frame(frame_section, 1, 0, "ew", "magenta", px=0, py=0),0,0, [i.name for i in get_groups_of_instructor(CURRENT_USER.id)], "get_group_id", lambda v: get_group_of_name(v).id)
+    if user_is_instructor: create_dropdown(criar_frame(frame_section, 1, 0, "ew", co3, px=0, py=0),0,0, [i.name for i in get_groups_of_instructor(CURRENT_USER.id)], "get_group_id", lambda v: get_group_of_name(v).id)
 
     # Frame para a timeline / datas importantes da sprint / periodo avaliativo
     frame_sprint_timeline = criar_frame(frame_section, 2, 0, "ew", co0, co0, 0, 2, 2)

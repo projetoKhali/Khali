@@ -141,12 +141,22 @@ def cadastrar():
         return
     
     from Models.Group import create_group
+    from Models.Group import get_group_of_name
 
-    create_group(
-        group_name,
-        register(instructor_data[0][0], instructor_data[0][1], None, None, 1),
-        register(instructor_data[1][0], instructor_data[1][1], None, None, 2)
-    )
+    if group_name == "":
+        messagebox.showinfo("Khali Group", "Insira o Nome do grupo!")
+        return
+    elif get_group_of_name(group_name) != None:
+        messagebox.showinfo("Khali Group", "Nome do grupo já está sendo usado!")
+        return
+    else:
+        create_group(
+            group_name,
+            register(instructor_data[0][0], instructor_data[0][1], None, None, 1),
+            register(instructor_data[1][0], instructor_data[1][1], None, None, 2)
+        )
+
+      
 
     trigger('update_table')
 
