@@ -197,6 +197,12 @@
 * Após o término da Sprint 1, os dados são compilados e um Dashboard com as médias dos critérios e os feedbacks recebidos fica disponível no perfil
 ![T_finalSprint](https://user-images.githubusercontent.com/111442399/204162187-c487956b-f0fb-4541-a2c3-9706fa6a0854.gif)
 
+### Dashboard de acompanhamento do time - visão do Estudante Líder Técnico
+![dash lt](https://user-images.githubusercontent.com/111442399/204180211-0e1603a9-0c6c-440e-ab2d-7e09cab17350.gif)
+
+### Dashboard de acompanhamento do grupo - visão do Estudante Líder do Grupo
+![dash lg](https://user-images.githubusercontent.com/111442399/204180581-bfeda00c-41b1-4520-9d0a-04c8431a9843.gif)
+
  </details>
 
 ## Backlog das Sprints
