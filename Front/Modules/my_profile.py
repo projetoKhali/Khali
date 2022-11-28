@@ -67,10 +67,11 @@ def criar_section_1():
 
     # Cria o frame principal da seção
     frame_section = criar_frame(module_frame, 0, 0, "nwes", co0, co2, 2, 0, 0)
+
     from Models.Group import get_groups_of_instructor, get_group_of_name
     if user_is_instructor: create_dropdown(criar_frame(frame_section, 1, 0, "ew", co3, px=0, py=0),0,0, [i.name for i in get_groups_of_instructor(CURRENT_USER.id)], "get_group_id", lambda v: get_group_of_name(v).id)
+    
     group_id = trigger("get_group_id") if user_is_instructor else CURRENT_USER.group_id
-
 
     if current_rating_period(group_id) == None and next_rating_period(group_id) == None: frame_section = criar_frame(module_frame, 0, 0, "nwes", co0, co0, 0, 0, 0)
     frame_section.columnconfigure(0, weight = 1)
@@ -144,7 +145,6 @@ def criar_section_1():
     if current_rating_period(group_id) == None:
         lista_titles = ['Integrantes a serem Avaliados', 'Integrantes a serem Avaliados']
         if next_rating_period(group_id) == None:
-            print(group_id, current_rating_period(group_id))
             lista_titles = ['Integrantes Avaliados', 'Integrantes Avaliados']
     
     # para cada lista
@@ -272,7 +272,7 @@ def criar_section_profile(frame_section, sprints):
     from graficos.Dashboards import user_pentagon
     from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
-    # Cria o gráfico pentagono
+    # Cria o gráfico pentagono    
     figure = user_pentagon(CURRENT_USER.id, sprints[sel_sprint], co3, co3, 2.75, 2.25)
 
     # configura o canvas e adiciona a Figure do grafico
@@ -294,7 +294,7 @@ def criar_section_profile(frame_section, sprints):
     # adquire as notas usuário 
     target_sprint = sprints[sel_sprint]
     ratings = get_ratings(to_user_id=CURRENT_USER.id, sprint_id=target_sprint.id)
-    u_medias = medias(criteria, [classify_criteria(criteria, ratings)])[0]
+    u_medias = medias(criteria, [classify_criteria(criteria, ratings)])[0]                  # !!!!!!!!!!!!!
 
     # cria um título no frame legenda
     frame_legenda_title = criar_frame(frame_legenda, 0, 0, "ew", co0, co2, 0, 4, 4)
@@ -337,7 +337,6 @@ def criar_retorno_feedbacks(frame_section_feedbacks, sprints):
     # Cria os botões que selecionam a sprint
     for index, _ in enumerate(sprints):
         sprint_btn = criar_button(frame_sprint_selector, f'Sprint {index+1}', 'Calibri, 12 bold', 0, index, lambda e=None, s=sprints, i=index: select_sprint(e, s, i), 'ew', 0)
-        print(f'index: {index} | sel_sprint: {sel_sprint}')
         sprint_btn.configure(fg=co3 if index == sel_sprint else co1, bg=co1 if index == sel_sprint else co3)
 
 

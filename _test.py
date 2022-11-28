@@ -92,11 +92,9 @@ def create_test_data():
 
                 # pra cada usuário do grupo
                 for from_user_id in users_of_team:
-                    if (randint(0, 100) < 60): continue
 
                     # pra cada usuário do grupo novamente
                     for to_user_id in users_of_team:
-                        if (randint(0, 100) < 60): continue
 
                         # pra cada critério de avaliação
                         for criterio in range(len(criteria)):

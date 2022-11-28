@@ -190,6 +190,8 @@ def user_pentagon (user_id, target_sprint, color, background, fig_size_x, fig_si
     from Models.id_criteria import criteria
 
     ratings = get_ratings(to_user_id=user_id, sprint_id=target_sprint.id)
+    if check_empty_recursive(ratings): return
+
     data = medias(criteria, [classify_criteria(criteria, ratings)])[0]
 
     N = 5
@@ -434,7 +436,7 @@ def users_media_team (team_id):
     team = get_team(team_id)
     users = get_users_of_team(team_id)
 
-    for u in users: print(f'u: {u}')
+    # for u in users: print(f'u: {u}')
     
     # print(f'team: {team}')
     # print(f'users: {users}')

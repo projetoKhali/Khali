@@ -45,7 +45,7 @@ def get_ratings(from_user_id='IGNORE', to_user_id='IGNORE', sprint_id='IGNORE', 
     if criteria_id != 'IGNORE': kvps.update({'criteria_id':criteria_id})
     if value != 'IGNORE': kvps.update({'value':value})
     if comment != 'IGNORE': kvps.update({'comment':comment})
-    return [to_rating(x) for x in find_data_list_by_fields_value_csv(RATINGS_PATH, kvps)]
+    return [to_rating(x) for x in find_data_list_by_fields_value_csv(RATINGS_PATH, kvps, True)]
 
 # Retorna todas as avaliações feitas pelo usuário de id especificado
 def get_ratings_from_user (user_id):

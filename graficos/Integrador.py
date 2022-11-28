@@ -4,8 +4,8 @@ from Models.Rating import Rating
 # retorna uma lista com as médias de cada critério especificado utilizando a lista de avaliações para o calculo
 def medias (criteria:list[str], ratings:list[list[list[Rating]]]):
 
-    sturingo = f'{[[sum(c) for c in s] for s in ratings]}'
-    print(f'medias - matriz: {sturingo}')
+    # sturingo = f'{[[sum(c) for c in s] for s in ratings]}'
+    # print(f'medias - matriz: {sturingo}')
 
     """ estrutura da lista ratings:
     ratings [

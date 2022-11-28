@@ -201,7 +201,7 @@ def find_data_list_by_field_values_csv(path:str, field:str, values):
 
 
 # Retorna uma lista contendo todas as linhas em que o cada campo possua o valor especificado por chave no dicionario 'kvps' 
-def find_data_list_by_fields_value_csv(path:str, kvps:dict):
+def find_data_list_by_fields_value_csv(path:str, kvps:dict, debug = False):
     
     # Tenta executar o próximo código
     try:
@@ -220,21 +220,24 @@ def find_data_list_by_fields_value_csv(path:str, kvps:dict):
     lista = []
 
     # Pra cada linha carregada na variavel 'lines'
-    for line in lines:
+    for line in lines[1:]:
 
         # adquire os valores dessa linha
         line_values = format_line_csv(lines[0].strip('\n').split(','), line)
 
         # para cada valor especificado no dicionario
         for key in kvps:
+            # if debug: print(f'key: {key}')
 
             # Se o valor da chave key na linha corresponde ao valor da mesma chave no dicionario kvps
             if line_values[key] != str(kvps[key]):
+                # if debug: print(f'{line_values[key]} != str({kvps[key] + 1}) ? {line_values[key] != str(kvps[key])}')
                 # sai do loop kvps
                 break
             
         else:
             # adiciona a linha formatada para a lista de retorno
+            # if debug: print('adicionado')
             lista.append(format_line_csv(lines[0].strip('\n').split(','), line))
 
     # Loop finalizado sem encontrar nenhum resultado
