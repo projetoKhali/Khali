@@ -4,6 +4,9 @@ from Models.Rating import Rating
 # retorna uma lista com as médias de cada critério especificado utilizando a lista de avaliações para o calculo
 def medias (criteria:list[str], ratings:list[list[list[Rating]]]):
 
+    sturingo = f'{[[sum(c) for c in s] for s in ratings]}'
+    print(f'medias - matriz: {sturingo}')
+
     """ estrutura da lista ratings:
     ratings [
     |-- separador1 [ 
@@ -21,25 +24,30 @@ def medias (criteria:list[str], ratings:list[list[list[Rating]]]):
     """
 
     # inicializa a lista de medias 
-    medias = [[[] for _ in criteria] for _ in ratings]
-    # print(f'medias: {medias}')
+    medias = []
 
     # Inicia um loop através dos separadores 
     # ratings[separator_index] = [ criterio1 [ n1, n2, n3], criterio2 [ ... ] ]
     for separator_index, separator_list in enumerate(ratings):
-
+        media_separator_list = []
+        
         # pra cada criterio no separador
         # separator_list[criteria_index] = [ n1, n2, n3 ]
         for criteria_index, criteria_list in enumerate(separator_list):
+            media_criteria_list = []
 
             # se a lista do critério não possui notas, ignore-a a vá para o próximo criterio para evitar divisão por 0
-            if len(criteria_list) == 0: continue
+            if len(criteria_list) == 0: 
+                media_criteria_list.append(0)
+                continue
 
             # define a média desse criterio nesse separador como a soma das notas dividida pela contagem de avaliações
-            medias[separator_index][criteria_index] = sum(criteria_list) / len(criteria_list)
-            # print(f'medias[{separator_index}][{criteria_index}] = {sum(criteria_list)} / {len(criteria_list)} = {sum(criteria_list) / len(criteria_list)}')
+            media_criteria_list.append(sum(criteria_list) / len(criteria_list))
+            print(f'medias[{separator_index}][{criteria_index}] = {sum(criteria_list)} / {len(criteria_list)} = {sum(criteria_list) / len(criteria_list)}')
+        media_separator_list.append(media_criteria_list)
+        medias.append(media_separator_list)
             
-    # print(f'medias: {medias}')
+    print(f'medias: {medias}')
 
     # retorna a lista de médias calculadas para cada critério
     return medias
@@ -81,6 +89,32 @@ def classify_criteria (criteria:list[str], ratings:list[Rating]):
 
         # adiciona à lista do critério dentro de classified
         classified[r.criteria_id].append(r.value)
+
+    # retorna a lista classificada por critério
+    return classified
+
+
+def classify_sprint (sprints:list[Sprint], ratings:list[Rating]):
+    
+    # Cria uma lista em que cada elemento é uma lista de notas correspondendo a um critério
+    # classified [ criterio1 [ n1, n2, n3 ], criterio2 [ ... ], criterio3 [ ... ] ]
+    classified = [[] for _ in sprints]
+
+    # para cada avaliação na lista
+    for r in ratings:
+
+        # adiciona à lista do critério dentro de classified
+        sprint_index = None
+        for i, s in enumerate(sprints):
+            if r.sprint_id == s.id:
+                sprint_index = i
+                break
+        if sprint_index is None:
+            print(f'Khali | graficos.Integrador -- classify_sprint: Erro ao adquirir indice de uma avaliação')
+            continue
+        # print(f'sprints: {[s.id for s in sprints]}')
+        # print(f'r: {r.sprint_id} | sprint_index: {sprint_index}')
+        classified[sprint_index].append(r.value)
 
     # retorna a lista classificada por critério
     return classified
