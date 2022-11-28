@@ -103,9 +103,9 @@ def run(frame_parent):
         figure3 = Dashboards.group_media_x_groups(group.id)
         canvas = FigureCanvasTkAgg(figure3, master = frame_dashboards)
         canvas.get_tk_widget().grid(row=2, column=0, sticky='wens')
-        figure4 = Dashboards.media_teams_line(group.id)
-        canvas = FigureCanvasTkAgg(figure4, master = frame_dashboards)
-        canvas.get_tk_widget().grid(row=3, column=0, sticky='wens')
+        # figure4 = Dashboards.media_teams_line(group.id)
+        # canvas = FigureCanvasTkAgg(figure4, master = frame_dashboards)
+        # canvas.get_tk_widget().grid(row=3, column=0, sticky='wens')
     
     if CURRENT_USER.role_id in [3, 4, 5]:
         frame_dashboards = criar_frame(frame_parent, 2, 0)
