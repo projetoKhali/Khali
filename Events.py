@@ -7,7 +7,9 @@ listeners = {}
 # inicializa o sistema de eventos
 def initialize():
     from Front.WindowManager import next_state
+    listeners.clear()
     register('login', next_state)
+    
 
 # Registra uma função a ser chamada ao executar o evento especificado
 def register(event, reaction):

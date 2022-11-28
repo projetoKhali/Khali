@@ -48,3 +48,5 @@ def edit_team(id, name = 'IGNORE', group_id = 'IGNORE'):
 def delete_team(id):
     delete_line_csv(TEAMS_PATH, id)
 
+def get_group_of_team (name:str):
+    return None if name == '' or name is None else to_team(find_data_by_field_value_csv(TEAMS_PATH, 'name', name))
