@@ -190,7 +190,7 @@ def user_pentagon (user_id, target_sprint, color, background, fig_size_x, fig_si
     from Models.id_criteria import criteria
 
     ratings = get_ratings(to_user_id=user_id, sprint_id=target_sprint.id)
-    if check_empty_recursive(ratings): return
+    if check_empty_recursive(ratings): return plt.figure(figsize=(fig_size_x, fig_size_y))
 
     data = medias(criteria, [classify_criteria(criteria, ratings)])[0]
 
