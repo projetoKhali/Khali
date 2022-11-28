@@ -95,16 +95,20 @@ def line (title, names, y_label, matriz, x_label, x_ticks):
     ylim_min, ylim_max = 100000, -100000
     range_adjust, precision = .5, 5.
 
+    print(f'matriz: {matriz}')
+
     for i, value in enumerate(matriz):
 
-        # print(f'value: {value}')
+        print(f'value: {value}')
+        for v in value:
+            print(f'v: {v}')
 
         # Aqui eu construo a barra
         positions = [j + barWidth for j in range(len(x_ticks))]
         ax.plot(positions, value, linewidth=2, color=colors[i % len(colors)], label=names[i])
 
         for v in value:
-            # print(f'v: {v}')
+            print(f'v: {v}')
             ylim_max = (lambda v=(ceil((v + range_adjust) * precision) / precision), max=ylim_max: v if v > max else max)() 
             ylim_min = (lambda v=(floor((v - range_adjust) * precision) / precision), min=ylim_min: v if v < min else min)() 
 
@@ -147,7 +151,7 @@ def line (title, names, y_label, matriz, x_label, x_ticks):
 # | media time / times      |    sprints    |  time / times  |     criterio     |     PO LT     |  team_media_x_group  |
 # | media grupo / grupos    |    sprints    | group / groups |     criterio     |     LG FC     | group_media_x_groups |
 # | media time.users        |    sprints    |  time / times  |     criterio     |     LG FC     |   users_media_team   | LINE
-# | media dos times         |    sprint     |      time      |      sprint      |     LG FC     |   media_teams_line   | LINE
+# | media dos times         |    sprint     |      time      |      sprint      |     LG FC     |   media_teams_sprints_line   | LINE 
 # |--------------------------------------------------------------------------------------------------------------------|
 
 
@@ -308,7 +312,7 @@ def teams_media (group_id):
         medias(criteria, ratings),
         'Critério avaliativo',
         criteria,
-        )
+    )
 
 
 # Renderiza um Dashboard comparando a media de um time com a média dos outros times de seu grupo em cada criterio
@@ -427,35 +431,6 @@ def users_media_team (team_id):
         'Critério avaliativo',
         criteria
     )
-
-
-def media_teams_line (group_id):
-
-    # importa as funções de acesso ao banco de dados de cada modelo
-    from Models.Team import get_teams_of_group
-    from Models.Rating import get_ratings_to_team
-    from Models.Group import get_group_name
-
-    # carrega o time com o id especificado e seus membros
-    teams = get_teams_of_group(group_id)
-
-    # cria uma lista de listas. Cada item-lista corresponde as avaliações do time
-    ratings = [get_ratings_to_team(team.id) for team in teams]
-
-    # para cada item-lista na lista, reorganiza o item-lista por critério caso a soma dos valores seja maior que 0
-    ratings = [classify_criteria(criteria, separator) for separator in ratings if sum([r.value for r in separator]) > 0]
-
-    # Renderiza o grafico representando as médias calculadas 
-    return line(
-        f'Média dos times do grupo {get_group_name(group_id)}',
-        [team.name for team in teams],
-        'Médias',
-        medias(criteria, ratings),
-
-        'Critério avaliativo',
-        criteria
-    )
-
 
 # Renderiza um Dashboard com a media de um determinado time em cada criterio de cada sprint
 def group_media_sprints (group_id):

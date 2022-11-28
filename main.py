@@ -14,7 +14,36 @@ from Time import set_today
 set_today(28, 11)
 
 
-# area de testes 
+# from tkinter import *
+# from Front.Core import *
+# window = Tk()
+# window.configure(background = co0)
+# window.columnconfigure(0, minsize = 0, weight = 1)
+# window.rowconfigure(0, minsize = 0, weight = 1)
+# framer = criar_frame(window, 0, 0, 'news', 'green', 'blue', 1, 4, 4)
+# framer.columnconfigure(0, minsize = 0, weight = 1)
+# framer.rowconfigure(0, minsize = 0, weight = 1)
+# from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+# from graficos.Dashboards import *
+
+# fig = media_teams_sprints_line(1)
+
+# fig = user_media_sprints(22)    # v
+# fig = user_media_x_team(12)     # v
+# fig = teams_media(1)            # v 
+# fig = role_media(1, 1)          # v
+# fig = team_media_x_group(7)     # v
+# fig = group_media_x_groups(2)   # v
+# fig = users_media_team(4)       # v
+
+# canvas = FigureCanvasTkAgg(fig, master = framer)
+# canvas.get_tk_widget().grid(row=0, column=0, sticky='wens')
+# def on_closing():
+#     from matplotlib import pyplot as plt
+#     plt.close("all")
+#     window.destroy()
+# window.protocol("WM_DELETE_WINDOW", on_closing)
+# window.mainloop()
 # exit()
 
 from Front import WindowManager
