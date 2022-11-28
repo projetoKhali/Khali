@@ -41,25 +41,25 @@ def create_test_data():
 
         #           nome             email                  grupo  time    role        senha
         # LTs
-        register("Moacir LTum"+ni,      ei+"lt1@o.com",            i,    t[0],    3,    custom_password='123')
-        register("Maria LTdois"+ni,    ei+"lt2@o.com",            i,    t[1],    3,    custom_password='123')
-        register("Ana LTtres"+ni,    ei+"lt3@o.com",            i,    t[2],    3,    custom_password='123')
+        register("Moacir LTum"+ni,      ei+"lt1@o.com",         i,    t[0],    3,    custom_password='123')
+        register("Maria LTdois"+ni,     ei+"lt2@o.com",         i,    t[1],    3,    custom_password='123')
+        register("Ana LTtres"+ni,       ei+"lt3@o.com",         i,    t[2],    3,    custom_password='123')
 
         # POs
-        register("Diego POum"+ni,      ei+"po-um@o.com",            i,    t[0],    4,    custom_password='123')
-        register("Caio POdois"+ni,    ei+"p0-dois@o.com",            i,    t[1],    4,    custom_password='123')
-        register("Maira POtres"+ni,    ei+"p0-três@o.com",            i,    t[2],    4,    custom_password='123')
+        register("Diego POum"+ni,       ei+"po-um@o.com",       i,    t[0],    4,    custom_password='123')
+        register("Caio POdois"+ni,      ei+"p0-dois@o.com",     i,    t[1],    4,    custom_password='123')
+        register("Maira POtres"+ni,     ei+"p0-três@o.com",     i,    t[2],    4,    custom_password='123')
 
         # devs
-        register("Felipe Dev"+ni,   ei+"d@e.v",                i,    t[0],    5,    custom_password='123')
-        register("Dora Dev"+ni,    ei+"dora@dev.com",      i,    t[0],    5,    custom_password='123')
-        register("Lucas Dev"+ni, ei+"luc@dev.com",         i,    t[0],    5,    custom_password='123')
-        register("Matheus Dev"+ni,       ei+"mat@dev.dev",         i,    t[1],    5,    custom_password='123')
-        register("Lais Dev"+ni, ei+"dev-lais@dev.com",      i,    t[1],    5,    custom_password='123')
-        register("Lara Dev"+ni,      ei+"dlara@dev.com",         i,    t[1],    5,    custom_password='123')
-        register("Ignacio Dev"+ni,    ei+"na-dev@dev.com",          i,    t[2],    5,    custom_password='123')
-        register("Marcia Dev"+ni,     ei+"marcia@dev.com",      i,    t[2],    5,    custom_password='123')
-        register("Olga Dev"+ni,  ei+"ol@dev.com",   i,    t[2],    5,    custom_password='123')
+        register("Felipe Dev"+ni,       ei+"d@e.v",             i,    t[0],    5,    custom_password='123')
+        register("Dora Dev"+ni,         ei+"dora@dev.com",      i,    t[0],    5,    custom_password='123')
+        register("Lucas Dev"+ni,        ei+"luc@dev.com",       i,    t[0],    5,    custom_password='123')
+        register("Matheus Dev"+ni,      ei+"mat@dev.dev",       i,    t[1],    5,    custom_password='123')
+        register("Lais Dev"+ni,         ei+"dev-lais@dev.com",  i,    t[1],    5,    custom_password='123')
+        register("Lara Dev"+ni,         ei+"dlara@dev.com",     i,    t[1],    5,    custom_password='123')
+        register("Ignacio Dev"+ni,      ei+"na-dev@dev.com",    i,    t[2],    5,    custom_password='123')
+        register("Marcia Dev"+ni,       ei+"marcia@dev.com",    i,    t[2],    5,    custom_password='123')
+        register("Olga Dev"+ni,         ei+"ol@dev.com",        i,    t[2],    5,    custom_password='123')
 
         from Models.User import get_users_of_team
         from Models.Team import get_teams_of_group
