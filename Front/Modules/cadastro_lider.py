@@ -388,31 +388,62 @@ def confirmar_cadastros():
     from Events import trigger
     from Models.Sprint import create_sprint
     from Models.Team import create_team
-
+    import tkinter
+    from tkinter import messagebox
     from Authentication import register
+    from Models.Team import get_group_of_team
+
     
     # TODO: Integração com dropdown de selecionar grupo
     group_id = trigger("get_group_id")
 
     # Chama o evento para obter o retorno dos dados
     sprints = trigger('get_sprints')
+    teams = trigger('get_teams')
+    
+    for sprint in sprints:
+        #sprint[0] = data incicio sprint[1] = termino
+        if sprint[0] >= sprint[1]:
+            messagebox.showinfo("Khali Group",  "Data de início é maior ou igual á data de término!")
+            return
+
+    # Chama o evento para obter o retorno dos dados
+    
+    for team in teams:
+        # team[0] = nome do time, time[1] = usuário, time[2] = 
+        if team[0] == '\n\n\nnome': 
+            messagebox.showinfo("khali Group", "Insira o nome do Time")
+            return
+        elif get_group_of_team(team[0]) == True:
+            messagebox.showinfo("Khali Group", "Nome do time já está sendo usado!")
+
+        # indice 0 = nome do time; indice 1 = membros
+        from Authentication import validate_user_name, validate_user_email
+        for user in team[1]:
+            if validate_user_name(user[0]):
+                messagebox.showinfo("Khali Group", "Nomeeee inválido!")
+                return
+            if validate_user_email(user[1]):
+                messagebox.showinfo("Khali Group", "E-mail válido!")
+                return
+
+            # 0 = nome; 1 = email; 2 = role
+    
     if sprints is not None:
 
         # cada item na lista representa uma sprint
         for sprint in sprints:
             create_sprint(group_id, sprint[0], sprint[1], sprint[2])
 
-    # Chama o evento para obter o retorno dos dados
-    teams = trigger('get_teams')
-    if teams is not None:
 
-        # cada item na lista representa um team
-        for team in teams:
-            if team[0] == '\n\n\nnome': continue
+    # cada item na lista representa um team
+    for team in teams:
+        # team[0] = nome do time, time[1] = usuário, time[2] = 
+        if team[0] == '\n\n\nnome': continue
 
-            # indice 0 = nome do time; indice 1 = membros
-            team_id = create_team(team[0], group_id)
-            for user in team[1]:
+        # indice 0 = nome do time; indice 1 = membros
+        team_id = create_team(team[0], group_id)
+        for user in team[1]:
 
-                # 0 = nome; 1 = email; 2 = role
-                register(user[0], user[1], group_id, team_id, user[2])
+            # 0 = nome; 1 = email; 2 = role
+            register(user[0], user[1], group_id, team_id, user[2])
