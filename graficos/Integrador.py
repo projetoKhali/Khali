@@ -38,16 +38,16 @@ def medias (criteria:list[str], ratings:list[list[list[Rating]]]):
 
             # se a lista do critério não possui notas, ignore-a a vá para o próximo criterio para evitar divisão por 0
             if len(criteria_list) == 0: 
-                media_criteria_list.append(0)
+                media_criteria_list = 0
                 continue
 
             # define a média desse criterio nesse separador como a soma das notas dividida pela contagem de avaliações
-            media_criteria_list.append(sum(criteria_list) / len(criteria_list))
-            print(f'medias[{separator_index}][{criteria_index}] = {sum(criteria_list)} / {len(criteria_list)} = {sum(criteria_list) / len(criteria_list)}')
-        media_separator_list.append(media_criteria_list)
+            media_criteria_list = sum(criteria_list) / len(criteria_list)
+            # print(f'medias[{separator_index}][{criteria_index}] = {sum(criteria_list)} / {len(criteria_list)} = {sum(criteria_list) / len(criteria_list)}')
+            media_separator_list.append(media_criteria_list)
         medias.append(media_separator_list)
             
-    print(f'medias: {medias}')
+    # print(f'medias: {medias}')
 
     # retorna a lista de médias calculadas para cada critério
     return medias

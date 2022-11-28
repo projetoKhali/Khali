@@ -130,7 +130,7 @@ def line (title, names, y_label, matriz, x_label, x_ticks):
         ax.plot(positions, value, linewidth=2, color=colors[i % len(colors)], label=names[i])
 
         for v in value:
-            print(f'v: {v}')
+            # print(f'v: {v}')
             ylim_max = (lambda v=(ceil((v + range_adjust) * precision) / precision), max=ylim_max: v if v > max else max)() 
             ylim_min = (lambda v=(floor((v - range_adjust) * precision) / precision), min=ylim_min: v if v < min else min)() 
 

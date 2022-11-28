@@ -29,6 +29,7 @@ def run(frame_parent):
 
     # section 0
     frame_header = Frame(module_frame, padx=2, pady=2, bg=co3)
+    frame_header.columnconfigure(0, weight=1)
     frame_header.grid(row=0, column=0, sticky='we')
 
     Label(frame_header, text="Editar Times", font='Calibri, 24 bold', bg=co3, fg=co0).grid(row=0, column=0)
@@ -95,7 +96,7 @@ def create_team(frame_teams_parent, team, team_id):
     frame_team.columnconfigure(0, weight = 1)
     frame_team.grid(row=team_id, column=0, sticky="ew")
 
-    frame_team_header = criar_frame(frame_team, 1, 0, 'ew', co4, co4, 0, 0, 0)
+    frame_team_header = criar_frame(frame_team, 0, 0, 'ew', co4, co4, 0, 0, 0)
     frame_team_header.columnconfigure(0, weight = 1)
 
     # coloca o nome do time
@@ -103,7 +104,7 @@ def create_team(frame_teams_parent, team, team_id):
     label_team_name.grid(row=0, column=0)
     if team is not None: label_team_name.bind("<Button-1>", lambda _, lbl=label_team_name, t=team, fg=frame_team_header: bind_edit_label(fg, lbl, t.name, 'Calibri, 16', 0, 0, lambda l, e, t=t: save_team_name(l, e, t)))
 
-    criar_button(frame_team_header, 'Excluir Time', 'Calibri, 11', 0, 1, lambda t=team: delete_team(t), 'ew').config(takefocus = 0)
+    if team is not None: criar_button(frame_team_header, 'Excluir Time', 'Calibri, 11', 0, 1, lambda t=team: [delete_team(t), redraw()], 'ew').config(takefocus = 0)
 
 
     frame_members_parent = Frame(frame_team)

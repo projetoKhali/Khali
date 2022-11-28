@@ -23,7 +23,7 @@ def to_rating(rating_dict):
         int(rating_dict['criteria_id']),
         int(rating_dict['value']),
         rating_dict['comment']
-    )
+    ) if rating_dict is not None else None
 
 # Cria uma avaliação e salva na database
 # parametros:

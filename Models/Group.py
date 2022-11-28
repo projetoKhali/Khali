@@ -19,7 +19,7 @@ def to_group(group_dict):
         group_dict['name'],
         int(group_dict['leader_id']),
         int(group_dict['client_id']),
-    ) # if group_dict is not None else None
+    ) if group_dict is not None else None
 
 # Cria e armazena um novo Grupo com o nome fornecido
 def create_group (name:str, leader_id, client_id):

@@ -17,7 +17,7 @@ def to_team(team_dict):
         int(team_dict['id']),
         int(team_dict['group_id']),
         team_dict['name']
-    )
+    ) if team_dict is not None else None
 
 # Cria e armazena um novo Time com o nome fornecido
 def create_team (name:str, group:int):

@@ -37,7 +37,7 @@ def to_user(user_data):
         (lambda x: int(x) if x != '' else x)(user_data['role_id']),
         user_data['password'],
         (lambda x: int(x) if x != '' else x)(user_data['id']),
-    )
+    ) if user_data is not None else None
 
 # Cria um Usuário e salva na database
 def create_user (name, email, group_id, team_id, role_id, password):

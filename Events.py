@@ -15,7 +15,7 @@ def initialize():
 def register(event, reaction):
     print(f'Events.register -- event: {event} | reaction: {reaction}')
     if type(event) is list:
-        print(f'events.register -- event is list!! {event}')
+        # print(f'events.register -- event is list!! {event}')
         for e in event:
             register(e, reaction)
         return reaction
@@ -44,8 +44,8 @@ def trigger(event):
         # print(event)
         for reaction in listeners[event]:
             result = reaction() if hasattr(reaction, '__call__') else reaction
-            print(f'Events.trigger -- event: {event} | rection: {reaction}')
-            print(f'result: {result}')
+            # print(f'Events.trigger -- event: {event} | rection: {reaction}')
+            # print(f'result: {result}')
             if result is not None: results.append(result)
     return results if len(results) > 1 else results[0] if len(results) == 1 else None
 
