@@ -392,7 +392,27 @@ def criar_section_instructor(frame_section):
 def criar_section_info(frame_section):
     
     frame_ratings_info = criar_frame(frame_section, 1, 0, "ew", co0, co0, 0, 2, 2)
-    criar_label(frame_ratings_info, 'Informações sobre a Avaliação 360°', 'Calibri, 15 bold', 0, 0, co0, 'nwes')
+    criar_label(frame_ratings_info, ''' ''', 'Calibri, 10', 0, 0, co0, 'nw')
+    criar_label(frame_ratings_info, 'Informações sobre a Avaliação 360°', 'Calibri, 15 bold', 1, 0, co0 , 'nwes')
+    criar_label(frame_ratings_info, ''' ''', 'Calibri, 10', 2, 0, co0, 'nw')
+    criar_label(frame_ratings_info, '       O que é?', 'Calibri, 13 bold', 3, 0, co0, 'nw')
+    criar_label(frame_ratings_info, ''' ''', 'Calibri, 10', 4, 0, co0, 'nw')
+    criar_label(frame_ratings_info, '''     Avaliação 360° é uma ferramenta onde um integrante de um time é analisado com base em suas competências por todos que compõem
+    seu entorno educacional, como outros integrantes de mesma ou outra função, instrutores e ele mesmo (autoavaliação). 
+    Utilizada principalmente para avaliar funções desempenhadas e para auxiliar no alinhamento de um membro específico do time ou do
+    coletivo ao longo de um período específico. ''', 'Calibri, 10', 5, 0, co0, 'nw')
+    criar_label(frame_ratings_info, ''' ''', 'Calibri, 10', 6, 0, co0, 'nw')
+    criar_label(frame_ratings_info, '       Como é aplicada? ', 'Calibri, 13 bold', 7, 0, co0, 'nw')
+    criar_label(frame_ratings_info, ''' ''', 'Calibri, 10', 8, 0, co0, 'nw')
+    criar_label(frame_ratings_info, '''     A avaliação acontece por meio de um formulário composto por critérios relacionados às habilidades necessárias e comportamentos
+    esperados para a execução das funções, onde todas as partes irão receber e dar uma nota para cada critério. As notas são de
+    1 a 5, utilizando valores ordenados entre “Péssimo” e “Ótimo”.
+    Para um resultado mais preciso, todas as avaliações são feitas possuindo os mesmos critérios para todos os integrantes. 
+    Quando a nota atribuída for igual ou menor que 3, uma resposta descritiva precisará ser enviada obrigatoriamente pelo avaliador como
+    um feedback qualitativo, para o aprimoramento do desempenho.''', 'Calibri, 10', 9, 0, co0, 'nw')
+    criar_label(frame_ratings_info, ''' 
+    
+    ''', 'Calibri, 15', 10, 0, co0, 'nw')
     
 
 
