@@ -38,7 +38,7 @@ def medias (criteria:list[str], ratings:list[list[list[Rating]]]):
 
             # se a lista do critério não possui notas, ignore-a a vá para o próximo criterio para evitar divisão por 0
             if len(criteria_list) == 0: 
-                media_criteria_list = 0
+                media_separator_list.append(0)
                 continue
 
             # define a média desse criterio nesse separador como a soma das notas dividida pela contagem de avaliações
