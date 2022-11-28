@@ -332,7 +332,7 @@ def criar_retorno_feedbacks(frame_section_feedbacks, sprints):
     def select_sprint(_, sprints, sprint_index):
         global sel_sprint
         sel_sprint = sprint_index
-        criar_section_2()
+        criar_section_2(sprints)
 
     # Cria os botões que selecionam a sprint
     for index, _ in enumerate(sprints):
