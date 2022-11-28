@@ -13,7 +13,7 @@ def initialize():
 
 # Registra uma função a ser chamada ao executar o evento especificado
 def register(event, reaction):
-    # print(f'Events.register -- event: {event} | reaction: {reaction}')
+    print(f'Events.register -- event: {event} | reaction: {reaction}')
     if type(event) is list:
         print(f'events.register -- event is list!! {event}')
         for e in event:

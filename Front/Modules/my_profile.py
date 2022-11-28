@@ -63,10 +63,15 @@ def criar_section_1():
 
     # o ID do grupo que será referenciado é o valor de retorno do dropdown seletor de grupos caso o usuário seja instrutor
     # ou o group_id do usuário caso aluno
-    group_id = trigger("get_group_id") if user_is_instructor else CURRENT_USER.group_id
+    
 
     # Cria o frame principal da seção
     frame_section = criar_frame(module_frame, 0, 0, "nwes", co0, co2, 2, 0, 0)
+    from Models.Group import get_groups_of_instructor, get_group_of_name
+    if user_is_instructor: create_dropdown(criar_frame(frame_section, 1, 0, "ew", co3, px=0, py=0),0,0, [i.name for i in get_groups_of_instructor(CURRENT_USER.id)], "get_group_id", lambda v: get_group_of_name(v).id)
+    group_id = trigger("get_group_id") if user_is_instructor else CURRENT_USER.group_id
+
+
     if current_rating_period(group_id) == None and next_rating_period(group_id) == None: frame_section = criar_frame(module_frame, 0, 0, "nwes", co0, co0, 0, 0, 0)
     frame_section.columnconfigure(0, weight = 1)
     frame_section.rowconfigure(3, weight = 1)
@@ -80,9 +85,6 @@ def criar_section_1():
     criar_label(frame_header_title, 'Avaliações', 'Calibri, 24 bold', 0, 0, co3, 'nes').configure(fg=co0)
 
     # dropdown com nome dos grupos
-    from Models.Group import get_groups_of_instructor, get_group_of_name
-    if user_is_instructor: create_dropdown(criar_frame(frame_section, 1, 0, "ew", co3, px=0, py=0),0,0, [i.name for i in get_groups_of_instructor(CURRENT_USER.id)], "get_group_id", lambda v: get_group_of_name(v).id)
-
     # Frame para a timeline / datas importantes da sprint / periodo avaliativo
     frame_sprint_timeline = criar_frame(frame_section, 2, 0, "ew", co0, co0, 0, 2, 2)
 
@@ -142,6 +144,7 @@ def criar_section_1():
     if current_rating_period(group_id) == None:
         lista_titles = ['Integrantes a serem Avaliados', 'Integrantes a serem Avaliados']
         if next_rating_period(group_id) == None:
+            print(group_id, current_rating_period(group_id))
             lista_titles = ['Integrantes Avaliados', 'Integrantes Avaliados']
     
     # para cada lista
