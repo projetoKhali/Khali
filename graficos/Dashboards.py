@@ -1,7 +1,7 @@
 from .Integrador import *
 from Front.Core import *
 
-colors = [
+colors_ = [
     '#C5A8B0', 
     '#4E615D', 
     '#896978', 
@@ -15,6 +15,28 @@ colors = [
     '#260C1A', 
     '#03120E', 
     '#C5BFBD'
+]
+
+colors = [
+    '#92a8d1',
+    '#034f84',
+    '#eca1a6',
+    '#f7786b',
+    '#cc33ff',
+    '#50394c',
+    '#ffef96',
+    '#b5e7a0',
+    '#ffcc5c',
+    '#618685',
+    '#3e4444',
+    '#4B0082',
+    '#40E0D0',
+    '#32CD32'
+    '#006400'
+
+
+
+
 ]
 
 # verifica se a matriz está vazia
@@ -34,7 +56,7 @@ def multi_bar (title, names, y_label, matriz, x_label, x_ticks):
     from matplotlib import pyplot
 
     fig, ax = pyplot.subplots(figsize = (12,5))
-    ax.set_ylim([-.75, len(names)])
+    # ax.set_ylim([-.75, len(names)+2])
     ax.set_xlim([1, 5])
     fig.set_facecolor(co0)
     bar_width = 1. / ((len(matriz) ) + .75)
@@ -150,8 +172,8 @@ def line (title, names, y_label, matriz, x_label, x_ticks):
 # |--------------------------------------------------------------------------------------------------------------------|
 # | media time / times      |    sprints    |  time / times  |     criterio     |     PO LT     |  team_media_x_group  |
 # | media grupo / grupos    |    sprints    | group / groups |     criterio     |     LG FC     | group_media_x_groups |
-# | media time.users        |    sprints    |  time / times  |     criterio     |     LG FC     |   users_media_team   | LINE
-# | media dos times         |    sprint     |      time      |      sprint      |     LG FC     |   media_teams_sprints_line   | LINE 
+# | media time.users        |    sprints    |  time / times  |     criterio     |     PO LT     |   users_media_team   | LINE
+# | media dos times         |    sprint     |      time      |      sprint      |     LG FC     |   media_teams_line   | LINE
 # |--------------------------------------------------------------------------------------------------------------------|
 
 
@@ -246,7 +268,7 @@ def user_media_x_team (user_id):
 
     # Renderiza o grafico representando as médias calculadas 
     return multi_bar(
-        f'Médias de {user.name} em comparativo ao time {team_name}',
+        f'Sua média x média de seu time\n(acumulada)',
         [user.name, team_name],
         'Médias',
         medias(criteria, ratings),
@@ -345,7 +367,7 @@ def team_media_x_group (team_id):
 
     # Renderiza o grafico representando as médias calculadas 
     return multi_bar(
-        f'Médias do time {team.name} em comparativo aos outros times do grupo {group_name}',
+        f'Média do seu time x média acumulada\ndos outros times do grupo',
         [team.name, 'outros times'],
         'Médias',
         medias(criteria, ratings),
@@ -489,7 +511,7 @@ def group_media_x_groups (group_id):
 
     # Renderiza o grafico representando as médias calculadas 
     return multi_bar(
-        f'Médias do time {group.name} em comparativo aos outros grupos',
+        f'Médias do {group.name} em comparativo aos outros grupos',
         [group.name, 'outros grupos'],
         'Médias',
         medias(criteria, ratings),

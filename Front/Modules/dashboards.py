@@ -16,11 +16,16 @@ def run(frame_parent):
     
     global master_frame
     from Front.Scrollbar import add_scrollbar
+
+    frame_parent = Frame(frame_parent, background = co0)
+    frame_parent.columnconfigure(0, weight = 1)
+    frame_parent.rowconfigure(0, weight = 1)
+    frame_parent.grid(row= 0, column=0, sticky='news')
+    
     frame_parent = add_scrollbar(frame_parent)
-    frame_parent.configure(background = co0)
-    frame_parent.grid(sticky = 'nwe')
-    frame_parent.columnconfigure(0, minsize = 0, weight = 1)
-    frame_parent.rowconfigure(0, minsize = 0, weight = 1)
+
+    frame_parent.rowconfigure(0, weight=2)
+    frame_parent.rowconfigure(1, weight=2)
     # frame_parent = Frame(frame_parent, background = co0)
     # frame_parent.grid(sticky = 'nwe')
     # frame_parent.columnconfigure(0, minsize = 0, weight = 1)
@@ -45,12 +50,14 @@ def run(frame_parent):
     criar_label(frame_title, "Dashboards", "Calibri, 24 bold", 0, 0, None, co3, co0)
 
     frame_legenda = criar_frame(frame_parent, 1, 0, 'nw', hlbg=co3, hlt=1, px=0, py=0)
+    from Models.id_criteria import criteria, criteria_full
+    
+   
     criar_label(frame_legenda, 'Critérios Avaliativos', 'Calibri, 12 bold', 0,0)
-    criar_label(frame_legenda, 'T.E. - Trabalho em Equipe', 'Calibri, 10 ', 1,0)
-    criar_label(frame_legenda, 'I.P. - Iniciativa e Proatividade', 'Calibri, 10 ', 2,0)
-    criar_label(frame_legenda, 'A.A. - Autodaxia e Agregação de Conhecimento', 'Calibri, 10 ', 3,0)
-    criar_label(frame_legenda, 'E.R. - Entrega de Resultados', 'Calibri, 10 ', 4,0)
-    criar_label(frame_legenda, 'C.T. - Competência Técnica', 'Calibri, 10 ', 5,0)
+    for i in range(len(criteria)):
+        criar_label(frame_legenda, f'{criteria[i]} - {criteria_full[i]}', 'Calibri 10', i%2 + 1, i//2)
+
+      
 
 
 
@@ -70,6 +77,11 @@ def run(frame_parent):
 
         group = get_group(id)
         frame_dashboards = criar_frame(frame_parent, 2, 0)
+        frame_dashboards.grid(sticky = 'news')
+        frame_dashboards.columnconfigure(0, minsize = 0, weight = 1)
+        frame_dashboards.rowconfigure(0, minsize = 0, weight = 1)
+    
+
         # figure = Dashboards.teste()
 
         print(f'get_group(id): {group}')
@@ -82,12 +94,18 @@ def run(frame_parent):
             figure2 = Dashboards.role_media(3, group.id)
             canvas = FigureCanvasTkAgg(figure2, master = frame_dashboards)
             # canvas.show()
-            canvas.get_tk_widget().grid(row=0, column=1, sticky='wens')
+            canvas.get_tk_widget().grid(row=1, column=0, sticky='wens')
         if group.client_id == CURRENT_USER.id:
             figure2 = Dashboards.role_media(4, group.id)
             canvas = FigureCanvasTkAgg(figure2, master = frame_dashboards)
             # canvas.show()
-            canvas.get_tk_widget().grid(row=0, column=1, sticky='wens')
+            canvas.get_tk_widget().grid(row=1, column=0, sticky='wens')
+        figure3 = Dashboards.group_media_x_groups(group.id)
+        canvas = FigureCanvasTkAgg(figure3, master = frame_dashboards)
+        canvas.get_tk_widget().grid(row=2, column=0, sticky='wens')
+        # figure4 = Dashboards.media_teams_line(group.id)
+        # canvas = FigureCanvasTkAgg(figure4, master = frame_dashboards)
+        # canvas.get_tk_widget().grid(row=3, column=0, sticky='wens')
     
     if CURRENT_USER.role_id in [3, 4, 5]:
         frame_dashboards = criar_frame(frame_parent, 2, 0)
@@ -99,4 +117,22 @@ def run(frame_parent):
         figure2 = Dashboards.user_media_x_team(CURRENT_USER.id)
         canvas = FigureCanvasTkAgg(figure2, master = frame_dashboards)
         # canvas.show()
-        canvas.get_tk_widget().grid(row=0, column=1, sticky='wens')
+        canvas.get_tk_widget().grid(row=1, column=0, sticky='wens')
+        
+        if CURRENT_USER.role_id in [3, 4]:
+            figure3 = Dashboards.team_media_x_group(CURRENT_USER.team_id)
+            canvas = FigureCanvasTkAgg(figure3, master = frame_dashboards)
+            # canvas.show()
+            canvas.get_tk_widget().grid(row=2, column=0, sticky='wens')
+
+            figure4 = Dashboards.users_media_team(CURRENT_USER.team_id)
+            canvas = FigureCanvasTkAgg(figure4, master = frame_dashboards)
+            # canvas.show()
+            canvas.get_tk_widget().grid(row=3, column=0, sticky='wens')
+
+    frame_bandaid = criar_frame(frame_parent, 3, 0)
+    frame_bandaid.grid(sticky='news')
+    frame_bandaid.columnconfigure(0, minsize = 0, weight = 1)
+    frame_bandaid.rowconfigure(0, minsize = 0, weight = 1)
+    criar_label(frame_bandaid, '                                  ', 'Calibri 24', 0,0)
+    criar_label(frame_bandaid, '                                  ', 'Calibri 24', 1,0)
