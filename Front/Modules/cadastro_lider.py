@@ -447,3 +447,4 @@ def confirmar_cadastros():
 
             # 0 = nome; 1 = email; 2 = role
             register(user[0], user[1], group_id, team_id, user[2])
+    messagebox.showinfo("Khali Group", "time(s) adicionados!")
