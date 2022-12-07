@@ -163,6 +163,7 @@ def run(frame_parent, target_user):
 # def criar_label(master, text, tamanho, column, row, padx, pady,None,  sticky):
 def slider_change_position(frame_feedback, new_value, criterio):
     from Events import trigger, register, unregister, unregister_all
+    from tkinter import Frame, Text
 
     ff_children = frame_feedback.winfo_children()
     if ff_children and len(ff_children) > 0 and ff_children[0] is not None:

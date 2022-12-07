@@ -229,6 +229,7 @@ def criar_section_2(sprints):
     
     # pega a sprint anterior do grupo do usuário logado
     target_sprint = previous_sprint(CURRENT_USER.group_id)
+    print(f'my_profile -- target_sprint: {target_sprint}')
     # if current_rating_period(CURRENT_USER.group_id) == None and next_rating_period(CURRENT_USER.group_id) == None:
     #     target_sprint = 'not none'
 

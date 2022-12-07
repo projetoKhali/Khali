@@ -59,11 +59,9 @@ def current_rating_period(group_id):
             return sprint
 
 def previous_sprint (group_id):
-    cur_sprint = current_sprint(group_id)
-    if cur_sprint is None: return None
     prev_sprint = None
     for sprint in get_group_sprints(group_id):
-        if sprint.id < cur_sprint.id and (lambda sprint=sprint: True if prev_sprint is None else sprint.id > prev_sprint.id):
+        if sprint.rating_period_end() < today() or prev_sprint is None:
             prev_sprint = sprint
     return prev_sprint
 

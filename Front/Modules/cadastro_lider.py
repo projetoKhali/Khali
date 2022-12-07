@@ -414,16 +414,16 @@ def confirmar_cadastros():
         if team[0] == '\n\n\nnome': 
             messagebox.showinfo("khali Group", "Insira o nome do Time")
             return
-        elif get_group_of_team(team[0]) == True:
+        elif get_group_of_team(team[0]) is not None:
             messagebox.showinfo("Khali Group", "Nome do time já está sendo usado!")
 
         # indice 0 = nome do time; indice 1 = membros
         from Authentication import validate_user_name, validate_user_email
         for user in team[1]:
-            if validate_user_name(user[0]):
+            if not validate_user_name(user[0]):
                 messagebox.showinfo("Khali Group", "Nomeeee inválido!")
                 return
-            if validate_user_email(user[1]):
+            if not validate_user_email(user[1]):
                 messagebox.showinfo("Khali Group", "E-mail válido!")
                 return
 
