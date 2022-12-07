@@ -51,11 +51,7 @@ def run(frame_parent):
 
 
 def criar_section_1():
-    from Utils import lista_usuarios_back
-    from Front.Scrollbar import add_scrollbar
-    from Models.Sprint import current_rating_period, next_rating_period, sprint_index
     from Authentication import CURRENT_USER
-    from Events import trigger
 
     # Define se o usuário logado é instrutor
     global user_is_instructor
@@ -63,17 +59,25 @@ def criar_section_1():
 
     # o ID do grupo que será referenciado é o valor de retorno do dropdown seletor de grupos caso o usuário seja instrutor
     # ou o group_id do usuário caso aluno
-        
 
     # Cria o frame principal da seção
     frame_section = criar_frame(module_frame, 0, 0, "nwes", co0, co2, 2, 0, 0)
 
     from Models.Group import get_groups_of_instructor, get_group_of_name
-    if user_is_instructor: create_dropdown(criar_frame(frame_section, 1, 0, "ew", co3, px=0, py=0),0,0, [i.name for i in get_groups_of_instructor(CURRENT_USER.id)], "get_group_id", lambda v: get_group_of_name(v).id)
-    
-    group_id = trigger("get_group_id") if user_is_instructor else CURRENT_USER.group_id
 
-    if current_rating_period(group_id) == None and next_rating_period(group_id) == None: frame_section = criar_frame(module_frame, 0, 0, "nwes", co0, co0, 0, 0, 0)
+    from Models.Group import get_groups_of_instructor, get_group_of_name
+    if user_is_instructor: create_dropdown(
+        criar_frame(frame_section, 1, 0, "ew", co3, px=0, py=0),0,0, 
+        [i.name for i in get_groups_of_instructor(CURRENT_USER.id)], 
+        'get_group_id', lambda v: get_group_of_name(v).id, lambda _, __, ___: create_ratings_lists()
+    
+    )
+    # mf_children = module_frame.winfo_children()
+    # if mf_children and len(mf_children) > 0 and mf_children[0] is not None:
+    #     mf_children[0].destroy()
+    
+
+    # if current_rating_period(group_id) == None and next_rating_period(group_id) == None: frame_section = criar_frame(module_frame, 0, 0, "nwes", co0, co0, 0, 0, 0)
     frame_section.columnconfigure(0, weight = 1)
     frame_section.rowconfigure(3, weight = 1)
 
@@ -85,10 +89,24 @@ def criar_section_1():
     frame_header_title = criar_frame(frame_section_header, 0, 0, "we", co3, co3, 0, 0, 0)
     criar_label(frame_header_title, 'Avaliações', 'Calibri, 24 bold', 0, 0, co3, 'nes').configure(fg=co0)
 
+    create_ratings_lists()
+
+def create_ratings_lists():
+    from Utils import lista_usuarios_back
+    from Front.Scrollbar import add_scrollbar
+    from Models.Sprint import current_rating_period, next_rating_period, sprint_index
+    from Authentication import CURRENT_USER
+    from Events import trigger
+
+    frame_section = module_frame.winfo_children()[0]
+
+    for i in frame_section.winfo_children()[2:]: i.destroy()
+
     # dropdown com nome dos grupos
     # Frame para a timeline / datas importantes da sprint / periodo avaliativo
     frame_sprint_timeline = criar_frame(frame_section, 2, 0, "ew", co0, co0, 0, 2, 2)
 
+    group_id = trigger("get_group_id") if user_is_instructor else CURRENT_USER.group_id
     from Time import today
 
     # pega o periodo avaliativo atual e inicializa uma string que irá conter o valor na label sprint_timeline
@@ -125,12 +143,13 @@ def criar_section_1():
     #       pendentes = indice 0
     #       avaliados = indice 1
     # ]
-    grades = lista_usuarios_back.get_users(CURRENT_USER)
+    grades = lista_usuarios_back.get_users(CURRENT_USER, group_id)
 
     # variavel com o tamanho das listas
     g = [len(grades[0]), len(grades[1])]
 
     # Cria o pie chart utilizando a informação de usuários
+    frame_section_header = frame_section.winfo_children()[1]
     if (sum(g) > 0) and current_rating_period(group_id) != None: criar_piechart(frame_section_header, g)
     
     # Cria o Frame parent de ambas as listas

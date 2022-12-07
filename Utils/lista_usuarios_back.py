@@ -1,16 +1,17 @@
 
 # função para acessar os users
-def get_users(user):
+def get_users(user, group_id):
     if user == None: return
 
     from Models.Role import get_role
     from Models.User import get_users_of_team, get_users_of_group
     from Models.Rating import get_ratings
     from Models.Sprint import current_rating_period, next_rating_period
+    from Models.Group import get_group
 
-    sprint = current_rating_period(user.group_id)
+    sprint = current_rating_period(group_id)
     if sprint == None: 
-        sprint = next_rating_period(user.group_id)
+        sprint = next_rating_period(group_id)
     if sprint == None: return [[], []]
     
 
@@ -43,7 +44,11 @@ def get_users(user):
                 grade_to_submit.append(member)
         return [grade_to_submit, grade_submitted]
 
-    rate_users = get_users_of_group(user.group_id)
+    group = get_group(group_id)
+    role = get_role(1) if group.leader_id == user.id else get_role(2) if group.client_id == user.id else None
+    if role is None: return
+
+    rate_users = get_users_of_group(group_id)
     for group_member in rate_users:
         if group_member.role_id not in role.permissions_rate or group_member.team_id == '': continue
         if ratings is None or len(ratings) < 1:
