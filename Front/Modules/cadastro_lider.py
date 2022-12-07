@@ -24,8 +24,7 @@ def run(frame_parent):
     frame_header.columnconfigure(1, weight=1)
 
     # insere o titulo da tela no cabeçalho
-    titulo = Label(frame_header, text='Cadastro de Sprints e Times',
-                   bg=co3, font='Calibre, 24 bold', fg=co0)
+    titulo = Label(frame_header, text='Cadastro de Sprints e Times', bg=co3, font='Calibre, 24 bold', fg=co0)
     titulo.grid(row=0, column=0, padx=4, pady=10, sticky='w')
 
     # cria o frame body que contém o conteúdo da tela
@@ -97,8 +96,7 @@ def entry_sprint(en_numsprints: IntVar, frame_parent):
     from Events import register, trigger, unregister_all, has_event
 
     # requisita dados de sprint que estejam preenchidos nos formulários atuais
-    previous_form_sprints = trigger('get_sprints_internal') if has_event(
-        'get_sprints_internal') else register('get_sprints_internal', trigger('get_sprints'))
+    previous_form_sprints = trigger('get_sprints_internal') if has_event('get_sprints_internal') else register('get_sprints_internal', trigger('get_sprints'))
     # print(f'previous_form_sprints: {previous_form_sprints}')
 
     # deleta o frame_list caso já exista
@@ -140,10 +138,8 @@ def entry_sprint(en_numsprints: IntVar, frame_parent):
     n_sprints = min(valor, 12)
 
     # Cadastra as reações de evento que retornam os valores de cada sprint
-    register('reset_sprints', lambda n=n_sprints: [
-             unregister_all(f'get_sprint_{i}') for i in range(n)])
-    register('get_sprints', lambda n=n_sprints: [
-             trigger(f'get_sprint_{i}') for i in range(n)])
+    register('reset_sprints', lambda n=n_sprints: [unregister_all(f'get_sprint_{i}') for i in range(n)])
+    register('get_sprints', lambda n=n_sprints: [trigger(f'get_sprint_{i}') for i in range(n)])
 
     # pra cada sprint
     for i in range(n_sprints):
@@ -340,8 +336,7 @@ def create_member_form(parent, row, team_index, previous_form_data=None):
     role_names = [get_role_name(i) for i in [3, 4, 5]]
 
     # inicializa a StringVar como LT para o primeiro membro do time, PO para o segundo e Dev para os demais
-    entry_role.set(role_names[previous_form_data[2] - 3]
-                   if previous_form_data is not None else role_names[min(row, 2)])
+    entry_role.set(role_names[previous_form_data[2] - 3] if previous_form_data is not None else role_names[min(row, 2)])
     entry_role_init_val = entry_role.get()
 
     # Role - Label e Dropdown
@@ -352,12 +347,15 @@ def create_member_form(parent, row, team_index, previous_form_data=None):
 
     from Events import trigger, register, unregister_all
     register(f'get_team_members_{team_index}', lambda n=entry_name, e=entry_email, r=entry_role: [
-            n.get(), e.get(), get_role_id(r.get())])
+        n.get(), e.get(), get_role_id(r.get())
+    ])
     unregister_all(f'clear_team_members_{team_index}_{row}')
-    register(f'clear_team_members_{team_index}_{row}', lambda n=entry_name, e=entry_email,
-            r=entry_role, riv=entry_role_init_val: [n.delete('0', 'end'), e.delete('0', 'end'), r.set(riv)])
-    register(f'clear_team_{team_index}', lambda ti=team_index,
-            mi=row: trigger(f'clear_team_members_{ti}_{mi}'))
+    register(f'clear_team_members_{team_index}_{row}', 
+        lambda n=entry_name, e=entry_email, r=entry_role, riv=entry_role_init_val: [
+            n.delete('0', 'end'), e.delete('0', 'end'), r.set(riv)
+        ]
+    )
+    register(f'clear_team_{team_index}', lambda ti=team_index, mi=row: trigger(f'clear_team_members_{ti}_{mi}'))
         
 # Retorna o valor na entry especificada considerando erros
 def get_entry_int(entry):
@@ -388,13 +386,11 @@ def confirmar_cadastros():
     from Events import trigger
     from Models.Sprint import create_sprint
     from Models.Team import create_team
-    import tkinter
     from tkinter import messagebox
     from Authentication import register
     from Models.Team import get_group_of_team
 
-    
-    # TODO: Integração com dropdown de selecionar grupo
+    # Chama o evento para obter o retorno dos dados
     group_id = trigger("get_group_id")
 
     # Chama o evento para obter o retorno dos dados
@@ -406,8 +402,6 @@ def confirmar_cadastros():
         if sprint[0] >= sprint[1]:
             messagebox.showinfo("Khali Group",  "Data de início é maior ou igual á data de término!")
             return
-
-    # Chama o evento para obter o retorno dos dados
     
     for team in teams:
         # team[0] = nome do time, time[1] = usuário, time[2] = 
@@ -420,6 +414,7 @@ def confirmar_cadastros():
         # indice 0 = nome do time; indice 1 = membros
         from Authentication import validate_user_name, validate_user_email
         for user in team[1]:
+            # 0 = nome; 1 = email; 2 = role
             if not validate_user_name(user[0]):
                 messagebox.showinfo("Khali Group", "Nomeeee inválido!")
                 return
@@ -427,8 +422,6 @@ def confirmar_cadastros():
                 messagebox.showinfo("Khali Group", "E-mail válido!")
                 return
 
-            # 0 = nome; 1 = email; 2 = role
-    
     if sprints is not None:
 
         # cada item na lista representa uma sprint

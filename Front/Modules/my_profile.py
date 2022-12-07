@@ -63,7 +63,7 @@ def criar_section_1():
 
     # o ID do grupo que será referenciado é o valor de retorno do dropdown seletor de grupos caso o usuário seja instrutor
     # ou o group_id do usuário caso aluno
-    
+        
 
     # Cria o frame principal da seção
     frame_section = criar_frame(module_frame, 0, 0, "nwes", co0, co2, 2, 0, 0)
@@ -270,7 +270,7 @@ def criar_section_profile(frame_section, sprints):
     frame_user_pentagon.columnconfigure(1, weight = 1)
     # frame_user_pentagon.rowconfigure(1, weight = 1)
 
-    from graficos.Dashboards import user_pentagon
+    from graficos.Charts import user_pentagon
     from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
     # Cria o gráfico pentagono    
@@ -419,9 +419,9 @@ def criar_section_info(frame_section):
 # função que cria e coloca o grafico pentagono em um canvas dentro do frame parametro
 def criar_piechart (module_frame, data):
     from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-    frame_dashboards = criar_frame(module_frame,0, 1, "ne", co3, co3, 0, 0, 0)
+    frame_dashboard = criar_frame(module_frame,0, 1, "ne", co3, co3, 0, 0, 0)
     figure = graphic_pie(data)
-    canvas = FigureCanvasTkAgg(figure, master = frame_dashboards)
+    canvas = FigureCanvasTkAgg(figure, master = frame_dashboard)
     canvas.get_tk_widget().grid(row=0, column=0, sticky='e')
 
 # função que cria o grafico pentagono com as informações parametro

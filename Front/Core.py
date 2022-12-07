@@ -57,15 +57,15 @@ def bind_entry_placeholder (entry, text):
     entry.bind('<FocusOut>', lambda _, e=entry, f=focus_in_lambda: [no_value_lambda(_, e), e.bind('<FocusIn>', f)] if len(e.get()) == 0 else None)
 
 
-def create_dropdown(frame_parent, r, c, options, event, command):
+def create_dropdown(frame_parent, r, c, options, event, command, callback=lambda _, __, ___:None):
     from tkinter import StringVar, OptionMenu
     from Events import unregister_all,register
     
     var = StringVar()
     var.set(options[0])
+    var.trace_add('write', callback)
 
     unregister_all(event)
-    # for command in commands:
     register(event, lambda v=var: command(v.get()))
 
     dropdown = OptionMenu(frame_parent, var, *options)

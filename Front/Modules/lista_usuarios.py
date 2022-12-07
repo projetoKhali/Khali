@@ -90,12 +90,12 @@ def run(frame_parent):
     # frame_usuarios = add_scrollbar(frame_usuarios)
     
 
-    frame_dashboards = criar_frame(module_frame, 1, 1, "new", co0, co0, 0)
+    frame_dashboard = criar_frame(module_frame, 1, 1, "new", co0, co0, 0)
     ## grafico pizza
     labels_pie_graphic = ['Concluídas', 'Pendentes']
     data = [len(grade_submitted), len(grade_to_submit)]
     figure = graphic_pie(data, labels_pie_graphic)
-    canvas = FigureCanvasTkAgg(figure, master = frame_dashboards)
+    canvas = FigureCanvasTkAgg(figure, master = frame_dashboard)
     canvas.get_tk_widget().grid(row=0, column=0, sticky='n')
     
     indice = 2
