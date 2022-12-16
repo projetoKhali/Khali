@@ -1,55 +1,78 @@
-from distutils.cmd import Command
 from tkinter import *
-from tkinter import Tk, ttk
-import tkinter as tk
 from Settings import RESOURCES_PATH, co0
+from tkinter import messagebox
 
 def run():
 
-    #criando janela
-    janela = tk.Tk()
-    janela.title('')
-    janela.geometry('1300x670') #aqui coloco o tamanho da tela, largura x altura
-    janela.configure(background=co0)
-    janela.resizable(width=True, height=True)
+    # criando janela
+    from Front.WindowManager import create_window
+    janela = create_window(co0)
 
-    #criar imagem e distribuir pro intereior do label essa imagem
-    # path = "\Logo_big.gif"
-    img = PhotoImage(file=".\\" + RESOURCES_PATH + "\Logo_small.png") #imagem que vai ser colocada na tela, tem que estar com formato gif
-    label_imagem = tk.Label(janela, image=img)
-    label_imagem.photo = img
-    label_imagem.place(relx = 0.5, rely = 0.2, anchor = 'center') #creio que 0.5 seja 50% da janela
-
-    #criando textos (Email, Senha e Login)
-
-    # entry email
-    en_email = tk.Entry(janela, bd=2, font=("Calibri", 15), justify=LEFT) #bd é a borda
-    en_email.place(relx = 0.5, rely = 0.4, anchor = 'center')
-
-    # entry senha
-    en_senha = tk.Entry(janela, bd=2, font=("Calibri", 15), justify=LEFT)
-    en_senha.place(relx = 0.5, rely = 0.5, anchor = 'center')
-
-    # # label email 
-    # label_email = tk.Label(janela, text = 'E-mail', font = ("Calibri,15"), background = co0)
-    # label_email.place(relx = 0.40, rely = 0.4, anchor = 'center')
-
-    # # label senha 
-    # label_senha = tk.Label(janela, text = 'Senha', font = ("Calibri,15"), background = co0)
-    # label_senha.place(relx = 0.40, rely = 0.5, anchor = 'center')
-
-    #*****BOTÃO DE LOGIN*****
+        #*****BOTÃO DE LOGIN*****
     def send_login():
         email = en_email.get()
         senha = en_senha.get()
-        from Users.Authentication import login
-        login(email=email, senha=senha)
+        # if email is None or email == '' or senha is None or senha == '': return
+        from Authentication import login
+        verify = login(email=email, senha=senha)
+        
+        if verify != 0:
+            if verify == 1:
+                messagebox.showinfo("Khali Group",  "E-mail inválido!")
+            else:
+                messagebox.showinfo("Khali Group",  "Senha inválida!")
+            return
+            
 
-    botao_login = tk.Button(janela, text = 'Entrar', font = ("Calibri,15"), command=send_login)
-    botao_login.place(relx = 0.50, rely = 0.57, anchor = 'center')
+    # criar imagem e distribuir pro intereior do label essa imagem
+    # path = "\Logo_big.gif"
+    
+    # criando frame das labels e entry
+    frame_login = Frame(janela, background=co0)
+    frame_login.place(relx= 0.5, rely= 0.4, anchor= "center")
 
-    #dividindo a janela
-    # frame_cima = Frame(janela, width=1300, height=50, bg=co0, relief='flat')
-    # frame
-    # janela.mainloop()
+    # criando frame que contêm outros frames
+    frame_entrada = Frame(frame_login, background=co0)
+    frame_entrada.grid(row=1, column= 0, pady= 4)
+
+    # criando framde do botão
+    frame_botao = Frame(frame_login)
+    frame_botao.grid(row=2, column= 0, pady= 4)
+
+    # criando frame da imagem
+    frame_imagem = Frame(frame_login)
+    frame_imagem.grid(row= 0, column= 0, pady= 4)
+
+    # imagem
+    img = PhotoImage(file=".\\" + RESOURCES_PATH + "\Logo_small.png") #imagem que vai ser colocada na tela, tem que estar com formato gif
+    label_imagem = Label(frame_imagem, image=img, background=co0)
+    label_imagem.photo = img
+    label_imagem.grid(row= 0, column= 0) #creio que 0.5 seja 50% da janela
+
+    # label senha
+    label_login=Label(master= frame_entrada,
+    text='E-mail: ', fg='#1a1d1a', bg='#fae8e8', font=('Calibre', 15), justify=LEFT)
+    label_login.grid(row= 0, column= 0, pady= 2)
+
+    # entry email
+    en_email = Entry(frame_entrada, bd=2, font=("Calibri", 15), justify=LEFT) #bd é a borda
+    en_email.bind('<Return>', lambda _:send_login())
+    en_email.focus()
+    en_email.grid(row= 0, column= 1)
+
+    # label senha
+    label_senha=Label(master= frame_entrada,
+    text='Senha: ', fg='#1a1d1a', bg='#fae8e8', font=('Calibre', 15), justify=LEFT)
+    label_senha.grid(row=1, column = 0, pady= 2)
+
+    # entry senha
+    en_senha = Entry(frame_entrada, bd=2, font=("Calibri", 15), justify=LEFT,show="*")
+    en_senha.bind('<Return>', lambda _:send_login())
+    en_senha.grid(row = 1, column= 1)
+
+    # ******Botão de login*******
+    botao_login = Button(frame_botao, text = 'Entrar', font = ("Calibri,15"), width=10, height=1, command=send_login, bg='#d9d9d9', activebackground='#c5a8b0', fg='#1a1d1a')
+    botao_login.grid(row = 0, column= 0)
+
+    # dividindo a janela
     return janela

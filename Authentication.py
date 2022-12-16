@@ -1,28 +1,31 @@
-from CSV.CSVHandler import *
-from Front import WindowManager
-from Khali.Users.envioemail import envio_email
-from Users.Gerar_Senha import gerar_senha
-from Users.User import User
 
-import Settings as settings
-from .Roles.Role import *
+from Models.User import User
 
-#region Users
-
-CURRENT_USER = None
+# O usuário logado no momento
+CURRENT_USER : User = None
 
 # Efetua o login de Usuário e, se efetuado com sucesso, retorna o User logado 
 def login (email, senha):
+    global CURRENT_USER
+    if CURRENT_USER is not None: 
+        print(f'Authentication.login -- Tentativa de login enquanto um usuário já está logado. Um novo login não pode ser efetuado')
+        return CURRENT_USER
+
+    from CSV.CSVHandler import find_data_by_field_value_csv
+    from Settings import USERS_PATH
+    import tkinter
+    from tkinter import messagebox
 
     # Acessa o usuário que corresponde ao email fornecido na database
     try:
-        user_data = find_data_csv(settings.USERS_PATH, email)
+        user_data = find_data_by_field_value_csv(USERS_PATH, "email", email)
         hashed_pw = user_data["password"]
+        print(user_data)
 
     # em caso de erro, retorna o erro 0 - dado não encontrado
     except:
-        print("dado não encontrado")
-        return 0
+        print("Authentication.login -- Usuário não encontrado")
+        return 1
 
     # importa a biblioteca de criptografia
     import bcrypt
@@ -32,30 +35,33 @@ def login (email, senha):
 
         # caso a comparação retorne False, significa que as senhas não são iguais
         # retorna o código de erro 1 - dado invalido
-        print("dado inválido")
-        return 1
+        print("Authentication.login -- Senha inválida")
+        return 2
 
     # comparação de senhas retorna True, login retornará o Usuário
-    print("login sucesso")
+    print("Authentication.login -- login sucesso")
 
+    from Models.User import to_user
+    CURRENT_USER = to_user(user_data)
+
+    from Events import trigger
+    trigger('login')
+
+    return 0
+
+# Define que não não tem usuário logado e envia para a tela de login
+def sair():
     global CURRENT_USER
-    CURRENT_USER = User(
-        user_data['name'],
-        user_data['email'],
-        user_data['group_id'],
-        user_data['team_id'],
-        user_data['role_id'],
-        user_data['password']
-    )
-
-    WindowManager.next_state()
-
-    return CURRENT_USER
-
-
+    CURRENT_USER = None
+    from Front.WindowManager import reset
+    reset()
+    from Events import initialize
+    initialize()
 
 # Efetua o Cadastro de um novo Usuário e, se efetuado com sucesso, o armazena na database .csv
-def register (name, email, group_id, team_id, role_id, custom_password = None):
+def register (name, email, group_id, team_id, role_id, custom_password = None, log = True):
+    from Settings import COLS
+    import tkinter
 
     # Verifica se o Nome do Usuário fornecido é válido. Cancela o processo caso não seja.
     if not validate_user_name (name):
@@ -68,30 +74,38 @@ def register (name, email, group_id, team_id, role_id, custom_password = None):
         return
 
     # Verifica se o Grupo fornceido é válido. Cancela o processo caso não seja.
-    if not exists_group (group_id):
-        print(COLS[2] + f'Authentication.Register -- Erro: Grupo de id {group_id} não existe' + COLS[0])
-        return
+    # if not Group.exists_group (group_id):
+    #     print(COLS[2] + f'Authentication.Register -- Erro: Grupo de id {group_id} não existe' + COLS[0])
+    #     return
+
+
+    from Models.Team import exists_team, get_team
 
     # Verifica se o Time fornecido é válido. Cancela o processo caso não seja.
     if not exists_team (team_id):
         print(COLS[2] + f'Authentication.Register -- Erro: Time de id {team_id} não existe' + COLS[0])
         return
+    if group_id != None and team_id != None and get_team(team_id).group_id != group_id:
+        print(COLS[2] + f'Authentication.Register -- Erro: Time de id {team_id} não é do grupo {group_id} do usuário sendo cadastrado' + COLS[0])
+        return
+
+    from Models.Role import get_role
 
     # Verifica se a Função fornecida é válida. Cancela o processo caso não seja.
-    if not exists_role (role_id):
+    if not get_role(role_id) is not None:
         print(COLS[2] + f'Authentication.Register -- Erro: Função de id {role_id} não existe' + COLS[0])
         return
 
     # Inicializa variável senha para armazenamento
-    password = custom_password
-
+    password = str(custom_password)
     if password is None:
+        from Utils.Gerar_Senha import gerar_senha
 
         # Atualiza a senha toda vez que uma senha gerada é inválida
         while not validate_user_password(password):
             password = gerar_senha()
 
-    print (f'email: {email} | password: {password}')
+    print (f'Authentication.register -- Novo usuário cadastrado. Email: {email}, senha: {password}')
 
     # Importa bcrypt para criptografar a senha
     import bcrypt
@@ -105,28 +119,28 @@ def register (name, email, group_id, team_id, role_id, custom_password = None):
     # Cria o Usuário com as informações especificadas        !! decodifica senha antes de salvar: remove b' e ' da string !! 
     user = User(name, email, group_id, team_id, role_id, hashed_password.decode('utf-8'))
 
+    from Models.User import create_user
+
     # Adiciona o usuário para a database
-    add_unique_csv_autoid(settings.USERS_PATH, get_user_fields(user))
-
-    import envioemail
-    # Envia email com os dados le login automaticamente para o usuário
-    envio_email(name, email)
-
-
-# Retorna uma lista com as informações de um Usuário
-def get_user_fields (user:User):
-    return [
+    id = create_user(
         user.name,
         user.email,
         user.group_id,
         user.team_id,
         user.role_id,
         user.password
-    ]
+    )
 
-#endregion
+    from Settings import SEND_EMAIL_ON_REGISTER
+    if SEND_EMAIL_ON_REGISTER:
+        # from Utils import sistema_email
+        # sistema_email.enviar_email(name, email, password)
+        from Utils.sistema_envio_email import envio_email
+        # Envia email com os dados le login automaticamente para o usuário
+        envio_email(name, email, password)
 
-#region User Register Validation
+    return id
+
 
 # Retorna True se o nome especificado é valido e False se não
 def validate_user_name(name:str):
@@ -134,7 +148,8 @@ def validate_user_name(name:str):
     # Nome fornecido é INVALIDO se descumprir qualquer uma das seguintes condições:
     # Numero de caracteres é maior ou igual ao minimo predefinido -> USER_NAME_MIN_MAX[0] 
     # Numero de caracteres é menor que o maximo predefinido       -> USER_NAME_MIN_MAX[1]
-    if len(name) < settings.USER_NAME_MIN_MAX[0] or len(name) >= settings.USER_NAME_MIN_MAX[1]:
+    from Settings import USER_NAME_MIN_MAX
+    if len(name) < USER_NAME_MIN_MAX[0] or len(name) >= USER_NAME_MIN_MAX[1]:
         return False
 
     # Cria uma variavel string para armazenar o caractere anterior no proximo loop
@@ -186,7 +201,8 @@ def validate_user_password(password:str):
     # Senha fornecida é INVALIDA se descumprir qualquer uma das seguintes condições:
     # Numero de caracteres é maior ou igual ao minimo predefinido -> PASSWORD_MIN_MAX[0] 
     # Numero de caracteres é menor que o maximo predefinido       -> PASSWORD_MIN_MAX[1]
-    if password is None or len(password) < settings.PASSWORD_MIN_MAX[0] or len(password) >= settings.PASSWORD_MIN_MAX[1]:
+    from Settings import PASSWORD_MIN_MAX
+    if password is None or len(password) < PASSWORD_MIN_MAX[0] or len(password) >= PASSWORD_MIN_MAX[1]:
         return False
 
     # Importa a biblioteca de utilidades para strings
@@ -212,44 +228,3 @@ def validate_user_password(password:str):
 
     # Após o loop, retorna Verdadeiro caso as 3 booleanas sejam True
     return (letters and digits and punctuations)
-
-#endregion
-
-#region Grupos
-
-# Cria e armazena um novo Grupo com o nome fornecido
-def create_group (name:str):
-    return add_unique_csv_autoid(settings.GROUPS_PATH, [name])
-
-# Verifica se um Grupo com o id forneido existe armazenado no banco de dados
-def exists_group (id:int):
-    return find_data_by_id_csv(settings.GROUPS_PATH, id) is not None 
-
-# retorna o nome do Grupo que corresponde ao id especificado 
-def get_group_name (id:int):
-    return find_data_by_id_csv(settings.GROUPS_PATH, id)['name'] 
-
-#endregion
-
-#region Times
-
-# Cria e armazena um novo Time com o nome fornecido
-def create_team (name:str, group:int):
-    return add_unique_csv_autoid(settings.TEAMS_PATH, [group, name])
-
-# Verifica se um Time com o id forneido existe armazenado no banco de dados
-def exists_team (id:int):
-    return find_data_by_id_csv(settings.TEAMS_PATH, id) is not None 
-
-# retorna o nome do Time que corresponde ao id especificado 
-def get_team_name (id:int):
-    return find_data_by_id_csv(settings.TEAMS_PATH, id)['name'] 
-
-#endregion
-
-#region Funções
-
-def exists_role (id:int):
-    return get_role(id) is not None
-
-#endregion

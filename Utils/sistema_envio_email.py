@@ -1,39 +1,38 @@
-def envio_email(nome ,to):
-    import email
+# import win32com.client as win32
+
+def envio_email(nome, to, senha):
     from http import server
     import smtplib
     from email.mime.multipart import MIMEMultipart
     from email.mime.text import MIMEText
-    from bd import password
+    from bd import login, password
 
     # S M T P - Simple Mail Transfere Protocol
     # para criar o servidor e enviar o email
 
     # starta o servidor smtp
-        # Declaração de valores de entrada e acesso 
+    # Declaração de valores de entrada e acesso 
     host = "smtp.gmail.com"
     port = "587"
-    login = "Khaligroup.fatecsjc@gmail.com" #endereço de onde o email vai ser enviado
-    password = "senha123" #exemplo de senha
 
-        # Faz a conexão com servidor
+    # Faz a conexão com servidor
     server = smtplib.SMTP(host, port)
 
     # Starta os requisitos de segurança para ativação
-        #  fornece endereço IP do servidor SMTP
+    #  fornece endereço IP do servidor SMTP
     server.ehlo()
-        # Inicializa a função de segurança "Transport Layer Security"
+    # Inicializa a função de segurança "Transport Layer Security"
     server.starttls()
 
     # Acessa a conta com os dados de login
     server.login(login, password)
 
-        #CORPO DE EMAIL TIPO MIME
+    #CORPO DE EMAIL TIPO MIME
     corpo = f'''
             Olá, {nome}!
             segue abaixo seus dados para acessar nossa plataforma
             email: {to}
-            senha: 
+            senha: {senha}
 
             não compartilhe sua senha com ninguêm!
 
@@ -58,3 +57,29 @@ def envio_email(nome ,to):
 
     # Ecerra conexão com o servidor
     server.quit()
+    
+# Função envio de  e-mail Líder do Grupo e Fake Client
+def enviar_email(nome, email1, senha):
+    outlook = win32.Dispatch('outlook.application')  # Criar interação com outlook
+    email = outlook.CreateItem(0)  # Criar um e-mail
+
+    # Configurar as informações do e-mail
+    email.To = email1
+    email.Subject = 'E-mail automático - Senha cadastrada para Avaliação 360°'
+    email.HTMLBody = f"""
+    <p>Olá, {nome}!</p>
+
+    <p>Aqui está sua senha gerada automaticamente, para acesso à plataforma de Avaliação 360°:</p>
+    <p>E-MAIL CADASTRADO: {email1}</p>
+
+    <p><b>Sua senha é intrasferível, não compartilhe com ninguém.</b></p>
+    <p>SENHA:{senha}</p>
+
+    <p>Não responda a este e-mail.</p>
+    """
+
+    if str(object='@') in email1:
+        email.Send()
+        print(f'E-mail enviado para {nome}')
+    else:
+        print(f'Não existe e-mail cadastrado para {nome}')
