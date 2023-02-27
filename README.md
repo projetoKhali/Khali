@@ -55,8 +55,8 @@
 > - [x] 19/09 a 09/10 - *Segunda Sprint*
 > - [x] 09/10 a 15/10 - *Recesso Escolar*
 > - [x] 17/10 a 06/11 - *Terceira Sprint*
-> - [ ] 07/11 a 27/11 - *Quarta Sprint*
-> - [ ] 08/12 - *Feira de Soluções e Apresentação Final API*
+> - [x] 07/11 a 27/11 - *Quarta Sprint*
+> - [x] 08/12 - *Feira de Soluções e Apresentação Final API*
 
 
 ##
