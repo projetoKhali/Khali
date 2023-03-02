@@ -1,72 +1,64 @@
-from datetime import date
-from CSV.CSVHandler import *
-import Settings
-from Users.Authentication import *
-from Users.Roles.Role import *
+# inicializa o sistema de eventos
+import Events
+Events.initialize()
+
+# Cria dados de teste para popular os bancos de dados com usuários, grupos, times e avaliações
+
+from _test import create_test_data
+# create_test_data()
+
+from Time import set_today
+# set_today(29, 8)    # começo da sprint 1
+# set_today(19, 9)    # fim da sprint 1 | começo do periodo avaliativo da sprint 1
+# set_today(26, 9)    # fim do periodo avaliativo da sprint 1
+set_today(28, 11)   # começo do periodo avaliativo da sprint 4
+# set_today(4, 12)   # fim do periodo avaliativo da sprint 4
+# set_today(10, 10)
 
 
-# Inicializa todas as databases
-def initialize_databases ():
-    initialize_csv(Settings.USERS_PATH)
-    initialize_csv(Settings.GROUPS_PATH)
-    initialize_csv(Settings.SPRINTS_PATH)
-    initialize_csv(Settings.TEAMS_PATH)
+# from tkinter import *
+# from Front.Core import *
+# window = Tk()
+# window.configure(background = co0)
+# window.columnconfigure(0, minsize = 0, weight = 1)
+# window.rowconfigure(0, minsize = 0, weight = 1)
+# framer = criar_frame(window, 0, 0, 'news', 'green', 'blue', 1, 4, 4)
+# framer.columnconfigure(0, minsize = 0, weight = 1)
+# framer.rowconfigure(0, minsize = 0, weight = 1)
+# from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+# from graficos.Dashboards import *
 
-# !TODO!: Limpa as databases toda vez que o programa for executado
-# !TODO!: 'Inicialize_databases' deverá ser executado APENAS na primeira execução do programa
+# fig = media_teams_sprints_line(1)
 
-initialize_databases()
+# fig = user_media_sprints(22)    # v
+# fig = user_media_x_team(12)     # v
+# fig = teams_media(1)            # v 
+# fig = role_media(1, 1)          # v
+# fig = team_media_x_group(7)     # v
+# fig = group_media_x_groups(2)   # v
+# fig = users_media_team(4)       # v
 
-# cria grupo e time do develano
-create_group("Grupo do Develano")
-create_team("Time do Develano", 0)
-
-# cadastra o develano
-register("develano", "dev.lano@dev.lano", 0, 0, 0, custom_password='123')
-
-
-# window = cadastroadm.run()
-# window = login_front.run()
-
-# window.mainloop()  # Método que executa eventos como cliques de botão e mantém a janela aberta
-
-# from Sprints.Sprints import create_sprint
-# create_sprint(0, date.)
-
-# faz login com o develano
-# login("develano", input("texto"))
-
-# area de testes:
-
-# # printa a quantidade de linhas na database de usuarios
-# print(line_count_csv(USERS_PATH))
-
-# cria 2 grupos
-create_group("first group")
-create_group("second group")
-
-# cria 2 times no primeiro grupo
-create_team("first_team_of0", 0)
-create_team("second_team_of0", 0)
-
-# cria 2 times no segundo grupo
-create_team("first_team_of1", 1)
-create_team("second_team_of1", 1)
-
-# cadastra ADM teste
-register("fulanoADM", "fulano.adm@adm.adm", 0, 0, 0)
-
-# cadastra lider do grupo teste
-register("fulanoLdG", "fulider_do@grupo.ldg", 0, 0, 1)
-
-# cadastra cliente teste
-register("clielano", "fulano.cliente@cliente.c", 0, 0, 2)
-
-# cadastra developer teste
-register("develano", "fulano-dev@dev.com", 0, 0, 5)
+# canvas = FigureCanvasTkAgg(fig, master = framer)
+# canvas.get_tk_widget().grid(row=0, column=0, sticky='wens')
+# def on_closing():
+#     from matplotlib import pyplot as plt
+#     plt.close("all")
+#     window.destroy()
+# window.protocol("WM_DELETE_WINDOW", on_closing)
+# window.mainloop()
+# exit()
 
 from Front import WindowManager
 
 WindowManager.initialize()
-WindowManager.update()
 
+# teste - login automatico
+from Authentication import login
+# login(email='a@d.m', senha='123')
+login(email='l@d.g', senha='123')
+# login(email='c@c.c', senha='123')
+# login(email='lt2@o.com', senha='123')
+# login(email='fulano-dev@dev.com', senha ='123')
+# login(email='d@e.v', senha='123')
+
+WindowManager.update()
